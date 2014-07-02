@@ -603,7 +603,7 @@
     
     
     
-    newsScrow=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 37, 320, iPhone5?568-20-40-40-49+3+49:480-19-40-40-49+3)];
+    newsScrow=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 37, 320, iPhone5?568-20-40-40-49+3+49:480-19-40-40-49+3+49)];
     newsScrow.contentSize=CGSizeMake(320*13, 0);
     newsScrow.pagingEnabled=YES;
     newsScrow.delegate=self;
@@ -616,7 +616,7 @@
     for (int i=0; i<13; i++) {
         
         
-        newsTableview *mytesttab=[[newsTableview alloc]initWithFrame:CGRectMake(320*i, 0, 320, iPhone5?568-20-40-40-49:480-19-40-40-49)];
+        newsTableview *mytesttab=[[newsTableview alloc]initWithFrame:CGRectMake(320*i, 0, 320, iPhone5?568-20-40-40:480-19-40-40)];
         mytesttab.tag=i+800;
         mytesttab.delegate=self;
         [newsScrow addSubview:mytesttab];
@@ -2610,6 +2610,10 @@
         
         if (newsScrow.contentOffset.x<-40) {
             [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+
+        }else if(newsScrow.contentOffset.x>3870){
+        
+            [self.mm_drawerController toggleDrawerSide:MMDrawerSideRight animated:YES completion:nil];
 
         }
         

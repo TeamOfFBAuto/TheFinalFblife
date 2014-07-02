@@ -132,7 +132,7 @@
         
         [tabbutton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 100)];
 
-        [tabbutton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+        [tabbutton setTitleColor:RGBCOLOR(131, 134, 139) forState:UIControlStateNormal];
         
         [tabbutton addTarget:self action:@selector(dobutton:) forControlEvents:UIControlEventTouchUpInside];
         
