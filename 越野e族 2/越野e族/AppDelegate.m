@@ -983,6 +983,8 @@
     
     UINavigationController *ritht = [[UINavigationController alloc] initWithRootViewController:[[RightViewController alloc] init]];
     
+    
+    RightViewController * rightVC = [[RightViewController alloc] init];
 
     
     LeftViewController *menuViewController = [[LeftViewController alloc] init];
@@ -995,10 +997,10 @@
     
     
     
-    MMDrawerController *_RootVC=[[MMDrawerController alloc]initWithCenterViewController:_navigationController leftDrawerViewController:menuViewController rightDrawerViewController:ritht];
+    MMDrawerController *_RootVC=[[MMDrawerController alloc]initWithCenterViewController:_navigationController leftDrawerViewController:menuViewController rightDrawerViewController:rightVC];
     
     
-    [_RootVC setMaximumRightDrawerWidth:200];
+    [_RootVC setMaximumRightDrawerWidth:298];
     [_RootVC setMaximumLeftDrawerWidth:200];
     _RootVC.shouldStretchDrawer = NO;
     [_RootVC setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
