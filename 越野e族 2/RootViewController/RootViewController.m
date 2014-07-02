@@ -603,7 +603,7 @@
     
     
     
-    newsScrow=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 37, 320, iPhone5?568-20-40-40-49+3:480-19-40-40-49+3)];
+    newsScrow=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 37, 320, iPhone5?568-20-40-40-49+3+49:480-19-40-40-49+3)];
     newsScrow.contentSize=CGSizeMake(320*13, 0);
     newsScrow.pagingEnabled=YES;
     newsScrow.delegate=self;
