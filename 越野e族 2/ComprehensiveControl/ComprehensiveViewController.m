@@ -17,6 +17,12 @@
 
 #import "RightViewController.h"
 
+#import "ShowImagesViewController.h"//看图集
+
+#import "CompreTableViewCell.h"
+
+#import "SzkLoadData.h"
+
 @interface ComprehensiveViewController (){
 
     UIBarButtonItem * spaceButton;
@@ -36,49 +42,12 @@
     return self;
 }
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-//    spaceButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-//    spaceButton.width = -10;
-//    
-//    
-//    UIImageView * titleImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,26,23)];
-//    
-//    titleImageView.image = [UIImage imageNamed:@"fb-52_46.png"];
-//    
-//    self.navigationItem.titleView = titleImageView;
-//    
-//    
-//    UIImage *background = [UIImage imageNamed:@"white.png"];
-//
-// UIImageView *   _blurredImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 64)];
-//    _blurredImageView.contentMode = UIViewContentModeScaleAspectFill;
-//    _blurredImageView.alpha = 0.0;
-//    [_blurredImageView setImageToBlur:background blurRadius:8 completionBlock:nil];
-//    
-//    
-//    [self.navigationController.navigationBar setBackgroundImage:_blurredImageView.image forBarMetrics: UIBarMetricsDefault];
-//
-//    
-//    
-//    self.view.backgroundColor=[UIColor blueColor];
-//    
-//    [self setupLeftMenuButton];
-//    [self setupRightMenuButton];
-    // Do any additional setup after loading the view.
-    
-    
-    UIImageView *aview=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 270)];
-    aview.image=[UIImage imageNamed:@"sxx@2x.png"];
-    [self.view addSubview:aview];
-    
-    
-    /**
-     *  假的navigationbar
-     
-     */
+    normalinfoAllArray=[NSArray array];
     
     self.navigationController.navigationBarHidden=YES;
     navibar=[[ZkingNavigationView alloc]initWithFrame:CGRectMake(0, 0, 320, 64)];
@@ -88,20 +57,139 @@
     
     self.view.backgroundColor=[UIColor redColor];
     
+    huandengDic=[NSDictionary dictionary];
     
+    [self loadHuandeng];
+    [self loadNomalData];
 
     
+}
+
+-(void)loadView{
+    [super loadView];
+    
+    mainTabView=[[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, iPhone5?568:480)];
+    mainTabView.delegate=self;
+    mainTabView.dataSource=self;
+    mainTabView.backgroundColor=[UIColor whiteColor];
+    [self.view addSubview:mainTabView];
+    
+    
+    
+
+
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     
-    
-    
     [super viewWillAppear:NO];
+    
   [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
+    
+    self.navigationController.navigationBarHidden=YES;
+    
+}
+
+
+
+#pragma mark-准备幻灯的数据
+
+-(void)loadHuandeng{
+    
+    __weak typeof(self) wself =self;
+
+    SzkLoadData *loaddata=[[SzkLoadData alloc]init];
+    
+    NSString *str_search=[NSString stringWithFormat:@"http://cmstest.fblife.com/ajax.php?c=newstwo&a=newsslide&classname=appnew&type=json"];
+    
+    [loaddata SeturlStr:str_search mytest:^(NSDictionary *dicinfo, int errcode) {
+        
+        
+        
+        
+        
+        NSLog(@"新版幻灯的数据dicinfo===%@",dicinfo);
+        
+        if (errcode==0) {
+            
+            [wself refreshHuandengWithDic:dicinfo];
+            
+            
+        }else{
+        //网络有问题
+        
+        }
+        
+    }];
+                          
+                          
+                          
+                          
+                          
+    
+    NSLog(@"幻灯的接口是这个。。=%@",str_search);
 
 
 }
+
+-(void)refreshHuandengWithDic:(NSDictionary *)dic{
+    
+    
+    
+    
+    huandengDic=dic;
+    
+    [mainTabView reloadData];
+
+
+
+}
+
+
+#pragma mark-准备下面的数据
+
+-(void)loadNomalData{
+    
+    
+    
+    
+    __weak typeof(self) wself =self;
+    
+    SzkLoadData *loaddata=[[SzkLoadData alloc]init];
+    
+    NSString *str_search=[NSString stringWithFormat:@"http://cmstest.fblife.com/ajax.php?c=newstwo&a=getapplist&page=1&type=json&pagesize=10&datatype=0"];
+    
+    [loaddata SeturlStr:str_search mytest:^(NSDictionary *dicinfo, int errcode) {
+        
+        NSLog(@"新版幻灯的数据dicinfo===%@",dicinfo);
+        
+        if (errcode==0) {
+            
+            [wself refreshNormalWithDic:dicinfo];
+            
+            
+        }else{
+            //网络有问题
+            
+        }
+        
+    }];
+    
+    NSLog(@"幻灯的接口是这个。。=%@",str_search);
+    
+
+}
+
+-(void)refreshNormalWithDic:(NSDictionary *)dicc{
+    
+    normalinfoAllArray=[NSArray arrayWithArray:[dicc objectForKey:@"app"]];
+    
+    [mainTabView reloadData];
+
+
+
+}
+
 
 #pragma mark-自定义导航栏的代理
 -(void)NavigationbuttonWithtag:(int)tag{
@@ -115,54 +203,126 @@
     }
        }
 
-//#pragma mark-左右两边的button
-//
-//-(void)setupLeftMenuButton{
-//    //   MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
-//    //wo-34_38@2x.png   fabu-40_40@2x.png
-//    UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(10,0,40,40)];
-//    [button_back addTarget:self action:@selector(leftDrawerButtonPress:) forControlEvents:UIControlEventTouchUpInside];
-//    //    [button_back setBackgroundImage:[UIImage imageNamed:@"wo-34_38.png"] forState:UIControlStateNormal];
-//    [button_back setImage:[UIImage imageNamed:@"fenlei36_33.png"] forState:UIControlStateNormal];
-//    
-//    
-//    
-//    
-//    UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:button_back];
-//    
-//    self.navigationItem.leftBarButtonItems=@[spaceButton,back_item];
-//}
-//
-//-(void)setupRightMenuButton
-//{
-//    
-//    UIView * viewww = [[UIView alloc] initWithFrame:CGRectMake(10,0,40,40)];
-//    
-//    viewww.backgroundColor = [UIColor clearColor];
-//    
-//    
-//   UIButton *  right_button=[[UIButton alloc]initWithFrame:CGRectMake(0,0,40,40)];
-//    
-//    right_button.backgroundColor = [UIColor clearColor];
-//    
-//    [right_button addTarget:self action:@selector(rightDrawerButtonPress:) forControlEvents:UIControlEventTouchUpInside];
-//    
-//    
-//    
-//    
-//    [right_button setImage:[UIImage imageNamed:@"our37_34.png"] forState:UIControlStateNormal];
-//    
-//    [viewww addSubview:right_button];
-//    
-//    UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:viewww];
-//    
-//    self.navigationItem.rightBarButtonItems = @[spaceButton,back_item];
-//    
-//    
-//    //    [self.navigationController.navigationBar addSubview:right_button];
-//    
-//}
-//
+
+#pragma mark-uitableviewdelegate datasource
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+
+    return 1+normalinfoAllArray.count;
+
+}
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+
+
+    return 1;
+    /**
+     * 1.幻灯，2,推的文章。3图集。4不清楚啊
+     */
+
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+
+
+    static NSString *stringidentifier=@"cell";
+    
+    CompreTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:stringidentifier];
+    
+    if (!cell) {
+        cell=[[CompreTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:stringidentifier];
+    }
+    
+    for (UIView *aview in cell.contentView.subviews) {
+        [aview removeFromSuperview];
+    }
+    
+    
+    if (indexPath.row==0) {
+        
+        [cell setDic:huandengDic cellStyle:CompreTableViewCellStyleHuandeng thecellbloc:^(int picID) {
+            
+            
+        }];
+        
+        
+    }else{
+        
+        NSDictionary *temPnormalDic=[normalinfoAllArray objectAtIndex:indexPath.row-1];
+        
+        if ([[temPnormalDic objectForKey:@"type"] integerValue]==1) {
+            
+            [cell setDic:temPnormalDic cellStyle:CompreTableViewCellStylePictures thecellbloc:^(int picID) {
+                
+            }];
+            
+
+        }else{
+        
+            [cell setDic:temPnormalDic cellStyle:CompreTableViewCellStyleText thecellbloc:^(int picID) {
+                
+            }];
+
+        
+        }
+     
+    }
+    
+    
+    return cell;
+    
+
+
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+
+    NSArray *array_img=@[@"http://cmsweb.fblife.com/attachments/20140627/1403808549.jpg.180x120.jpg",@"http://cmsweb.fblife.com/attachments/20140627/1403808549.jpg.180x120.jpg",@"http://cmsweb.fblife.com/attachments/20140627/1403808549.jpg.180x120.jpg",@"http://cmsweb.fblife.com/attachments/20140627/1403808549.jpg.180x120.jpg",@"http://cmsweb.fblife.com/attachments/20140627/1403808549.jpg.180x120.jpg"];
+    NSMutableArray *muArr=[NSMutableArray arrayWithArray:array_img];
+    ShowImagesViewController *_showbig=[[ShowImagesViewController alloc]init];
+    _showbig.allImagesUrlArray=muArr;
+    _showbig.currentPage=3;
+    [self.navigationController pushViewController:_showbig animated:YES];
+    
+
+
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    
+    
+    if (indexPath.row==0) {
+        
+        return   [CompreTableViewCell getHeightwithtype:CompreTableViewCellStyleHuandeng];
+    
+    
+    }else{
+        
+        NSDictionary *temPnormalDic=[normalinfoAllArray objectAtIndex:indexPath.row-1];
+
+        
+            
+            
+            
+            if ([[temPnormalDic objectForKey:@"type"] integerValue]==1) {
+                return    [CompreTableViewCell getHeightwithtype:CompreTableViewCellStylePictures];
+                
+                
+                
+            }else{
+                
+                return    [CompreTableViewCell getHeightwithtype:CompreTableViewCellStyleText];
+                
+            }
+            
+            
+    
+    }
+
+}
+
+
 #pragma mark - Button Handlers
 -(void)leftDrawerButtonPress{
     [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleDefault animated:NO];

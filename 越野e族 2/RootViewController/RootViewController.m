@@ -76,6 +76,59 @@
 {
     [super viewWillAppear:NO];
     //
+   
+    //  [self testmymodelofadvertising];
+    
+    //self.tabBarController.tabBar.hidden=NO;
+}
+
+
+
+-(void)viewWillDisappear:(BOOL)animated{
+    
+    
+    
+    
+    
+    
+    [MobClick endEvent:@"RootViewController"];
+    
+    NSDate* dat = [NSDate dateWithTimeIntervalSinceNow:0];
+    NSTimeInterval a=[dat timeIntervalSince1970];
+    NSString *timeString = [NSString stringWithFormat:@"%f", a];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:timeString forKey:[NSString stringWithFormat:@"%@timechange",[personal place: self.category_string ]]];
+    
+    
+    
+    
+    
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:NO];
+    
+    //    for (UIView *_viewhalf in [UIApplication sharedApplication].keyWindow.subviews) {
+    //        [_viewhalf removeFromSuperview];
+    //    }
+    
+    //
+    //    UIAlertView *alert_=[[UIAlertView alloc]initWithTitle:@"dismiss" message:nil delegate:nil cancelButtonTitle:@"yes" otherButtonTitles:nil, nil];
+    //    [alert_ show];
+    //
+    //    if (!halfblackView) {
+    //        halfblackView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, iPhone5?568:480)];
+    //
+    //        halfblackView.backgroundColor=[UIColor blackColor];
+    //        halfblackView.userInteractionEnabled=NO;
+    //        halfblackView.alpha=0.8;
+    //        halfblackView.window.windowLevel=UIWindowLevelAlert-1;
+    //        [[UIApplication sharedApplication].keyWindow
+    //         addSubview:halfblackView];
+    //
+    //    }
+    
+    
     if (searchheaderview) {
         self.navigationController.navigationBarHidden=!searchheaderview.hidden;
         
@@ -156,37 +209,37 @@
     }
     
     
-    if (![stringoldtime isEqualToString:@"(null)"]) {
-        
-        float timecha=-[stringoldtime floatValue]+[timeString floatValue];
-        
-        NSLog(@"时间差为==%f",timecha);
-        if (timecha<600) {
-            NSLog(@"10分钟之内");
-            // [self getdatafromcache];
-        }else{
-            NSLog(@"超过10分钟了");
-            
-            NSString *stringnetwork=[Reachability checkNetWork ];
-            
-            // NSLog(@"当前的网络为%@",stringnetwork);
-            if ([stringnetwork isEqualToString:@"NONetWork"]) {
-                [self HaveNoNetWork];
-                
-            }else{
-                
-                
-                [self showguanggao];
-                [self refreshnormal];
-                [self sendrecommedrequest];
-            }
-            
-        }
-        
-    }else{
-        NSLog(@"第一次程序启动");
-        
-    }
+//    if (![stringoldtime isEqualToString:@"(null)"]) {
+//        
+//        float timecha=-[stringoldtime floatValue]+[timeString floatValue];
+//        
+//        NSLog(@"时间差为==%f",timecha);
+//        if (timecha<600) {
+//            NSLog(@"10分钟之内");
+//            // [self getdatafromcache];
+//        }else{
+//            NSLog(@"超过10分钟了");
+//            
+//            NSString *stringnetwork=[Reachability checkNetWork ];
+//            
+//            // NSLog(@"当前的网络为%@",stringnetwork);
+//            if ([stringnetwork isEqualToString:@"NONetWork"]) {
+//                [self HaveNoNetWork];
+//                
+//            }else{
+//                
+//                
+//               // [self showguanggao];
+//               // [self refreshnormal];
+//                [self sendrecommedrequest];
+//            }
+//            
+//        }
+//        
+//    }else{
+//        NSLog(@"第一次程序启动");
+//        
+//    }
     if (isadvertisingoadsuccess==NO) {
         
         
@@ -198,54 +251,12 @@
         }else{
             
             
-            [self testmymodelofadvertising];
+           // [self testmymodelofadvertising];
         }
         
         
         
     }
-    //  [self testmymodelofadvertising];
-    
-    //self.tabBarController.tabBar.hidden=NO;
-}
--(void)viewWillDisappear:(BOOL)animated{
-    
-    [MobClick endEvent:@"RootViewController"];
-    
-    NSDate* dat = [NSDate dateWithTimeIntervalSinceNow:0];
-    NSTimeInterval a=[dat timeIntervalSince1970];
-    NSString *timeString = [NSString stringWithFormat:@"%f", a];
-    
-    [[NSUserDefaults standardUserDefaults] setObject:timeString forKey:[NSString stringWithFormat:@"%@timechange",[personal place: self.category_string ]]];
-    
-    
-    
-    
-    
-}
-
--(void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:NO];
-    
-    //    for (UIView *_viewhalf in [UIApplication sharedApplication].keyWindow.subviews) {
-    //        [_viewhalf removeFromSuperview];
-    //    }
-    
-    //
-    //    UIAlertView *alert_=[[UIAlertView alloc]initWithTitle:@"dismiss" message:nil delegate:nil cancelButtonTitle:@"yes" otherButtonTitles:nil, nil];
-    //    [alert_ show];
-    //
-    //    if (!halfblackView) {
-    //        halfblackView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, iPhone5?568:480)];
-    //
-    //        halfblackView.backgroundColor=[UIColor blackColor];
-    //        halfblackView.userInteractionEnabled=NO;
-    //        halfblackView.alpha=0.8;
-    //        halfblackView.window.windowLevel=UIWindowLevelAlert-1;
-    //        [[UIApplication sharedApplication].keyWindow
-    //         addSubview:halfblackView];
-    //
-    //    }
     
 }
 #pragma mark-通知

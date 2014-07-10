@@ -109,7 +109,7 @@
     currentSelectButtonIndex=0;
     
     for (int i=0; i<5; i++) {
-        UIButton *tabbutton=[[UIButton alloc] initWithFrame:CGRectMake(0, 64+i*50, 200, 50)];
+        UIButton *tabbutton=[[UIButton alloc] initWithFrame:CGRectMake(0, 64+i*50, 300, 50)];
        // [tabbutton setSelected:YES];
         tabbutton.tag=i+100;
         if (i==0) {
@@ -128,9 +128,9 @@
         
         [tabbutton setTitle:titles[i] forState:UIControlStateNormal];
         
-        [tabbutton setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 70)];
+        [tabbutton setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
         
-        [tabbutton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 100)];
+        [tabbutton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 30)];
 
         [tabbutton setTitleColor:RGBCOLOR(131, 134, 139) forState:UIControlStateNormal];
         

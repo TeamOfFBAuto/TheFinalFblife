@@ -13,6 +13,7 @@
 		1913EA781890AF6B0045CBD8 /* ios7_loading61_12_4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1913EA741890AF6B0045CBD8 /* ios7_loading61_12_4@2x.png */; };
 		1913EA7A1890BDC40045CBD8 /* ios7_halfblack640_158@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1913EA791890BDC40045CBD8 /* ios7_halfblack640_158@2x.png */; };
 		1913EA7C1890FEE20045CBD8 /* ios7_bottomtalk_39_36@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1913EA7B1890FEE20045CBD8 /* ios7_bottomtalk_39_36@2x.png */; };
+		191402BA196E36A6009FFCF8 /* ShoucangViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 191402B9196E36A6009FFCF8 /* ShoucangViewController.m */; };
 		1916EA2C1895086700FAA565 /* ios7_zanwu_120_120@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1916EA2B1895086700FAA565 /* ios7_zanwu_120_120@2x.png */; };
 		191D57E318B3085F00C6FFEA /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 191D57E218B3085F00C6FFEA /* OpenAL.framework */; };
 		191EFEB318A6376B00F6A765 /* SGFocusImageFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 191EFEB018A6376B00F6A765 /* SGFocusImageFrame.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -106,6 +107,9 @@
 		19CF4184186D88AE00AA51A9 /* NewFaceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 19CF4180186D88AE00AA51A9 /* NewFaceView.m */; };
 		19CF4185186D88AE00AA51A9 /* WeiBoFaceScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 19CF4182186D88AE00AA51A9 /* WeiBoFaceScrollView.m */; };
 		19CF4186186D88AE00AA51A9 /* WeiBoFaceScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 19CF4182186D88AE00AA51A9 /* WeiBoFaceScrollView.m */; };
+		19D21860196B97C700621C04 /* NewMainViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D2185F196B97C700621C04 /* NewMainViewModel.m */; };
+		19D21863196BB86F00621C04 /* SzkLoadData.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D21862196BB86F00621C04 /* SzkLoadData.m */; };
+		19D21866196BC15200621C04 /* NewHuandengView.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D21865196BC15200621C04 /* NewHuandengView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		19D63A9018AA06F800E8EF18 /* ios7_authorselected70_37@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 19D63A8E18AA06F800E8EF18 /* ios7_authorselected70_37@2x.png */; };
 		19D63A9118AA06F800E8EF18 /* ios7_authorunselect70_37@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 19D63A8F18AA06F800E8EF18 /* ios7_authorunselect70_37@2x.png */; };
 		19EA040F196289160080C03E /* our37_34@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 19EA040E196289160080C03E /* our37_34@2x.png */; };
@@ -1222,6 +1226,8 @@
 		1913EA741890AF6B0045CBD8 /* ios7_loading61_12_4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ios7_loading61_12_4@2x.png"; sourceTree = "<group>"; };
 		1913EA791890BDC40045CBD8 /* ios7_halfblack640_158@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ios7_halfblack640_158@2x.png"; sourceTree = "<group>"; };
 		1913EA7B1890FEE20045CBD8 /* ios7_bottomtalk_39_36@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ios7_bottomtalk_39_36@2x.png"; sourceTree = "<group>"; };
+		191402B8196E36A6009FFCF8 /* ShoucangViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShoucangViewController.h; sourceTree = "<group>"; };
+		191402B9196E36A6009FFCF8 /* ShoucangViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShoucangViewController.m; sourceTree = "<group>"; };
 		1916EA2B1895086700FAA565 /* ios7_zanwu_120_120@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ios7_zanwu_120_120@2x.png"; sourceTree = "<group>"; };
 		191D57E218B3085F00C6FFEA /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		191EFEAF18A6376B00F6A765 /* SGFocusImageFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGFocusImageFrame.h; sourceTree = "<group>"; };
@@ -1318,6 +1324,12 @@
 		19CF4180186D88AE00AA51A9 /* NewFaceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewFaceView.m; sourceTree = "<group>"; };
 		19CF4181186D88AE00AA51A9 /* WeiBoFaceScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiBoFaceScrollView.h; sourceTree = "<group>"; };
 		19CF4182186D88AE00AA51A9 /* WeiBoFaceScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiBoFaceScrollView.m; sourceTree = "<group>"; };
+		19D2185E196B97C700621C04 /* NewMainViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewMainViewModel.h; sourceTree = "<group>"; };
+		19D2185F196B97C700621C04 /* NewMainViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewMainViewModel.m; sourceTree = "<group>"; };
+		19D21861196BB86F00621C04 /* SzkLoadData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SzkLoadData.h; sourceTree = "<group>"; };
+		19D21862196BB86F00621C04 /* SzkLoadData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SzkLoadData.m; sourceTree = "<group>"; };
+		19D21864196BC15200621C04 /* NewHuandengView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewHuandengView.h; sourceTree = "<group>"; };
+		19D21865196BC15200621C04 /* NewHuandengView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewHuandengView.m; sourceTree = "<group>"; };
 		19D63A8E18AA06F800E8EF18 /* ios7_authorselected70_37@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ios7_authorselected70_37@2x.png"; sourceTree = "<group>"; };
 		19D63A8F18AA06F800E8EF18 /* ios7_authorunselect70_37@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ios7_authorunselect70_37@2x.png"; sourceTree = "<group>"; };
 		19EA040E196289160080C03E /* our37_34@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "our37_34@2x.png"; sourceTree = "<group>"; };
@@ -2742,6 +2754,8 @@
 				19B8118219613A800083EEE3 /* LeftViewController.m */,
 				19B8118319613A800083EEE3 /* RightViewController.h */,
 				19B8118419613A800083EEE3 /* RightViewController.m */,
+				191402B8196E36A6009FFCF8 /* ShoucangViewController.h */,
+				191402B9196E36A6009FFCF8 /* ShoucangViewController.m */,
 			);
 			path = ComprehensiveControl;
 			sourceTree = "<group>";
@@ -2813,6 +2827,8 @@
 				19EA041919629A160080C03E /* ZkingNavigationView.m */,
 				19EA04231962EC4D0080C03E /* CompreTableViewCell.h */,
 				19EA04241962EC4D0080C03E /* CompreTableViewCell.m */,
+				19D21864196BC15200621C04 /* NewHuandengView.h */,
+				19D21865196BC15200621C04 /* NewHuandengView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2820,6 +2836,10 @@
 		19EA041719629A010080C03E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				19D21861196BB86F00621C04 /* SzkLoadData.h */,
+				19D21862196BB86F00621C04 /* SzkLoadData.m */,
+				19D2185E196B97C700621C04 /* NewMainViewModel.h */,
+				19D2185F196B97C700621C04 /* NewMainViewModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -6205,6 +6225,7 @@
 				19CF412B186C526C00AA51A9 /* VerificationViewController.m in Sources */,
 				566E7A51185EE80100BB88C5 /* GrayPageControl.m in Sources */,
 				566E777A185EE71100BB88C5 /* PictureModel.m in Sources */,
+				19D21863196BB86F00621C04 /* SzkLoadData.m in Sources */,
 				566E797E185EE75D00BB88C5 /* MWZoomingScrollView.m in Sources */,
 				566E7775185EE71100BB88C5 /* CarInfo.m in Sources */,
 				566E7979185EE75D00BB88C5 /* MWCaptionView.m in Sources */,
@@ -6222,6 +6243,7 @@
 				566E7A4F185EE80100BB88C5 /* FaceScrollView.m in Sources */,
 				566E79E7185EE7B000BB88C5 /* testbase.m in Sources */,
 				19B8118019613A3B0083EEE3 /* ComprehensiveViewController.m in Sources */,
+				19D21866196BC15200621C04 /* NewHuandengView.m in Sources */,
 				566E78D5185EE75D00BB88C5 /* ASIFormDataRequest.m in Sources */,
 				566E78D6185EE75D00BB88C5 /* ASIHTTPRequest.m in Sources */,
 				563365091862E7500069F838 /* UMEGORefreshTableHeaderView.m in Sources */,
@@ -6313,6 +6335,7 @@
 				566E7A78185EE82C00BB88C5 /* zsnApi.m in Sources */,
 				566075DA188F5D2E00C25ACE /* QRCodeGenerator.m in Sources */,
 				19B305CD18AE16E80048AA49 /* MyTextViewForForward.m in Sources */,
+				191402BA196E36A6009FFCF8 /* ShoucangViewController.m in Sources */,
 				56607566188F5D1200C25ACE /* UMTableViewController.m in Sources */,
 				566E7980185EE75D00BB88C5 /* SDWebImageDecoder.m in Sources */,
 				566E7BE0185EE88400BB88C5 /* FBNotificationViewController.m in Sources */,
@@ -6327,6 +6350,7 @@
 				566E7977185EE75D00BB88C5 /* Reachability.m in Sources */,
 				566E796C185EE75D00BB88C5 /* QBImagePickerAssetView.m in Sources */,
 				566E7C63185EE8F100BB88C5 /* PRTween.m in Sources */,
+				19D21860196B97C700621C04 /* NewMainViewModel.m in Sources */,
 				566E7C16185EE88400BB88C5 /* UIView+AnimationOptionsForCurve.m in Sources */,
 				56C9557E185EEE3E00763E69 /* PhotoFeed.m in Sources */,
 				566E79E3185EE7B000BB88C5 /* DraftDatabase.m in Sources */,
