@@ -985,6 +985,7 @@
     
 //    UINavigationController *ritht = [[UINavigationController alloc] initWithRootViewController:[[RightViewController alloc] init]];
     
+//
     
     RightViewController * rightVC = [[RightViewController alloc] init];
 
@@ -1003,7 +1004,7 @@
     
     
     [_RootVC setMaximumRightDrawerWidth:298];
-    [_RootVC setMaximumLeftDrawerWidth:200];
+    [_RootVC setMaximumLeftDrawerWidth:287];
     _RootVC.shouldStretchDrawer = NO;
     [_RootVC setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
     [_RootVC setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];

@@ -246,6 +246,7 @@
         writeBlogView.allImageArray1=array_shareimg;
         writeBlogView.allAssesters1=array_none;
         
+        
         [self presentModalViewController:writeBlogView animated:YES];
         
     }
