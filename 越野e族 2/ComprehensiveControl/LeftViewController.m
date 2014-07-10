@@ -23,6 +23,8 @@
 
 #import "AppDelegate.h"
 
+#import "SliderBBSViewController.h"
+
 //https://itunes.apple.com/us/app/meng-yi-tian-qi/id847338649?ls=1&mt=8
 @interface LeftViewController (){
     UIImage *bgbuttonImage;
@@ -64,7 +66,7 @@
     
     _rootNav=[[UINavigationController alloc]initWithRootViewController:[[RootViewController alloc]init]];
     
-    _bbsNav=[[UINavigationController alloc]initWithRootViewController:[[BBSViewController alloc]init]];
+    _bbsNav=[[UINavigationController alloc]initWithRootViewController:[[SliderBBSViewController alloc]init]];
 
     _newNav=[[UINavigationController alloc]initWithRootViewController:[[NewWeiBoViewController alloc]init]];
 

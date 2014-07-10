@@ -27,6 +27,19 @@
     [super viewWillDisappear:animated];
     
     [MobClick endEvent:@"FansViewController"];
+    
+    CGRect rect = self.navigationController.navigationBar.frame;
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        
+        self.navigationController.navigationBar.frame = CGRectMake(0,rect.origin.y,rect.size.width,rect.size.height);
+        
+    } completion:^(BOOL finished) {
+        
+        self.navigationController.navigationBar.frame = CGRectMake(0,rect.origin.y,rect.size.width,rect.size.height);
+        
+        [[self getAppDelegate] setPushViewHidden:NO];
+    }];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -34,7 +47,30 @@
     [super viewWillAppear:animated];
     
     [MobClick beginEvent:@"FansViewController"];
+    
+    CGRect rect = self.navigationController.navigationBar.frame;
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        
+        self.navigationController.navigationBar.frame = CGRectMake(320,rect.origin.y,rect.size.width,rect.size.height);
+        
+    } completion:^(BOOL finished) {
+        
+        self.navigationController.navigationBar.frame = CGRectMake(0,rect.origin.y,rect.size.width,rect.size.height);
+        
+        [[self getAppDelegate] setPushViewHidden:YES];
+    }];
+    
 }
+
+
+-(AppDelegate *)getAppDelegate
+{
+    AppDelegate * appdelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    
+    return appdelegate;
+}
+
 
 - (void)viewDidLoad
 {

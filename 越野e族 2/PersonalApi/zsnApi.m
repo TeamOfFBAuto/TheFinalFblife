@@ -15,6 +15,7 @@
 #import "PhotoFeed.h"
 #import "BlogFeed.h"
 
+
 @implementation zsnApi
 
 
@@ -71,13 +72,13 @@
     
     if (sizez_b < 1024)
     {
-        return [NSString stringWithFormat:@"(%dK)",sizez_b];
+        return [NSString stringWithFormat:@"%dK",sizez_b];
     }else if (sizez_b < 1024*1024 && sizez_b >= 1024)
     {
-        return [NSString stringWithFormat:@"(%.1fM)",sizez_b/1024.0];
+        return [NSString stringWithFormat:@"%.1fM",sizez_b/1024.0];
     }else
     {
-        return [NSString stringWithFormat:@"(%.2fG)",sizez_b/1048576.0];
+        return [NSString stringWithFormat:@"%.2fG",sizez_b/1048576.0];
     }
 }
 
@@ -1207,6 +1208,19 @@
     return lastPoint;
 }
 
+
+
++(NSString *)exchangeStringForDeleteNULL:(id)sender
+{
+    NSString * temp = [NSString stringWithFormat:@"%@",sender];
+    
+    if (temp.length == 0 || [temp isEqualToString:@"<null>"] || [temp isEqualToString:@"null"])
+    {
+        temp = @"";
+    }
+    
+    return temp;
+}
 
 
 @end

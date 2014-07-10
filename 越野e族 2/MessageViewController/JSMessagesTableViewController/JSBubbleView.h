@@ -38,8 +38,8 @@
 extern CGFloat const kJSAvatarSize;
 
 typedef enum {
-    JSBubbleMessageTypeIncoming = 0,
-    JSBubbleMessageTypeOutgoing
+    JSBubbleMessageTypeIncoming1 = 0,
+    JSBubbleMessageTypeOutgoing1
 } JSBubbleMessageType;
 
 

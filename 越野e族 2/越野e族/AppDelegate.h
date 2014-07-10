@@ -28,7 +28,7 @@
 #import "RESideMenu.h"
 #import "LeftViewController.h"
 #import "ComprehensiveViewController.h"
-
+#import "FansViewController.h"
 
 
 
@@ -65,6 +65,10 @@
 
 @property(nonatomic,strong)UINavigationController *navigationController;
 
+@property(nonatomic,strong)FansViewController * pushViewController;//控制跳转的透明view
 
+@property(nonatomic,strong)UINavigationController * weibo_nav;//公用微博界面
+
+-(void)setPushViewHidden:(BOOL)hidden;//设置推送界面是否隐藏
 
 @end

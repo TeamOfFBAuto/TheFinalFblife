@@ -44,6 +44,8 @@
 
 @synthesize choose_array = _choose_array;
 
+@synthesize weibo_seg = _weibo_seg;
+
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -546,15 +548,15 @@
     
     self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithCustomView:rightview];
     
-    weibo_seg = [[WeiBoCustomSegmentView alloc] initWithFrame:CGRectMake(15,0,240,44)];
+    _weibo_seg = [[WeiBoCustomSegmentView alloc] initWithFrame:CGRectMake(15,0,240,44)];
     
-    weibo_seg.delegate = self;
+    _weibo_seg.delegate = self;
     
-    weibo_seg.backgroundColor = [UIColor clearColor];
+    _weibo_seg.backgroundColor = [UIColor clearColor];
     
-    [weibo_seg setAllViewsWith:[NSArray arrayWithObjects:@"我关注的",@"微博广场",@"我的微博",nil] index:authkey?0:1];
+    [_weibo_seg setAllViewsWith:[NSArray arrayWithObjects:@"我关注的",@"微博广场",@"我的微博",nil] index:authkey?0:1];
     
-    self.navigationItem.titleView = weibo_seg;
+    self.navigationItem.titleView = _weibo_seg;
     
     
     
@@ -1420,7 +1422,7 @@
     
     selectedView = 1;
     
-    [weibo_seg MyButtonStateWithIndex:1];
+    [_weibo_seg MyButtonStateWithIndex:1];
     
     [_array1 removeAllObjects];
     [_array3 removeAllObjects];
@@ -1552,7 +1554,7 @@
             
             selectedView = current_page;
             
-            [weibo_seg MyButtonStateWithIndex:selectedView];
+            [_weibo_seg MyButtonStateWithIndex:selectedView];
             
             if (isCacheData[selectedView])
             {

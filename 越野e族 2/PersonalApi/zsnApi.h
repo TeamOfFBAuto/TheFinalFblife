@@ -7,6 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+
+
+
 @interface zsnApi : NSObject
 
 +(NSString *)timechange:(NSString *)placetime;
@@ -51,6 +54,10 @@
 +(BOOL) validateEmail: (NSString *) candidate;
 
 +(CGPoint)LinesWidth:(NSString *)string Label:(UILabel *)label font:(UIFont *)thefont linebreak:(NSLineBreakMode)linebreak;
+
+//字符串转换，防止出现<null>
+
++(NSString *)exchangeStringForDeleteNULL:(id)sender;
 
 @end
 

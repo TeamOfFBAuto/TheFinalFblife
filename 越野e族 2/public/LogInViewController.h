@@ -53,6 +53,8 @@
 @property(nonatomic,assign)id<LogInViewControllerDelegate>delegate;
 
 
++ (LogInViewController *)sharedManager;//单例模式
+
 
 @end
 

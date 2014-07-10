@@ -23,6 +23,19 @@
 @synthesize TextField2 = _TextField2;
 @synthesize delegate = _delegate;
 
+
++ (LogInViewController *)sharedManager
+{
+    static LogInViewController *sharedAccountManagerInstance = nil;
+    static dispatch_once_t predicate;
+    dispatch_once(&predicate, ^{
+        sharedAccountManagerInstance = [[self alloc] init];
+    });
+    return sharedAccountManagerInstance;
+}
+
+
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];

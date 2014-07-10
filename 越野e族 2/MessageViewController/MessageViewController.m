@@ -102,7 +102,6 @@
         [label_havenoshuju stopLoading:1];
         
         @try {
-            isShowFb = YES;
             
             NSDictionary * allDic = [_request_.responseData objectFromJSONData];
             
@@ -234,6 +233,8 @@
 -(void)backto
 {
     [self.navigationController popViewControllerAnimated:YES];
+    
+    [(AppDelegate *)[[UIApplication sharedApplication] delegate] setPushViewHidden:YES];
 }
 
 
@@ -344,7 +345,6 @@
 -(void)celearolddatafirst
 {
     [[NSUserDefaults standardUserDefaults]setObject:nil forKey:@"whyhavenodata"];
-    isShowFb = NO;
     NewsMessageNumber = 0;
     [self.data_array removeAllObjects];
     
@@ -364,11 +364,6 @@
     
     if (self.data_array.count>0)
     {
-        isShowFb = YES;
-        
-        //        [label_havenoshuju stopLoading:1];
-        //
-        //        label_havenoshuju.normalLabel.text = @"";
         
         [self.myTableView reloadData];
         
@@ -390,7 +385,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return isShowFb?self.data_array.count+1:self.data_array.count;
+    return self.data_array.count;
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -415,70 +410,16 @@
     cell.contentLabel1.text = @"";
     cell.contentLabel.text = @"";
     
+ 
+    cell.tixing_label.hidden=YES;
     
-    if (isShowFb)
-    {
-        if (indexPath.row ==0)
-        {
-            cell.tixing_label.image = nil;
-            [cell setAllViewWithType:1];
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            
-            cell.contentLabel.text = @"系统通知";
-            cell.headImageView.image = [personal getImageWithName:@"fbno@2x"];
-            cell.tixing_label.hidden=NO;
-            
-            
-            if (!_tixing_label)
-            {
-                _tixing_label = [[UIImageView alloc] init];
-                
-            }
-            
-            _tixing_label.hidden = !isnewfbnotification;
-            
-            _tixing_label.frame=CGRectMake(120, 21,13,13);
-            
-            _tixing_label.center = CGPointMake(50,10);
-            
-            _tixing_label.image=[UIImage imageNamed:@"newlabel.png" ];
-            
-            [cell.contentView addSubview:_tixing_label];
-        }else
-        {
-            cell.tixing_label.hidden=YES;
-            
-            MessageInfo * info = [self.data_array objectAtIndex:indexPath.row-1];
-            
-            cell.accessoryType = UITableViewCellAccessoryNone;
-            
-            [cell setAllViewWithType:0];
-            
-            [cell setInfoWithType:0 withMessageInfo:info];
-        }
-        
-        
-        
-        
-        NSLog(@"..........self.string_messageorfbno==%@.............",self.string_messageorfbno);
-        
-        if ([self.string_messageorfbno isEqualToString:@"fb"]) {
-            _tixing_label.hidden = NO;
-        }
-        
-        
-    }else
-    {
-        cell.tixing_label.hidden=YES;
-        
-        MessageInfo * info = [self.data_array objectAtIndex:indexPath.row];
-        
-        cell.accessoryType = UITableViewCellAccessoryNone;
-        
-        [cell setAllViewWithType:0];
-        
-        [cell setInfoWithType:0 withMessageInfo:info];
-    }
+    MessageInfo * info = [self.data_array objectAtIndex:indexPath.row];
+    
+    cell.accessoryType = UITableViewCellAccessoryNone;
+    
+    [cell setAllViewWithType:0];
+    
+    [cell setInfoWithType:0 withMessageInfo:info];
     
     UIColor *color = [[UIColor lightGrayColor] colorWithAlphaComponent:0.2f];
     cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame] ;
@@ -497,51 +438,21 @@
     
     CustomMessageCell * cell = (CustomMessageCell *)[self.myTableView cellForRowAtIndexPath:indexPath];
     
-    if (isShowFb)
-    {
-        if (indexPath.row > 0)
-        {
-            cell.tixing_label.hidden = YES;
-            
-            MessageInfo * info = [self.data_array objectAtIndex:indexPath.row-1];
-            
-            MyChatViewController * chat = [[MyChatViewController alloc] init];
-            
-            chat.info = info;
-            //            self.leveyTabBarController.tabBar.tixing_label.hidden=YES;
-            
-            [self setHidesBottomBarWhenPushed:YES];
-            
-            [self.leveyTabBarController hidesTabBar:YES animated:YES];
-            [self.navigationController pushViewController:chat animated:YES];
-            [self setHidesBottomBarWhenPushed:NO];
-        }else
-        {
-            isnewfbnotification=NO;
-            string_messageorfbno=@"";
-
-            [self.myTableView reloadData];
-            //            self.leveyTabBarController.tabBar.tixing_label.hidden=YES;
-            FBNotificationViewController *fbno=[[FBNotificationViewController alloc]init];
-            [self.navigationController pushViewController:fbno animated:YES];
-        }
-    }else
-    {
-        cell.tixing_label.hidden = YES;
-        
-        MessageInfo * info = [self.data_array objectAtIndex:indexPath.row];
-        
-        MyChatViewController * chat = [[MyChatViewController alloc] init];
-        
-        chat.info = info;
-        //        self.leveyTabBarController.tabBar.tixing_label.hidden=YES;
-        
-        [self setHidesBottomBarWhenPushed:YES];
-        
-        [self.leveyTabBarController hidesTabBar:YES animated:YES];
-        [self.navigationController pushViewController:chat animated:YES];
-        [self setHidesBottomBarWhenPushed:NO];
-    }
+   
+    cell.tixing_label.hidden = YES;
+    
+    MessageInfo * info = [self.data_array objectAtIndex:indexPath.row];
+    
+    MyChatViewController * chat = [[MyChatViewController alloc] init];
+    
+    chat.info = info;
+    //        self.leveyTabBarController.tabBar.tixing_label.hidden=YES;
+    
+    [self setHidesBottomBarWhenPushed:YES];
+    
+    [self.leveyTabBarController hidesTabBar:YES animated:YES];
+    [self.navigationController pushViewController:chat animated:YES];
+    [self setHidesBottomBarWhenPushed:NO];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -552,104 +463,22 @@
 {
     
     return 0;
-    
-    //    if (isShowFb)
-    //    {
-    //        if (self.data_array.count>0)
-    //        {
-    //            return 0;
-    //        }else
-    //        {
-    //            return 40;
-    //        }
-    //    }else
-    //    {
-    //        return 0;
-    //    }
+ 
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 0;
 }
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    if (isShowFb)
+  
+    if (editingStyle == UITableViewCellEditingStyleDelete)
     {
-        if (editingStyle == UITableViewCellEditingStyleDelete)
-        {
-            [self deletemypersonalmessage:indexPath.row-1];;
-            [self.data_array removeObjectAtIndex:indexPath.row-1];
-            
-            // Delete the row from the data source.
-            [self.myTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        }
-    }else
-    {
-        if (editingStyle == UITableViewCellEditingStyleDelete)
-        {
-            [self deletemypersonalmessage:indexPath.row];;
-            [self.data_array removeObjectAtIndex:indexPath.row];
-            
-            // Delete the row from the data source.
-            [self.myTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        }
+        [self deletemypersonalmessage:indexPath.row];;
+        [self.data_array removeObjectAtIndex:indexPath.row];
+        
+        // Delete the row from the data source.
+        [self.myTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
-    
-    
-    /*
-     
-     if (isShowFb)
-     {
-     if (indexPath.row > 0)
-     {
-     if (editingStyle == UITableViewCellEditingStyleDelete)
-     {
-     [self deletemypersonalmessage:indexPath.row];;
-     [self.data_array removeObjectAtIndex:indexPath.row];
-     
-     // Delete the row from the data source.
-     [self.myTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-     
-     CustomMessageCell * cell = (CustomMessageCell *)[tableView cellForRowAtIndexPath:indexPath];
-     
-     [UIView animateWithDuration:0.3 animations:^{
-     cell.timeLabel.frame = CGRectMake(220,5,90,20);
-     cell.contentLabel1.frame = CGRectMake(50,30,240,20);
-     } completion:^(BOOL finished)
-     {
-     
-     }];
-     }else if (editingStyle == UITableViewCellEditingStyleInsert)
-     {
-     // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
-     }
-     
-     }
-     }else
-     {
-     if (editingStyle == UITableViewCellEditingStyleDelete)
-     {
-     [self deletemypersonalmessage:indexPath.row];;
-     [self.data_array removeObjectAtIndex:indexPath.row];
-     
-     // Delete the row from the data source.
-     [self.myTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-     
-     CustomMessageCell * cell = (CustomMessageCell *)[tableView cellForRowAtIndexPath:indexPath];
-     
-     [UIView animateWithDuration:0.3 animations:^{
-     cell.timeLabel.frame = CGRectMake(220,5,90,20);
-     cell.contentLabel1.frame = CGRectMake(50,30,240,20);
-     } completion:^(BOOL finished)
-     {
-     
-     }];
-     }else if (editingStyle == UITableViewCellEditingStyleInsert)
-     {
-     // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
-     }
-     }
-     */
 }
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath
@@ -664,20 +493,7 @@
 
 -(UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    if (isShowFb)
-    {
-        if (indexPath.row == 0)
-        {
-            return UITableViewCellEditingStyleNone;
-        }else
-        {
-            return UITableViewCellEditingStyleDelete;
-        }
-    }else
-    {
-        return UITableViewCellEditingStyleDelete;
-    }
+    return UITableViewCellEditingStyleDelete;
 }
 #pragma mark-删除私信
 -(void)deletemypersonalmessage:(NSInteger)indexPathofrow
@@ -809,15 +625,15 @@
             
             
             
-            //   NewsMessageNumber=8;
-            if (NewsMessageNumber != 0)
-            {
-                //                self.leveyTabBarController.tabBar.tixing_label.hidden = NO;
-                isnewfbnotification=YES;
-                
-                numberoftixing=NewsMessageNumber;
-                [self.myTableView reloadData];
-            }
+//            //   NewsMessageNumber=8;
+//            if (NewsMessageNumber != 0)
+//            {
+//                //                self.leveyTabBarController.tabBar.tixing_label.hidden = NO;
+//                isnewfbnotification=YES;
+//                
+//                numberoftixing=NewsMessageNumber;
+//                [self.myTableView reloadData];
+//            }
         }
     }
     @catch (NSException *exception) {

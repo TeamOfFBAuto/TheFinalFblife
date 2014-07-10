@@ -9,5 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @interface RightViewController : UIViewController
+{
+    AsyncImageView * headerImageView;//头像
+    
+    UILabel * LogIn_label;//用户名
+}
 
 @end

@@ -128,6 +128,20 @@
 		19ECDABC186F1447002B2281 /* weibo_detail_pinglun@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 19ECDAB9186F1447002B2281 /* weibo_detail_pinglun@2x.png */; };
 		19ECDABD186F1447002B2281 /* weibo_detail_shuaxin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 19ECDABA186F1447002B2281 /* weibo_detail_shuaxin@2x.png */; };
 		19ECDABE186F1447002B2281 /* weibo_detail_zhuanfa@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 19ECDABB186F1447002B2281 /* weibo_detail_zhuanfa@2x.png */; };
+		561B65B51964F5AE00572350 /* SliderBBSTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 561B65B41964F5AE00572350 /* SliderBBSTitleView.m */; };
+		561B65B61964F5AE00572350 /* SliderBBSTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 561B65B41964F5AE00572350 /* SliderBBSTitleView.m */; };
+		561B65B91964F94E00572350 /* SliderBBSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 561B65B81964F94E00572350 /* SliderBBSViewController.m */; };
+		561B65BA1964F94E00572350 /* SliderBBSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 561B65B81964F94E00572350 /* SliderBBSViewController.m */; };
+		561B65BE1964FB1000572350 /* MyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 561B65BD1964FB1000572350 /* MyViewController.m */; };
+		561B65BF1964FB1000572350 /* MyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 561B65BD1964FB1000572350 /* MyViewController.m */; };
+		561B65C219652E4F00572350 /* SliderBBSSectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 561B65C119652E4F00572350 /* SliderBBSSectionView.m */; };
+		561B65C319652E4F00572350 /* SliderBBSSectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 561B65C119652E4F00572350 /* SliderBBSSectionView.m */; };
+		561B65C61965526900572350 /* SliderBBSJingXuanModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 561B65C51965526900572350 /* SliderBBSJingXuanModel.m */; };
+		561B65C71965526900572350 /* SliderBBSJingXuanModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 561B65C51965526900572350 /* SliderBBSJingXuanModel.m */; };
+		561B65CE1965679600572350 /* SliderBBSJingXuanCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 561B65CD1965679600572350 /* SliderBBSJingXuanCell.m */; };
+		561B65CF1965679600572350 /* SliderBBSJingXuanCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 561B65CD1965679600572350 /* SliderBBSJingXuanCell.m */; };
+		561B65D219668B4200572350 /* SliderBBSForumSegmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 561B65D119668B4200572350 /* SliderBBSForumSegmentView.m */; };
+		561B65D319668B4200572350 /* SliderBBSForumSegmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 561B65D119668B4200572350 /* SliderBBSForumSegmentView.m */; };
 		563362F1186298AE0069F838 /* HotCarType@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 563362F0186298AE0069F838 /* HotCarType@2x.png */; };
 		563362F318629A960069F838 /* telephoto@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 563362F218629A960069F838 /* telephoto@2x.png */; };
 		563362F51862A4380069F838 /* earth_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 563362F41862A4380069F838 /* earth_logo@2x.png */; };
@@ -509,6 +523,7 @@
 		565008E41861664600EFD08D /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 565008E31861664600EFD08D /* MapKit.framework */; };
 		565008E718616CFA00EFD08D /* FBMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 565008E618616CFA00EFD08D /* FBMapViewController.m */; };
 		5650097D18618FBA00EFD08D /* underPageBackGround@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5650097C18618FBA00EFD08D /* underPageBackGround@2x.png */; };
+		565D3930196BCD370015F421 /* SliderRightSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 565D392F196BCD370015F421 /* SliderRightSettingViewController.m */; };
 		56607562188F5D1100C25ACE /* libUMAppNetwork_3.5.6.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5660751B188F5D1100C25ACE /* libUMAppNetwork_3.5.6.a */; };
 		56607563188F5D1100C25ACE /* libUMAppNetwork_3.5.6.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5660751B188F5D1100C25ACE /* libUMAppNetwork_3.5.6.a */; };
 		56607564188F5D1200C25ACE /* UMTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5660751E188F5D1100C25ACE /* UMTableViewCell.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -1072,6 +1087,14 @@
 		566E7CDB185EEA4800BB88C5 /* WeiBoSpecialView.m in Sources */ = {isa = PBXBuildFile; fileRef = 566E7CC9185EEA4800BB88C5 /* WeiBoSpecialView.m */; };
 		566E7CDC185EEA4800BB88C5 /* NewWeiBoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 566E7CCB185EEA4800BB88C5 /* NewWeiBoViewController.m */; };
 		566E7CDD185EEA4800BB88C5 /* WeiBoCustomSegmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 566E7CCD185EEA4800BB88C5 /* WeiBoCustomSegmentView.m */; };
+		5675DE20196D2E8F001926E1 /* SliderRankingListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5675DE1F196D2E8F001926E1 /* SliderRankingListViewController.m */; };
+		5675DE21196D2E8F001926E1 /* SliderRankingListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5675DE1F196D2E8F001926E1 /* SliderRankingListViewController.m */; };
+		5675DE24196D31EE001926E1 /* RankingListSegmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5675DE23196D31EE001926E1 /* RankingListSegmentView.m */; };
+		5675DE25196D31EE001926E1 /* RankingListSegmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5675DE23196D31EE001926E1 /* RankingListSegmentView.m */; };
+		5675DE28196D3C6B001926E1 /* RankingListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5675DE27196D3C6B001926E1 /* RankingListModel.m */; };
+		5675DE29196D3C6B001926E1 /* RankingListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5675DE27196D3C6B001926E1 /* RankingListModel.m */; };
+		5675DE2C196D4CDD001926E1 /* RankingListCustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5675DE2B196D4CDD001926E1 /* RankingListCustomCell.m */; };
+		5675DE2D196D4CDD001926E1 /* RankingListCustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5675DE2B196D4CDD001926E1 /* RankingListCustomCell.m */; };
 		56BEFC84185F01D1003068AA /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 56BEFC83185F01D1003068AA /* libiconv.dylib */; };
 		56C95544185EED9A00763E69 /* NewWeiBoCommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56C95524185EED9A00763E69 /* NewWeiBoCommentViewController.m */; };
 		56C95545185EED9A00763E69 /* ForwardingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56C95526185EED9A00763E69 /* ForwardingViewController.m */; };
@@ -1343,6 +1366,20 @@
 		19ECDAB9186F1447002B2281 /* weibo_detail_pinglun@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weibo_detail_pinglun@2x.png"; sourceTree = "<group>"; };
 		19ECDABA186F1447002B2281 /* weibo_detail_shuaxin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weibo_detail_shuaxin@2x.png"; sourceTree = "<group>"; };
 		19ECDABB186F1447002B2281 /* weibo_detail_zhuanfa@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weibo_detail_zhuanfa@2x.png"; sourceTree = "<group>"; };
+		561B65B31964F5AE00572350 /* SliderBBSTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SliderBBSTitleView.h; sourceTree = "<group>"; };
+		561B65B41964F5AE00572350 /* SliderBBSTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SliderBBSTitleView.m; sourceTree = "<group>"; };
+		561B65B71964F94E00572350 /* SliderBBSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SliderBBSViewController.h; sourceTree = "<group>"; };
+		561B65B81964F94E00572350 /* SliderBBSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SliderBBSViewController.m; sourceTree = "<group>"; };
+		561B65BC1964FB1000572350 /* MyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyViewController.h; sourceTree = "<group>"; };
+		561B65BD1964FB1000572350 /* MyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyViewController.m; sourceTree = "<group>"; };
+		561B65C019652E4F00572350 /* SliderBBSSectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SliderBBSSectionView.h; sourceTree = "<group>"; };
+		561B65C119652E4F00572350 /* SliderBBSSectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SliderBBSSectionView.m; sourceTree = "<group>"; };
+		561B65C41965526900572350 /* SliderBBSJingXuanModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SliderBBSJingXuanModel.h; sourceTree = "<group>"; };
+		561B65C51965526900572350 /* SliderBBSJingXuanModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SliderBBSJingXuanModel.m; sourceTree = "<group>"; };
+		561B65CC1965679600572350 /* SliderBBSJingXuanCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SliderBBSJingXuanCell.h; sourceTree = "<group>"; };
+		561B65CD1965679600572350 /* SliderBBSJingXuanCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SliderBBSJingXuanCell.m; sourceTree = "<group>"; };
+		561B65D019668B4200572350 /* SliderBBSForumSegmentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SliderBBSForumSegmentView.h; sourceTree = "<group>"; };
+		561B65D119668B4200572350 /* SliderBBSForumSegmentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SliderBBSForumSegmentView.m; sourceTree = "<group>"; };
 		563362F0186298AE0069F838 /* HotCarType@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HotCarType@2x.png"; sourceTree = "<group>"; };
 		563362F218629A960069F838 /* telephoto@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "telephoto@2x.png"; sourceTree = "<group>"; };
 		563362F41862A4380069F838 /* earth_logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "earth_logo@2x.png"; sourceTree = "<group>"; };
@@ -1759,6 +1796,8 @@
 		565008E518616CFA00EFD08D /* FBMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBMapViewController.h; sourceTree = "<group>"; };
 		565008E618616CFA00EFD08D /* FBMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBMapViewController.m; sourceTree = "<group>"; };
 		5650097C18618FBA00EFD08D /* underPageBackGround@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "underPageBackGround@2x.png"; sourceTree = "<group>"; };
+		565D392E196BCD370015F421 /* SliderRightSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SliderRightSettingViewController.h; sourceTree = SOURCE_ROOT; };
+		565D392F196BCD370015F421 /* SliderRightSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SliderRightSettingViewController.m; sourceTree = SOURCE_ROOT; };
 		5660751B188F5D1100C25ACE /* libUMAppNetwork_3.5.6.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMAppNetwork_3.5.6.a; sourceTree = "<group>"; };
 		5660751D188F5D1100C25ACE /* UMTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMTableViewCell.h; sourceTree = "<group>"; };
 		5660751E188F5D1100C25ACE /* UMTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMTableViewCell.m; sourceTree = "<group>"; };
@@ -2475,6 +2514,14 @@
 		566E7CCB185EEA4800BB88C5 /* NewWeiBoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewWeiBoViewController.m; sourceTree = "<group>"; };
 		566E7CCC185EEA4800BB88C5 /* WeiBoCustomSegmentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiBoCustomSegmentView.h; sourceTree = "<group>"; };
 		566E7CCD185EEA4800BB88C5 /* WeiBoCustomSegmentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiBoCustomSegmentView.m; sourceTree = "<group>"; };
+		5675DE1E196D2E8F001926E1 /* SliderRankingListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SliderRankingListViewController.h; sourceTree = "<group>"; };
+		5675DE1F196D2E8F001926E1 /* SliderRankingListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SliderRankingListViewController.m; sourceTree = "<group>"; };
+		5675DE22196D31EE001926E1 /* RankingListSegmentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RankingListSegmentView.h; sourceTree = "<group>"; };
+		5675DE23196D31EE001926E1 /* RankingListSegmentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RankingListSegmentView.m; sourceTree = "<group>"; };
+		5675DE26196D3C6B001926E1 /* RankingListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RankingListModel.h; sourceTree = "<group>"; };
+		5675DE27196D3C6B001926E1 /* RankingListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RankingListModel.m; sourceTree = "<group>"; };
+		5675DE2A196D4CDD001926E1 /* RankingListCustomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RankingListCustomCell.h; sourceTree = "<group>"; };
+		5675DE2B196D4CDD001926E1 /* RankingListCustomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RankingListCustomCell.m; sourceTree = "<group>"; };
 		56B5575A185F01A300191CC9 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		56BEFC83185F01D1003068AA /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 		56C95523185EED9A00763E69 /* NewWeiBoCommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewWeiBoCommentViewController.h; sourceTree = "<group>"; };
@@ -2839,6 +2886,66 @@
 				19ECDABB186F1447002B2281 /* weibo_detail_zhuanfa@2x.png */,
 			);
 			path = WeiBoImage;
+			sourceTree = "<group>";
+		};
+		561B65AE1964F2A200572350 /* SliderBBSControl */ = {
+			isa = PBXGroup;
+			children = (
+				561B65AF1964F2A200572350 /* SliderBBSController */,
+				561B65B01964F2A200572350 /* SliderBBSImages */,
+				561B65B11964F2A200572350 /* SliderBBSModels */,
+				561B65B21964F2A200572350 /* SliderBBSViews */,
+			);
+			path = SliderBBSControl;
+			sourceTree = "<group>";
+		};
+		561B65AF1964F2A200572350 /* SliderBBSController */ = {
+			isa = PBXGroup;
+			children = (
+				561B65B71964F94E00572350 /* SliderBBSViewController.h */,
+				561B65B81964F94E00572350 /* SliderBBSViewController.m */,
+			);
+			path = SliderBBSController;
+			sourceTree = "<group>";
+		};
+		561B65B01964F2A200572350 /* SliderBBSImages */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = SliderBBSImages;
+			sourceTree = "<group>";
+		};
+		561B65B11964F2A200572350 /* SliderBBSModels */ = {
+			isa = PBXGroup;
+			children = (
+				561B65C41965526900572350 /* SliderBBSJingXuanModel.h */,
+				561B65C51965526900572350 /* SliderBBSJingXuanModel.m */,
+			);
+			path = SliderBBSModels;
+			sourceTree = "<group>";
+		};
+		561B65B21964F2A200572350 /* SliderBBSViews */ = {
+			isa = PBXGroup;
+			children = (
+				561B65B31964F5AE00572350 /* SliderBBSTitleView.h */,
+				561B65B41964F5AE00572350 /* SliderBBSTitleView.m */,
+				561B65C019652E4F00572350 /* SliderBBSSectionView.h */,
+				561B65C119652E4F00572350 /* SliderBBSSectionView.m */,
+				561B65CC1965679600572350 /* SliderBBSJingXuanCell.h */,
+				561B65CD1965679600572350 /* SliderBBSJingXuanCell.m */,
+				561B65D019668B4200572350 /* SliderBBSForumSegmentView.h */,
+				561B65D119668B4200572350 /* SliderBBSForumSegmentView.m */,
+			);
+			path = SliderBBSViews;
+			sourceTree = "<group>";
+		};
+		561B65BB1964FA8B00572350 /* ZSNAPI */ = {
+			isa = PBXGroup;
+			children = (
+				561B65BC1964FB1000572350 /* MyViewController.h */,
+				561B65BD1964FB1000572350 /* MyViewController.m */,
+			);
+			path = ZSNAPI;
 			sourceTree = "<group>";
 		};
 		563363121862E68D0069F838 /* ios7_more_images */ = {
@@ -3495,6 +3602,8 @@
 		5643876F1963EAF800152B2D /* NewClassOfZSNControl */ = {
 			isa = PBXGroup;
 			children = (
+				5675DE19196D2E4E001926E1 /* SliderRankingListControl */,
+				561B65AE1964F2A200572350 /* SliderBBSControl */,
 				564387701963EAF800152B2D /* SliderRightControls */,
 			);
 			path = NewClassOfZSNControl;
@@ -3514,6 +3623,8 @@
 		564387711963EAF800152B2D /* SliderRightController */ = {
 			isa = PBXGroup;
 			children = (
+				565D392E196BCD370015F421 /* SliderRightSettingViewController.h */,
+				565D392F196BCD370015F421 /* SliderRightSettingViewController.m */,
 			);
 			path = SliderRightController;
 			sourceTree = "<group>";
@@ -4128,6 +4239,7 @@
 		566E77A6185EE75C00BB88C5 /* public */ = {
 			isa = PBXGroup;
 			children = (
+				561B65BB1964FA8B00572350 /* ZSNAPI */,
 				564387931963F9C500152B2D /* ZSNPhotoDetailControl */,
 				19CF4124186C526C00AA51A9 /* 注册找回密码 */,
 				19B1186E18687EB900CA4C07 /* custonnb */,
@@ -4947,6 +5059,53 @@
 				566E7CC9185EEA4800BB88C5 /* WeiBoSpecialView.m */,
 			);
 			path = NewWeiBoShowView;
+			sourceTree = "<group>";
+		};
+		5675DE19196D2E4E001926E1 /* SliderRankingListControl */ = {
+			isa = PBXGroup;
+			children = (
+				5675DE1A196D2E81001926E1 /* SliderRankingListControllers */,
+				5675DE1B196D2E81001926E1 /* SliderRankingListImages */,
+				5675DE1C196D2E81001926E1 /* SliderRankingListModel */,
+				5675DE1D196D2E81001926E1 /* SliderRankingListViews */,
+			);
+			path = SliderRankingListControl;
+			sourceTree = "<group>";
+		};
+		5675DE1A196D2E81001926E1 /* SliderRankingListControllers */ = {
+			isa = PBXGroup;
+			children = (
+				5675DE1E196D2E8F001926E1 /* SliderRankingListViewController.h */,
+				5675DE1F196D2E8F001926E1 /* SliderRankingListViewController.m */,
+			);
+			path = SliderRankingListControllers;
+			sourceTree = "<group>";
+		};
+		5675DE1B196D2E81001926E1 /* SliderRankingListImages */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = SliderRankingListImages;
+			sourceTree = "<group>";
+		};
+		5675DE1C196D2E81001926E1 /* SliderRankingListModel */ = {
+			isa = PBXGroup;
+			children = (
+				5675DE26196D3C6B001926E1 /* RankingListModel.h */,
+				5675DE27196D3C6B001926E1 /* RankingListModel.m */,
+			);
+			path = SliderRankingListModel;
+			sourceTree = "<group>";
+		};
+		5675DE1D196D2E81001926E1 /* SliderRankingListViews */ = {
+			isa = PBXGroup;
+			children = (
+				5675DE22196D31EE001926E1 /* RankingListSegmentView.h */,
+				5675DE23196D31EE001926E1 /* RankingListSegmentView.m */,
+				5675DE2A196D4CDD001926E1 /* RankingListCustomCell.h */,
+				5675DE2B196D4CDD001926E1 /* RankingListCustomCell.m */,
+			);
+			path = SliderRankingListViews;
 			sourceTree = "<group>";
 		};
 		56C95527185EED9A00763E69 /* image */ = {
@@ -6181,6 +6340,8 @@
 				566E78DF185EE75D00BB88C5 /* ATMTextLayer.m in Sources */,
 				563365F11862E7590069F838 /* RootViewController.m in Sources */,
 				566E797F185EE75D00BB88C5 /* SDImageCache.m in Sources */,
+				561B65C61965526900572350 /* SliderBBSJingXuanModel.m in Sources */,
+				5675DE28196D3C6B001926E1 /* RankingListModel.m in Sources */,
 				566E7A58185EE80100BB88C5 /* SMPageControl.m in Sources */,
 				56607568188F5D1200C25ACE /* UMTableViewLoadingCell.m in Sources */,
 				563365281862E7510069F838 /* DraftBoxViewController.m in Sources */,
@@ -6203,6 +6364,7 @@
 				566E78CE185EE75D00BB88C5 /* AlertRePlaceView.m in Sources */,
 				563364881862E7490069F838 /* commrntbbdViewController.m in Sources */,
 				19CF412B186C526C00AA51A9 /* VerificationViewController.m in Sources */,
+				561B65D219668B4200572350 /* SliderBBSForumSegmentView.m in Sources */,
 				566E7A51185EE80100BB88C5 /* GrayPageControl.m in Sources */,
 				566E777A185EE71100BB88C5 /* PictureModel.m in Sources */,
 				566E797E185EE75D00BB88C5 /* MWZoomingScrollView.m in Sources */,
@@ -6234,6 +6396,7 @@
 				566E78D2185EE75D00BB88C5 /* ASIDataCompressor.m in Sources */,
 				566E7C1F185EE88400BB88C5 /* pinyin.c in Sources */,
 				566E79E2185EE7B000BB88C5 /* DataBase1.m in Sources */,
+				565D3930196BCD370015F421 /* SliderRightSettingViewController.m in Sources */,
 				566E79E6185EE7B000BB88C5 /* Search.m in Sources */,
 				566075D4188F5D2E00C25ACE /* DetailViewController.m in Sources */,
 				566075E4188F5D2E00C25ACE /* split.c in Sources */,
@@ -6301,6 +6464,7 @@
 				19B8118619613A800083EEE3 /* RightViewController.m in Sources */,
 				563366041862E7590069F838 /* searchmodelofnews.m in Sources */,
 				566075E2188F5D2E00C25ACE /* rscode.c in Sources */,
+				561B65BE1964FB1000572350 /* MyViewController.m in Sources */,
 				566E7BE4185EE88400BB88C5 /* JSMessageSoundEffect.m in Sources */,
 				566E7965185EE75D00BB88C5 /* FullyLoaded.m in Sources */,
 				566E797A185EE75D00BB88C5 /* MWPhoto.m in Sources */,
@@ -6312,16 +6476,19 @@
 				566E7BDF185EE88400BB88C5 /* CustomMessageCell.m in Sources */,
 				566E7A78185EE82C00BB88C5 /* zsnApi.m in Sources */,
 				566075DA188F5D2E00C25ACE /* QRCodeGenerator.m in Sources */,
+				561B65B91964F94E00572350 /* SliderBBSViewController.m in Sources */,
 				19B305CD18AE16E80048AA49 /* MyTextViewForForward.m in Sources */,
 				56607566188F5D1200C25ACE /* UMTableViewController.m in Sources */,
 				566E7980185EE75D00BB88C5 /* SDWebImageDecoder.m in Sources */,
 				566E7BE0185EE88400BB88C5 /* FBNotificationViewController.m in Sources */,
 				566E7A53185EE80100BB88C5 /* loadingview.m in Sources */,
+				5675DE20196D2E8F001926E1 /* SliderRankingListViewController.m in Sources */,
 				56C9557D185EEE3E00763E69 /* FbNewsFeed.m in Sources */,
 				566E7970185EE75D00BB88C5 /* QBImagePickerGroupCell.m in Sources */,
 				563365481862E7510069F838 /* testimgViewController.m in Sources */,
 				566E7C14185EE88400BB88C5 /* UIColor+JSMessagesView.m in Sources */,
 				566E7777185EE71100BB88C5 /* CarPortDetailViewController.m in Sources */,
+				5675DE24196D31EE001926E1 /* RankingListSegmentView.m in Sources */,
 				566E7968185EE75D00BB88C5 /* MyHttpResponse.m in Sources */,
 				56C9557F185EEE3E00763E69 /* ReplysFeed.m in Sources */,
 				566E7977185EE75D00BB88C5 /* Reachability.m in Sources */,
@@ -6340,6 +6507,7 @@
 				566E7CB0185EEA4000BB88C5 /* ShangJiaNewsInfo.m in Sources */,
 				566E797D185EE75D00BB88C5 /* MWTapDetectingView.m in Sources */,
 				566E7BDC185EE88400BB88C5 /* ChatInfo.m in Sources */,
+				561B65CE1965679600572350 /* SliderBBSJingXuanCell.m in Sources */,
 				566E796A185EE75D00BB88C5 /* QBAssetCollectionViewController.m in Sources */,
 				563366051862E7590069F838 /* SearchNewsView.m in Sources */,
 				563365EB1862E7590069F838 /* NewsCommentModel.m in Sources */,
@@ -6353,6 +6521,7 @@
 				566E7A77185EE82C00BB88C5 /* personal.m in Sources */,
 				566E7982185EE75D00BB88C5 /* SDWebImageManager.m in Sources */,
 				19B8118519613A800083EEE3 /* LeftViewController.m in Sources */,
+				561B65B51964F5AE00572350 /* SliderBBSTitleView.m in Sources */,
 				566E78CF185EE75D00BB88C5 /* loadingimview.m in Sources */,
 				566E777C185EE71100BB88C5 /* SummaryModel.m in Sources */,
 				566E777F185EE71100BB88C5 /* CarPortViewController.m in Sources */,
@@ -6377,6 +6546,7 @@
 				566E74CB185EE62300BB88C5 /* main.m in Sources */,
 				566E7CD1185EEA4800BB88C5 /* NewWeiBoDetailViewController.m in Sources */,
 				19B8119019613AFC0083EEE3 /* UIViewController+RESideMenu.m in Sources */,
+				561B65C219652E4F00572350 /* SliderBBSSectionView.m in Sources */,
 				56C9559F185EEE5500763E69 /* FriendListViewController.m in Sources */,
 				566E7984185EE75D00BB88C5 /* UIButton+WebCache.m in Sources */,
 				566E7A52185EE80100BB88C5 /* LoadingIndicatorView.m in Sources */,
@@ -6385,6 +6555,7 @@
 				566E7964185EE75D00BB88C5 /* FMResultSet.m in Sources */,
 				566E7978185EE75D00BB88C5 /* MBProgressHUD.m in Sources */,
 				566075DE188F5D2E00C25ACE /* qrinput.c in Sources */,
+				5675DE2C196D4CDD001926E1 /* RankingListCustomCell.m in Sources */,
 				566E7C13185EE88400BB88C5 /* UIButton+JSMessagesView.m in Sources */,
 				563364331862E7490069F838 /* AdvertisingModel.m in Sources */,
 				566E777E185EE71100BB88C5 /* summarycellview.m in Sources */,
@@ -6405,25 +6576,36 @@
 			buildActionMask = 2147483647;
 			files = (
 				5643879F1963FAE100152B2D /* FBQuanAlertView.m in Sources */,
+				561B65C71965526900572350 /* SliderBBSJingXuanModel.m in Sources */,
 				19CF4186186D88AE00AA51A9 /* WeiBoFaceScrollView.m in Sources */,
 				56607565188F5D1200C25ACE /* UMTableViewCell.m in Sources */,
+				5675DE29196D3C6B001926E1 /* RankingListModel.m in Sources */,
 				566075DF188F5D2E00C25ACE /* qrinput.c in Sources */,
+				561B65B61964F5AE00572350 /* SliderBBSTitleView.m in Sources */,
+				561B65BA1964F94E00572350 /* SliderBBSViewController.m in Sources */,
+				5675DE2D196D4CDD001926E1 /* RankingListCustomCell.m in Sources */,
 				19B1187218687ECD00CA4C07 /* CustomNavigationBar.m in Sources */,
 				566075E3188F5D2E00C25ACE /* rscode.c in Sources */,
 				566075D9188F5D2E00C25ACE /* mask.c in Sources */,
+				561B65D319668B4200572350 /* SliderBBSForumSegmentView.m in Sources */,
 				5643879B1963FA3D00152B2D /* QBShowImagesScrollView.m in Sources */,
+				5675DE21196D2E8F001926E1 /* SliderRankingListViewController.m in Sources */,
 				566075DD188F5D2E00C25ACE /* qrencode.c in Sources */,
+				561B65CF1965679600572350 /* SliderBBSJingXuanCell.m in Sources */,
 				56607569188F5D1200C25ACE /* UMTableViewLoadingCell.m in Sources */,
 				566075E1188F5D2E00C25ACE /* qrspec.c in Sources */,
+				5675DE25196D31EE001926E1 /* RankingListSegmentView.m in Sources */,
 				566075D7188F5D2E00C25ACE /* bitstream.c in Sources */,
 				56607567188F5D1200C25ACE /* UMTableViewController.m in Sources */,
 				566075D5188F5D2E00C25ACE /* DetailViewController.m in Sources */,
 				566075E5188F5D2E00C25ACE /* split.c in Sources */,
 				19CF412A186C526C00AA51A9 /* MyPhoneNumViewController.m in Sources */,
 				19B305CE18AE16E80048AA49 /* MyTextViewForForward.m in Sources */,
+				561B65BF1964FB1000572350 /* MyViewController.m in Sources */,
 				19CF412C186C526C00AA51A9 /* VerificationViewController.m in Sources */,
 				566E74E4185EE62300BB88C5 /* __e_Tests.m in Sources */,
 				19CF4184186D88AE00AA51A9 /* NewFaceView.m in Sources */,
+				561B65C319652E4F00572350 /* SliderBBSSectionView.m in Sources */,
 				566075DB188F5D2E00C25ACE /* QRCodeGenerator.m in Sources */,
 				564387971963F9EE00152B2D /* ShowImagesViewController.m in Sources */,
 			);
@@ -6504,7 +6686,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "58460C9C-37C8-4F87-A1EF-9024558219DD";
+				PROVISIONING_PROFILE = "3A72525B-3641-4B18-A06F-45C3ECB6517D";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -6538,7 +6720,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				PROVISIONING_PROFILE = "58460C9C-37C8-4F87-A1EF-9024558219DD";
+				PROVISIONING_PROFILE = "3A72525B-3641-4B18-A06F-45C3ECB6517D";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -6548,8 +6730,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5C1EA72A18914F7EAC3FE954 /* Pods.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Bing Jin (KMZ2AD5LZY)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bing Jin (KMZ2AD5LZY)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
@@ -6589,7 +6771,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "3A72525B-3641-4B18-A06F-45C3ECB6517D";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
@@ -6600,8 +6782,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5C1EA72A18914F7EAC3FE954 /* Pods.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Bing Jin (KMZ2AD5LZY)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bing Jin (KMZ2AD5LZY)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
@@ -6641,7 +6823,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "3A72525B-3641-4B18-A06F-45C3ECB6517D";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;

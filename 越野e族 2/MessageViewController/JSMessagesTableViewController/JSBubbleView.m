@@ -136,10 +136,10 @@ CGFloat const kJSAvatarSize = 35.0f;
     switch (self.style) {
         case JSBubbleMessageStyleDefault:
         case JSBubbleMessageStyleDefaultGreen:
-            return (self.type == JSBubbleMessageTypeIncoming) ? [UIImage bubbleDefaultIncomingSelected] : [UIImage bubbleDefaultOutgoingSelected];
+            return (self.type == JSBubbleMessageTypeIncoming1) ? [UIImage bubbleDefaultIncomingSelected] : [UIImage bubbleDefaultOutgoingSelected];
             
         case JSBubbleMessageStyleSquare:
-            return (self.type == JSBubbleMessageTypeIncoming) ? [UIImage bubbleSquareIncomingSelected] : [UIImage bubbleSquareOutgoingSelected];
+            return (self.type == JSBubbleMessageTypeIncoming1) ? [UIImage bubbleSquareIncomingSelected] : [UIImage bubbleSquareOutgoingSelected];
             
         default:
             return nil;
@@ -192,10 +192,10 @@ CGFloat const kJSAvatarSize = 35.0f;
 + (UIImage *)bubbleImageForType:(JSBubbleMessageType)aType style:(JSBubbleMessageStyle)aStyle
 {
     switch (aType) {
-        case JSBubbleMessageTypeIncoming:
+        case JSBubbleMessageTypeIncoming1:
             return [self bubbleImageTypeIncomingWithStyle:aStyle];
             
-        case JSBubbleMessageTypeOutgoing:
+        case JSBubbleMessageTypeOutgoing1:
             return [self bubbleImageTypeOutgoingWithStyle:aStyle];
             
         default:

@@ -166,32 +166,35 @@ static UITapGestureRecognizer *tapRecognizer;
 
    // self.navigationItem.title = NSLocalizedString(@"用户反馈", @"用户反馈");
     
-    self.navigationItem.title = @"用户反馈";
-    
-    UIColor * cc = [UIColor blackColor];
-    
-    NSDictionary * dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:cc,[UIFont systemFontOfSize:20],[UIColor clearColor],nil] forKeys:[NSArray arrayWithObjects:UITextAttributeTextColor,UITextAttributeFont,UITextAttributeTextShadowColor,nil]];
-    
-    self.navigationController.navigationBar.titleTextAttributes = dict;
-    
-  //  if([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)] ) {
-        //iOS 5 new UINavigationBar custom background
-        [self.navigationController.navigationBar setBackgroundImage:MY_MACRO_NAME?[UIImage imageNamed:IOS7DAOHANGLANBEIJING]:[UIImage imageNamed:@"ios7eva320_44.png"] forBarMetrics: UIBarMetricsDefault];
-        
-   // }
-    
-    UIButton *button_back=[[UIButton alloc]initWithFrame: CGRectMake(MY_MACRO_NAME? -5:5, 3, 12, 43/2)];
-    
-    [button_back addTarget:self action:@selector(backToPrevious) forControlEvents:UIControlEventTouchUpInside];
-    [button_back setBackgroundImage:[UIImage imageNamed:@"ios7_back.png"] forState:UIControlStateNormal];
-    
-    UIButton *back_view=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50, 28)];
-    [back_view addSubview:button_back];
-    back_view.backgroundColor=[UIColor clearColor];
-    [back_view addTarget:self action:@selector(backToPrevious) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:back_view];
-    self.navigationItem.leftBarButtonItem=back_item;
+//    self.navigationItem.title = @"用户反馈";
+//    
+//    UIColor * cc = [UIColor blackColor];
+//    
+//    NSDictionary * dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:cc,[UIFont systemFontOfSize:20],[UIColor clearColor],nil] forKeys:[NSArray arrayWithObjects:UITextAttributeTextColor,UITextAttributeFont,UITextAttributeTextShadowColor,nil]];
+//    
+//    self.navigationController.navigationBar.titleTextAttributes = dict;
+//    
+//  //  if([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)] ) {
+//        //iOS 5 new UINavigationBar custom background
+//        [self.navigationController.navigationBar setBackgroundImage:MY_MACRO_NAME?[UIImage imageNamed:IOS7DAOHANGLANBEIJING]:[UIImage imageNamed:@"ios7eva320_44.png"] forBarMetrics: UIBarMetricsDefault];
+//        
+//   // }
+//    
+//    UIButton *button_back=[[UIButton alloc]initWithFrame: CGRectMake(MY_MACRO_NAME? -5:5, 3, 12, 43/2)];
+//    
+//    [button_back addTarget:self action:@selector(backToPrevious) forControlEvents:UIControlEventTouchUpInside];
+//    [button_back setBackgroundImage:[UIImage imageNamed:@"ios7_back.png"] forState:UIControlStateNormal];
+//    
+//    UIButton *back_view=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50, 28)];
+//    [back_view addSubview:button_back];
+//    back_view.backgroundColor=[UIColor clearColor];
+//    [back_view addTarget:self action:@selector(backToPrevious) forControlEvents:UIControlEventTouchUpInside];
+//    UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:back_view];
+//    self.navigationItem.leftBarButtonItem=back_item;
 
+    self.title = @"用户反馈";
+    
+    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
 
     
 
@@ -200,7 +203,7 @@ static UITapGestureRecognizer *tapRecognizer;
     [self setupTableView];
     [self setupEGORefreshTableHeaderView];
     [self setupToolbar];
-    [self customizeNavigationBar:self.navigationController.navigationBar];
+//    [self customizeNavigationBar:self.navigationController.navigationBar];
     [self setFeedbackClient];
     [self updateTableView:nil];
     [self handleKeyboard];

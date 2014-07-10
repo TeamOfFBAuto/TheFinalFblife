@@ -30,6 +30,8 @@
 @synthesize moreVC;
 @synthesize weiboVC;
 @synthesize _center;
+@synthesize pushViewController = _pushViewController;
+@synthesize weibo_nav = _weibo_nav;
 
 - (void)dealloc
 {
@@ -981,7 +983,7 @@
     
     
     
-    UINavigationController *ritht = [[UINavigationController alloc] initWithRootViewController:[[RightViewController alloc] init]];
+//    UINavigationController *ritht = [[UINavigationController alloc] initWithRootViewController:[[RightViewController alloc] init]];
     
     
     RightViewController * rightVC = [[RightViewController alloc] init];
@@ -1012,8 +1014,33 @@
     self.window.rootViewController = _RootVC;//sideMenuViewController;
 
     
-
+    _pushViewController = [[FansViewController alloc] init];
+    
+    UINavigationController * pushNav = [[UINavigationController alloc] initWithRootViewController:_pushViewController];
+    
+    pushNav.view.frame = CGRectMake(0,0,320,iPhone5?568:480);
+    
+    pushNav.view.alpha = 0;
+    
+    pushNav.view.userInteractionEnabled = NO;
+    
+    [_RootVC.view addSubview:pushNav.view];
+    
+    
+    
+    
+    weiboVC = [[NewWeiBoViewController alloc] init];
+    
+    _weibo_nav = [[UINavigationController alloc] initWithRootViewController:weiboVC];
 }
+
+-(void)setPushViewHidden:(BOOL)hidden
+{    
+    _pushViewController.navigationController.view.alpha = !hidden;
+    
+    _pushViewController.navigationController.view.userInteractionEnabled = !hidden;
+}
+
 
 #pragma mark RESideMenu Delegate
 

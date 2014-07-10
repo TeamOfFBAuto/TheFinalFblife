@@ -29,8 +29,6 @@
 
 @interface NewWeiBoViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,EGORefreshTableHeaderDelegate,AlertRePlaceViewDelegate,WeiBoCustomSegmentViewDelegate,NewWeiBoCustomCellDelegate,MWPhotoBrowserDelegate,SliderSegmentViewDelegate,UITextFieldDelegate,ForwardingViewControllerDelegate,NewWeiBoCommentViewControllerDelegate>
 {
-    WeiBoCustomSegmentView * weibo_seg;
-    
     LogInViewController * logIn;
     
     LoadingIndicatorView * loadview;
@@ -135,6 +133,8 @@
 @property(nonatomic,strong)EGORefreshTableHeaderView * refreshHeaderView2;
 @property(nonatomic,strong)EGORefreshTableHeaderView * refreshHeaderView3;
 
+@property(nonatomic,strong)WeiBoCustomSegmentView * weibo_seg;//顶头切换按钮
+
 @property(nonatomic,strong)NSMutableArray * data_array;
 
 @property(nonatomic,strong)NSMutableArray * array1;//好友圈
@@ -146,6 +146,6 @@
 @property(nonatomic,strong)NSArray * choose_array;
 
 
-
+-(void)ClickWeiBoCustomSegmentWithIndex:(int)index;//点击切换按钮，加载当前选中数据
 
 @end

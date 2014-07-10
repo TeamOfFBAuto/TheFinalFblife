@@ -365,4 +365,16 @@ alpha:(a)]
 
 
 
+//排行榜接口
+
+#define RANKING_LIST @"http://demo03.fblife.com/bbsapinew/cmsappgetranking.php?type=%d&formattype=json"
+
+
+
+
+
+
+
+
+
 
