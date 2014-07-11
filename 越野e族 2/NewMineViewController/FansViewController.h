@@ -8,6 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^hiddenNavgationBlock)(void);
+
+
 @interface FansViewController : UIViewController
+{
+    hiddenNavgationBlock hiddennavigation_block;
+}
+
+
+-(void)setNavigationHiddenWith:(BOOL)isHidden WithBlock:(hiddenNavgationBlock)theBlock;
+
+
 
 @end

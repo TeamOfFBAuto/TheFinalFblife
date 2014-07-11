@@ -24,7 +24,7 @@
 #import "loadingimview.h"
 
 
-@interface FriendListViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,ASIHTTPRequestDelegate,AlertRePlaceViewDelegate,UITextFieldDelegate>
+@interface FriendListViewController : MyViewController<UITableViewDataSource,UITableViewDelegate,ASIHTTPRequestDelegate,AlertRePlaceViewDelegate,UITextFieldDelegate>
 {
     int pageCount;
     id<FriendListViewControllerDelegate>delegate;

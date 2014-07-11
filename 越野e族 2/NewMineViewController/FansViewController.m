@@ -28,18 +28,15 @@
     
     [MobClick endEvent:@"FansViewController"];
     
-    CGRect rect = self.navigationController.navigationBar.frame;
-    
-    [UIView animateWithDuration:0.3 animations:^{
-        
-        self.navigationController.navigationBar.frame = CGRectMake(0,rect.origin.y,rect.size.width,rect.size.height);
-        
-    } completion:^(BOOL finished) {
-        
-        self.navigationController.navigationBar.frame = CGRectMake(0,rect.origin.y,rect.size.width,rect.size.height);
-        
-        [[self getAppDelegate] setPushViewHidden:NO];
-    }];
+//    CGRect rect = self.navigationController.view.frame;
+//    
+//    [UIView animateWithDuration:0.4 animations:^{
+//        
+//        self.navigationController.view.frame = CGRectMake(0,rect.origin.y,rect.size.width,rect.size.height);
+//        
+//    } completion:^(BOOL finished) {
+//        
+//    }];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -48,20 +45,35 @@
     
     [MobClick beginEvent:@"FansViewController"];
     
-    CGRect rect = self.navigationController.navigationBar.frame;
-    
-    [UIView animateWithDuration:0.3 animations:^{
-        
-        self.navigationController.navigationBar.frame = CGRectMake(320,rect.origin.y,rect.size.width,rect.size.height);
-        
-    } completion:^(BOOL finished) {
-        
-        self.navigationController.navigationBar.frame = CGRectMake(0,rect.origin.y,rect.size.width,rect.size.height);
-        
-        [[self getAppDelegate] setPushViewHidden:YES];
-    }];
+//    CGRect rect = self.navigationController.view.frame;
+//        
+//    [UIView animateWithDuration:0.3 animations:^{
+//        
+//        self.navigationController.view.frame = CGRectMake(320,rect.origin.y,rect.size.width,rect.size.height);
+//        
+//    } completion:^(BOOL finished) {
+//        
+//    }];
     
 }
+
+
+-(void)setNavigationHiddenWith:(BOOL)isHidden WithBlock:(hiddenNavgationBlock)theBlock
+{
+    hiddennavigation_block = theBlock;
+    
+    CGRect rect = self.navigationController.view.frame;
+    
+    [UIView animateWithDuration:0.4 animations:^{
+        
+        self.navigationController.view.frame = CGRectMake(isHidden?320:0,rect.origin.y,rect.size.width,rect.size.height);
+        
+    } completion:^(BOOL finished)
+     {
+        hiddennavigation_block();
+    }];
+}
+
 
 
 -(AppDelegate *)getAppDelegate

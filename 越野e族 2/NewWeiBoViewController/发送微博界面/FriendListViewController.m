@@ -356,60 +356,68 @@
     }
     
     
-    //自定义navigation
-    CGRect aScreenRect = [[UIScreen mainScreen] bounds];
-    //创建navbar
-    nav = [[UINavigationBar alloc] initWithFrame:CGRectMake(0,0,aScreenRect.size.width,44+ios7_height)];
-    //创建navbaritem
-    UINavigationItem *NavTitle = [[UINavigationItem alloc] initWithTitle:self.title_name_string];
-    nav.barStyle = UIBarStyleBlackOpaque;
-    [nav pushNavigationItem:NavTitle animated:YES];
-    
-    [self.view addSubview:nav];
-    
-    UIBarButtonItem * space = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    space.width = MY_MACRO_NAME?-4:5;
-    
-    
-    UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(0,0,12,21.5)];
-    
-    [button_back addTarget:self action:@selector(backH) forControlEvents:UIControlEventTouchUpInside];
-    [button_back setBackgroundImage:[UIImage imageNamed:@"ios7_back.png"] forState:UIControlStateNormal];
-    
-    UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:button_back];
-    NavTitle.leftBarButtonItems=@[space,back_item];
-    [nav setItems:[NSArray arrayWithObject:NavTitle]];
-    
-    [nav setBackgroundImage:[UIImage imageNamed:IOS_VERSION>=7.0?IOS7DAOHANGLANBEIJING:IOS6DAOHANGLANBEIJING] forBarMetrics: UIBarMetricsDefault];
-    
-    
-    UIButton *button_refresh=[[UIButton alloc]initWithFrame:CGRectMake(10,8,41/2,39/2)];
-    
-    [button_refresh addTarget:self action:@selector(refreshData:) forControlEvents:UIControlEventTouchUpInside];
-    [button_refresh setBackgroundImage:[UIImage imageNamed:@"ios7_refresh4139.png"] forState:UIControlStateNormal];
-    button_refresh.titleLabel.font=[UIFont systemFontOfSize:14];
-    
-    NavTitle.rightBarButtonItems = @[space,[[UIBarButtonItem alloc] initWithCustomView:button_refresh]];
-    
-    
-    UILabel * title_label = [[UILabel alloc] initWithFrame:CGRectMake(0,0,100,44)];
-    
-    title_label.text = @"联系人";
-    
-    title_label.backgroundColor = [UIColor clearColor];
-    
-    title_label.textAlignment = NSTextAlignmentCenter;
-    
-    title_label.textColor = [UIColor blackColor];
-    
-    title_label.font = TITLEFONT;
-    
-    NavTitle.titleView = title_label;
-    
-    
+//    //自定义navigation
+//    CGRect aScreenRect = [[UIScreen mainScreen] bounds];
+//    //创建navbar
+//    nav = [[UINavigationBar alloc] initWithFrame:CGRectMake(0,0,aScreenRect.size.width,44+ios7_height)];
+//    //创建navbaritem
+//    UINavigationItem *NavTitle = [[UINavigationItem alloc] initWithTitle:self.title_name_string];
+//    nav.barStyle = UIBarStyleBlackOpaque;
+//    [nav pushNavigationItem:NavTitle animated:YES];
+//    
+//    [self.view addSubview:nav];
+//    
+//    UIBarButtonItem * space = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+//    space.width = MY_MACRO_NAME?-4:5;
+//    
+//    
+//    UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(0,0,12,21.5)];
+//    
+//    [button_back addTarget:self action:@selector(backH) forControlEvents:UIControlEventTouchUpInside];
+//    [button_back setBackgroundImage:[UIImage imageNamed:@"ios7_back.png"] forState:UIControlStateNormal];
+//    
+//    UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:button_back];
+//    NavTitle.leftBarButtonItems=@[space,back_item];
+//    [nav setItems:[NSArray arrayWithObject:NavTitle]];
+//    
+//    [nav setBackgroundImage:[UIImage imageNamed:IOS_VERSION>=7.0?IOS7DAOHANGLANBEIJING:IOS6DAOHANGLANBEIJING] forBarMetrics: UIBarMetricsDefault];
+//    
+//    
+//    UIButton *button_refresh=[[UIButton alloc]initWithFrame:CGRectMake(10,8,41/2,39/2)];
+//    
+//    [button_refresh addTarget:self action:@selector(refreshData:) forControlEvents:UIControlEventTouchUpInside];
+//    [button_refresh setBackgroundImage:[UIImage imageNamed:@"ios7_refresh4139.png"] forState:UIControlStateNormal];
+//    button_refresh.titleLabel.font=[UIFont systemFontOfSize:14];
+//    
+//    NavTitle.rightBarButtonItems = @[space,[[UIBarButtonItem alloc] initWithCustomView:button_refresh]];
+//    
+//    
+//    UILabel * title_label = [[UILabel alloc] initWithFrame:CGRectMake(0,0,100,44)];
+//    
+//    title_label.text = @"联系人";
+//    
+//    title_label.backgroundColor = [UIColor clearColor];
+//    
+//    title_label.textAlignment = NSTextAlignmentCenter;
+//    
+//    title_label.textColor = [UIColor blackColor];
+//    
+//    title_label.font = TITLEFONT;
+//    
+//    NavTitle.titleView = title_label;
     
     
-    search_view = [[UIView alloc] initWithFrame:CGRectMake(0,44+ios7_height,320,40)];
+    
+    self.title = @"联系人";
+    
+    self.rightImageName = @"ios7_refresh4139.png";
+    
+    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeOther];
+    
+    
+    
+    
+    search_view = [[UIView alloc] initWithFrame:CGRectMake(0,0,320,40)];
     search_view.backgroundColor = [UIColor whiteColor];//RGBCOLOR(242,242,242);
     [self.view addSubview:search_view];
     
@@ -453,7 +461,7 @@
     }
     
     
-    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,84+ios7_height,320,(iPhone5?568:480)-44-40-ios7_height) style:UITableViewStylePlain];
+    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,40,320,(iPhone5?568:480)-44) style:UITableViewStylePlain];
     
     if (IOS_VERSION >=6.0)
     {
@@ -481,6 +489,23 @@
     [[UIApplication sharedApplication].keyWindow
      addSubview:_replaceAlertView];
 }
+
+
+-(void)rightButtonTap:(UIButton *)sender
+{
+    [self refreshData:nil];
+}
+
+-(void)leftButtonTap:(UIButton *)sender
+{
+    AppDelegate * app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    
+    [app.pushViewController setNavigationHiddenWith:YES WithBlock:^{
+        [self.navigationController popViewControllerAnimated:YES];
+    }];
+
+}
+
 
 
 #pragma mark-UITextFieldDelegate

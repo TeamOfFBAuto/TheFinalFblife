@@ -222,23 +222,25 @@
     {
         NewMineViewController * mine = [[NewMineViewController alloc] init];
         
-        [[self getAppDelegate] setPushViewHidden:NO];
-        
         [[self getAppDelegate].pushViewController.navigationController pushViewController:mine animated:YES];
         
+        [myDelegate.pushViewController setNavigationHiddenWith:NO WithBlock:^{
+            
+        }];
         
     }else
     {
         LogInViewController * login = [LogInViewController sharedManager];
         
-        [[self getAppDelegate].pushViewController presentViewController:login animated:YES completion:^{
+        [self presentViewController:login animated:YES completion:^{
             
         }];
     }
 }
 
 
-//登陆成功获取用户头像等信息
+#pragma mark - 登陆成功获取用户头像等信息
+
 -(void)receivemyimage_head{
     
     NSString *authkey=[[NSUserDefaults standardUserDefaults] objectForKey:USER_AUTHOD];
@@ -335,6 +337,10 @@
             
             [myDelegate.pushViewController.navigationController pushViewController:friend animated:YES];
             
+            [myDelegate.pushViewController setNavigationHiddenWith:NO WithBlock:^{
+                
+            }];
+            
         }
             break;
         case 3:
@@ -405,15 +411,14 @@
 #pragma mark - 跳转到设置界面
 
 -(void)settingButtonTap:(UIButton *)sender
-{
-    
-    
+{    
     SliderRightSettingViewController * settingVC = [[SliderRightSettingViewController alloc] init];
-    
-    [myDelegate setPushViewHidden:NO];
     
     [myDelegate.pushViewController.navigationController pushViewController:settingVC animated:YES];
     
+    [myDelegate.pushViewController setNavigationHiddenWith:NO WithBlock:^{
+        
+    }];
 }
 
 

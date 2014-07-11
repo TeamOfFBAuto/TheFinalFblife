@@ -1019,11 +1019,11 @@
     
     UINavigationController * pushNav = [[UINavigationController alloc] initWithRootViewController:_pushViewController];
     
-    pushNav.view.frame = CGRectMake(0,0,320,iPhone5?568:480);
+    pushNav.view.frame = CGRectMake(320,0,320,iPhone5?568:480);
     
-    pushNav.view.alpha = 0;
+//    pushNav.view.alpha = 0;
     
-    pushNav.view.userInteractionEnabled = NO;
+//    pushNav.view.userInteractionEnabled = NO;
     
     [_RootVC.view addSubview:pushNav.view];
     
