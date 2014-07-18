@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RankingListCustomCell.h"
 
-@interface SliderRankingListViewController : MyViewController<UITableViewDataSource,UITableViewDelegate>
+@interface SliderRankingListViewController : MyViewController<UITableViewDataSource,UITableViewDelegate,RankingListCustomCellDelegate>
 {
     
 }
@@ -21,6 +22,6 @@
 
 @property(nonatomic,assign)int currentPage;//记录当前选中项
 
-
+@property(nonatomic,strong)NSMutableArray * bbs_forum_collection_array;//论坛版块收藏的数据
 
 @end

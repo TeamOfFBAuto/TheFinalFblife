@@ -16,6 +16,10 @@
 #import "UIViewController+MMDrawerController.h"
 #import "NewWeiBoViewController.h"
 #import "NewMineViewController.h"
+#import "MMDrawerController.h"
+#import "DraftBoxViewController.h"
+#import "DetailViewController.h"
+#import "ShowImagesViewController.h"
 
 
 @interface RightViewController ()
@@ -222,11 +226,7 @@
     {
         NewMineViewController * mine = [[NewMineViewController alloc] init];
         
-        [[self getAppDelegate].pushViewController.navigationController pushViewController:mine animated:YES];
-        
-        [myDelegate.pushViewController setNavigationHiddenWith:NO WithBlock:^{
-            
-        }];
+        [myDelegate.root_nav pushViewController:mine animated:YES];
         
     }else
     {
@@ -331,54 +331,52 @@
             
         }
             break;
-        case 2:
+        case 2://好友
         {
             FriendListViewController * friend = [[FriendListViewController alloc] init];
             
-            [myDelegate.pushViewController.navigationController pushViewController:friend animated:YES];
-            
-            [myDelegate.pushViewController setNavigationHiddenWith:NO WithBlock:^{
-                
-            }];
+            [myDelegate.root_nav pushViewController:friend animated:YES];
             
         }
             break;
-        case 3:
+        case 3://个人主页
         {
-            [myDelegate setPushViewHidden:YES];
-            
-            [myDelegate.weiboVC.weibo_seg MyButtonStateWithIndex:2];
-            
-            [myDelegate.weiboVC ClickWeiBoCustomSegmentWithIndex:2];
-            
-            [self.mm_drawerController
-             setCenterViewController:myDelegate.weibo_nav    withCloseAnimation:YES
-             completion:nil];
+            [self headerTapToLogIn:sender]; //已登录跳转到个人信息页
         }
             break;
-        case 4:
+        case 4://私信
         {
             MessageViewController * message = [[MessageViewController alloc] init];
             
-            [myDelegate.pushViewController.navigationController pushViewController:message animated:YES];
+//            [myDelegate.pushViewController.navigationController pushViewController:message animated:YES];
+//            
+//            [myDelegate.pushViewController setNavigationHiddenWith:NO WithBlock:^{
+//                
+//            }];
+            
+            [myDelegate.root_nav pushViewController:message animated:YES];
             
         }
             break;
-        case 5:
+        case 5://通知
         {
             FBNotificationViewController *fbno=[[FBNotificationViewController alloc]init];
             
-            [myDelegate.pushViewController.navigationController pushViewController:fbno animated:YES];
+            [myDelegate.root_nav pushViewController:fbno animated:YES];
         }
             break;
-        case 6:
+        case 6://草稿箱
         {
+            DraftBoxViewController *draft=[[DraftBoxViewController alloc]init];
             
+            [myDelegate.root_nav pushViewController:draft animated:YES];
         }
             break;
-        case 7:
+        case 7://扫一扫
         {
+            DetailViewController *_qrcode=[[DetailViewController alloc]init];
             
+            [self.navigationController pushViewController:_qrcode animated:YES];
         }
             break;
             
@@ -399,7 +397,11 @@
     {
         LogInViewController * login = [LogInViewController sharedManager];
         
-        [[self getAppDelegate].pushViewController presentViewController:login animated:YES completion:^{
+//        [[self getAppDelegate].pushViewController presentViewController:login animated:YES completion:^{
+//            
+//        }];
+        
+        [self presentViewController:login animated:YES completion:^{
             
         }];
     }
@@ -412,13 +414,19 @@
 
 -(void)settingButtonTap:(UIButton *)sender
 {    
-    SliderRightSettingViewController * settingVC = [[SliderRightSettingViewController alloc] init];
+//    SliderRightSettingViewController * settingVC = [[SliderRightSettingViewController alloc] init];
     
-    [myDelegate.pushViewController.navigationController pushViewController:settingVC animated:YES];
+//    [myDelegate.pushViewController.navigationController pushViewController:settingVC animated:YES];
+//    
+//    [myDelegate.pushViewController setNavigationHiddenWith:NO WithBlock:^{
+//        
+//    }];
     
-    [myDelegate.pushViewController setNavigationHiddenWith:NO WithBlock:^{
-        
-    }];
+    
+    
+    ShowImagesViewController * settingVC = [[ShowImagesViewController alloc] init];
+    
+    [myDelegate.root_nav pushViewController:settingVC animated:YES];
 }
 
 

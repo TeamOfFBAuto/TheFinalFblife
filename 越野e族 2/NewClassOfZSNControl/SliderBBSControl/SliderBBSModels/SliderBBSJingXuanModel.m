@@ -52,7 +52,7 @@
 {
     jxModelBlock = theBlock;
     
-    NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:@"http://cmsweb.fblife.com/ajax.php?c=newstwo&a=bbspicked&classname=luntanjingxuan&type=json&page=%d",thePage]];
+    NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:BBS_JINGXUAN_URL,thePage]];
     NSLog(@"查找论坛精选接口 ---  %@",url);
     
     if (!_data_array) {

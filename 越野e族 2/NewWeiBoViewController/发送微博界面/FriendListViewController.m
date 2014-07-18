@@ -496,15 +496,15 @@
     [self refreshData:nil];
 }
 
--(void)leftButtonTap:(UIButton *)sender
-{
-    AppDelegate * app = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    
-    [app.pushViewController setNavigationHiddenWith:YES WithBlock:^{
-        [self.navigationController popViewControllerAnimated:YES];
-    }];
-
-}
+//-(void)leftButtonTap:(UIButton *)sender
+//{
+//    AppDelegate * app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+//    
+//    [app.pushViewController setNavigationHiddenWith:YES WithBlock:^{
+//        [self.navigationController popViewControllerAnimated:YES];
+//    }];
+//
+//}
 
 
 

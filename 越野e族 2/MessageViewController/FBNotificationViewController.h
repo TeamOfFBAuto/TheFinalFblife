@@ -14,7 +14,7 @@
 
 #import "SliderSegmentView.h"//选择微博还是贴子
 
-@interface FBNotificationViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,NotificationInfoDelegate,downloaddelegate,SliderSegmentViewDelegate>{
+@interface FBNotificationViewController : MyViewController<UITableViewDataSource,UITableViewDelegate,NotificationInfoDelegate,downloaddelegate,SliderSegmentViewDelegate>{
     
     UITableView *fbnoti_tab;
     UITableView *bbs_tab;

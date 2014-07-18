@@ -14,6 +14,7 @@
 @synthesize follow_num_label = _follow_num_label;
 @synthesize line_view = _line_view;
 @synthesize collection_button = _collection_button;
+@synthesize delegate = _delegate;
 
 
 
@@ -69,11 +70,28 @@
         
         
         if (!_line_view) {
-            _line_view = [[UIView alloc] initWithFrame:CGRectMake(518/2,12,0.5,30)];
+            _line_view = [[UIView alloc] initWithFrame:CGRectMake(259,12,0.5,30)];
             
             _line_view.backgroundColor = RGBCOLOR(223,223,223);
             
             [self.contentView addSubview:_line_view];
+        }
+        
+        
+        
+        if (!_collection_button)
+        {
+            _collection_button = [UIButton buttonWithType:UIButtonTypeCustom];
+            
+            _collection_button.frame = CGRectMake(265,0,45,54);
+            
+            [_collection_button setImage:[UIImage imageNamed:@"bbs_rankinglist_guanzhu"] forState:UIControlStateNormal];
+            
+            [_collection_button setImage:[UIImage imageNamed:@"bbs_rankinglist_guanzhu1"] forState:UIControlStateSelected];
+            
+            [_collection_button addTarget:self action:@selector(collectAndCancelSectionTap:) forControlEvents:UIControlEventTouchUpInside];
+            
+            [self.contentView addSubview:_collection_button];
         }
     }
     return self;
@@ -82,6 +100,13 @@
 
 -(void)setInfoWith:(int)ranking WithModel:(RankingListModel *)model
 {
+    _ranking_label.text = @"";
+    
+    _title_label.text = @"";
+    
+    _follow_num_label.text = @"";
+    
+    
     if (ranking <= 3)
     {
         _ranking_label.textColor = [UIColor redColor];
@@ -94,13 +119,31 @@
     
     _title_label.text = model.ranking_title;
     
+    CGRect rect = _title_label.frame;
+    
     if (model.ranking_num.length != 0)
     {
-        _follow_num_label.text = [NSString stringWithFormat:@"%@帖",@"9999"];
+        _follow_num_label.text = [NSString stringWithFormat:@"%@帖",model.ranking_num];
+        
+        rect.size.width = 140;
+    }else
+    {
+        rect.size.width = 200;
     }
+    _title_label.frame = rect;
 }
 
 
+
+#pragma mark - 收藏或取消收藏
+
+-(void)collectAndCancelSectionTap:(UIButton *)sender
+{
+    if (_delegate && [_delegate respondsToSelector:@selector(cancelOrCollectSectionsWith:)])
+    {
+        [_delegate cancelOrCollectSectionsWith:self];
+    }
+}
 
 
 

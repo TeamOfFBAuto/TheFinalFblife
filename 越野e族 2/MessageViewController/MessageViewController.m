@@ -25,6 +25,21 @@
 @synthesize string_messageorfbno;
 
 
+
++(MessageViewController *)shareManager
+{
+    static MessageViewController * message = nil;
+    
+    static dispatch_once_t predicate;
+    
+    dispatch_once(&predicate, ^{
+        message = [[self alloc] init];
+    });
+    return message;
+}
+
+
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -95,7 +110,7 @@
     
     __block ASIHTTPRequest * request = _request_;
     
-    
+    __weak typeof(self) bself = self;
     
     [request setCompletionBlock:^{
         
@@ -106,7 +121,7 @@
             NSDictionary * allDic = [_request_.responseData objectFromJSONData];
             
             
-            [self.data_array removeAllObjects];
+            [bself.data_array removeAllObjects];
             NSArray * infoArray = [allDic objectForKey:@"info"];
             
             NSLog(@"info===%@",infoArray);
@@ -115,7 +130,7 @@
             {
                 MessageInfo * info = [[MessageInfo alloc] initWithDictionary:dic];
                 
-                [self.data_array addObject:info];
+                [bself.data_array addObject:info];
                 
             }
             NSLog(@"这里。。。。。%@",self.data_array);
@@ -126,17 +141,17 @@
             [stau synchronize];
             
             
-            if (self.data_array.count == 0)
+            if (bself.data_array.count == 0)
             {
                 label_havenoshuju.normalLabel.text = @"没有私信消息";
-                self.myTableView.tableFooterView = label_havenoshuju;
+                bself.myTableView.tableFooterView = label_havenoshuju;
             }else
             {
                 label_havenoshuju.normalLabel.text = @"";
             }
             
             
-            [_myTableView reloadData];
+            [bself.myTableView reloadData];
         }
         @catch (NSException *exception)
         {
@@ -233,8 +248,6 @@
 -(void)backto
 {
     [self.navigationController popViewControllerAnimated:YES];
-    
-    [(AppDelegate *)[[UIApplication sharedApplication] delegate] setPushViewHidden:YES];
 }
 
 
@@ -264,39 +277,47 @@
     
     self.navigationController.navigationBarHidden=NO;
     
-    self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
+//    self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
+//    
+//    UIBarButtonItem * space_button = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+//    space_button.width = MY_MACRO_NAME?-4:5;
+//    
+//    UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(5,8,12,21.5)];
+//    [button_back addTarget:self action:@selector(backto) forControlEvents:UIControlEventTouchUpInside];
+//    [button_back setBackgroundImage:[UIImage imageNamed:@"ios7_back@2x.png"] forState:UIControlStateNormal];
+//    UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:button_back];
+//    
+//    self.navigationItem.leftBarButtonItems=@[space_button,back_item];
+//    
+//    if([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)] )
+//    {
+//        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:MY_MACRO_NAME?IOS7DAOHANGLANBEIJING:IOS6DAOHANGLANBEIJING] forBarMetrics: UIBarMetricsDefault];
+//    }
+//    
+//    
+//    self.navigationItem.title = @"消息中心";
+//    
+//    UIColor * cc = [UIColor blackColor];
+//    
+//    NSDictionary * dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:cc,[UIFont systemFontOfSize:20],[UIColor clearColor],nil] forKeys:[NSArray arrayWithObjects:UITextAttributeTextColor,UITextAttributeFont,UITextAttributeTextShadowColor,nil]];
+//    
+//    self.navigationController.navigationBar.titleTextAttributes = dict;
+//    
+//    UIButton * button_send=[[UIButton alloc]initWithFrame:CGRectMake(270,8,39/2,38/2)];
+//    [button_send addTarget:self action:@selector(writeMessage:) forControlEvents:UIControlEventTouchUpInside];
+//    [button_send setBackgroundImage:[personal getImageWithName:@"weibo_write_image@2x"] forState:UIControlStateNormal];
+//    //    [button_send setTitle:@"写私信" forState:UIControlStateNormal];
+//    [button_send.titleLabel setFont:[UIFont systemFontOfSize:12]];
+//    
+//    self.navigationItem.rightBarButtonItems = @[space_button,[[UIBarButtonItem alloc] initWithCustomView:button_send]];
     
-    UIBarButtonItem * space_button = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    space_button.width = MY_MACRO_NAME?-4:5;
     
-    UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(5,8,12,21.5)];
-    [button_back addTarget:self action:@selector(backto) forControlEvents:UIControlEventTouchUpInside];
-    [button_back setBackgroundImage:[UIImage imageNamed:@"ios7_back@2x.png"] forState:UIControlStateNormal];
-    UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:button_back];
+    self.title = @"消息中心";
     
-    self.navigationItem.leftBarButtonItems=@[space_button,back_item];
+    self.rightImageName = @"weibo_write_image";
     
-    if([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)] )
-    {
-        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:MY_MACRO_NAME?IOS7DAOHANGLANBEIJING:IOS6DAOHANGLANBEIJING] forBarMetrics: UIBarMetricsDefault];
-    }
+    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeOther];
     
-    
-    self.navigationItem.title = @"消息中心";
-    
-    UIColor * cc = [UIColor blackColor];
-    
-    NSDictionary * dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:cc,[UIFont systemFontOfSize:20],[UIColor clearColor],nil] forKeys:[NSArray arrayWithObjects:UITextAttributeTextColor,UITextAttributeFont,UITextAttributeTextShadowColor,nil]];
-    
-    self.navigationController.navigationBar.titleTextAttributes = dict;
-    
-    UIButton * button_send=[[UIButton alloc]initWithFrame:CGRectMake(270,8,39/2,38/2)];
-    [button_send addTarget:self action:@selector(writeMessage:) forControlEvents:UIControlEventTouchUpInside];
-    [button_send setBackgroundImage:[personal getImageWithName:@"weibo_write_image@2x"] forState:UIControlStateNormal];
-    //    [button_send setTitle:@"写私信" forState:UIControlStateNormal];
-    [button_send.titleLabel setFont:[UIFont systemFontOfSize:12]];
-    
-    self.navigationItem.rightBarButtonItems = @[space_button,[[UIBarButtonItem alloc] initWithCustomView:button_send]];
     
     
     
@@ -340,6 +361,21 @@
     [self getmychachearray];
 }
 
+
+-(void)rightButtonTap:(UIButton *)sender
+{
+    [self writeMessage:sender];
+}
+
+//-(void)leftButtonTap:(UIButton *)sender
+//{
+//    AppDelegate * app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+//
+//    app.root_nav.navigationBarHidden = YES;
+//    
+//    [self.navigationController popViewControllerAnimated:YES];
+//    
+//}
 
 #pragma mark-在缓存中去数据
 -(void)celearolddatafirst
@@ -655,6 +691,8 @@
     
     _requset.delegate = self;
     
+    __weak typeof(self) bself = self;
+    
     [_requset setCompletionBlock:^{
         NSDictionary * dic = [request.responseData objectFromJSONData];
         NSLog(@"个人信息 -=-=  %@",dic);
@@ -670,7 +708,7 @@
                 [[NSUserDefaults standardUserDefaults]setObject:string_uid forKey:USER_UID];
                 NSLog(@"string_uid===%@",string_uid);
                 
-                [_myTableView reloadData];
+                [bself.myTableView reloadData];
             }
         }
         @catch (NSException *exception) {
@@ -755,6 +793,14 @@
 	
 	return [NSDate date]; // should return date data source was last changed
 	
+}
+
+
+-(void)dealloc
+{
+    
+    
+    
 }
 
 

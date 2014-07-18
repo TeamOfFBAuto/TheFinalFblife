@@ -22,8 +22,11 @@ typedef void(^SliderBBSSectionSegmentBlock)(int index);//选择订阅 最近浏�
 }
 
 
+@property(nonatomic,strong)UIScrollView * myScrollView;
+
+
 //加载订阅所有视图
--(void)setAllViewsWithArray:(NSArray *)array withBlock:(SliderBBSSectionViewBlock)theBlock;
+-(void)setAllViewsWithArray:(NSArray *)array WithType:(int)theType withBlock:(SliderBBSSectionViewBlock)theBlock;
 
 //加载segment
 - (id)initWithFrame:(CGRect)frame WithBlock:(SliderBBSSectionSegmentBlock)theBlock;

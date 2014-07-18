@@ -85,27 +85,30 @@
     //        _slsV.backgroundColor=[UIColor orangeColor];
     
     
-    if([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)] )
-    {
-        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:MY_MACRO_NAME?IOS7DAOHANGLANBEIJING:IOS6DAOHANGLANBEIJING] forBarMetrics: UIBarMetricsDefault];
-    }
-    
-    UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(10, 8, 12, 21.5)];
-    
-    [button_back addTarget:self action:@selector(backto) forControlEvents:UIControlEventTouchUpInside];
-    
-    [button_back setBackgroundImage:[UIImage imageNamed:@"ios7_back.png"] forState:UIControlStateNormal];
-    
-    
-    UIBarButtonItem * space = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    
-    space.width = MY_MACRO_NAME?-4:5;
-    
-    
-    
-    UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:button_back];
-    
-    self.navigationItem.leftBarButtonItems=@[space,back_item];
+//    if([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)] )
+//    {
+//        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:MY_MACRO_NAME?IOS7DAOHANGLANBEIJING:IOS6DAOHANGLANBEIJING] forBarMetrics: UIBarMetricsDefault];
+//    }
+//    
+//    UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(10, 8, 12, 21.5)];
+//    
+//    [button_back addTarget:self action:@selector(backto) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    [button_back setBackgroundImage:[UIImage imageNamed:@"ios7_back.png"] forState:UIControlStateNormal];
+//    
+//    
+//    UIBarButtonItem * space = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+//    
+//    space.width = MY_MACRO_NAME?-4:5;
+//    
+//    
+//    
+//    UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:button_back];
+//    
+//    self.navigationItem.leftBarButtonItems=@[space,back_item];
+        
+        
+    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
     
     
     fbnoti_tab=[[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, iPhone5?568-44-25:480-44-25)];

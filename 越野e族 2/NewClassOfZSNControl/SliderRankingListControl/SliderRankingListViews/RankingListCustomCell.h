@@ -9,6 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "RankingListModel.h"
 
+@class RankingListCustomCell;
+@protocol RankingListCustomCellDelegate <NSObject>
+
+-(void)cancelOrCollectSectionsWith:(RankingListCustomCell *)cell;
+
+@end
+
 @interface RankingListCustomCell : UITableViewCell
 {
     
@@ -25,7 +32,7 @@
 
 @property(nonatomic,strong)UIButton * collection_button;//收藏按钮
 
-
+@property(nonatomic,assign)id<RankingListCustomCellDelegate>delegate;
 
 
 -(void)setInfoWith:(int)ranking WithModel:(RankingListModel *)model;

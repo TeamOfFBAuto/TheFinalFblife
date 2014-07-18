@@ -156,14 +156,14 @@
         
         if ([_per_info.is_shangjia isEqualToString:@"1"])
         {
-            self.navigationItem.title = @"企业主页";
+            self.title = @"企业主页";
             
             [self getShangJiaNews];
             
             [_top_view setAllViewWithPerson:_per_info type:1];
         }else
         {
-            self.navigationItem.title = @"个人主页";
+            self.title = @"个人主页";
             
             [_top_view setAllViewWithPerson:_per_info type:1];
         }
@@ -844,35 +844,38 @@
     _photos = [[NSMutableArray alloc] init];
     
     
-    if([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)] )
-    {
-        //iOS 5 new UINavigationBar custom background
-        
-        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:MY_MACRO_NAME?IOS7DAOHANGLANBEIJING:IOS6DAOHANGLANBEIJING] forBarMetrics: UIBarMetricsDefault];
-    }
+    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
     
     
-    UIBarButtonItem * spaceBar = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    
-    spaceBar.width = MY_MACRO_NAME?-4:5;
-    
-    
-    UIButton * back_button = [UIButton buttonWithType:UIButtonTypeCustom];
-    
-    back_button.frame = CGRectMake(0,0,12,21.5);
-    
-    [back_button setImage:[UIImage imageNamed:@"ios7_back.png"] forState:UIControlStateNormal];
-    
-    [back_button addTarget:self action:@selector(backH:) forControlEvents:UIControlEventTouchUpInside];
-    
-    self.navigationItem.leftBarButtonItems = @[spaceBar,[[UIBarButtonItem alloc] initWithCustomView:back_button]];
-    
-    
-    UIColor * cc = [UIColor blackColor];
-    
-    NSDictionary * dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:cc,[UIFont systemFontOfSize:20],[UIColor clearColor],nil] forKeys:[NSArray arrayWithObjects:UITextAttributeTextColor,UITextAttributeFont,UITextAttributeTextShadowColor,nil]];
-    
-    self.navigationController.navigationBar.titleTextAttributes = dict;
+//    if([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)] )
+//    {
+//        //iOS 5 new UINavigationBar custom background
+//        
+//        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:MY_MACRO_NAME?IOS7DAOHANGLANBEIJING:IOS6DAOHANGLANBEIJING] forBarMetrics: UIBarMetricsDefault];
+//    }
+//    
+//    
+//    UIBarButtonItem * spaceBar = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+//    
+//    spaceBar.width = MY_MACRO_NAME?-4:5;
+//    
+//    
+//    UIButton * back_button = [UIButton buttonWithType:UIButtonTypeCustom];
+//    
+//    back_button.frame = CGRectMake(0,0,12,21.5);
+//    
+//    [back_button setImage:[UIImage imageNamed:@"ios7_back.png"] forState:UIControlStateNormal];
+//    
+//    [back_button addTarget:self action:@selector(backH:) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    self.navigationItem.leftBarButtonItems = @[spaceBar,[[UIBarButtonItem alloc] initWithCustomView:back_button]];
+//    
+//    
+//    UIColor * cc = [UIColor blackColor];
+//    
+//    NSDictionary * dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:cc,[UIFont systemFontOfSize:20],[UIColor clearColor],nil] forKeys:[NSArray arrayWithObjects:UITextAttributeTextColor,UITextAttributeFont,UITextAttributeTextShadowColor,nil]];
+//    
+//    self.navigationController.navigationBar.titleTextAttributes = dict;
     
     
     [self initHttpRequest];

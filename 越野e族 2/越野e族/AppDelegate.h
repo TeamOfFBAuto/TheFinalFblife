@@ -29,6 +29,8 @@
 #import "LeftViewController.h"
 #import "ComprehensiveViewController.h"
 #import "FansViewController.h"
+#import "MMDrawerController.h"
+#import <CoreData/CoreData.h>
 
 
 
@@ -65,10 +67,28 @@
 
 @property(nonatomic,strong)UINavigationController *navigationController;
 
+@property(nonatomic,strong)UINavigationController * root_nav;
+
+@property(nonatomic,strong)MMDrawerController *RootVC;
+
 @property(nonatomic,strong)FansViewController * pushViewController;//控制跳转的透明view
 
-@property(nonatomic,strong)UINavigationController * weibo_nav;//公用微博界面
+//coredata相关
 
--(void)setPushViewHidden:(BOOL)hidden;//设置推送界面是否隐藏
+@property(strong,nonatomic,readonly)NSManagedObjectModel* managedObjectModel;
+
+@property(strong,nonatomic,readonly)NSManagedObjectContext* managedObjectContext;
+
+@property(strong,nonatomic,readonly)NSPersistentStoreCoordinator* persistentStoreCoordinator;
+
+
+
 
 @end
+
+
+
+
+
+
+

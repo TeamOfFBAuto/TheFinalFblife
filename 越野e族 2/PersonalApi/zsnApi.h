@@ -9,6 +9,18 @@
 #import <Foundation/Foundation.h>
 
 
+@interface ZSNButton : UIButton
+{
+    
+}
+
+
+@property(nonatomic,strong)NSDictionary * myDictionary;
+
+@end
+
+
+
 
 @interface zsnApi : NSObject
 
@@ -58,6 +70,8 @@
 //字符串转换，防止出现<null>
 
 +(NSString *)exchangeStringForDeleteNULL:(id)sender;
+
+
 
 @end
 

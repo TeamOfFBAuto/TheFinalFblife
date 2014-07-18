@@ -16,6 +16,7 @@
 #import "LogInViewController.h"
 #import "SDImageCache.h"
 #import "FullyLoaded.h"
+#import "UIViewController+MMDrawerController.h"
 
 
 @interface NewWeiBoViewController ()
@@ -45,6 +46,22 @@
 @synthesize choose_array = _choose_array;
 
 @synthesize weibo_seg = _weibo_seg;
+
+@synthesize selected_index = _selected_index;
+
+
+
+
+
++ (NewWeiBoViewController *)sharedManager
+{
+    static NewWeiBoViewController *sharedAccountManagerInstance = nil;
+    static dispatch_once_t predicate;
+    dispatch_once(&predicate, ^{
+        sharedAccountManagerInstance = [[self alloc] init];
+    });
+    return sharedAccountManagerInstance;
+}
 
 
 
@@ -517,7 +534,14 @@
     
     BOOL authkey=[[NSUserDefaults standardUserDefaults] boolForKey:USER_IN];
     
-    selectedView = authkey?0:1;
+    
+    if ([_selected_index isEqualToString:@"我的微博"])
+    {
+        selectedView = 2;
+    }else
+    {
+        selectedView = authkey?0:1;
+    }
     
     
     UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
@@ -554,7 +578,7 @@
     
     _weibo_seg.backgroundColor = [UIColor clearColor];
     
-    [_weibo_seg setAllViewsWith:[NSArray arrayWithObjects:@"我关注的",@"微博广场",@"我的微博",nil] index:authkey?0:1];
+    [_weibo_seg setAllViewsWith:[NSArray arrayWithObjects:@"我关注的",@"微博广场",@"我的微博",nil] index:selectedView];
     
     self.navigationItem.titleView = _weibo_seg;
     
@@ -562,18 +586,18 @@
     
     
     //创建主滚动视图
-    _rootScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0,0,320,iPhone5?548-44-49:460-44-49)];
+    _rootScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0,0,320,iPhone5?548-44:460-44)];
     _rootScrollView.delegate = self;
     _rootScrollView.pagingEnabled = YES;
     _rootScrollView.backgroundColor = [UIColor whiteColor];
     _rootScrollView.userInteractionEnabled = YES;
-    _rootScrollView.bounces = NO;
+    _rootScrollView.bounces = YES;
     _rootScrollView.showsHorizontalScrollIndicator = NO;
     _rootScrollView.showsVerticalScrollIndicator = NO;
     _rootScrollView.contentSize = CGSizeMake(960,0);
     [self.view addSubview:_rootScrollView];
     
-    _rootScrollView.contentOffset = CGPointMake((authkey?0:1)*320,0);
+    _rootScrollView.contentOffset = CGPointMake(selectedView*320,0);
     
     _userContentOffsetX = 0;
     
@@ -583,7 +607,7 @@
     loadview1=[[LoadingIndicatorView alloc]initWithFrame:CGRectMake(0, 900, 320, 40)];
     loadview3=[[LoadingIndicatorView alloc]initWithFrame:CGRectMake(0, 900, 320, 40)];
     
-    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(320,0,320,iPhone5?548-44-49:460-44-49) style:UITableViewStylePlain];
+    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(320,0,320,iPhone5?548-44:460-44) style:UITableViewStylePlain];
     
     if (IOS_VERSION>=7.0)
     {
@@ -598,7 +622,7 @@
     
     
     
-    _myTableView1 = [[UITableView alloc] initWithFrame:CGRectMake(0,0,320,iPhone5?548-44-49:460-44-49) style:UITableViewStylePlain];
+    _myTableView1 = [[UITableView alloc] initWithFrame:CGRectMake(0,0,320,iPhone5?548-44:460-44) style:UITableViewStylePlain];
     
     if (IOS_VERSION>=7.0)
     {
@@ -611,7 +635,7 @@
     _myTableView1.tableFooterView = loadview1;
     
     
-    _myTableView2 = [[UITableView alloc] initWithFrame:CGRectMake(640,0,320,iPhone5?548-44-49:460-44-49) style:UITableViewStylePlain];
+    _myTableView2 = [[UITableView alloc] initWithFrame:CGRectMake(640,0,320,iPhone5?548-44:460-44) style:UITableViewStylePlain];
     
     if (IOS_VERSION>=7.0)
     {
@@ -742,7 +766,7 @@
     
     if (!xiala_tab)
     {
-        xiala_tab=[[UITableView alloc]initWithFrame:CGRectMake(0,MY_MACRO_NAME?108:88,320,iPhone5?(568-49-19-44-36):(480-49-19-44-36)) style:UITableViewStylePlain];
+        xiala_tab=[[UITableView alloc]initWithFrame:CGRectMake(0,MY_MACRO_NAME?108:88,320,iPhone5?(568-19-44-36):(480-19-44-36)) style:UITableViewStylePlain];
         xiala_tab.backgroundColor=[UIColor whiteColor];
         xiala_tab.hidden=YES;
         
@@ -1396,7 +1420,7 @@
     
     
     
-    logIn = [[LogInViewController alloc] init];
+    logIn = [LogInViewController sharedManager];
     
     [self.leveyTabBarController hidesTabBar:YES animated:YES];
     
@@ -1525,6 +1549,18 @@
             break;
     }
     
+    
+    if (scrollView == _rootScrollView)
+    {
+        if (scrollView.contentOffset.x<-40)
+        {
+            [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+            
+        }else if(scrollView.contentOffset.x>680)
+        {
+            [self.mm_drawerController toggleDrawerSide:MMDrawerSideRight animated:YES completion:nil];
+        }
+    }
 }
 
 //滚动视图释放滚动
@@ -2423,6 +2459,12 @@
     return nil;
 }
 
+
+-(void)dealloc
+{
+    
+    
+}
 
 
 - (void)didReceiveMemoryWarning

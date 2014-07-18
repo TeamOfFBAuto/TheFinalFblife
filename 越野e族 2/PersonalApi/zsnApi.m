@@ -16,6 +16,15 @@
 #import "BlogFeed.h"
 
 
+@implementation ZSNButton
+@synthesize myDictionary = _myDictionary;
+
+
+@end
+
+
+
+
 @implementation zsnApi
 
 
@@ -317,6 +326,11 @@
     return [NSString stringWithFormat:@"%@<a href=\"fb://PhotoDetail/id=%@\">%@",font_string,the_id,temp_string];
 }
 
+
++ (float)theHeight:(NSString *)content withHeight:(CGFloat)theheight WidthFont:(UIFont *)font
+{
+    return 0;
+}
 
 +(NSString *)exchangeFrom:(NSString *)from
 {
@@ -1214,14 +1228,13 @@
 {
     NSString * temp = [NSString stringWithFormat:@"%@",sender];
     
-    if (temp.length == 0 || [temp isEqualToString:@"<null>"] || [temp isEqualToString:@"null"])
+    if (temp.length == 0 || [temp isEqualToString:@"<null>"] || [temp isEqualToString:@"null"] || [temp isEqualToString:@"(null)"])
     {
         temp = @"";
     }
     
     return temp;
 }
-
 
 @end
 

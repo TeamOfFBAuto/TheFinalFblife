@@ -31,11 +31,24 @@
 @synthesize weiboVC;
 @synthesize _center;
 @synthesize pushViewController = _pushViewController;
-@synthesize weibo_nav = _weibo_nav;
+@synthesize navigationController = _navigationController;
+@synthesize root_nav = _root_nav;
+@synthesize RootVC = _RootVC;
+
+
+@synthesize managedObjectModel=_managedObjectModel;
+@synthesize managedObjectContext=_managedObjectContext;
+@synthesize persistentStoreCoordinator=_persistentStoreCoordinator;
+
+
 
 - (void)dealloc
 {
     [_window release];
+    
+    [_managedObjectContext release];
+    [_managedObjectModel release];
+    [_persistentStoreCoordinator release];
     [super dealloc];
 }
 
@@ -994,13 +1007,7 @@
     
     
     
-    
-   
-
-    
-    
-    
-    MMDrawerController *_RootVC=[[MMDrawerController alloc]initWithCenterViewController:_navigationController leftDrawerViewController:menuViewController rightDrawerViewController:rightVC];
+    _RootVC=[[MMDrawerController alloc]initWithCenterViewController:_navigationController leftDrawerViewController:menuViewController rightDrawerViewController:rightVC];
     
     
     [_RootVC setMaximumRightDrawerWidth:298];
@@ -1010,10 +1017,10 @@
     [_RootVC setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
     
     
+    _root_nav = [[UINavigationController alloc] initWithRootViewController:_RootVC];
+    _root_nav.navigationBarHidden = YES;
+    self.window.rootViewController = _root_nav;//sideMenuViewController;
     
-    
-    self.window.rootViewController = _RootVC;//sideMenuViewController;
-
     
     _pushViewController = [[FansViewController alloc] init];
     
@@ -1021,25 +1028,8 @@
     
     pushNav.view.frame = CGRectMake(320,0,320,iPhone5?568:480);
     
-//    pushNav.view.alpha = 0;
-    
-//    pushNav.view.userInteractionEnabled = NO;
-    
-    [_RootVC.view addSubview:pushNav.view];
-    
-    
-    
-    
-    weiboVC = [[NewWeiBoViewController alloc] init];
-    
-    _weibo_nav = [[UINavigationController alloc] initWithRootViewController:weiboVC];
-}
-
--(void)setPushViewHidden:(BOOL)hidden
-{    
-    _pushViewController.navigationController.view.alpha = !hidden;
-    
-    _pushViewController.navigationController.view.userInteractionEnabled = !hidden;
+  //  [self.window.rootViewController.view addSubview:pushNav.view];
+        
 }
 
 
@@ -1065,6 +1055,60 @@
     NSLog(@"didHideMenuViewController");
 }
 
+
+#pragma mark - coredata相关
+
+//托管对象
+-(NSManagedObjectModel *)managedObjectModel
+{
+    if (_managedObjectModel!=nil) {
+        return _managedObjectModel;
+    }
+    //    NSURL* modelURL=[[NSBundle mainBundle] URLForResource:@"CoreDataExample" withExtension:@"momd"];
+    //    _managedObjectModel=[[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
+    _managedObjectModel=[[NSManagedObjectModel mergedModelFromBundles:nil] retain];
+    return _managedObjectModel;
+}
+//托管对象上下文
+-(NSManagedObjectContext *)managedObjectContext
+{
+    if (_managedObjectContext!=nil) {
+        return _managedObjectContext;
+    }
+    
+    NSPersistentStoreCoordinator* coordinator=[self persistentStoreCoordinator];
+    if (coordinator!=nil) {
+        _managedObjectContext=[[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
+        
+        [_managedObjectContext setPersistentStoreCoordinator:coordinator];
+    }
+    return _managedObjectContext;
+}
+//持久化存储协调器
+-(NSPersistentStoreCoordinator *)persistentStoreCoordinator
+{
+    if (_persistentStoreCoordinator!=nil) {
+        return _persistentStoreCoordinator;
+    }
+    //    NSURL* storeURL=[[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"CoreaDataExample.CDBStore"];
+    //    NSFileManager* fileManager=[NSFileManager defaultManager];
+    //    if(![fileManager fileExistsAtPath:[storeURL path]])
+    //    {
+    //        NSURL* defaultStoreURL=[[NSBundle mainBundle] URLForResource:@"CoreDataExample" withExtension:@"CDBStore"];
+    //        if (defaultStoreURL) {
+    //            [fileManager copyItemAtURL:defaultStoreURL toURL:storeURL error:NULL];
+    //        }
+    //    }
+    NSString* docs=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)lastObject];
+    NSURL* storeURL=[NSURL fileURLWithPath:[docs stringByAppendingPathComponent:@"CoreDataExample.sqlite"]];
+    NSLog(@"path is %@",storeURL);
+    NSError* error=nil;
+    _persistentStoreCoordinator=[[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
+    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
+        NSLog(@"Error: %@,%@",error,[error userInfo]);
+    }
+    return _persistentStoreCoordinator;
+}
 
 
 

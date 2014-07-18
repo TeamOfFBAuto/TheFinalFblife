@@ -13,7 +13,7 @@
 #import "LoadingIndicatorView.h"
 
 
-@interface MessageViewController : UIViewController<ASIHTTPRequestDelegate,UITableViewDataSource,UITableViewDelegate,NewMessageViewControllerDelegate,downloaddelegate,EGORefreshTableHeaderDelegate>
+@interface MessageViewController : MyViewController<ASIHTTPRequestDelegate,UITableViewDataSource,UITableViewDelegate,NewMessageViewControllerDelegate,downloaddelegate,EGORefreshTableHeaderDelegate>
 {
     NSString * authcode;
     int NewsMessageNumber;
@@ -39,6 +39,6 @@
 @property(nonatomic,strong)ASIHTTPRequest * newsMessage_request;
 @property(nonatomic,strong)NSString *string_messageorfbno;
 
-
++(MessageViewController *)shareManager;
 
 @end

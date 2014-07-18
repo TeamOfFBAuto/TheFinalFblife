@@ -9,7 +9,8 @@
 #import "SliderRankingListViewController.h"
 #import "RankingListSegmentView.h"
 #import "RankingListModel.h"
-#import "RankingListCustomCell.h"
+#import "bbsdetailViewController.h"
+#import "BBSfenduiViewController.h"
 
 @interface SliderRankingListViewController ()
 {
@@ -24,6 +25,7 @@
 @synthesize myTableView = _myTableView;
 @synthesize data_array = _data_array;
 @synthesize currentPage = _currentPage;
+@synthesize bbs_forum_collection_array = _bbs_forum_collection_array;
 
 
 
@@ -35,6 +37,19 @@
     }
     return self;
 }
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    if([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)] )
+    {
+        //iOS 5 new UINavigationBar custom background
+        
+        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:MY_MACRO_NAME?@"sliderBBSNavigationBarImage":@"sliderBBSNavigationBarImage_ios6"] forBarMetrics: UIBarMetricsDefault];
+    }
+}
+
 
 - (void)viewDidLoad
 {
@@ -64,7 +79,7 @@
     
     _currentPage = 1;
     
-    ranking_segment = [[RankingListSegmentView alloc] initWithFrame:CGRectMake(0,0,320,60) WithBlock:^(int index) {
+    ranking_segment = [[RankingListSegmentView alloc] initWithFrame:CGRectMake(0,0,320,56.5) WithBlock:^(int index) {
         
         bself.currentPage = index + 1;
         
@@ -139,14 +154,98 @@
     
     if (cell == nil) {
         cell = [[RankingListCustomCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        cell.delegate = self;
     }
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     RankingListModel * model = [[_data_array objectAtIndex:_currentPage-1] objectAtIndex:indexPath.row];
     
     [cell setInfoWith:indexPath.row + 1 WithModel:model];
     
+    cell.collection_button.selected = [self.bbs_forum_collection_array containsObject:model.ranking_id];
+    
     return cell;
 }
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (_currentPage-1 == 0)
+    {
+        RankingListModel * model = [[_data_array objectAtIndex:_currentPage-1] objectAtIndex:indexPath.row];
+        
+        bbsdetailViewController * detail = [[bbsdetailViewController alloc] init];
+        
+        detail.bbsdetail_tid = model.ranking_id;
+        
+        [self.navigationController pushViewController:detail animated:YES];
+    }else
+    {
+        RankingListModel * model = [[_data_array objectAtIndex:_currentPage-1] objectAtIndex:indexPath.row];
+        
+        BBSfenduiViewController * detail = [[BBSfenduiViewController alloc] init];
+        
+        detail.string_id = model.ranking_id;
+        
+        detail.string_name = model.ranking_title;
+        
+        [self.navigationController pushViewController:detail animated:YES];
+    }
+}
+
+
+
+#pragma mark - RankingListCellDelegate
+
+#pragma mark - 收藏或取消收藏
+
+-(void)cancelOrCollectSectionsWith:(RankingListCustomCell *)cell
+{
+    NSIndexPath * indexPath = [_myTableView indexPathForCell:cell];
+    
+    RankingListModel * model = [[_data_array objectAtIndex:_currentPage-1] objectAtIndex:indexPath.row];
+    
+    NSString * fullUrl = @"";
+    
+    BOOL isCollected = [self.bbs_forum_collection_array containsObject:model.ranking_id];
+    
+    if (isCollected)
+    {
+        fullUrl = [NSString stringWithFormat:COLLECTION_FORUM_SECTION_URL_OLD,model.ranking_id,AUTHKEY];
+    }else
+    {
+        fullUrl = [NSString stringWithFormat:COLLECTION_CANCEL_FORUM_SECTION_URL_OLD,model.ranking_id,AUTHKEY];
+    }
+    
+    NSURL * url = [NSURL URLWithString:fullUrl];
+    
+    
+    ASIHTTPRequest * collect_request = [[ASIHTTPRequest alloc] initWithURL:url];
+    
+    __block typeof(collect_request) request = collect_request;
+    
+    __weak typeof(self) bself = self;
+    
+    [request setCompletionBlock:^{
+        
+        cell.collection_button.selected = !isCollected;
+        
+        if (isCollected)
+        {
+            [bself.bbs_forum_collection_array removeObject:model.ranking_id];
+        }else
+        {
+            [bself.bbs_forum_collection_array addObject:model.ranking_id];
+        }
+    }];
+    
+    [request setFailedBlock:^{
+        
+    }];
+    
+    [collect_request startAsynchronous];
+}
+
 
 
 

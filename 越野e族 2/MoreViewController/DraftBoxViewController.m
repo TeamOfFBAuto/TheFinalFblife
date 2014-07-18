@@ -105,7 +105,7 @@
     
     UILabel *label_=[[UILabel alloc]initWithFrame:CGRectMake(0, 464/2, 320, 15)];
     label_.text=@"还没有草稿";
-    label_.textAlignment=UITextAlignmentCenter;
+    label_.textAlignment=NSTextAlignmentCenter;
     label_.textColor=RGBCOLOR(197, 197, 197);
     label_.backgroundColor=[UIColor clearColor];
     [wormingLabel addSubview:label_];
@@ -127,60 +127,66 @@
 //    self.navigationItem.rightBarButtonItem=comment_item;
     
     
-    UIButton *button_back=[[UIButton alloc]initWithFrame: CGRectMake(MY_MACRO_NAME? -5:5, 3, 12, 43/2)];
-    
-    [button_back addTarget:self action:@selector(backto) forControlEvents:UIControlEventTouchUpInside];
-    [button_back setBackgroundImage:[UIImage imageNamed:@"ios7_back.png"] forState:UIControlStateNormal];
-    
-    UIButton *back_view=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50, 28)];
-    [back_view addSubview:button_back];
-    back_view.backgroundColor=[UIColor clearColor];
-    [back_view addTarget:self action:@selector(backto) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:back_view];
-    self.navigationItem.leftBarButtonItem=back_item;
-    
-    button_comment=[[UIButton alloc]initWithFrame:CGRectMake(MY_MACRO_NAME?35-3+8: 25-3+8, (44-39/2)/2, 27/2, 39/2)];
-    
-    
-    button_comment.tag=26;
-    
-    //[button_comment setTitle:@"评论" forState:UIControlStateNormal];
-    button_comment.titleLabel.font=[UIFont systemFontOfSize:14];
-    [button_comment addTarget:self action:@selector(tableViewEdit:) forControlEvents:UIControlEventTouchUpInside];
-    [button_comment setBackgroundImage:[UIImage imageNamed:@"ios7_lese@2x.png"] forState:UIControlStateNormal];
-    
-  UIButton *  rightView=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50, 44)];
-    [rightView addTarget:self action:@selector(tableViewEdit:) forControlEvents:UIControlEventTouchUpInside];
-    [rightView addSubview:button_comment];
-    rightView.backgroundColor=[UIColor clearColor];
-    rightView.userInteractionEnabled=YES;
-    
-    
-    
-    
-    
-    UIBarButtonItem *comment_item=[[UIBarButtonItem alloc]initWithCustomView:rightView];
-    
-    self.navigationItem.rightBarButtonItem=comment_item;
-    
-    
-    self.navigationItem.title = @"草稿箱";
-    
-    UIColor * cc = [UIColor blackColor];
-    
-    NSDictionary * dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:cc,[UIFont systemFontOfSize:20],[UIColor clearColor],nil] forKeys:[NSArray arrayWithObjects:UITextAttributeTextColor,UITextAttributeFont,UITextAttributeTextShadowColor,nil]];
-    
-    self.navigationController.navigationBar.titleTextAttributes = dict;
+//    UIButton *button_back=[[UIButton alloc]initWithFrame: CGRectMake(MY_MACRO_NAME? -5:5, 3, 12, 43/2)];
+//    
+//    [button_back addTarget:self action:@selector(backto) forControlEvents:UIControlEventTouchUpInside];
+//    [button_back setBackgroundImage:[UIImage imageNamed:@"ios7_back.png"] forState:UIControlStateNormal];
+//    
+//    UIButton *back_view=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50, 28)];
+//    [back_view addSubview:button_back];
+//    back_view.backgroundColor=[UIColor clearColor];
+//    [back_view addTarget:self action:@selector(backto) forControlEvents:UIControlEventTouchUpInside];
+//    UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:back_view];
+//    self.navigationItem.leftBarButtonItem=back_item;
+//    
+//    button_comment=[[UIButton alloc]initWithFrame:CGRectMake(MY_MACRO_NAME?35-3+8: 25-3+8, (44-39/2)/2, 27/2, 39/2)];
+//    
+//    
+//    button_comment.tag=26;
+//    
+//    //[button_comment setTitle:@"评论" forState:UIControlStateNormal];
+//    button_comment.titleLabel.font=[UIFont systemFontOfSize:14];
+//    [button_comment addTarget:self action:@selector(tableViewEdit:) forControlEvents:UIControlEventTouchUpInside];
+//    [button_comment setBackgroundImage:[UIImage imageNamed:@"ios7_lese@2x.png"] forState:UIControlStateNormal];
+//    
+//  UIButton *  rightView=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50, 44)];
+//    [rightView addTarget:self action:@selector(tableViewEdit:) forControlEvents:UIControlEventTouchUpInside];
+//    [rightView addSubview:button_comment];
+//    rightView.backgroundColor=[UIColor clearColor];
+//    rightView.userInteractionEnabled=YES;
+//    
+//    
+//    
+//    
+//    
+//    UIBarButtonItem *comment_item=[[UIBarButtonItem alloc]initWithCustomView:rightView];
+//    
+//    self.navigationItem.rightBarButtonItem=comment_item;
+//    
+//    
+//    self.navigationItem.title = @"草稿箱";
+//    
+//    UIColor * cc = [UIColor blackColor];
+//    
+//    NSDictionary * dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:cc,[UIFont systemFontOfSize:20],[UIColor clearColor],nil] forKeys:[NSArray arrayWithObjects:UITextAttributeTextColor,UITextAttributeFont,UITextAttributeTextShadowColor,nil]];
+//    
+//    self.navigationController.navigationBar.titleTextAttributes = dict;
 
-    
+    self.rightImageName = @"ios7_lese";
 
-    
+    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeOther];
         
     
     // tab_.backgroundColor=[UIColor redColor];
     
 	// Do any additional setup after loading the view.
 }
+
+-(void)rightButtonTap:(UIButton *)sender
+{
+    [self tableViewEdit:sender];
+}
+
 - (void)tableViewEdit:(id)sender{
     
     

@@ -34,7 +34,7 @@
 
 
 
-@interface NewMineViewController : UIViewController<ASIHTTPRequestDelegate,UITableViewDataSource,UITableViewDelegate,MWPhotoBrowserDelegate,NewWeiBoCustomCellDelegate,NewUserMessageTopDelegate,AlertRePlaceViewDelegate,ForwardingViewControllerDelegate,NewWeiBoCommentViewControllerDelegate>
+@interface NewMineViewController : MyViewController<ASIHTTPRequestDelegate,UITableViewDataSource,UITableViewDelegate,MWPhotoBrowserDelegate,NewWeiBoCustomCellDelegate,NewUserMessageTopDelegate,AlertRePlaceViewDelegate,ForwardingViewControllerDelegate,NewWeiBoCommentViewControllerDelegate>
 {
     ASIHTTPRequest * request_mine;
     

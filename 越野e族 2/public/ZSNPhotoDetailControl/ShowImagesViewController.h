@@ -10,7 +10,9 @@
 
 #import "FBQuanAlertView.h"
 
-@interface ShowImagesViewController : UIViewController<UIScrollViewDelegate,QBShowImagesScrollViewDelegate>
+#import "AtlasContentView.h"
+
+@interface ShowImagesViewController : UIViewController<UIScrollViewDelegate,QBShowImagesScrollViewDelegate,UITextViewDelegate>
 {
     UIView * navgationBar;
     
@@ -30,7 +32,13 @@
     
     FBQuanAlertView * myAlertView;
     
+    BOOL isCollected;
+    
+    
+    AtlasContentView * content_back_view; //图片标题、简介视图
 }
+
+@property(nonatomic,strong)NSString * id_atlas;
 
 @property(nonatomic,strong)NSMutableArray * allImagesUrlArray;
 

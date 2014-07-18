@@ -146,6 +146,21 @@
 @property(nonatomic,strong)NSArray * choose_array;
 
 
+@property(nonatomic,strong)NSString * selected_index;//跳到对应的微博列表
+
+
 -(void)ClickWeiBoCustomSegmentWithIndex:(int)index;//点击切换按钮，加载当前选中数据
 
++ (NewWeiBoViewController *)sharedManager;//单例
+
 @end
+
+
+
+
+
+
+
+
+
+

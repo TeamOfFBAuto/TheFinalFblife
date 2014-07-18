@@ -12,7 +12,7 @@
 
 
 
-@interface DraftBoxViewController : UIViewController<downloaddelegate,UITableViewDataSource,UITableViewDelegate,DraftBoxViewDelegate,AlertRePlaceViewDelegate>{
+@interface DraftBoxViewController : MyViewController<downloaddelegate,UITableViewDataSource,UITableViewDelegate,DraftBoxViewDelegate,AlertRePlaceViewDelegate>{
     downloadtool *_tool;
     UITableView *tab_;
     NSMutableArray *array_info;

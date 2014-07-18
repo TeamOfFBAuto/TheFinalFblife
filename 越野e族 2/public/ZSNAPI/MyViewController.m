@@ -76,6 +76,9 @@
 
 -(void)setMyViewControllerLeftButtonType:(MyViewControllerLeftbuttonType)theType WithRightButtonType:(MyViewControllerRightbuttonType)rightType
 {
+    
+    leftType = theType;
+    
     if (theType == MyViewControllerLeftbuttonTypeBack)
     {
         UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(10,8,12,21.5)];
@@ -223,6 +226,15 @@
 
 -(void)leftButtonTap:(UIButton *)sender
 {
+//    AppDelegate * app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+//    
+//    if (leftType == MyViewControllerLeftbuttonTypeBack)
+//    {
+//        [app.pushViewController setNavigationHiddenWith:YES WithBlock:^{
+//            [self.navigationController popViewControllerAnimated:YES];
+//        }];
+//    }
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 

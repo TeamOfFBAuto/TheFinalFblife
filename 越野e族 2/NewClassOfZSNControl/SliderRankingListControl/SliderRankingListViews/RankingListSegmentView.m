@@ -17,7 +17,7 @@
     {
         rankingListBlock = theBlock;
         
-        NSArray * array = [NSArray arrayWithObjects:@"主题",@"车型",@"大队",nil];
+        NSArray * image_array = [NSArray arrayWithObjects:@"bbs_rankinglist_zhuti1",@"bbs_rankinglist_chexing1",@"bbs_rankinglist_dadui1",@"bbs_rankinglist_zhuti",@"bbs_rankinglist_chexing",@"bbs_rankinglist_dadui",nil];
         
         for (int i = 0;i < 3;i++)
         {
@@ -25,18 +25,22 @@
             
             button.frame = CGRectMake(12 + 100*i,12,96,45);
             
-            [button setTitle:[array objectAtIndex:i] forState:UIControlStateNormal];
+            [button setImage:[UIImage imageNamed:[image_array objectAtIndex:i]] forState:UIControlStateNormal];
             
-            button.backgroundColor = RGBCOLOR(244,244,244);
+            [button setImage:[UIImage imageNamed:[image_array objectAtIndex:i+3]] forState:UIControlStateSelected];
             
             historyPage = 0;
             
             if (i == 0)
             {
-                [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+                button.selected = YES;
+                
+                [button setImageEdgeInsets:UIEdgeInsetsZero];
             }else
             {
-                [button setTitleColor:RGBCOLOR(126,126,126) forState:UIControlStateNormal];
+                button.selected = NO;
+                
+                [button setImageEdgeInsets:UIEdgeInsetsMake(0,0,5,0)];
             }
             
             button.tag = 100+i;
@@ -60,9 +64,13 @@
     {
         UIButton * button = (UIButton *)[self viewWithTag:historyPage+100];
         
-        [button setTitleColor:RGBCOLOR(126,126,126) forState:UIControlStateNormal];
+        button.selected = NO;
         
-        [sender setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [button setImageEdgeInsets:UIEdgeInsetsMake(0,0,5,0)];
+        
+        sender.selected = YES;
+        
+        [sender setImageEdgeInsets:UIEdgeInsetsZero];
     }
     
     historyPage = sender.tag -100;

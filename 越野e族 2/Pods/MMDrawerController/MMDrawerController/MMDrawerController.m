@@ -694,6 +694,9 @@ static NSString *MMDrawerOpenSideKey = @"MMDrawerOpenSide";
     else if(self.openSide == MMDrawerSideRight) {
         [self.rightDrawerViewController beginAppearanceTransition:YES animated:animated];
     }
+    
+    self.navigationController.navigationBarHidden = YES;
+    
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -1406,4 +1409,21 @@ static inline CGFloat originXForDrawerOriginAndTargetOriginOffset(CGFloat origin
     return (CGRectContainsPoint(rightBezelRect, point) &&
             [self isPointContainedWithinCenterViewContentRect:point]);
 }
+
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

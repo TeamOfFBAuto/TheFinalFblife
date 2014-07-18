@@ -89,8 +89,6 @@
     [app.pushViewController setNavigationHiddenWith:YES WithBlock:^{
         [self.navigationController popViewControllerAnimated:YES];
     }];
-
-//    [(AppDelegate *)[UIApplication sharedApplication].delegate setPushViewHidden:YES];
 }
 
 #pragma mark - 登陆成功

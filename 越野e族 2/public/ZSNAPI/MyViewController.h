@@ -33,6 +33,8 @@ typedef enum
 @interface MyViewController : UIViewController
 {
     UIBarButtonItem * spaceButton;
+    
+    MyViewControllerLeftbuttonType leftType;
 }
 
 @property(nonatomic,assign)MyViewControllerLeftbuttonType * leftButtonType;

@@ -10,6 +10,7 @@
 #import "SliderBBSJingXuanModel.h"
 #import "LoadingIndicatorView.h"
 #import "ASINetworkQueue.h"
+#import "SliderForumCollectionModel.h"
 
 
 
@@ -22,6 +23,10 @@
 @property(nonatomic,strong)NSString * forum_fid;
 
 @property(nonatomic,strong)NSString * forum_name;
+
+@property(nonatomic,assign)BOOL forum_isOpen;
+
+@property(nonatomic,assign)BOOL forum_isHave_sub;
 
 @property(nonatomic,strong)NSMutableArray * forum_sub;
 
@@ -51,6 +56,14 @@ typedef enum{
     NSArray * forum_title_array;//存放论坛版块标题
     
     ForumType theType; // 当前论坛版块
+    
+    int current_forum;//当前论坛板块
+    
+    int history_second_cell;//是否点开第三层
+    
+    
+    SliderForumCollectionModel * collection_model;//所有收藏的论坛版块数据
+    
 }
 
 
@@ -73,6 +86,10 @@ typedef enum{
 @property(nonatomic,strong)NSMutableArray * forum_jiaoyi_array;//交易版块数据
 
 @property(nonatomic,strong)NSMutableArray * forum_temp_array;//临时存放版块数据，用以显示
+
+@property(nonatomic,strong)NSMutableArray * forum_section_collection_array;//存放所有收藏的论坛版块的id
+
+@property(nonatomic,strong)NSMutableArray * recently_look_array;//存放最近浏览数据
 
 
 

@@ -17,7 +17,7 @@
 #import <UIKit/UIKit.h>
 #import "ZBarSDK.h"
 
-@interface DetailViewController : UIViewController< ZBarReaderDelegate,UIAlertViewDelegate,ZBarReaderViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@interface DetailViewController : MyViewController< ZBarReaderDelegate,UIAlertViewDelegate,ZBarReaderViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 {
     ZBarReaderView * myReaderView;
 }
