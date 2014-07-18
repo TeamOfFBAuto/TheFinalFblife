@@ -25,6 +25,8 @@
 
 #import "SliderBBSViewController.h"
 
+#import "PicShowViewController.h"
+
 //https://itunes.apple.com/us/app/meng-yi-tian-qi/id847338649?ls=1&mt=8
 @interface LeftViewController (){
     UIImage *bgbuttonImage;
@@ -36,6 +38,8 @@
     UINavigationController *_newNav;
 
     UINavigationController *_carNav;
+    
+    UINavigationController *_picNav;
     
     
 
@@ -64,13 +68,22 @@
 - (void)viewDidLoad
 {
     
-    _rootNav=[[UINavigationController alloc]initWithRootViewController:[[RootViewController alloc]init]];
+    RootViewController *sRootVC=[[RootViewController alloc]init];
+    sRootVC.isMain=YES;
+    _rootNav=[[UINavigationController alloc]initWithRootViewController:sRootVC];
+    
     
     _bbsNav=[[UINavigationController alloc]initWithRootViewController:[[SliderBBSViewController alloc]init]];
 
     _newNav=[[UINavigationController alloc]initWithRootViewController:[[NewWeiBoViewController alloc]init]];
 
     _carNav=[[UINavigationController alloc]initWithRootViewController:[[CarPortViewController alloc]init]];
+    
+    
+    PicShowViewController *showPic=[[PicShowViewController alloc]init];
+    showPic.isMain=YES;
+    _picNav=[[UINavigationController alloc]initWithRootViewController:showPic];
+
 
     
     bgbuttonImage = [UIImage imageNamed:@"shouyes473_100.png"];
@@ -81,9 +94,9 @@
    [super viewDidLoad];
     _firstVC=[[ComprehensiveViewController alloc]init];
     
-    titles = @[@"综合",@"资讯", @"论坛", @"自留", @"车库"];
+    titles = @[@"综合",@"资讯",@"图集", @"论坛", @"自留", @"车库"];
     
-    imageArr=@[@"zonghegray50_48.png",@"zixungray47_42.png",@"luntangray48_41.png",@"ziliudigray44_4.png",@"chekugray54_35.png",@"zonghered50_48.png",@"zixunred47_42.png",@"luntanred48_41.png",@"ziliudired44_40.png",@"chekured54_35.png"];
+    imageArr=@[@"zonghegray50_48.png",@"zixungray47_42.png",@"tujigray.png",@"luntangray48_41.png",@"ziliudigray44_4.png",@"chekugray54_35.png",@"zonghered50_48.png",@"zixunred47_42.png",@"tujired.png",@"luntanred48_41.png",@"ziliudired44_40.png",@"chekured54_35.png"];
     
 //    UIImage *background   =[UIImage imageNamed:IS_IPHONE_5?@"Mallbackgurand.png":@"Mallbackgurand.png"];
     
@@ -110,12 +123,12 @@
     //默认第一个
     currentSelectButtonIndex=0;
     
-    for (int i=0; i<5; i++) {
+    for (int i=0; i<6; i++) {
         UIButton *tabbutton=[[UIButton alloc] initWithFrame:CGRectMake(0, 64+i*50, 300, 50)];
        // [tabbutton setSelected:YES];
         tabbutton.tag=i+100;
         if (i==0) {
-            [tabbutton setImage:[UIImage imageNamed:imageArr[5]] forState:UIControlStateNormal];
+            [tabbutton setImage:[UIImage imageNamed:imageArr[6]] forState:UIControlStateNormal];
            // tabbutton.backgroundColor=RGBCOLOR(226, 230, 233);
             
             [tabbutton setBackgroundImage:bgbuttonImage forState:UIControlStateNormal];
@@ -153,7 +166,7 @@
     [preButton setImage:[UIImage imageNamed:imageArr[currentSelectButtonIndex]] forState:UIControlStateNormal];
 
     currentSelectButtonIndex=sender.tag-100;
-    [sender setImage:[UIImage imageNamed:imageArr[sender.tag-100+5]] forState:UIControlStateNormal];
+    [sender setImage:[UIImage imageNamed:imageArr[sender.tag-100+6]] forState:UIControlStateNormal];
     
     [sender setBackgroundImage:bgbuttonImage forState:UIControlStateNormal];
 
@@ -173,6 +186,17 @@
 
         }
             break;
+        case 102:
+        {
+            NSLog(@"选择的第%d个button",sender.tag-100);
+            
+            
+            [self.mm_drawerController
+             setCenterViewController:_picNav    withCloseAnimation:YES
+             completion:nil];
+        }
+            break;
+            
         case 101:
         {
             NSLog(@"选择的第%d个button",sender.tag-100);
@@ -183,7 +207,9 @@
              completion:nil];
         }
             break;
-        case 102:
+
+            
+        case 103:
         {
             [self.mm_drawerController
              setCenterViewController:_bbsNav    withCloseAnimation:YES
@@ -192,7 +218,7 @@
 
         }
             break;
-        case 103:
+        case 104:
         {
             NSLog(@"选择的第%d个button",sender.tag-100);
             
@@ -205,7 +231,7 @@
 
         }
             break;
-        case 104:
+        case 105:
         {
             NSLog(@"选择的第%d个button",sender.tag-100);
             [self.mm_drawerController

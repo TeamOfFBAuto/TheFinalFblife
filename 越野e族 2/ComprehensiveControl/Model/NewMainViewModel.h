@@ -52,6 +52,7 @@
  photosize	string	照片尺寸
  publishtime	int	新闻发布时间
  type	int	类别（0：新闻，1图集，2论坛，3商城）
+ shownum//第几个
  
  */
 
@@ -82,6 +83,12 @@
 @property(nonatomic,strong)NSString *type;//类别（0：新闻，1图集，2论坛，3商城）
 
 @property(nonatomic,strong)NSString *publishtime;//发布的时间
+
+@property(nonatomic,strong)NSString *likes;//赞的数量
+
+@property(nonatomic,strong)NSString *shownum;//赞的数量
+
+
 
 
 

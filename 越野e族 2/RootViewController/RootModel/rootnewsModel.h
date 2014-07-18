@@ -10,7 +10,6 @@
 @class rootnewsModel;
 @protocol rootNewsModelDelegate <NSObject>
 
--(void)successloadwitharray:(NSMutableArray *)muarray tag:(int)_tag;
 -(void)successloadcommentdic:(NSDictionary *)_comdic mormaldic:(NSDictionary *)_nordic tag:(int)_tag;
 -(void)doneloadmoremornormal:(NSDictionary*)_morenormaldic tag:(int )_tag;
 

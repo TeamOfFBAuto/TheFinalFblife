@@ -9,13 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "SMPageControl.h"
 @class SGFocusImageItem;
-@class SGFocusImageFrame;
+@class NewHuandengView;
 
-#pragma mark - NewHuandengViewDelegate
+#pragma mark - SGFocusImageFrameDelegate
 @protocol NewHuandengViewDelegate <NSObject>
 @optional
-- (void)foucusImageFrame:(SGFocusImageFrame *)imageFrame didSelectItem:(SGFocusImageItem *)item;
-- (void)foucusImageFrame:(SGFocusImageFrame *)imageFrame currentItem:(int)index;
+- (void)testfoucusImageFrame:(NewHuandengView *)imageFrame didSelectItem:(SGFocusImageItem *)item;
+- (void)testfoucusImageFrame:(NewHuandengView *)imageFrame currentItem:(int)index;
 
 @end
 
@@ -32,6 +32,8 @@
 
 
 -(void)setimageItems:(NSArray *)items;
+
+@property(nonatomic,strong)UIImageView *sanJiaoImageView;
 
 @property (nonatomic, assign) id<NewHuandengViewDelegate> delegate;
 

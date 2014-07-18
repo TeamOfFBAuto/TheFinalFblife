@@ -1,35 +1,18 @@
 //
-//  ShoucangViewController.m
+//  MyWriteAndCommentViewController.m
 //  越野e族
 //
-//  Created by 史忠坤 on 14-7-10.
+//  Created by 史忠坤 on 14-7-15.
 //  Copyright (c) 2014年 soulnear. All rights reserved.
 //
 
+#import "MyWriteAndCommentViewController.h"
 
-#import "newsdetailViewController.h"
-
-#import "bbsdetailViewController.h"
-
-#import "BBSfenduiViewController.h"
-
-#import "QBShowImagesScrollView.h"
-
-
-#import "SzkLoadData.h"
-
-#import "ShoucangViewController.h"
-
-#import "NewshoucangTableViewCell.h"
-
-
-
-
-@interface ShoucangViewController ()
+@interface MyWriteAndCommentViewController ()
 
 @end
 
-@implementation ShoucangViewController
+@implementation MyWriteAndCommentViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -43,6 +26,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    
     
     
     if([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)] ) {
@@ -73,9 +58,9 @@
     
     [self.view addSubview:newsScrow];
     
-    for (int i=0; i<4; i++) {
+    for (int i=0; i<2; i++) {
         
-        FinalshoucangView *mytesttab=[[FinalshoucangView alloc]initWithFrame:CGRectMake(320*i, 0, 320, iPhone5?568-64:480-64) Type:i];
+        FinalshoucangView *mytesttab=[[FinalshoucangView alloc]initWithFrame:CGRectMake(320*i, 0, 320, iPhone5?568-64:480-64) Type:i+4];
         mytesttab.tag=i+800;
         mytesttab.delegate=self;
         [newsScrow addSubview:mytesttab];
@@ -95,19 +80,20 @@
     
     _weibo_seg.backgroundColor = [UIColor clearColor];
     
-    [_weibo_seg setAllViewsWith:[NSArray arrayWithObjects:@"新闻",@"帖子",@"版块",@"图集",nil] index:0];
+    [_weibo_seg setAllViewsWith:[NSArray arrayWithObjects:@"我发布的",@"我回复的",nil] index:0];
     
     self.navigationItem.titleView = daohangview;
-
+    
+    
+    
     
     
     // Do any additional setup after loading the view.
 }
 
-
 -(void)sClickWeiBoCustomSegmentWithIndex:(int)index{
     
-  
+    
     
     NSLog(@"xxxsindex===%d",index);
     
@@ -117,18 +103,18 @@
     } completion:^(BOOL finished) {
         
     }];
-
-
-
+    
+    
+    
 }
 
 -(void)sWeiBoViewLogIn{
     
-   LogInViewController *   logIn = [[LogInViewController alloc] init];
+    LogInViewController *   logIn = [[LogInViewController alloc] init];
     
     
     [self presentViewController:logIn animated:YES completion:NULL];
-
+    
 }
 
 
@@ -136,7 +122,7 @@
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     
-   if(scrollView ==newsScrow)
+    if(scrollView ==newsScrow)
     {
         int   number=scrollView.contentOffset.x/320;
         
@@ -145,7 +131,7 @@
         [_weibo_seg MyButtonStateWithIndex:number];
         
     }
-
+    
 }
 
 
@@ -159,8 +145,11 @@
 
 -(void)backto{
     [self.navigationController popViewControllerAnimated:YES];
-
+    
 }
+
+
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -169,14 +158,14 @@
 }
 
 /*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
- {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
 
 @end

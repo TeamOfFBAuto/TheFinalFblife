@@ -23,9 +23,32 @@
 
 #import "SzkLoadData.h"
 
+#import "PicShowViewController.h"
+
+#import "RootViewController.h"//新闻首页
+
+#import "BBSViewController.h"//论坛首页
+
+#import "NewMainViewModel.h"
+
+#import "BBSfenduiViewController.h"
+
+#import "GuanggaoViewController.h"//广告
+
+#import "NewMainViewModel.h"//普通新闻数据的model
+
+
+
+
 @interface ComprehensiveViewController (){
 
     UIBarButtonItem * spaceButton;
+    
+    NSMutableArray *com_id_array;//幻灯的id
+    NSMutableArray *com_type_array;//幻灯的type
+    NSMutableArray *com_link_array;//幻灯的外链
+    NSMutableArray *com_title_array;//幻灯的标题
+
 
 }
 
@@ -47,13 +70,27 @@
 {
     [super viewDidLoad];
     
-    normalinfoAllArray=[NSArray array];
+    isloadsuccess = YES;
     
-    self.navigationController.navigationBarHidden=YES;
-    navibar=[[ZkingNavigationView alloc]initWithFrame:CGRectMake(0, 0, 320, 64)];
-    navibar.centerlabel.image=[UIImage imageNamed:@"fblifelogo102_38_.png"];
-    navibar.delegate=self;
-    [self.view addSubview:navibar];
+    numberofpage=1;
+    //点击了广告
+    
+    [XTSideMenuManager resetSideMenuRecognizerEnable:NO];
+    
+    [[NSNotificationCenter defaultCenter]
+     
+     addObserver:self selector:@selector(ssTurntoFbWebview:) name:@"TouchGuanggao" object:nil];
+    
+    
+    [self turnToguanggao];
+    
+    
+    
+    normalinfoAllArray=[NSMutableArray array];
+    
+    [self prepairNavigationBar];
+    
+    
     
     self.view.backgroundColor=[UIColor redColor];
     
@@ -65,17 +102,118 @@
     
 }
 
+#pragma mark-跳到fb页面
+-(void)ssTurntoFbWebview:(NSNotification*)sender{
+    
+    fbWebViewController *fbweb=[[fbWebViewController alloc]init];
+    fbweb.urlstring=[NSString stringWithFormat:@"%@",[sender.userInfo objectForKey:@"link"]];
+    
+    [self.navigationController pushViewController:fbweb animated:YES];
+
+    NSLog(@"sender.object===%@",sender.userInfo);
+
+
+}
+
+#pragma mark--先加广告
+
+-(void)turnToguanggao{
+
+
+    GuanggaoViewController *_guanggaoVC=[[GuanggaoViewController alloc]init];
+    
+    [self presentViewController:_guanggaoVC animated:NO completion:NULL];
+
+}
+
+#pragma mark-准备uinavigationbar
+
+-(void)prepairNavigationBar{
+
+    
+    if([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)] ) {
+        //iOS 5 new UINavigationBar custom background
+        [self.navigationController.navigationBar setBackgroundImage:MY_MACRO_NAME?[UIImage imageNamed:IOS7DAOHANGLANBEIJING]:[UIImage imageNamed:@"ios7eva320_44.png"] forBarMetrics: UIBarMetricsDefault];
+        
+    }
+    
+    UIButton *button_back=[[UIButton alloc]initWithFrame: CGRectMake(MY_MACRO_NAME? -5:5, (44-33/2)/2, 36/2, 33/2)];
+    
+    [button_back addTarget:self action:@selector(leftDrawerButtonPress) forControlEvents:UIControlEventTouchUpInside];
+    [button_back setBackgroundImage:[UIImage imageNamed:@"homenewz36_33.png"] forState:UIControlStateNormal];
+    
+    UIButton *back_view=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50, 44)];
+    [back_view addSubview:button_back];
+    back_view.backgroundColor=[UIColor clearColor];
+    [back_view addTarget:self action:@selector(leftDrawerButtonPress) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:back_view];
+    self.navigationItem.leftBarButtonItem=back_item;
+    
+  UIButton *  button_comment=[[UIButton alloc]initWithFrame:CGRectMake(MY_MACRO_NAME?37: 25, (44-34/2)/2, 37/2, 34/2)];
+    
+    
+    
+    //[button_comment setTitle:@"评论" forState:UIControlStateNormal];
+    button_comment.titleLabel.font=[UIFont systemFontOfSize:14];
+    [button_comment addTarget:self action:@selector(rightDrawerButtonPress) forControlEvents:UIControlEventTouchUpInside];
+    [button_comment setBackgroundImage:[UIImage imageNamed:@"menewz37_36.png"] forState:UIControlStateNormal];
+    
+  UIButton *  rightView=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50, 44)];
+    [rightView addTarget:self action:@selector(rightDrawerButtonPress) forControlEvents:UIControlEventTouchUpInside];
+    [rightView addSubview:button_comment];
+    rightView.backgroundColor=[UIColor clearColor];
+    
+    
+    
+    
+    UIBarButtonItem *comment_item=[[UIBarButtonItem alloc]initWithCustomView:rightView];
+    
+    self.navigationItem.rightBarButtonItem=comment_item;
+//[UIImage imageNamed:@"fblifelogo102_38_.png"];
+    
+    UIImageView *imgLogo=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"logonewz113_46.png"]];
+    
+    self.navigationItem.titleView=imgLogo;
+    
+
+
+}
 -(void)loadView{
     [super loadView];
     
-    mainTabView=[[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, iPhone5?568:480)];
+    nomore=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 320, 30)];
+    nomore.text=@"没有更多数据";
+    nomore.textAlignment=NSTextAlignmentCenter;
+    nomore.font=[UIFont systemFontOfSize:13];
+    nomore.textColor=[UIColor lightGrayColor];
+    
+    loadview=[[LoadingIndicatorView alloc]initWithFrame:CGRectMake(0, 900, 320, 40)];
+    loadview.backgroundColor=[UIColor clearColor];
+
+    
+    mainTabView=[[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, iPhone5?568-64:480-64)];
     mainTabView.delegate=self;
     mainTabView.dataSource=self;
     mainTabView.backgroundColor=[UIColor whiteColor];
+    mainTabView.separatorColor=[UIColor clearColor];
     [self.view addSubview:mainTabView];
     
     
     
+    
+    
+    
+    if (_refreshHeaderView == nil)
+    {
+        EGORefreshTableHeaderView *view = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0-mainTabView.bounds.size.height, 320, mainTabView.bounds.size.height)];
+        view.delegate = self;
+        _refreshHeaderView = view;
+    }
+    [_refreshHeaderView refreshLastUpdatedDate];
+    [mainTabView addSubview:_refreshHeaderView];
+    
+    
+
 
 
 }
@@ -84,9 +222,9 @@
     
     [super viewWillAppear:NO];
     
-  [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
+//  [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
     
-    self.navigationController.navigationBarHidden=YES;
+//    self.navigationController.navigationBarHidden=YES;
     
 }
 
@@ -136,10 +274,14 @@
     
     
     
-    
+    huandengDic=[NSDictionary dictionary];
     huandengDic=dic;
     
-    [mainTabView reloadData];
+   
+    
+    mainTabView.tableHeaderView= [self getHeaderViewWithDic:huandengDic] ;
+    
+   // [mainTabView reloadData];
 
 
 
@@ -157,11 +299,11 @@
     
     SzkLoadData *loaddata=[[SzkLoadData alloc]init];
     
-    NSString *str_search=[NSString stringWithFormat:@"http://cmstest.fblife.com/ajax.php?c=newstwo&a=getapplist&page=1&type=json&pagesize=10&datatype=0"];
+    NSString *str_search=[NSString stringWithFormat:@"http://cmstest.fblife.com/ajax.php?c=newstwo&a=getappindex&page=%d&type=json&pagesize=10",numberofpage];
     
     [loaddata SeturlStr:str_search mytest:^(NSDictionary *dicinfo, int errcode) {
         
-        NSLog(@"新版幻灯的数据dicinfo===%@",dicinfo);
+        NSLog(@"新版普通的数据dicinfo===%@",dicinfo);
         
         if (errcode==0) {
             
@@ -175,14 +317,48 @@
         
     }];
     
-    NSLog(@"幻灯的接口是这个。。=%@",str_search);
+    NSLog(@"新版普通的的接口是这个。。=%@",str_search);
     
 
 }
 
 -(void)refreshNormalWithDic:(NSDictionary *)dicc{
     
-    normalinfoAllArray=[NSArray arrayWithArray:[dicc objectForKey:@"app"]];
+  NSArray *  tempnormalinfoAllArray=[NSArray arrayWithArray:[dicc objectForKey:@"app"]];
+     [loadview stopLoading:1];
+    if (numberofpage==1) {
+        [normalinfoAllArray removeAllObjects];
+    }
+    
+    for (NSDictionary *tsdic in tempnormalinfoAllArray) {
+        [normalinfoAllArray addObject:tsdic];
+    }
+    
+    
+    if (tempnormalinfoAllArray.count>0&&tempnormalinfoAllArray.count>=10) {
+        
+        mainTabView.tableFooterView=loadview;
+        isloadsuccess=YES;
+
+    }else if(tempnormalinfoAllArray.count<10&&tempnormalinfoAllArray.count>0){
+        
+        mainTabView.tableFooterView=nomore;
+        isloadsuccess=NO;
+
+        
+    }else if(tempnormalinfoAllArray.count==0&&normalinfoAllArray.count >0){
+        isloadsuccess=NO;
+
+        mainTabView.tableFooterView=nomore;
+        
+        
+    }else if(tempnormalinfoAllArray.count==0&&normalinfoAllArray.count ==0){
+        
+        NSLog(@"没有数据");
+        isloadsuccess=YES;
+    }
+
+    
     
     [mainTabView reloadData];
 
@@ -204,11 +380,189 @@
        }
 
 
+#pragma mark--幻灯的View
+
+-(UIView *)getHeaderViewWithDic:(NSDictionary*)headerDic {
+    
+    com_id_array=[NSMutableArray array];
+    com_link_array=[NSMutableArray array];
+    com_type_array=[NSMutableArray array];
+    com_title_array=[NSMutableArray array];
+    
+
+    
+    self.commentarray=[NSMutableArray arrayWithArray:[headerDic objectForKey:@"news"]];
+    
+    if (self.commentarray.count>0) {
+        NSMutableArray *imgarray=[NSMutableArray array];
+        
+        for ( int i=0; i<[self.commentarray count]; i++) {
+            
+            NSDictionary *dic_ofcomment=[self.commentarray objectAtIndex:i];
+            NSString *strimg=[dic_ofcomment objectForKey:@"photo"];
+            [imgarray addObject:strimg];
+            
+            
+            NSString *str_rec_title=[dic_ofcomment objectForKey:@"title"];
+            [com_title_array addObject:str_rec_title];
+            /*           id = 82920;
+             link = "http://drive.fblife.com/html/20131226/82920.html";
+             photo = "http://cmsweb.fblife.com/attachments/20131226/1388027183.jpg";
+             title = "\U57ce\U5e02\U8de8\U754c\U5148\U950b \U6807\U81f42008\U8bd5\U9a7e\U4f53\U9a8c";
+             type = 1;*/
+            
+            NSString *str_link=[dic_ofcomment objectForKey:@"link"];
+            [com_link_array addObject:str_link];
+            NSString *str_type=[dic_ofcomment objectForKey:@"type"];
+            [com_type_array addObject:str_type];
+            NSString *str__id=[dic_ofcomment objectForKey:@"id"];
+            [com_id_array addObject:str__id];
+            
+            
+        }
+        int length = self.commentarray.count;
+        NSMutableArray *tempArray = [NSMutableArray array];
+        for (int i = 0 ; i < length; i++)
+        {
+            NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
+                                  [NSString stringWithFormat:@"%@",[com_title_array objectAtIndex:i]],@"title" ,
+                                  [NSString stringWithFormat:@"%@",[imgarray objectAtIndex:i]],@"image",[NSString stringWithFormat:@"%@",[com_link_array objectAtIndex:i]],@"link",
+                                  [NSString stringWithFormat:@"%@",[com_type_array objectAtIndex:i]],@"type",[NSString stringWithFormat:@"%@",[com_id_array objectAtIndex:i]],@"idoftype",nil];
+            [tempArray addObject:dict];
+        }
+        
+        NSMutableArray *itemArray = [NSMutableArray arrayWithCapacity:length+2];
+        if (length > 1)
+        {
+            NSDictionary *dict = [tempArray objectAtIndex:length-1];
+            SGFocusImageItem *item = [[SGFocusImageItem alloc] initWithDict:dict tag:-1] ;
+            [itemArray addObject:item];
+        }
+        for (int i = 0; i < length; i++)
+        {
+            NSDictionary *dict = [tempArray objectAtIndex:i];
+            SGFocusImageItem *item = [[SGFocusImageItem alloc] initWithDict:dict tag:i] ;
+            [itemArray addObject:item];
+            
+        }
+        //添加第一张图 用于循环
+        if (length >1)
+        {
+            NSDictionary *dict = [tempArray objectAtIndex:0];
+            SGFocusImageItem *item = [[SGFocusImageItem alloc] initWithDict:dict tag:length];
+            [itemArray addObject:item];
+        }
+        bannerView = [[NewHuandengView alloc] initWithFrame:CGRectMake(0, 0, 320, 191) delegate:self imageItems:itemArray isAuto:YES];
+        [bannerView scrollToIndex:0];
+        
+ 
+        
+    }
+    
+    return bannerView;
+    
+}
+
+#pragma mark-SGFocusImageItem的代理
+- (void)testfoucusImageFrame:(NewHuandengView *)imageFrame didSelectItem:(SGFocusImageItem *)item
+{
+
+
+
+
+
+    NSLog(@"%s \n click===>%@",__FUNCTION__,item.title);
+
+
+    if (com_id_array.count>0) {
+
+        int type;
+        NSString *string_link_;
+        @try {
+            type=[item.type intValue];
+            
+            
+            
+            
+            NSLog(@"item.type====%d",type);
+            
+            
+
+            string_link_=item.link;
+
+        }
+        @catch (NSException *exception) {
+            NSLog(@"%@",exception);
+            return;
+
+        }@finally {
+            switch (type) {
+                    
+                    
+                    
+                case 1:
+                {
+
+                    NSLog(@"到新闻的");
+                    
+                    newsdetailViewController *_newsdetailVC=[[newsdetailViewController alloc]initWithID:item.idoftype];
+                    
+                    [self.navigationController pushViewController:_newsdetailVC animated:YES];
+                
+                    
+
+                }
+                    break;
+
+                case 2:{
+                    NSLog(@"到论坛的");
+                    bbsdetailViewController *_detaibbslVC=[[bbsdetailViewController alloc]init];
+                    
+                    _detaibbslVC.bbsdetail_tid=item.idoftype;
+                    
+                    [self.navigationController pushViewController:_detaibbslVC animated:YES];
+                    
+
+                }
+                    break;
+                case 3:{
+
+                    fbWebViewController *_fbVc=[[fbWebViewController alloc]init];\
+                    
+                    _fbVc.urlstring=item.link;
+                    
+                    [self.navigationController pushViewController:_fbVc animated:YES];
+                    
+                    NSLog(@"外链的");
+
+                }
+
+                default:
+                    break;
+            }
+
+
+        }
+
+
+
+    }
+
+}
+
+-(void)testfoucusImageFrame:(NewHuandengView *)imageFrame currentItem:(int)index{
+    
+//    NSLog(@"index===%d",index);
+    
+
+}
+
 #pragma mark-uitableviewdelegate datasource
+
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
 
-    return 1+normalinfoAllArray.count;
+    return normalinfoAllArray.count;
 
 }
 
@@ -216,6 +570,7 @@
 
 
     return 1;
+    
     /**
      * 1.幻灯，2,推的文章。3图集。4不清楚啊
      */
@@ -225,64 +580,121 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
 
 
-    static NSString *stringidentifier=@"cell";
     
-    CompreTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:stringidentifier];
-    
-    if (!cell) {
-        cell=[[CompreTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:stringidentifier];
-    }
-    
-    for (UIView *aview in cell.contentView.subviews) {
-        [aview removeFromSuperview];
-    }
-    
-    
-    if (indexPath.row==0) {
+        NSDictionary *dictemp=[normalinfoAllArray objectAtIndex:indexPath.row];
         
-        [cell setDic:huandengDic cellStyle:CompreTableViewCellStyleHuandeng thecellbloc:^(int picID) {
+        if ([[dictemp objectForKey:@"type"] integerValue]==2) {
             
+            static NSString *stringnormalidentifier=@"normal";
             
-        }];
-        
-        
-    }else{
-        
-        NSDictionary *temPnormalDic=[normalinfoAllArray objectAtIndex:indexPath.row-1];
-        
-        if ([[temPnormalDic objectForKey:@"type"] integerValue]==1) {
-            
-            [cell setDic:temPnormalDic cellStyle:CompreTableViewCellStylePictures thecellbloc:^(int picID) {
-                
-            }];
-            
+            CompreTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:stringnormalidentifier];
 
+            
+            if (!cell) {
+                cell=[[CompreTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:stringnormalidentifier type:CompreTableViewCellStyleText];
+            }
+
+            __weak typeof(self) wself=self;
+            
+            [cell normalsetDic:dictemp cellStyle:CompreTableViewCellStylePictures thecellbloc:^(NSString *thebuttontype,NSDictionary *dic,NSString * theWhateverid) {
+                
+                
+                [wself turntoOtherVCwithtype:thebuttontype thedic:dic theid:theWhateverid];
+            }];
+            return cell;
+
+            
         }else{
-        
-            [cell setDic:temPnormalDic cellStyle:CompreTableViewCellStyleText thecellbloc:^(int picID) {
+            
+            
+            static NSString *stringnormalidentifiers=@"normaltext";
+            
+            CompreTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:stringnormalidentifiers];
+            
+
+            if (!cell) {
+                cell=[[CompreTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:stringnormalidentifiers type:CompreTableViewCellStyleText];
+            }
+
+            
+            
+            __weak typeof(self) wself=self;
+
+            
+            [cell normalsetDic:dictemp cellStyle:CompreTableViewCellStyleText thecellbloc:^(NSString *thebuttontype,NSDictionary *dic,NSString * theWhateverid) {
+                
+                
+                [wself turntoOtherVCwithtype:thebuttontype thedic:dic theid:theWhateverid];
+
                 
             }];
-
         
+            return cell;
+
         }
-     
+        
     }
-    
-    
-    return cell;
-    
+ 
+//}
 
 
-}
+
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 
-    NSArray *array_img=@[@"http://cmsweb.fblife.com/attachments/20140627/1403808549.jpg.180x120.jpg",@"http://cmsweb.fblife.com/attachments/20140627/1403808549.jpg.180x120.jpg",@"http://cmsweb.fblife.com/attachments/20140627/1403808549.jpg.180x120.jpg",@"http://cmsweb.fblife.com/attachments/20140627/1403808549.jpg.180x120.jpg",@"http://cmsweb.fblife.com/attachments/20140627/1403808549.jpg.180x120.jpg"];
-    NSMutableArray *muArr=[NSMutableArray arrayWithArray:array_img];
-    ShowImagesViewController *_showbig=[[ShowImagesViewController alloc]init];
-    _showbig.allImagesUrlArray=muArr;
-    _showbig.currentPage=3;
-    [self.navigationController pushViewController:_showbig animated:YES];
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+   
+    NSDictionary *temPnormalDic=[normalinfoAllArray objectAtIndex:indexPath.row];
+    
+    NewMainViewModel *_newmodel=[[NewMainViewModel alloc]init];
+    [_newmodel NewMainViewModelSetdic:temPnormalDic];
+    
+    
+
+    switch ([[temPnormalDic objectForKey:@"type"] integerValue]) {
+            
+            //（1新闻，2图集，3论坛，4商城)
+        case 1:
+        {
+            newsdetailViewController *_newsdetailVC=[[newsdetailViewController alloc]initWithID:_newmodel.tid];
+            
+            [self.navigationController pushViewController:_newsdetailVC animated:YES];
+            
+            
+            
+        
+        }
+            break;
+        case 2:
+        {
+            NSLog(@"和少男对接");
+            
+            
+        }
+            break;
+        case 3:
+        {
+            NSLog(@"到论坛的");
+            bbsdetailViewController *_detaibbslVC=[[bbsdetailViewController alloc]init];
+            
+            _detaibbslVC.bbsdetail_tid=_newmodel.tid;
+            
+            [self.navigationController pushViewController:_detaibbslVC animated:YES];
+            
+        }
+            break;
+        case 4:
+        {
+            
+        }
+            break;
+            
+            
+        default:
+            break;
+    }
     
 
 
@@ -290,22 +702,16 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    
-    
-    if (indexPath.row==0) {
+ 
         
-        return   [CompreTableViewCell getHeightwithtype:CompreTableViewCellStyleHuandeng];
-    
-    
-    }else{
         
-        NSDictionary *temPnormalDic=[normalinfoAllArray objectAtIndex:indexPath.row-1];
+        NSDictionary *temPnormalDic=[normalinfoAllArray objectAtIndex:indexPath.row];
 
         
             
             
             
-            if ([[temPnormalDic objectForKey:@"type"] integerValue]==1) {
+            if ([[temPnormalDic objectForKey:@"type"] integerValue]==2) {
                 return    [CompreTableViewCell getHeightwithtype:CompreTableViewCellStylePictures];
                 
                 
@@ -318,7 +724,141 @@
             
             
     
+
+}
+//NSString *thebuttontype,NSDictionary *dic,NSString * theWhateverid
+
+
+
+
+
+#pragma mark--处理各种跳转
+
+-(void)turntoOtherVCwithtype:(NSString *)thebuttontype thedic:(NSDictionary *)mydic theid:(NSString *)theWhateverid{
+    //（1新闻，2图集，3论坛，4商城
+    
+    NewMainViewModel *_newmodel=[[NewMainViewModel alloc]init];
+    [_newmodel NewMainViewModelSetdic:mydic];
+    
+    if ([thebuttontype isEqualToString:@"big"]) {
+        //点击的是大的button
+        
+        switch ([_newmodel.type intValue]) {
+            case 1:
+            {
+                
+                RootViewController *rootV=[[RootViewController alloc]init];
+                
+                [self.navigationController pushViewController:rootV animated:YES];
+                
+                
+            }
+                break;
+            case 2:
+            {
+                PicShowViewController *TestVC=[[PicShowViewController alloc]init];
+                
+                
+                [self.navigationController pushViewController:TestVC animated:YES];
+                
+                
+            }
+                break;
+            case 3:
+            {
+                BBSViewController *_bbsVC=[[BBSViewController alloc]init];
+                
+                [self.navigationController pushViewController:_bbsVC animated:YES];
+            }
+                break;
+            case 4:
+            {
+                
+                
+                
+            }
+                break;
+                
+            default:
+                break;
+        }
+        
+        
+        
+        
+    }else if([thebuttontype isEqualToString:@"small"]) {
+    
+    
+    
+        switch ([_newmodel.type intValue]) {
+            case 1:
+            {
+                
+                RootViewController *rootV=[[RootViewController alloc]init];
+                rootV.str_dijige=_newmodel.shownum;
+                
+                
+                
+                NSLog(@"self.diji===%@",rootV.str_dijige);
+
+                [self.navigationController pushViewController:rootV animated:YES];
+                
+                
+                
+                
+                
+                
+            }
+                break;
+            case 2:
+            {
+                PicShowViewController *TestVC=[[PicShowViewController alloc]init];
+                
+                
+                [self.navigationController pushViewController:TestVC animated:YES];
+                
+                
+            }
+                break;
+            case 3:
+            {
+                BBSfenduiViewController *_bbsVC=[[BBSfenduiViewController alloc]init];\
+                
+                _bbsVC.string_id=_newmodel.bbsfid;
+                
+                [self.navigationController pushViewController:_bbsVC animated:YES];
+            }
+                break;
+            case 4:
+            {
+                
+                
+                
+            }
+                break;
+                
+            default:
+                break;
+        }
+        
+        
+
+    
+    
+    
     }
+    
+    
+ 
+ 
+    
+    
+    
+
+    
+ //   NSLog(@"xxxx==%@",mydic);
+//    
+
 
 }
 
@@ -340,6 +880,70 @@
   }
 
 
+
+#pragma mark-下拉刷新的代理
+- (void)reloadTableViewDataSource
+{
+    _reloading = YES;
+}
+- (void)doneLoadingTableViewData
+{
+    _reloading = NO;
+	[_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:mainTabView];
+    
+}
+
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
+    
+    
+    
+    
+	
+    //	[self refreshwithrag:self.tag];
+    //    [self.delegate refreshmydatawithtag:self.tag];
+    [self loadNomalData];
+    [self loadHuandeng];
+	[self performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:3.0];
+	
+}
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    //要判断当前是哪一个，有mainTabView/imagesc/twoscrow/sec2
+    if (scrollView==mainTabView) {
+        [_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
+        
+        if(mainTabView.contentOffset.y > (mainTabView.contentSize.height - mainTabView.frame.size.height+40)&&isloadsuccess==YES&&normalinfoAllArray.count>=10) {
+            
+            
+            [loadview startLoading];
+            numberofpage++;
+            isloadsuccess=!isloadsuccess;
+            [self loadNomalData];
+        }
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    [_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+    
+}
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view{
+	
+	return _reloading; // should return ccif data source model is reloading
+}
+
+- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view{
+    
+	return [NSDate date]; // should return date data source was last changed
+}
 
 
 
