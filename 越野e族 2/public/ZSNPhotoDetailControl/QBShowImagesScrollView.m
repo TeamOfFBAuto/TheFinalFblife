@@ -107,7 +107,6 @@
         _locationImageView.contentMode = UIViewContentModeScaleAspectFit;
         _locationImageView.delegate = self;
         //张少南 默认图
-        NSLog(@"什么情况呢-=-=-=-=-=----   %@",theUrl);
         [_locationImageView loadImageFromURL:theUrl withPlaceholdImage:nil];
         
         [self addSubview:_locationImageView];

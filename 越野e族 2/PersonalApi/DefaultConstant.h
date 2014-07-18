@@ -385,6 +385,10 @@ alpha:(a)]
 
 #define ATLAS_COMMENT_URL @"http://t.fblife.com/openapi/index.php?mod=comment&code=commentadd&sort=15&sortid=%@&content=%@&title=%@&intro=%@&photo=%@&fromtype=b5eeec0b&authkey=%@"
 
+#pragma mark - 赞图集的接口
+
+#define ATLAS_PRAISE_URL @"http://cmstest.fblife.com/ajax.php?c=photo&a=addlikes&type=json&id=%@"
+
 
 #pragma mark - 获取所有收藏的板块接口
 

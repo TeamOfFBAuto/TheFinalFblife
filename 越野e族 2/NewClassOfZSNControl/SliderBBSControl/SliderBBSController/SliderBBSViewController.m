@@ -19,6 +19,7 @@
 #import "testbase.h"
 #import "NewMainViewModel.h"
 #import "CompreTableViewCell.h"
+#import "UIViewController+MMDrawerController.h"
 
 
 
@@ -137,6 +138,17 @@
     }
 }
 
+-(void)rightButtonTap:(UIButton *)sender
+{
+    [self.mm_drawerController toggleDrawerSide:MMDrawerSideRight animated:YES completion:nil];
+}
+
+-(void)leftButtonTap:(UIButton *)sender
+{
+    [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+}
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -204,6 +216,8 @@
     _myTableView1.delegate = self;
     
     _myTableView1.dataSource = self;
+    
+    _myTableView1.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     [_myScrollView addSubview:_myTableView1];
     
@@ -443,11 +457,7 @@
                     
                     for (NSDictionary * dic in array)
                     {
-                        NewMainViewModel * model = [[NewMainViewModel alloc] init];
-                        
-                        [model NewMainViewModelSetdic:dic];
-                        
-                        [bself.data_array addObject:model];
+                        [bself.data_array addObject:dic];
                     }
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
@@ -686,7 +696,7 @@
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     if (tableView == _myTableView1) {
-        return 2;
+        return 1;
     }else
     {
         return _forum_temp_array.count;
@@ -697,12 +707,7 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (tableView == _myTableView1) {
-        if (section == 0) {
-            return 0;
-        }else
-        {
-            return self.data_array.count;
-        }
+        return self.data_array.count;
     }else
     {
         SliderBBSForumModel * model = [_forum_temp_array objectAtIndex:section];
@@ -715,31 +720,24 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    if (tableView ==_myTableView1) {
+    if (tableView ==_myTableView1)
+    {
         static NSString * identifier = @"identifier";
         
         CompreTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
         
-        if (cell == nil) {
-            cell = [[CompreTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        if (!cell) {
+            cell=[[CompreTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier type:CompreTableViewCellStyleText];
         }
         
+        NSDictionary * dictemp = [self.data_array objectAtIndex:indexPath.row];
         
-        if (indexPath.section == 1)
-        {
-//            NewMainViewModel * model = [self.data_array objectAtIndex:indexPath.row];
-//            
-//            [cell setDic:temPnormalDic cellStyle:CompreTableViewCellStyleText thecellbloc:^(int picID) {
-//                
-//            }];
-//            
-//            
-//            NSMutableArray *array_select=[NSMutableArray array];
-//            
-//            array_select=  [newslooked findbytheid:model.jx_id];
-//            
-//            cell.title_label.textColor = array_select.count?[UIColor grayColor]:[UIColor blackColor];
-        }
+        __weak typeof(self) wself=self;
+        
+        [cell normalsetDic:dictemp cellStyle:CompreTableViewCellStyleText thecellbloc:^(NSString *thebuttontype,NSDictionary *dic,NSString * theWhateverid) {
+            
+//                [wself turntoOtherVCwithtype:thebuttontype thedic:dic theid:theWhateverid];
+        }];
         
         return cell;
     }else
@@ -844,13 +842,7 @@
 {
     if (tableView == _myTableView1)
     {
-        if (indexPath.section == 0)
-        {
-            return 0;
-        }else
-        {
-            return 85;
-        }
+        return 85;
     }else
     {
         SliderBBSForumModel * first_model = [_forum_temp_array objectAtIndex:indexPath.section];
@@ -877,13 +869,7 @@
 {
     if (tableView == _myTableView1)
     {
-        if (section == 0)
-        {
-            return @"";
-        }else
-        {
-            return @"论坛精选";
-        }
+        return nil;
     }else
     {
         return @"";
@@ -895,12 +881,7 @@
 {
     if (tableView == _myTableView1)
     {
-        if (section == 0) {
-            return 113.5;
-        }else
-        {
-            return 30;
-        }
+        return 105;
     }else
     {
         return 44;
@@ -912,13 +893,8 @@
 {
     if (tableView == _myTableView1)
     {
-        if (section == 0)
-        {
-            return sectionView;
-        }else
-        {
-            return nil;
-        }
+        return sectionView;
+        
     }else
     {
         SliderBBSForumModel * model = [_forum_temp_array objectAtIndex:section];
@@ -999,7 +975,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (tableView == _myTableView1 && indexPath.section == 1)
+    if (tableView == _myTableView1)
     {
         SliderBBSJingXuanModel * model = [self.data_array objectAtIndex:indexPath.row];
         

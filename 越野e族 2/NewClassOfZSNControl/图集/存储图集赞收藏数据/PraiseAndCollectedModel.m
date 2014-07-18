@@ -11,9 +11,9 @@
 
 @implementation PraiseAndCollectedModel
 
-@dynamic atlasid;
-@dynamic praise;
-@dynamic collected;
+@synthesize atlasid = _atlasid;
+@synthesize praise = _praise;
+@synthesize collected = _collected;
 
 
 
@@ -23,15 +23,17 @@
 +(void)addIntoDataSource:(PraiseAndCollectedModel *)sender
 {
     
+    NSLog(@"zenme mei ------%@ ---  %@ ",sender.atlasid,sender.praise);
+    
     AppDelegate * myAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
     PraiseAndCollectedModel* user=(PraiseAndCollectedModel *)[NSEntityDescription insertNewObjectForEntityForName:@"PraiseAndCollectedModel" inManagedObjectContext:myAppDelegate.managedObjectContext];
     
-    [user setAtlasid:sender.atlasid];
+    user.atlasid = sender.atlasid;
     
-    [user setPraise:sender.praise];
+    user.praise = sender.praise;
     
-    [user setCollected:sender.collected];
+    user.collected = sender.collected;
     
     NSError* error;
     BOOL isSaveSuccess=[myAppDelegate.managedObjectContext save:&error];
@@ -75,6 +77,7 @@
     }
     
     return mutableFetchResult;
+    
 }
 
 //更新
@@ -98,11 +101,11 @@
     //更新age后要进行保存，否则没更新
     for (PraiseAndCollectedModel* user in mutableFetchResult)
     {
-        [user setAtlasid:sender.atlasid];
+        user.atlasid = sender.atlasid;
         
-        [user setPraise:sender.praise];
+        user.praise = sender.praise;
         
-        [user setCollected:sender.collected];
+        user.collected = sender.collected;
         
     }
     [myAppDelegate.managedObjectContext save:&error];

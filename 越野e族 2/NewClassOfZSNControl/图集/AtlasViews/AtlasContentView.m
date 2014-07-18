@@ -87,9 +87,7 @@
     [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:16] range:NSMakeRange(0,page.length)];
     
     [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12] range:NSMakeRange(page.length,str.length-page.length)];
-    
-    NSLog(@"str ----   %@",str);
-    
+        
     _current_page.attributedText = str;
 }
 

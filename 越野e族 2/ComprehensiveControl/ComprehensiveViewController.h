@@ -9,7 +9,19 @@
 #import <UIKit/UIKit.h>
 #import "ZkingNavigationView.h"
 
-@interface ComprehensiveViewController : UIViewController<ZkingNavigationViewDelegate,UITableViewDelegate,UITableViewDataSource>{
+
+
+#import "EGORefreshTableHeaderView.h"
+
+#import "LoadingIndicatorView.h"
+
+#import "NewHuandengView.h"
+
+
+#import "SGFocusImageItem.h"
+
+
+@interface ComprehensiveViewController : UIViewController<ZkingNavigationViewDelegate,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,EGORefreshTableHeaderDelegate,NewHuandengViewDelegate>{
 
     ZkingNavigationView *navibar;
     
@@ -17,14 +29,33 @@
     
     NSDictionary *huandengDic;//幻灯的整体数据；
     
-    NSArray *normalinfoAllArray;//所有的普通数据的array
+    
+    NSMutableArray *normalinfoAllArray;//所有的普通数据的array
+    
+    
+    /**
+下拉刷新及上拉加载相关
+     */
 
+    UILabel *nomore;//没有更多数据
+    LoadingIndicatorView *loadview;//上拉加载的view
+    
+    EGORefreshTableHeaderView *_refreshHeaderView;
+    
+    BOOL _reloading;//第三刷新类的，不知道啥用
+    
+    int numberofpage;//当前页
+    
+    BOOL isloadsuccess;//是否加载成功
+    
+
+  NewHuandengView *bannerView ;//幻灯的view;
     
     
 
 }
 
-@property(nonatomic,strong)NSMutableArray *huandengArray;
+@property(nonatomic,strong)NSMutableArray *commentarray;
 
 
 

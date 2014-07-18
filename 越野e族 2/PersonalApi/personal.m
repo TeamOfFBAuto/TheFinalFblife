@@ -6,7 +6,6 @@
 //  Copyright (c) 2013年 szk. All rights reserved.
 //
 
-#import "personal.h"
 #include <AudioToolbox/AudioToolbox.h>
 #include <CoreFoundation/CFURL.h>
 #include <OpenAL/al.h>

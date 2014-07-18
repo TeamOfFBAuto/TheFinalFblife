@@ -457,6 +457,8 @@
     
     [super viewDidLoad];
     
+    
+    
     mycurrentlanmu = 1;
     
     self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
@@ -503,64 +505,64 @@
     self.category_string=[[NSString alloc]initWithFormat:@"zuixin"];
     self.view.backgroundColor = [UIColor clearColor];
     
-    UIView * topView = [[UIView alloc] initWithFrame:CGRectMake(0,0,200,44)];
-    topView.backgroundColor = [UIColor clearColor];
-    // [self.view addSubview:topView];
-    
-    UIImageView * logoImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo.png"]];
-    logoImage.frame=CGRectMake(MY_MACRO_NAME?-54+5:-54+5,(44-16)/2 , 312/2, 32/2);
-    logoImage.backgroundColor = [UIColor clearColor];
-    [topView addSubview:logoImage];
-    
-    self.navigationItem.titleView=topView;
-    
-    
+//    UIView * topView = [[UIView alloc] initWithFrame:CGRectMake(0,0,200,44)];
+//    topView.backgroundColor = [UIColor clearColor];
+//    // [self.view addSubview:topView];
+//    
+//    UIImageView * logoImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo.png"]];
+//    logoImage.frame=CGRectMake(MY_MACRO_NAME?-54+5:-54+5,(44-16)/2 , 312/2, 32/2);
+//    logoImage.backgroundColor = [UIColor clearColor];
+//    [topView addSubview:logoImage];
+//    
+//    self.navigationItem.titleView=topView;
     
     
-    UIButton *rightview=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 37, 37/2)];
-    rightview.backgroundColor=[UIColor clearColor];
-    [rightview addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventTouchUpInside];
-    
-    refreshButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [refreshButton setImage:[UIImage imageNamed:@"ios7_newssearch.png"] forState:UIControlStateNormal];
-    refreshButton.frame = CGRectMake(MY_MACRO_NAME? 25:10, 0, 37/2, 37/2);
-    //    refreshButton.center = CGPointMake(300,20);
-    [rightview addSubview:refreshButton];
-    [refreshButton addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *_rightitem=[[UIBarButtonItem alloc]initWithCustomView:rightview];
-    self.navigationItem.rightBarButtonItem=_rightitem;
-    
-    //  [topView addSubview:refreshButton];
-    
-    self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
-    
-    self.navigationController.navigationBarHidden=NO;
-    
-    self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
     
     
-    [self.navigationController.parentViewController.view.window makeKeyAndVisible];
+//    UIButton *rightview=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 37, 37/2)];
+//    rightview.backgroundColor=[UIColor clearColor];
+//    [rightview addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    refreshButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [refreshButton setImage:[UIImage imageNamed:@"ios7_newssearch.png"] forState:UIControlStateNormal];
+//    refreshButton.frame = CGRectMake(MY_MACRO_NAME? 25:10, 0, 37/2, 37/2);
+//    //    refreshButton.center = CGPointMake(300,20);
+//    [rightview addSubview:refreshButton];
+//    [refreshButton addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventTouchUpInside];
+//    UIBarButtonItem *_rightitem=[[UIBarButtonItem alloc]initWithCustomView:rightview];
+//    self.navigationItem.rightBarButtonItem=_rightitem;
+//    
+//    //  [topView addSubview:refreshButton];
+//    
+//    self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
+//    
+//    self.navigationController.navigationBarHidden=NO;
+//    
+//    self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
+//    
+//    
+//    [self.navigationController.parentViewController.view.window makeKeyAndVisible];
+//    
+//    
+//    if([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)] )
+//    {
+//        //iOS 5 new UINavigationBar custom background
+//        
+//        //        if (IOS_VERSION>=7.0)
+//        //        {
+//        //            [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:IOS7DAOHANGLANBEIJING] forBarMetrics: UIBarMetricsDefault];
+//        //        }else
+//        //        {
+//        //            [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"pinglun_bg(2).png"] forBarMetrics: UIBarMetricsDefault];
+//        //        }
+//        
+//        [self.navigationController.navigationBar setBackgroundImage:MY_MACRO_NAME?[UIImage imageNamed:IOS7DAOHANGLANBEIJING]:[UIImage imageNamed:@"ios7eva320_44.png"] forBarMetrics: UIBarMetricsDefault];
+//        
+//        
+//    }
     
     
-    if([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)] )
-    {
-        //iOS 5 new UINavigationBar custom background
-        
-        //        if (IOS_VERSION>=7.0)
-        //        {
-        //            [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:IOS7DAOHANGLANBEIJING] forBarMetrics: UIBarMetricsDefault];
-        //        }else
-        //        {
-        //            [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"pinglun_bg(2).png"] forBarMetrics: UIBarMetricsDefault];
-        //        }
-        
-        [self.navigationController.navigationBar setBackgroundImage:MY_MACRO_NAME?[UIImage imageNamed:IOS7DAOHANGLANBEIJING]:[UIImage imageNamed:@"ios7eva320_44.png"] forBarMetrics: UIBarMetricsDefault];
-        
-        
-    }
-    
-    
-    self.navigationController.navigationBar.alpha=1;
+//    self.navigationController.navigationBar.alpha=1;
     
     _titleView = [[UIScrollView alloc] initWithFrame:CGRectMake(0,0,320,37)];
     _titleView.backgroundColor = [UIColor whiteColor];
@@ -713,11 +715,124 @@
     
     searchresaultview.tableFooterView = searchloadingview;
     
-    rootnewsModel *model=[[rootnewsModel alloc]init];
-    [model startloadcommentsdatawithtag:800 thetype:[personal place:[array_lanmu objectAtIndex:0]]];
-    model.delegate=self;
+    if ([self.str_dijige intValue ]==0) {
+        rootnewsModel *model=[[rootnewsModel alloc]init];
+        [model startloadcommentsdatawithtag:800 thetype:[personal place:[array_lanmu objectAtIndex:0]]];
+        model.delegate=self;
+        
+    }else{
+    
+        [self refreshWithZonghe];
+    
+    
+    }
+    [self prepairNavigationBar];
+  
     
 }
+
+
+#pragma mark-准备uinavigationbar
+
+-(void)prepairNavigationBar{
+    
+    
+    if([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)] ) {
+        //iOS 5 new UINavigationBar custom background
+        [self.navigationController.navigationBar setBackgroundImage:MY_MACRO_NAME?[UIImage imageNamed:IOS7DAOHANGLANBEIJING]:[UIImage imageNamed:@"ios7eva320_44.png"] forBarMetrics: UIBarMetricsDefault];
+        
+    }
+    
+    
+    UIButton *button_back=[[UIButton alloc]initWithFrame:self.isMain? CGRectMake(MY_MACRO_NAME? -2:5, (44-33/2)/2, 36/2, 33/2):CGRectMake(MY_MACRO_NAME? -5:5, (44-43/2)/2, 12, 43/2)];
+    
+    [button_back addTarget:self action:@selector(leftDrawerButtonPress) forControlEvents:UIControlEventTouchUpInside];
+    [button_back setBackgroundImage:self.isMain? [UIImage imageNamed:@"homenewz36_33.png"]:[UIImage imageNamed:@"ios7_back.png"] forState:UIControlStateNormal];
+    
+    UIButton *back_view=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50, 44)];
+    [back_view addSubview:button_back];
+    back_view.backgroundColor=[UIColor clearColor];
+    [back_view addTarget:self action:@selector(leftDrawerButtonPress) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:back_view];
+    self.navigationItem.leftBarButtonItem=back_item;
+    
+    
+    
+    //[UIImage imageNamed:@"fblifelogo102_38_.png"];
+    
+    self.navigationItem.title = @"资讯";
+    
+    UIColor * cc = [UIColor blackColor];
+    
+    NSDictionary * dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:cc,[UIFont systemFontOfSize:20],[UIColor clearColor],nil] forKeys:[NSArray arrayWithObjects:UITextAttributeTextColor,UITextAttributeFont,UITextAttributeTextShadowColor,nil]];
+    
+    self.navigationController.navigationBar.titleTextAttributes = dict;
+    
+    //右边
+    
+    UIButton *  button_comment=[[UIButton alloc]initWithFrame:CGRectMake(MY_MACRO_NAME?37: 25, (44-34/2)/2, 37/2, 34/2)];
+    
+    
+    
+    //[button_comment setTitle:@"评论" forState:UIControlStateNormal];
+    
+    if (self.isMain) {
+        button_comment.titleLabel.font=[UIFont systemFontOfSize:14];
+        [button_comment addTarget:self action:@selector(rightDrawerButtonPress) forControlEvents:UIControlEventTouchUpInside];
+        [button_comment setBackgroundImage:[UIImage imageNamed:@"menewz37_36.png"] forState:UIControlStateNormal];
+        
+        UIButton *  rightView=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50, 44)];
+        [rightView addTarget:self action:@selector(rightDrawerButtonPress) forControlEvents:UIControlEventTouchUpInside];
+        [rightView addSubview:button_comment];
+        rightView.backgroundColor=[UIColor clearColor];
+        
+        
+        
+        
+        UIBarButtonItem *comment_item=[[UIBarButtonItem alloc]initWithCustomView:rightView];
+        
+        self.navigationItem.rightBarButtonItem=comment_item;
+
+    }
+    
+    
+    
+    
+    
+    
+}
+
+#pragma mark - Button Handlers
+-(void)leftDrawerButtonPress{
+    
+    
+        if (self.isMain) {
+            [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+            
+        }else{
+            [self.navigationController popViewControllerAnimated:YES];
+            
+        }
+
+}
+
+-(void)rightDrawerButtonPress{
+    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleDefault animated:NO];
+    
+    [self.mm_drawerController toggleDrawerSide:MMDrawerSideRight animated:YES completion:nil];
+    
+    
+}
+
+-(void)backtoShangVC{
+
+    [self.navigationController popViewControllerAnimated:YES];
+
+}
+
+
+
+
 
 #pragma mark-判断是否更新版本，以及是否更新缓存里面的数据
 -(void)judgeversionandclean{
@@ -749,7 +864,7 @@
         
         alert.tag = 10000;
         
-        [alert show];
+      //  [alert show];
         
     }
 }
@@ -2823,6 +2938,24 @@
     }
     
 }
+
+#pragma mark--综合首页过来之后，可以定位到某个栏目
+
+-(void)refreshWithZonghe{
+    
+    
+    
+    NSLog(@"self.diji===%@",self.str_dijige);
+    int mm=[self.str_dijige intValue];
+    
+    [newsScrow setContentOffset:CGPointMake(320*(mm-1), 0)];
+    
+   [self refreshmydatawithtag:mm-1+800];
+
+
+}
+
+
 
 #pragma mark-新的请求新闻和推荐新闻
 

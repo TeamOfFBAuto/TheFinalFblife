@@ -33,11 +33,20 @@
         
         self.channel_name=[NSString stringWithFormat:@"%@",[thedic objectForKey:@"channel_name"]];
         
-        self.bbsfid=[NSString stringWithFormat:@"%@",[thedic objectForKey:@"forumname"]];
+        self.bbsfid=[NSString stringWithFormat:@"%@",[thedic objectForKey:@"bbsfid"]];
+        
+        self.forumname=[NSString stringWithFormat:@"%@",[thedic objectForKey:@"forumname"]];
         
         self.type=[NSString stringWithFormat:@"%@",[thedic objectForKey:@"type"]];
         
         self.publishtime=[NSString stringWithFormat:@"%@",[thedic objectForKey:@"publishtime"]];
+        
+        self.likes=[NSString stringWithFormat:@"%@",[thedic objectForKey:@"likes"]];
+        
+        self.shownum=[NSString stringWithFormat:@"%@",[thedic objectForKey:@"shownum"]];
+
+        
+        
     }
     @catch (NSException *exception) {
         

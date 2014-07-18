@@ -136,12 +136,18 @@
 @property(nonatomic,assign)int pages;//判断是否是最后一页
 @property(nonatomic,strong)NSMutableArray *array_searchresault;
 
+@property(nonatomic,assign)BOOL isMain;
+
+@property(nonatomic,strong)NSString *str_dijige;
+
 
 //搜索微博数据
 
 @property(nonatomic,strong)NSMutableArray * photos;
 @property(nonatomic,strong)NSMutableArray * Replys_photos;
 @property (nonatomic,strong) UIView *BaseView;
+
+
 
 
 @end

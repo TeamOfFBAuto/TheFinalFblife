@@ -27,6 +27,10 @@
 #import "MobClick.h"
 #import "AdvertisingModel.h"
 #import "MyViewController.h"
+
+#import "XTSideMenuManager.h"
+
+
 #import "AppDelegate.h"
 #import "MyNavigationController.h"
 

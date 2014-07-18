@@ -28,6 +28,9 @@
     UIView * _theTouchView;//用于点击空白区域消失键盘
     
     UIButton * send_button;//发送按钮
+    
+    PraiseAndCollectedModel * praise_model;
+
 }
 
 @end
@@ -108,6 +111,11 @@
         
         [button setImage:[UIImage imageNamed:[imageArray objectAtIndex:i+3]] forState:UIControlStateSelected];
         
+        if (i == 0 && isPraise)
+        {
+            button.selected = YES;
+        }
+        
         [daohangView addSubview:button];
     }
 }
@@ -172,7 +180,7 @@
     {
         case 0://赞
         {
-            
+            [self cancelAndPraise];
         }
             break;
         case 1://收藏
@@ -190,6 +198,55 @@
             break;
     }
 }
+
+
+#pragma mark - 赞或取消赞
+
+-(void)cancelAndPraise
+{
+    if (isPraise)
+    {
+        UIButton * button = (UIButton *)[navImageView viewWithTag:10000];
+        
+        button.selected = NO;
+        
+        [PraiseAndCollectedModel delete:praise_model];
+        
+        return;
+    }
+    
+    NSString * fullUrl = [NSString stringWithFormat:ATLAS_PRAISE_URL,self.id_atlas];
+    
+    ASIHTTPRequest * p_request = [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:fullUrl]];
+    
+    __block typeof(p_request) request = p_request;
+    
+    [request setCompletionBlock:^{
+        
+        isPraise = YES;
+        
+        praise_model.praise = [NSNumber numberWithBool:isPraise];
+        
+        
+        NSLog(@"点在 ---   %@",praise_model.praise);
+        
+        [PraiseAndCollectedModel addIntoDataSource:praise_model];
+        
+        UIButton * button = (UIButton *)[navImageView viewWithTag:10000];
+        
+        button.selected = YES;
+        
+    }];
+    
+    
+    [request setFailedBlock:^{
+        
+    }];
+    
+    [p_request startAsynchronous];
+    
+}
+
 
 
 
@@ -240,7 +297,7 @@
 }
 
 
-#pragma mark - 获取数据
+#pragma mark - 获取图集数据
 
 -(void)loadData
 {
@@ -251,7 +308,7 @@
         _allImagesUrlArray = [NSMutableArray array];
     }
     //张少南 这里需要图集id
-    [atlasModel loadAtlasDataWithId:@"362" WithCompleted:^(NSMutableArray *array) {
+    [atlasModel loadAtlasDataWithId:self.id_atlas WithCompleted:^(NSMutableArray *array) {
         
         [bself.allImagesUrlArray addObjectsFromArray:array];
         
@@ -361,8 +418,21 @@
     
     self.view.backgroundColor = [UIColor blackColor];//RGBCOLOR(229,229,229);
     
-    _currentPage = 2;
+    praise_model = [[PraiseAndCollectedModel alloc] init];
     
+    praise_model.atlasid = self.id_atlas;
+    
+    NSMutableArray * praise_array = [NSMutableArray array];
+    
+    praise_array = [PraiseAndCollectedModel findQuery:praise_model];
+    
+    NSLog(@"zan -----%@  ---  %@",[[praise_array objectAtIndex:0] praise],praise_array);
+    
+    if (praise_array.count > 0)
+    {
+        isPraise = [[[praise_array objectAtIndex:0] praise] intValue];
+    }
+        
     atlasModel = [[AtlasModel alloc] init];
     
     [self loadData];

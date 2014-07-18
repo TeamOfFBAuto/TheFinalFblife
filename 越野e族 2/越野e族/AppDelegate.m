@@ -986,7 +986,6 @@
 //    guanggao_image=nil;
 //    iMagelogo=nil;
 //    bigimageview=nil;
-    [[UIApplication sharedApplication] setStatusBarHidden:NO];
     
 
     
@@ -1013,7 +1012,7 @@
     [_RootVC setMaximumRightDrawerWidth:298];
     [_RootVC setMaximumLeftDrawerWidth:287];
     _RootVC.shouldStretchDrawer = NO;
-    [_RootVC setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
+    [_RootVC setOpenDrawerGestureModeMask:MMOpenDrawerGestureModePanningNavigationBar];
     [_RootVC setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
     
     

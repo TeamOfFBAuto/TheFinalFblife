@@ -34,6 +34,7 @@
     
     BOOL isCollected;
     
+    BOOL isPraise;
     
     AtlasContentView * content_back_view; //图片标题、简介视图
 }

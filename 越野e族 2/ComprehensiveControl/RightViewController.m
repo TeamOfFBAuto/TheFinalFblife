@@ -20,6 +20,8 @@
 #import "DraftBoxViewController.h"
 #import "DetailViewController.h"
 #import "ShowImagesViewController.h"
+#import "ShoucangViewController.h"//收藏界面
+#import "MyWriteAndCommentViewController.h"//我发布的帖子和我回复的帖子
 
 
 @interface RightViewController ()
@@ -323,11 +325,22 @@
     switch (sender.tag - 1000) {
         case 0:
         {
+            NSLog(@"帖子");
+            MyWriteAndCommentViewController * shoucangVC = [[MyWriteAndCommentViewController alloc] init];
+            
+            [myDelegate.root_nav pushViewController:shoucangVC animated:YES];
+
+  
             
         }
             break;
         case 1:
         {
+            NSLog(@"收藏");
+            
+            ShoucangViewController * shoucangVC = [[ShoucangViewController alloc] init];
+            
+            [myDelegate.root_nav pushViewController:shoucangVC animated:YES];
             
         }
             break;
