@@ -116,6 +116,7 @@ alpha:(a)]
 #define USER_BOTOM 10 //整体距离下面的距离
 ///////////////////////////////////我是分界线///////////////////////////////////////////////////
 //保存用户信息的常量key
+#define USER_FACE @"userface"
 #define USER_NAME @"username"
 #define USER_PW @"userPw"
 #define USER_UID @"useruid"
@@ -417,8 +418,17 @@ alpha:(a)]
 #define COLLECTION_CANCEL_FORUM_SECTION_URL_OLD @"http://bbs.fblife.com/bbsapinew/favoritesforums.php?fid=%@&action=add&formattype=json&authcode=%@"
 
 
+#pragma mark - 收藏帖子接口
 
+#define COLLECTION_BBS_POST_URL @"http://demo03.fblife.com/bbsapinew/addfavoritesthread.php?authcode=%@&addtid=%@&formattype=json"
 
+#pragma mark - 查看收藏的帖子
+
+#define GET_COLLECTION_BBS_POST_URL @"http://bbs.fblife.com/bbsapinew/favoritesthread.php?authcode=%@&formattype=json&page=1&pagesize=2000"
+
+#pragma mark - 删除收藏的帖子
+
+#define DELETE_COLLECTION_BBS_POST_URL @"http://demo03.fblife.com/bbsapinew/delfavoritesthread.php?delid=%@&formattype=json&authcode=%@"
 
 
 

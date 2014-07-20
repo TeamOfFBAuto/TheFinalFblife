@@ -15,7 +15,7 @@
 @end
 
 @implementation QrcodeViewController
-@synthesize headImage,nameString,uid;
+@synthesize headImage,nameString,uid,imageString;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -41,6 +41,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
+    
+    self.uid = [user objectForKey:USER_UID];
+    
+    self.nameString = [user objectForKey:USER_NAME];
+    
+    self.imageString = [user objectForKey:USER_FACE];
+    
     
     self.view.backgroundColor=RGBCOLOR(247, 247, 247);
 //    UILabel *labelbiaoti=[[UILabel alloc]initWithFrame:CGRectMake(35,0,120,44)];
@@ -127,11 +136,11 @@
    // qrimageview.backgroundColor=[UIColor orangeColor];
     [centerimgkuang addSubview:qrimageview];
     
-
     
+    AsyncImageView * headimageview = [[AsyncImageView alloc] initWithFrame:CGRectMake(15, 564/2, 50, 50)];
     
-    UIImageView *headimageview=[[UIImageView alloc]initWithImage:self.headImage];
-    headimageview.frame=CGRectMake(15, 564/2, 50, 50);
+    [headimageview loadImageFromURL:self.imageString withPlaceholdImage:[UIImage imageNamed:@"touxiang"]];
+    
     [centerimgkuang addSubview:headimageview];
     
     if ([string_myuid isEqualToString:self.uid]) {

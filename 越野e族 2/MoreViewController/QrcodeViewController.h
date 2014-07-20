@@ -15,5 +15,6 @@
 @property(nonatomic,strong)UIImage *headImage;
 @property(nonatomic,strong)NSString *nameString;
 @property(nonatomic,strong)NSString * uid;
+@property(nonatomic,strong)NSString * imageString;
 
 @end

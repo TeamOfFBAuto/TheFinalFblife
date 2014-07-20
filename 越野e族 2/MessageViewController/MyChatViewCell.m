@@ -48,6 +48,7 @@
 - (void)setup
 {
     self.backgroundColor = [UIColor clearColor];
+    self.contentView.backgroundColor = [UIColor clearColor];
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.accessoryType = UITableViewCellAccessoryNone;
     self.accessoryView = nil;
@@ -82,7 +83,6 @@
     _background_imageView = [[UIImageView alloc] initWithFrame:CGRectMake(type == JSBubbleMessageTypeOutgoing?(320 - point.x - 65):50,34,point.x+15,point.y)];
     
     _background_imageView.userInteractionEnabled = YES;
-    
     
     /*
      CALayer * layer = [theView layer];

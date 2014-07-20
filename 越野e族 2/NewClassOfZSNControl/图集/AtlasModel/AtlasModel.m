@@ -58,6 +58,8 @@
     
     NSString * fullUrl = [NSString stringWithFormat:GET_PICTURES_URL,theId];
     
+    NSLog(@"获取图集数据 -----   %@",fullUrl);
+    
     ASIHTTPRequest * atlas_request = [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:fullUrl]];
     
     
@@ -70,8 +72,6 @@
             NSMutableArray * data_array = [NSMutableArray array];
             
             NSDictionary * allDic = [atlas_request.responseString objectFromJSONString];
-            
-            NSLog(@"图集数据----%@",allDic);
             
             if ([[allDic objectForKey:@"errno"] intValue] == 0)
             {

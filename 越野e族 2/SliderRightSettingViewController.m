@@ -338,6 +338,7 @@
         [user setObject:@"" forKey:USER_PW] ;
         [user setObject:@"" forKey:USER_AUTHOD] ;
         [user setObject:@"" forKey:USER_UID] ;
+        [user setObject:@"" forKey:USER_FACE];
         
         [user setBool:NO forKey:USER_IN];
         

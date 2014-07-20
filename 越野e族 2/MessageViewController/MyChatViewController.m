@@ -286,46 +286,53 @@
     
     temp_count = 1;
     
-    self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
+//    self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
+//    
+//    if([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)] )
+//    {
+//        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:MY_MACRO_NAME?IOS7DAOHANGLANBEIJING:IOS6DAOHANGLANBEIJING] forBarMetrics: UIBarMetricsDefault];
+//    }
+//    
+//    self.navigationItem.title = self.info.othername;
+//    
+//    UIColor * cc = [UIColor blackColor];
+//    
+//    NSDictionary * dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:cc,[UIFont systemFontOfSize:20],[UIColor clearColor],nil] forKeys:[NSArray arrayWithObjects:UITextAttributeTextColor,UITextAttributeFont,UITextAttributeTextShadowColor,nil]];
+//    
+//    self.navigationController.navigationBar.titleTextAttributes = dict;
+//    
+//    
+//    UIBarButtonItem * spaceButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+//    spaceButton.width = MY_MACRO_NAME?0:5;
+//    
+//    
+//    UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(10,8,12,21.5)];
+//    [button_back addTarget:self action:@selector(back:) forControlEvents:UIControlEventTouchUpInside];
+//    [button_back setBackgroundImage:[UIImage imageNamed:@"ios7_back@2x.png"] forState:UIControlStateNormal];
+//    UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:button_back];
+//    self.navigationItem.leftBarButtonItems=@[spaceButton,back_item];
+//    
+//    
+//    UIButton * peopleButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    
+//    peopleButton.frame = CGRectMake(0,0,36/2,33/2);
+//    
+//    [peopleButton setImage:[UIImage imageNamed:@"chat_people.png"] forState:UIControlStateNormal];
+//    
+//    [peopleButton addTarget:self action:@selector(PeopleView:) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    UIBarButtonItem * People_button = [[UIBarButtonItem alloc] initWithCustomView:peopleButton];
+//    
+//    self.navigationItem.rightBarButtonItems = @[spaceButton,People_button];
     
-    if([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)] )
-    {
-        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:MY_MACRO_NAME?IOS7DAOHANGLANBEIJING:IOS6DAOHANGLANBEIJING] forBarMetrics: UIBarMetricsDefault];
-    }
+    
+    self.rightImageName = @"chat_people";
+    
+    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeOther];
     
     self.navigationItem.title = self.info.othername;
-    
-    UIColor * cc = [UIColor blackColor];
-    
-    NSDictionary * dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:cc,[UIFont systemFontOfSize:20],[UIColor clearColor],nil] forKeys:[NSArray arrayWithObjects:UITextAttributeTextColor,UITextAttributeFont,UITextAttributeTextShadowColor,nil]];
-    
-    self.navigationController.navigationBar.titleTextAttributes = dict;
-    
-    
-    UIBarButtonItem * spaceButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    spaceButton.width = MY_MACRO_NAME?0:5;
-    
-    
-    UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(10,8,12,21.5)];
-    [button_back addTarget:self action:@selector(back:) forControlEvents:UIControlEventTouchUpInside];
-    [button_back setBackgroundImage:[UIImage imageNamed:@"ios7_back@2x.png"] forState:UIControlStateNormal];
-    UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:button_back];
-    self.navigationItem.leftBarButtonItems=@[spaceButton,back_item];
-    
-    
-    UIButton * peopleButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    
-    peopleButton.frame = CGRectMake(0,0,36/2,33/2);
-    
-    [peopleButton setImage:[UIImage imageNamed:@"chat_people.png"] forState:UIControlStateNormal];
-    
-    [peopleButton addTarget:self action:@selector(PeopleView:) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem * People_button = [[UIBarButtonItem alloc] initWithCustomView:peopleButton];
-    
-    self.navigationItem.rightBarButtonItems = @[spaceButton,People_button];
-    
-    
+
+    self.view.backgroundColor = RGBCOLOR(248,248,248);
     
     self.data_array = [[NSMutableArray alloc] init];
     
@@ -353,6 +360,7 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 	self.tableView.dataSource = self;
 	self.tableView.delegate = self;
+    self.tableView.backgroundColor = RGBCOLOR(248,248,248);
 	[self.view addSubview:self.tableView];
     
     backkeyboard =
@@ -397,6 +405,11 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadNewMessage) name:@"postNewMessage" object:nil];
     
+}
+
+-(void)rightButtonTap:(UIButton *)sender
+{
+    [self PeopleView:sender];
 }
 
 #pragma mark-显示框
@@ -699,6 +712,11 @@
         
         [cell loadAllViewWithUrl:info Style:theType];
     }
+    
+    
+    cell.backgroundColor = [UIColor clearColor];
+    
+    cell.contentView.backgroundColor = [UIColor clearColor];
     
     
     return cell;

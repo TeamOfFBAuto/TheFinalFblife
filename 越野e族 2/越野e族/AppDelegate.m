@@ -1063,9 +1063,9 @@
     if (_managedObjectModel!=nil) {
         return _managedObjectModel;
     }
-    //    NSURL* modelURL=[[NSBundle mainBundle] URLForResource:@"CoreDataExample" withExtension:@"momd"];
-    //    _managedObjectModel=[[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
-    _managedObjectModel=[[NSManagedObjectModel mergedModelFromBundles:nil] retain];
+    NSURL* modelURL=[[NSBundle mainBundle] URLForResource:@"AtlasSavedPraAndCollModel" withExtension:@"momd"];
+    _managedObjectModel=[[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
+//    _managedObjectModel=[[NSManagedObjectModel mergedModelFromBundles:nil] retain];
     return _managedObjectModel;
 }
 //托管对象上下文
@@ -1099,8 +1099,8 @@
     //        }
     //    }
     NSString* docs=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)lastObject];
-    NSURL* storeURL=[NSURL fileURLWithPath:[docs stringByAppendingPathComponent:@"CoreDataExample.sqlite"]];
-    NSLog(@"path is %@",storeURL);
+    NSURL* storeURL=[NSURL fileURLWithPath:[docs stringByAppendingPathComponent:@"AtlasSavedPraAndCollModel.sqlite"]];
+    NSLog(@"path is %@",[docs stringByAppendingPathComponent:@"AtlasSavedPraAndCollModel.sqlite"]);
     NSError* error=nil;
     _persistentStoreCoordinator=[[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
     if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {

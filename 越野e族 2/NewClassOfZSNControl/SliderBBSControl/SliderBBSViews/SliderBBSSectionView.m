@@ -20,6 +20,8 @@
     self = [super initWithFrame:frame];
     if (self)
     {
+        self.backgroundColor = [UIColor whiteColor];
+        
         sliderBBSSectionSegmentBlock = theBlock;
         
         for (int i = 0;i < 3;i++)
@@ -103,6 +105,7 @@
 {
     sectionView_block = theBlock;
     
+    NSLog(@"array ----  %@",array);
     
     if (_myScrollView)//如果有数据，把之前的数据干掉
     {
@@ -136,6 +139,9 @@
             string = base.name;
         }
         
+        CGSize titleSize = [string sizeWithFont:[UIFont systemFontOfSize:13] constrainedToSize:CGSizeMake(MAXFLOAT, 30)];
+        
+        
         [button setTitle:string forState:UIControlStateNormal];
         
         button.tag = 1000+i;
@@ -148,7 +154,20 @@
         
         button.backgroundColor = [UIColor whiteColor];
         
-        button.titleLabel.font = [UIFont systemFontOfSize:15];
+        
+        NSLog(@"string ----  %@",string);
+        
+        if (titleSize.width > 90)
+        {
+            button.titleLabel.font = [UIFont systemFontOfSize:13];
+            
+            button.titleLabel.textAlignment = NSTextAlignmentCenter;
+            
+        }else
+        {
+            button.titleLabel.font = [UIFont systemFontOfSize:15];
+        }
+        
         
         button.layer.borderColor = RGBCOLOR(194,194,194).CGColor;
         

@@ -426,53 +426,57 @@
     pageCount = 1;
     
     
-    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
-    
+//    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+//    
     self.view.backgroundColor=[UIColor whiteColor];
+//
+//    //    self.title = @"车库";
+//    
+//    if([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)])
+//    {
+//        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:MY_MACRO_NAME?IOS7DAOHANGLANBEIJING:IOS6DAOHANGLANBEIJING] forBarMetrics: UIBarMetricsDefault];
+//    }
     
     
-    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
     
-    self.view.backgroundColor=[UIColor whiteColor];
     
-    //    self.title = @"车库";
-    
-    if([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)])
-    {
-        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:MY_MACRO_NAME?IOS7DAOHANGLANBEIJING:IOS6DAOHANGLANBEIJING] forBarMetrics: UIBarMetricsDefault];
-    }
-    
+//    UIColor * cc = [UIColor blackColor];
+//    
+//    NSDictionary * dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:cc,[UIFont systemFontOfSize:20],[UIColor clearColor],nil] forKeys:[NSArray arrayWithObjects:UITextAttributeTextColor,UITextAttributeFont,UITextAttributeTextShadowColor,nil]];
+//    
+//    self.navigationController.navigationBar.titleTextAttributes = dict;
+//    
+//    
+//    UIBarButtonItem * space_button = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+//    space_button.width = MY_MACRO_NAME?-4:5;
+//    
+//    
+//    UIImageView * leftImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ios7logo"]];
+//    leftImageView.center = CGPointMake(MY_MACRO_NAME? 18:30,22);
+//    UIView *lefttttview=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 80, 44)];
+//    [lefttttview addSubview:leftImageView];
+//    UIBarButtonItem * leftButton = [[UIBarButtonItem alloc] initWithCustomView:lefttttview];
+//    
+//    self.navigationItem.leftBarButtonItem = leftButton;
+//    
+//    
+//    
+//    UIButton * refreshButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [refreshButton setImage:[UIImage imageNamed:@"ios7_refresh4139.png"] forState:UIControlStateNormal];
+//    refreshButton.frame = CGRectMake(0,0,41/2,39/2);
+//    refreshButton.center = CGPointMake(300,20);
+//    [refreshButton addTarget:self action:@selector(refreshData:) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    self.navigationItem.rightBarButtonItems= @[space_button,[[UIBarButtonItem alloc] initWithCustomView:refreshButton]];
     
     self.navigationItem.title = @"车库";
     
-    UIColor * cc = [UIColor blackColor];
+    self.leftImageName = @"ios7logo";
     
-    NSDictionary * dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:cc,[UIFont systemFontOfSize:20],[UIColor clearColor],nil] forKeys:[NSArray arrayWithObjects:UITextAttributeTextColor,UITextAttributeFont,UITextAttributeTextShadowColor,nil]];
+    self.rightImageName = @"ios7_refresh4139";
     
-    self.navigationController.navigationBar.titleTextAttributes = dict;
+    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeOther WithRightButtonType:MyViewControllerRightbuttonTypeOther];
     
-    
-    UIBarButtonItem * space_button = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    space_button.width = MY_MACRO_NAME?-4:5;
-    
-    
-    UIImageView * leftImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ios7logo"]];
-    leftImageView.center = CGPointMake(MY_MACRO_NAME? 18:30,22);
-    UIView *lefttttview=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 80, 44)];
-    [lefttttview addSubview:leftImageView];
-    UIBarButtonItem * leftButton = [[UIBarButtonItem alloc] initWithCustomView:lefttttview];
-    
-    self.navigationItem.leftBarButtonItem = leftButton;
-    
-    
-    
-    UIButton * refreshButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [refreshButton setImage:[UIImage imageNamed:@"ios7_refresh4139.png"] forState:UIControlStateNormal];
-    refreshButton.frame = CGRectMake(0,0,41/2,39/2);
-    refreshButton.center = CGPointMake(300,20);
-    [refreshButton addTarget:self action:@selector(refreshData:) forControlEvents:UIControlEventTouchUpInside];
-    
-    self.navigationItem.rightBarButtonItems= @[space_button,[[UIBarButtonItem alloc] initWithCustomView:refreshButton]];
     
     
     seg = [[CarPortSeg alloc] initWithFrame:CGRectMake(0,0,320,33)];
@@ -498,7 +502,7 @@
     
     
     
-    CGRect rect = CGRectMake(0,33,320,iPhone5?568-33-20-44-49:480-33-20-44-49);
+    CGRect rect = CGRectMake(0,33,320,iPhone5?568-33-20-44:480-33-20-44);
     
     self.myTableView = [[UITableView alloc] initWithFrame:rect style:UITableViewStylePlain];
     
@@ -578,6 +582,17 @@
     
     
     
+}
+
+
+-(void)rightButtonTap:(UIButton *)sender
+{
+    
+}
+
+-(void)leftButtonTap:(UIButton *)sender
+{
+    [self refreshData:sender];
 }
 
 
@@ -805,7 +820,7 @@
         
         brand_label.backgroundColor = [UIColor clearColor];
         
-        brand_label.font = [UIFont systemFontOfSize:15];
+        brand_label.font = [UIFont systemFontOfSize:17];
         
         [cell.contentView addSubview:brand_label];
         

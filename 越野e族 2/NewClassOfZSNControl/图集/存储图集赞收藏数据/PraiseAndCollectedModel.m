@@ -11,29 +11,32 @@
 
 @implementation PraiseAndCollectedModel
 
-@synthesize atlasid = _atlasid;
-@synthesize praise = _praise;
-@synthesize collected = _collected;
+@dynamic atlasid;
+@dynamic praise;
 
 
 
 
 
 //插入数据
-+(void)addIntoDataSource:(PraiseAndCollectedModel *)sender
++(void)addIntoDataSourceWithId:(NSString *)sender WithPraise:(NSNumber *)thePraise
 {
-    
-    NSLog(@"zenme mei ------%@ ---  %@ ",sender.atlasid,sender.praise);
-    
     AppDelegate * myAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
-    PraiseAndCollectedModel* user=(PraiseAndCollectedModel *)[NSEntityDescription insertNewObjectForEntityForName:@"PraiseAndCollectedModel" inManagedObjectContext:myAppDelegate.managedObjectContext];
+//    PraiseAndCollectedModel* user=(PraiseAndCollectedModel *)[NSEntityDescription insertNewObjectForEntityForName:@"PraiseAndCollectedModel" inManagedObjectContext:myAppDelegate.managedObjectContext];
+//    
+//    user.atlasid = sender.atlasid;
+//    
+//    user.praise = sender.praise;
+//    
+//    user.collected = sender.collected;
     
-    user.atlasid = sender.atlasid;
     
-    user.praise = sender.praise;
+    NSManagedObject *object=[NSEntityDescription insertNewObjectForEntityForName:@"PraiseAndCollectedModel" inManagedObjectContext:myAppDelegate.managedObjectContext];
     
-    user.collected = sender.collected;
+    [object setValue:sender forKey:@"atlasid"];
+    
+    [object setValue:thePraise forKey:@"praise"];
     
     NSError* error;
     BOOL isSaveSuccess=[myAppDelegate.managedObjectContext save:&error];
@@ -46,7 +49,7 @@
     
 }
 //查询
-+(NSMutableArray *)findQuery:(PraiseAndCollectedModel *)sender
++(NSMutableArray *)findQueryWithId:(NSString *)theId
 {
     AppDelegate * myAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
@@ -56,13 +59,14 @@
     
     [request setEntity:user];
     
-    
-    NSPredicate* predicate=[NSPredicate predicateWithFormat:@"atlasid==%@",sender.atlasid];
+    NSPredicate* predicate=[NSPredicate predicateWithFormat:@"atlasid==%@",theId];
     [request setPredicate:predicate];
   
     NSError* error=nil;
     
-    NSMutableArray* mutableFetchResult=[[myAppDelegate.managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+    NSMutableArray* mutableFetchResult = [NSMutableArray array];
+    
+    mutableFetchResult=[[myAppDelegate.managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
     
     
     if (mutableFetchResult==nil)
@@ -71,14 +75,52 @@
     }
     NSLog(@"The count of entry: %i",[mutableFetchResult count]);
     
-    for (PraiseAndCollectedModel * user in mutableFetchResult)
+    
+    for (PraiseAndCollectedModel * name in mutableFetchResult)
     {
-        NSLog(@"name:%@----age:%@------sex:%@",user.atlasid,user.praise,user.collected);
+        NSLog(@"name:%@----age:%@------%@",name.atlasid,name.praise,mutableFetchResult);
     }
     
     return mutableFetchResult;
     
+    
 }
+
+
++(PraiseAndCollectedModel *)getTeamInfoById:(NSString *)theId
+{
+    PraiseAndCollectedModel *teamObject = nil;
+    
+    AppDelegate * myAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    
+    NSEntityDescription *teamEntity = [NSEntityDescription entityForName:@"PraiseAndCollectedModel" inManagedObjectContext:myAppDelegate.managedObjectContext];
+    [fetchRequest setEntity:teamEntity];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"atlasid == %@",theId];
+    [fetchRequest setPredicate:predicate];
+    [fetchRequest setFetchLimit:1];
+    
+    NSError *error = NULL;
+    NSArray *array = [myAppDelegate.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (error) {
+        NSLog(@"Error---- : %@\n", [error localizedDescription]);
+    }
+    
+    if (array && [array count] > 0) {
+        teamObject = [array objectAtIndex:0];
+    }
+    
+    NSLog(@"怎么读不出数据呢 ----  %@ --  %@ ---  %@",teamObject.atlasid,teamObject.praise,array);
+    
+    [fetchRequest release], fetchRequest = nil;
+    
+    return teamObject;
+}
+
+
 
 //更新
 +(void)update:(PraiseAndCollectedModel *)sender
@@ -104,14 +146,12 @@
         user.atlasid = sender.atlasid;
         
         user.praise = sender.praise;
-        
-        user.collected = sender.collected;
-        
+
     }
     [myAppDelegate.managedObjectContext save:&error];
 }
 //删除
-+(void)delete:(PraiseAndCollectedModel *)sender
++(void)deleteWithId:(NSString *)theId
 {
     AppDelegate * myAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
@@ -121,7 +161,7 @@
     
     [request setEntity:user];
     
-    NSPredicate* predicate=[NSPredicate predicateWithFormat:@"atlasid==%@",sender.atlasid];
+    NSPredicate* predicate=[NSPredicate predicateWithFormat:@"atlasid==%@",theId];
     
     [request setPredicate:predicate];
     

@@ -22,6 +22,7 @@
 #import "ShowImagesViewController.h"
 #import "ShoucangViewController.h"//收藏界面
 #import "MyWriteAndCommentViewController.h"//我发布的帖子和我回复的帖子
+#import "GscanfViewController.h"
 
 
 @interface RightViewController ()
@@ -268,18 +269,23 @@
                 
                 NSString * userName = [NSString stringWithFormat:@"%@",[dictionary objectForKey:@"nickname"]];
                 
+                NSString * userFace = [NSString stringWithFormat:@"%@",[dictionary objectForKey:@"face_original"]];
+                
                 NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
                 
                 [defaults setObject:string_uid forKey:USER_UID];
                 
                 [defaults setObject:userName forKey:USER_NAME];
                 
+                [defaults setObject:userFace forKey:USER_FACE];
+                
+                
                 [[NSNotificationCenter defaultCenter]postNotificationName:@"successgetuid" object:Nil];
                 
                 
                 LogIn_label.text = userName;
                 
-                [headerImageView loadImageFromURL:[NSString stringWithFormat:@"%@",[dictionary objectForKey:@"face_original"]] withPlaceholdImage:[UIImage imageNamed:@"SliderRightLogin.png"]];
+                [headerImageView loadImageFromURL:userFace withPlaceholdImage:[UIImage imageNamed:@"SliderRightLogin.png"]];
                 
             }
         }
@@ -390,6 +396,7 @@
             DetailViewController *_qrcode=[[DetailViewController alloc]init];
             
             [self.navigationController pushViewController:_qrcode animated:YES];
+        
         }
             break;
             
@@ -427,17 +434,7 @@
 
 -(void)settingButtonTap:(UIButton *)sender
 {    
-//    SliderRightSettingViewController * settingVC = [[SliderRightSettingViewController alloc] init];
-    
-//    [myDelegate.pushViewController.navigationController pushViewController:settingVC animated:YES];
-//    
-//    [myDelegate.pushViewController setNavigationHiddenWith:NO WithBlock:^{
-//        
-//    }];
-    
-    
-    
-    ShowImagesViewController * settingVC = [[ShowImagesViewController alloc] init];
+    SliderRightSettingViewController * settingVC = [[SliderRightSettingViewController alloc] init];
     
     [myDelegate.root_nav pushViewController:settingVC animated:YES];
 }

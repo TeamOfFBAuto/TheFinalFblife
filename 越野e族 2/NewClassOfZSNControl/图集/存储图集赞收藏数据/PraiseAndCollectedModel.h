@@ -14,20 +14,20 @@
 
 @property (nonatomic, retain) NSString * atlasid;
 @property (nonatomic, retain) NSNumber * praise;
-@property (nonatomic, retain) NSNumber * collected;
 
 
 
 //插入数据
-+(void)addIntoDataSource:(PraiseAndCollectedModel *)sender;
++(void)addIntoDataSourceWithId:(NSString *)sender WithPraise:(NSNumber *)thePraise;
 
 //查询
-+(NSMutableArray *)findQuery:(PraiseAndCollectedModel *)sender;
++(NSMutableArray *)findQueryWithId:(NSString *)theId;
+
++(PraiseAndCollectedModel *)getTeamInfoById:(NSString *)theId;
 
 //更新
 +(void)update:(PraiseAndCollectedModel *)sender;
 
 //删除
-+(void)delete:(PraiseAndCollectedModel *)sender;
-
++(void)deleteWithId:(NSString *)theId;
 @end

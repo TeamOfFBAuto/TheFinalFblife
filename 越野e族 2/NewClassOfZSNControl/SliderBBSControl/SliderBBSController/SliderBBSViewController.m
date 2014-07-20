@@ -164,6 +164,14 @@
     
     _forum_diqu_array = [NSMutableArray array];
     
+    _forum_chexing_array = [NSMutableArray array];
+    
+    _forum_zhuti_array = [NSMutableArray array];
+    
+    _forum_jiaoyi_array = [NSMutableArray array];
+    
+    _forum_temp_array = [NSMutableArray arrayWithObjects:_forum_diqu_array,_forum_chexing_array,_forum_zhuti_array,_forum_jiaoyi_array,nil];
+    
     data_currentPage = 1;
     
     theType = ForumDiQuType;
@@ -222,6 +230,18 @@
     [_myScrollView addSubview:_myTableView1];
     
     
+    if (_refreshHeaderView == nil)
+    {
+		EGORefreshTableHeaderView *view = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0-_myTableView1.bounds.size.height, self.view.frame.size.width, _myTableView1.bounds.size.height)];
+		view.delegate = self;
+		//[tab_pinglunliebiao addSubview:view];
+		_refreshHeaderView = view;
+	}
+	[_refreshHeaderView refreshLastUpdatedDate];
+    [_myTableView1 addSubview:_refreshHeaderView];
+    
+    
+    
     loadview=[[LoadingIndicatorView alloc]initWithFrame:CGRectMake(0, 900, 320, 40)];
     loadview.backgroundColor=[UIColor whiteColor];
     _myTableView1.tableFooterView = loadview;
@@ -259,9 +279,6 @@
         current_forum = index;
         
         [bself isHaveCacheDataWith:index];
-        
-        
-        
     }];
     
     
@@ -275,6 +292,8 @@
 //    }
     
     sectionView = [[SliderBBSSectionView alloc] initWithFrame:CGRectMake(0,0,320,113.5) WithBlock:^(int index) {
+        
+        current_dingyue_zuijin = index;
         
         if (index == 2)
         {
@@ -293,12 +312,17 @@
         
     }];
     
-//    _myTableView1.tableHeaderView = sectionView;
+    _myTableView1.tableHeaderView = sectionView;
     
     
     [self loadCollectionForumSectionData];
     
-    [self isHaveCacheDataWith:current_forum];
+//    [self isHaveCacheDataWith:current_forum];
+    
+    
+    //请求所有论坛板块数据
+    
+    [self loadAllForums];
 }
 
 #pragma mark - 切换我的订阅数据跟最近浏览
@@ -383,11 +407,18 @@
         
         [bself.forum_section_collection_array addObjectsFromArray:collection_model.collect_id_array];
         
-        NSLog(@"forum_section_collection_array ----  %@",bself.forum_section_collection_array);
-        
         [bself.myTableView2 reloadData];
         
+        [[NSUserDefaults standardUserDefaults] setObject:bself.forum_section_collection_array forKey:@"forumSectionCollectionArray"];
+        
     } WithFailedBlock:^(NSString *string) {
+        
+        bself.forum_section_collection_array = [[NSUserDefaults standardUserDefaults] objectForKey:@"forumSectionCollectionArray"];
+        
+        if (bself.forum_section_collection_array.count > 0)
+        {
+            [bself.myTableView2 reloadData];
+        }
         
     }];
     
@@ -405,10 +436,7 @@
     NSArray * dictionary = [userDefaults objectForKey:[NSString stringWithFormat:@"forum%@",[forum_title_array objectAtIndex:index]]];
     
     
-    if (_forum_temp_array.count)
-    {
-        [_forum_temp_array removeAllObjects];
-    }
+    [[_forum_temp_array objectAtIndex:index] removeAllObjects];
     
     if (!dictionary)
     {
@@ -419,10 +447,8 @@
         {
             SliderBBSForumModel * model = [[SliderBBSForumModel alloc] initWithDictionary:dic];
             
-            [_forum_diqu_array addObject:model];
+            [[_forum_temp_array objectAtIndex:current_forum] addObject:model];
         }
-        
-        _forum_temp_array = _forum_diqu_array;
         
         [_myTableView2 reloadData];
     }
@@ -446,13 +472,25 @@
         
         @try
         {
+            [self doneLoadingTableViewData];
+            
+            [loadview stopLoading:1];
+            
             NSDictionary * allDic = [jingxuan_request.responseString objectFromJSONString];
             
             if ([[allDic objectForKey:@"errno"] intValue] == 0)
             {
+                
+                if (bself.data_array.count >= [[allDic objectForKey:@"pages"] intValue])
+                {
+                    loadview.normalLabel.text = @"没有更多了";
+                    
+                    return;
+                }
+                
+                
                 NSArray * array = [allDic objectForKey:@"app"];
                 
-            
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{
                     
                     for (NSDictionary * dic in array)
@@ -474,13 +512,12 @@
         @finally {
             
         }
-        
-        
-        
     }];
     
     [request setFailedBlock:^{
+        [self doneLoadingTableViewData];
         
+        [loadview stopLoading:1];
     }];
     
     
@@ -509,15 +546,21 @@
 {//张少南此处需要把auther替换掉
     NSString * fullUrl = [NSString stringWithFormat:@"http://bbs.fblife.com/bbsapinew/favoritesforums.php?authcode=%@&action=query&formattype=json" ,@"AjxSNlEwBW8HOAdqBH8LfwRvUCEAMwI+BGcENQkj"];//[[NSUserDefaults standardUserDefaults]objectForKey:USER_AUTHOD]];
     
+    NSLog(@"我的订阅 ---- %@",fullUrl);
+    
     ASIHTTPRequest * collection_request = [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:fullUrl]];
     
     __block ASIHTTPRequest * request = collection_request;
+    
+    collection_request.timeOutSeconds = 30;
     
     __weak typeof(self) bself = self;
     
     [request setCompletionBlock:^{
         
         NSDictionary * _dic = [collection_request.responseString objectFromJSONString];
+        
+        NSLog(@"我的订阅数据 ---  %@",_dic);
         
         int issuccess=[[_dic objectForKey:@"errcode"]integerValue];
         
@@ -531,6 +574,8 @@
     
     
     [request setFailedBlock:^{
+        
+        
         
     }];
     
@@ -557,19 +602,6 @@
         
         [_array_collect addObject:dicinfo];
     }
-    
-    
-    int count = _array_collect.count;
-    
-    int row = count/3 + (count%3?1:0);
-    
-    float height = 24 + row*32 + (row-1)*12;
-    
-    CGRect sectionViewFrame = sectionView.frame;
-    
-    sectionViewFrame.size.height = height + 44;
-    
-    sectionView.frame = sectionViewFrame;
     
     [self loadSectionViewDataWithType:0 WithArray:_array_collect];
     
@@ -602,27 +634,18 @@
         networkQueue = [[ASINetworkQueue alloc] init];
     }
     
-    NSString * string_authcode = [[NSUserDefaults standardUserDefaults] objectForKey:USER_AUTHOD];
-    
-    NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
-    
-    
     for (int i = 0;i < 4;i++)
     {//张少南 此处需要替换autherkey
         
-        if (![userDefaults objectForKey:[NSString stringWithFormat:@"forum%@",[forum_title_array objectAtIndex:i]]]) {
-            NSString * fullUrl = [NSString stringWithFormat:@"http://bbs.fblife.com/bbsapinew/getforumsbycategory.php?categorytype=%@&formattype=json&authocode=%@",[forum_title_array objectAtIndex:i],@"AjxSNlEwBW8HOAdqBH8LfwRvUCEAMwI+BGcENQkj"];
-            
-            NSLog(@"请求版块接口-----%@",fullUrl);
-            
-            ASIHTTPRequest * request = [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:fullUrl]];
-            
-            request.tag = 417 + i;
-            
-            request.delegate = self;
-            
-            [networkQueue addOperation:request];
-        }
+        NSString * fullUrl = [NSString stringWithFormat:@"http://bbs.fblife.com/bbsapinew/getforumsbycategory.php?categorytype=%@&formattype=json&authocode=%@",[forum_title_array objectAtIndex:i],@"AjxSNlEwBW8HOAdqBH8LfwRvUCEAMwI+BGcENQkj"];
+        
+        NSLog(@"请求版块接口-----%@",fullUrl);
+        
+        ASIHTTPRequest * request = [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:fullUrl]];
+        
+        request.tag = 417 + i;
+        
+        [networkQueue addOperation:request];
     }
     
     
@@ -652,32 +675,43 @@
     {
         NSArray * array = [allDic objectForKey:@"bbsinfo"];
         
-        
-        for (NSDictionary * dic in array)
-        {
-            SliderBBSForumModel * model = [[SliderBBSForumModel alloc] initWithDictionary:dic];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{
             
-            [_forum_diqu_array addObject:model];
-        }
-        
-        
-        NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
-        
-        [userDefaults setObject:array forKey:[NSString stringWithFormat:@"forum%@",[forum_title_array objectAtIndex:request.tag-417]]];
-        
-        [userDefaults synchronize];
+            for (NSDictionary * dic in array)
+            {
+                SliderBBSForumModel * model = [[SliderBBSForumModel alloc] initWithDictionary:dic];
+                
+                [[_forum_temp_array objectAtIndex:request.tag-417] addObject:model];
+            }
+            
+            NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
+            
+            [userDefaults setObject:array forKey:[NSString stringWithFormat:@"forum%@",[forum_title_array objectAtIndex:request.tag-417]]];
+            
+            [userDefaults synchronize];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                if (request.tag - 417 == current_forum)
+                {
+                    [_myTableView2 reloadData];
+                }
+            });
+        });
     }
 }
 
 - (void)requestFailed:(ASIHTTPRequest *)request
 {
-    
+    if (request.tag -417 == current_forum)
+    {
+        [self isHaveCacheDataWith:current_forum];
+    }
 }
 
 
 - (void)queueFinished:(ASIHTTPRequest *)request
 {
-    
     if ([networkQueue requestsCount] == 0) {
         
         networkQueue = nil;
@@ -699,7 +733,7 @@
         return 1;
     }else
     {
-        return _forum_temp_array.count;
+        return [[_forum_temp_array objectAtIndex:current_forum] count];
     }
 }
 
@@ -710,7 +744,7 @@
         return self.data_array.count;
     }else
     {
-        SliderBBSForumModel * model = [_forum_temp_array objectAtIndex:section];
+        SliderBBSForumModel * model = [[_forum_temp_array objectAtIndex:current_forum] objectAtIndex:section];
         
         return model.forum_isOpen?model.forum_sub.count:0;
     }
@@ -757,7 +791,7 @@
                 
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        SliderBBSForumModel * model = [_forum_temp_array objectAtIndex:indexPath.section];
+        SliderBBSForumModel * model = [[_forum_temp_array objectAtIndex:current_forum] objectAtIndex:indexPath.section];
         
         
         if (model.forum_isOpen)
@@ -845,7 +879,7 @@
         return 85;
     }else
     {
-        SliderBBSForumModel * first_model = [_forum_temp_array objectAtIndex:indexPath.section];
+        SliderBBSForumModel * first_model = [[_forum_temp_array objectAtIndex:current_forum] objectAtIndex:indexPath.section];
         
         SliderBBSForumModel * second_model = [first_model.forum_sub objectAtIndex:indexPath.row];
         
@@ -867,13 +901,7 @@
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    if (tableView == _myTableView1)
-    {
-        return nil;
-    }else
-    {
-        return @"";
-    }
+    return @"";
 }
 
 
@@ -881,7 +909,7 @@
 {
     if (tableView == _myTableView1)
     {
-        return 105;
+        return 0;
     }else
     {
         return 44;
@@ -893,11 +921,11 @@
 {
     if (tableView == _myTableView1)
     {
-        return sectionView;
+        return nil;
         
     }else
     {
-        SliderBBSForumModel * model = [_forum_temp_array objectAtIndex:section];
+        SliderBBSForumModel * model = [[_forum_temp_array objectAtIndex:current_forum] objectAtIndex:section];
         
         UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0,0,320,44)];
         
@@ -1003,7 +1031,7 @@
     
     if (tableView == _myTableView2)
     {
-        SliderBBSForumModel * first_model = [_forum_temp_array objectAtIndex:indexPath.section];
+        SliderBBSForumModel * first_model = [[_forum_temp_array objectAtIndex:current_forum] objectAtIndex:indexPath.section];
         
         SliderBBSForumModel * second_model = [first_model.forum_sub objectAtIndex:indexPath.row];
         
@@ -1040,7 +1068,7 @@
     
     view.backgroundColor = RGBCOLOR(238,238,238);
     
-    SliderBBSForumModel * first_model = [_forum_temp_array objectAtIndex:indexPath.section];
+    SliderBBSForumModel * first_model = [[_forum_temp_array objectAtIndex:current_forum] objectAtIndex:indexPath.section];
     
     SliderBBSForumModel * second_model = [first_model.forum_sub objectAtIndex:indexPath.row];
     
@@ -1129,7 +1157,7 @@
 
 -(void)ShowSecondView:(UIButton *)sender
 {
-    SliderBBSForumModel * model = [_forum_temp_array objectAtIndex:sender.tag-10000];
+    SliderBBSForumModel * model = [[_forum_temp_array objectAtIndex:current_forum] objectAtIndex:sender.tag-10000];
     
     model.forum_isOpen = !model.forum_isOpen;
     
@@ -1143,7 +1171,7 @@
 {
     NSIndexPath * indexPath = [sender.myDictionary objectForKey:@"indexPath"];
     
-    SliderBBSForumModel * first_model = [_forum_temp_array objectAtIndex:indexPath.section];
+    SliderBBSForumModel * first_model = [[_forum_temp_array objectAtIndex:current_forum] objectAtIndex:indexPath.section];
     
     SliderBBSForumModel * second_model = [first_model.forum_sub objectAtIndex:indexPath.row];
     
@@ -1187,6 +1215,9 @@
         int current_page = scrollView.contentOffset.x/320;
         
         [seg_view MyButtonStateWithIndex:current_page];
+    }else if (scrollView == _myTableView1)
+    {
+        [_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
     }
 }
 
@@ -1196,14 +1227,18 @@
     
     if (scrollView == _myTableView1)
     {
+        [_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+        
         if(scrollView.contentOffset.y > (scrollView.contentSize.height - scrollView.frame.size.height+40) && scrollView.contentOffset.y > 0)
         {
-            if (![loadview.normalLabel.text isEqualToString:@"没有更多了"] || ![loadview.normalLabel.text isEqualToString:@"加载中..."] || loadview.normalLabel.hidden)
+            if ([loadview.normalLabel.text isEqualToString:@"没有更多了"] || [loadview.normalLabel.text isEqualToString:@"加载中..."] || loadview.normalLabel.hidden)
             {
-                [loadview startLoading];
-                data_currentPage++;
-                [self loadLuntanJingXuanData];
+                return;
             }
+         
+            [loadview startLoading];
+            data_currentPage++;
+            [self loadLuntanJingXuanData];
         }
     }
 }
@@ -1258,6 +1293,47 @@
     
     [collect_request startAsynchronous];
 }
+
+
+#pragma mark - 下拉刷新代理
+
+#pragma mark-下拉刷新的代理
+- (void)reloadTableViewDataSource
+{
+    _reloading = YES;
+}
+- (void)doneLoadingTableViewData
+{
+    _reloading = NO;
+	[_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:_myTableView1];
+    
+}
+
+
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view
+{
+    data_currentPage = 1;
+	[self loadLuntanJingXuanData];
+    
+    if (current_dingyue_zuijin == 0)
+    {
+        [self loadMyCollectionData];
+    }
+}
+
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view{
+	
+	return _reloading; // should return ccif data source model is reloading
+	
+}
+
+- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view{
+	
+	return [NSDate date]; // should return date data source was last changed
+	
+}
+
+
 
 
 - (void)didReceiveMemoryWarning

@@ -169,7 +169,21 @@
     [c_request startAsynchronous];
 }
 
+#pragma mark - 判断是否登陆
 
+-(BOOL)isLogIn
+{
+    BOOL islogin = [[NSUserDefaults standardUserDefaults] boolForKey:USER_IN];
+    
+    if (!islogin)
+    {
+        LogInViewController * logIn = [LogInViewController sharedManager];
+        
+        [self presentViewController:logIn animated:YES completion:NULL];
+    }
+    
+    return islogin;
+}
 
 
 #pragma mark - 赞 收藏 转发
@@ -185,7 +199,12 @@
             break;
         case 1://收藏
         {
+            BOOL islogin = [self isLogIn];
             
+            if (islogin)
+            {
+                [self cancelAndCollectionAtlas];
+            }
         }
             break;
         case 2://转发
@@ -210,7 +229,9 @@
         
         button.selected = NO;
         
-        [PraiseAndCollectedModel delete:praise_model];
+        isPraise = NO;
+        
+        [PraiseAndCollectedModel deleteWithId:self.id_atlas];
         
         return;
     }
@@ -225,12 +246,7 @@
         
         isPraise = YES;
         
-        praise_model.praise = [NSNumber numberWithBool:isPraise];
-        
-        
-        NSLog(@"点在 ---   %@",praise_model.praise);
-        
-        [PraiseAndCollectedModel addIntoDataSource:praise_model];
+        [PraiseAndCollectedModel addIntoDataSourceWithId:self.id_atlas WithPraise:[NSNumber numberWithBool:isPraise]];
         
         UIButton * button = (UIButton *)[navImageView viewWithTag:10000];
         
@@ -245,6 +261,46 @@
     
     [p_request startAsynchronous];
     
+}
+
+
+
+#pragma mark - 收藏或取消收藏图集
+
+
+-(void)cancelAndCollectionAtlas
+{
+    NSString * fullUrl;
+    
+    if (isCollected)
+    {
+        fullUrl = [NSString stringWithFormat:DELETE_COLLECTION_BBS_POST_URL,self.id_atlas,AUTHKEY];//取消收藏帖子
+    }else
+    {
+        fullUrl = [NSString stringWithFormat:COLLECTION_BBS_POST_URL,AUTHKEY,self.id_atlas];//收藏帖子
+    }
+    
+    NSLog(@"收藏或取消收藏接口----%@",fullUrl);
+    
+    ASIHTTPRequest * c_request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:fullUrl]];
+    
+    __block typeof(c_request) request = c_request;
+    
+    [request setCompletionBlock:^{
+        
+        isCollected = !isCollected;
+        
+        UIButton * button = (UIButton *)[navImageView viewWithTag:10001];
+        
+        button.selected = isCollected;
+    }];
+    
+    
+    [request setFailedBlock:^{
+        
+    }];
+    
+    [c_request startAsynchronous];
 }
 
 
@@ -420,19 +476,8 @@
     
     praise_model = [[PraiseAndCollectedModel alloc] init];
     
-    praise_model.atlasid = self.id_atlas;
+    isPraise = [[[PraiseAndCollectedModel getTeamInfoById:self.id_atlas] praise] intValue];
     
-    NSMutableArray * praise_array = [NSMutableArray array];
-    
-    praise_array = [PraiseAndCollectedModel findQuery:praise_model];
-    
-    NSLog(@"zan -----%@  ---  %@",[[praise_array objectAtIndex:0] praise],praise_array);
-    
-    if (praise_array.count > 0)
-    {
-        isPraise = [[[praise_array objectAtIndex:0] praise] intValue];
-    }
-        
     atlasModel = [[AtlasModel alloc] init];
     
     [self loadData];
@@ -751,9 +796,9 @@
     
     AtlasModel * model = [self.allImagesUrlArray objectAtIndex:0];
     
-    NSString * fullUrl = [NSString stringWithFormat:ATLAS_COMMENT_URL,model.atlas_id,model.atlas_content,model.atlas_name,model.atlas_name,@"",AUTHKEY];
+    NSString * fullUrl = [NSString stringWithFormat:ATLAS_COMMENT_URL,model.atlas_id,text_input_view.text,model.atlas_name,model.atlas_name,model.atlas_photo,AUTHKEY];
     
-    NSLog(@"发表图集评论接口 ---   %@",[fullUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]);
+    NSLog(@"发表图集评论接口 ---   %@",fullUrl);
     
     NSURL * url = [NSURL URLWithString:[fullUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     
@@ -772,6 +817,11 @@
             model.atlas_likes = [NSString stringWithFormat:@"%d",count+1];
             
             [pinglun_button setTitle:model.atlas_likes forState:UIControlStateNormal];
+        }else
+        {
+            UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:[allDic objectForKey:@"data"] message:nil delegate:nil cancelButtonTitle:@"确认" otherButtonTitles:nil,nil];
+            
+            [alertView show];
         }
     }];
     

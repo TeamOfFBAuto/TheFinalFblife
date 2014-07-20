@@ -11,6 +11,7 @@
 #import "RankingListModel.h"
 #import "bbsdetailViewController.h"
 #import "BBSfenduiViewController.h"
+#import "SliderForumCollectionModel.h"
 
 @interface SliderRankingListViewController ()
 {
@@ -26,6 +27,7 @@
 @synthesize data_array = _data_array;
 @synthesize currentPage = _currentPage;
 @synthesize bbs_forum_collection_array = _bbs_forum_collection_array;
+@synthesize bbs_post_collection_array = _bbs_post_collection_array;
 
 
 
@@ -97,6 +99,8 @@
     
     [self loadRankingListDataWithIndex:_currentPage];
     
+    [self loadAllBBSPostData];
+    
 }
 
 -(void)leftButtonTap:(UIButton *)sender
@@ -125,6 +129,75 @@
         
     }];
 }
+
+
+#pragma mark - 请求收藏的所有的帖子
+
+
+-(void)loadAllBBSPostData
+{
+    
+    if (!_bbs_post_collection_array) {
+        _bbs_post_collection_array = [NSMutableArray array];
+    }else
+    {
+        [_bbs_post_collection_array removeAllObjects];
+    }
+    
+    //张少南 更换autherkey
+    NSString * fullUrl = [NSString stringWithFormat:GET_COLLECTION_BBS_POST_URL,@"U2VRMgdnVzVQZlc8AnkKelo7A25fd1JhCWEANw"];
+    
+    NSLog(@"获取收藏帖子接口 --   %@",fullUrl);
+    
+    ASIHTTPRequest * bbs_request = [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:fullUrl]];
+    
+    __block typeof(bbs_request) request = bbs_request;
+    
+    __weak typeof(self) bself = self;
+    
+    [request setCompletionBlock:^{
+       
+        @try
+        {
+            NSDictionary * allDic = [bbs_request.responseString objectFromJSONString];
+            
+            if ([[allDic objectForKey:@"errcode"] intValue] == 0)
+            {
+                NSArray * array = [allDic objectForKey:@"bbsinfo"];
+                
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{
+                    
+                    for (NSDictionary * dic in array)
+                    {
+                        [bself.bbs_post_collection_array addObject:[dic objectForKey:@"tid"]];
+                    }
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        
+                        if (bself.currentPage == 1)
+                        {
+                            [bself.myTableView reloadData];
+                        }
+                    });
+                });
+            }
+        }
+        @catch (NSException *exception) {
+            
+        }
+        @finally {
+            
+        }
+    }];
+    
+    
+    [request setFailedBlock:^{
+        
+    }];
+    
+    [bbs_request startAsynchronous];
+}
+
 
 
 
@@ -163,7 +236,7 @@
     
     [cell setInfoWith:indexPath.row + 1 WithModel:model];
     
-    cell.collection_button.selected = [self.bbs_forum_collection_array containsObject:model.ranking_id];
+    cell.collection_button.selected = [self.currentPage==1?self.bbs_post_collection_array:self.bbs_forum_collection_array containsObject:model.ranking_id];
     
     return cell;
 }
@@ -207,15 +280,38 @@
     
     NSString * fullUrl = @"";
     
-    BOOL isCollected = [self.bbs_forum_collection_array containsObject:model.ranking_id];
+    BOOL isCollected;
     
-    if (isCollected)
+    //张少南 更换autherkey
+    if (self.currentPage == 1)
     {
-        fullUrl = [NSString stringWithFormat:COLLECTION_FORUM_SECTION_URL_OLD,model.ranking_id,AUTHKEY];
+        isCollected = [self.bbs_post_collection_array containsObject:model.ranking_id];
+        
+         NSLog(@"怎么回事删除呢 ------  %@ ---- %@",model.ranking_id,self.bbs_post_collection_array);
+        
+        if (!isCollected)
+        {
+            fullUrl = [NSString stringWithFormat:COLLECTION_BBS_POST_URL,@"U2VRMgdnVzVQZlc8AnkKelo7A25fd1JhCWEANw",model.ranking_id];
+        }else
+        {
+            fullUrl = [NSString stringWithFormat:DELETE_COLLECTION_BBS_POST_URL,model.ranking_id,@"U2VRMgdnVzVQZlc8AnkKelo7A25fd1JhCWEANw"];
+        }
+        
     }else
     {
-        fullUrl = [NSString stringWithFormat:COLLECTION_CANCEL_FORUM_SECTION_URL_OLD,model.ranking_id,AUTHKEY];
+        isCollected = [self.bbs_forum_collection_array containsObject:model.ranking_id];
+        
+        if (!isCollected)
+        {
+            fullUrl = [NSString stringWithFormat:COLLECTION_FORUM_SECTION_URL_OLD,model.ranking_id,AUTHKEY];
+        }else
+        {
+            fullUrl = [NSString stringWithFormat:COLLECTION_CANCEL_FORUM_SECTION_URL_OLD,model.ranking_id,AUTHKEY];
+        }
     }
+    
+    NSLog(@"收藏取消收藏 ---  %@",fullUrl);
+    
     
     NSURL * url = [NSURL URLWithString:fullUrl];
     
@@ -228,14 +324,17 @@
     
     [request setCompletionBlock:^{
         
+        NSLog(@"收藏取消 ---   %@",[collect_request.responseString objectFromJSONString]);
+        
+        
         cell.collection_button.selected = !isCollected;
         
         if (isCollected)
         {
-            [bself.bbs_forum_collection_array removeObject:model.ranking_id];
+            [bself.currentPage==1?self.bbs_post_collection_array:self.bbs_forum_collection_array removeObject:model.ranking_id];
         }else
         {
-            [bself.bbs_forum_collection_array addObject:model.ranking_id];
+            [bself.currentPage==1?self.bbs_post_collection_array:self.bbs_forum_collection_array addObject:model.ranking_id];
         }
     }];
     

@@ -9,24 +9,26 @@
 #import "DetailViewController.h"
 #import "NewMineViewController.h"
 #import "fbWebViewController.h"
+#import "QrcodeViewController.h"
 
 @interface DetailViewController (){
     NSString *string_uid;
     
     UIView * loadingView;
-    
-    UIImageView * line;
-    
-    UIView * downView;
-    UIView *rightView;
-    UIView *leftView;
-    UIView* upView;
+//
+//    UIImageView * line;
+//    
+//    UIView * downView;
+//    UIView *rightView;
+//    UIView *leftView;
+//    UIView* upView;
 }
 
 @end
 
 @implementation DetailViewController
 @synthesize delegate;
+@synthesize line = _line;
 
 
 
@@ -48,17 +50,17 @@
 {
     [super viewWillAppear:animated];
     
-    [UIView beginAnimations:@"animation" context:nil];
-    
-    [UIView setAnimationDuration:2];
-    
-    [UIView setAnimationRepeatAutoreverses:YES];
-    
-    [UIView setAnimationRepeatCount:HUGE_VALF];
-    
-    line.frame = CGRectMake(35,280-7.5,250,7.5);
-    
-    [UIView commitAnimations];
+//    [UIView beginAnimations:@"animation" context:nil];
+//    
+//    [UIView setAnimationDuration:2];
+//    
+//    [UIView setAnimationRepeatAutoreverses:YES];
+//    
+//    [UIView setAnimationRepeatCount:HUGE_VALF];
+//    
+//    line.frame = CGRectMake(35,280-7.5,250,7.5);
+//    
+//    [UIView commitAnimations];
     
     [MobClick beginEvent:@"DetailViewController"];
 }
@@ -74,17 +76,22 @@
     
     [loadingView removeFromSuperview];
     
-    upView.alpha = 0.6;
-    upView.backgroundColor = [UIColor blackColor];
+    [timer invalidate];
     
-    downView.alpha = 0.6;
-    downView.backgroundColor = [UIColor blackColor];
+    timer = [NSTimer scheduledTimerWithTimeInterval:0.005 target:self selector:@selector(animation1) userInfo:nil repeats:YES];
+
     
-    leftView.alpha = 0.6;
-    leftView.backgroundColor = [UIColor blackColor];
-    
-    rightView.alpha = 0.6;
-    rightView.backgroundColor = [UIColor blackColor];
+//    upView.alpha = 0.6;
+//    upView.backgroundColor = [UIColor blackColor];
+//    
+//    downView.alpha = 0.6;
+//    downView.backgroundColor = [UIColor blackColor];
+//    
+//    leftView.alpha = 0.6;
+//    leftView.backgroundColor = [UIColor blackColor];
+//    
+//    rightView.alpha = 0.6;
+//    rightView.backgroundColor = [UIColor blackColor];
     
     
     
@@ -98,31 +105,33 @@
     
     self.navigationItem.title = @"扫一扫";
     
-    UIColor * cc = [UIColor blackColor];
+    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
     
-    NSDictionary * dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:cc,[UIFont systemFontOfSize:20],[UIColor clearColor],nil] forKeys:[NSArray arrayWithObjects:UITextAttributeTextColor,UITextAttributeFont,UITextAttributeTextShadowColor,nil]];
-    
-    self.navigationController.navigationBar.titleTextAttributes = dict;
-    
-    //
-    
-    
-    if([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)] ) {
-        //iOS 5 new UINavigationBar custom background
-        [self.navigationController.navigationBar setBackgroundImage:MY_MACRO_NAME?[UIImage imageNamed:IOS7DAOHANGLANBEIJING]:[UIImage imageNamed:@"ios7eva320_44.png"] forBarMetrics: UIBarMetricsDefault];
-        
-    }
-    
-    UIButton *button_back=[[UIButton alloc]initWithFrame: CGRectMake(5, 3, 12, 43/2)];
-    
-    [button_back addTarget:self action:@selector(backto) forControlEvents:UIControlEventTouchUpInside];
-    [button_back setBackgroundImage:[UIImage imageNamed:@"ios7_back.png"] forState:UIControlStateNormal];
-    
-    UIButton *back_view=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 120, 28)];
-    [back_view addSubview:button_back];
-    [back_view addTarget:self action:@selector(backto) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:back_view];
-    self.navigationItem.leftBarButtonItem=back_item;
+//    UIColor * cc = [UIColor blackColor];
+//    
+//    NSDictionary * dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:cc,[UIFont systemFontOfSize:20],[UIColor clearColor],nil] forKeys:[NSArray arrayWithObjects:UITextAttributeTextColor,UITextAttributeFont,UITextAttributeTextShadowColor,nil]];
+//    
+//    self.navigationController.navigationBar.titleTextAttributes = dict;
+//    
+//    //
+//    
+//    
+//    if([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)] ) {
+//        //iOS 5 new UINavigationBar custom background
+//        [self.navigationController.navigationBar setBackgroundImage:MY_MACRO_NAME?[UIImage imageNamed:IOS7DAOHANGLANBEIJING]:[UIImage imageNamed:@"ios7eva320_44.png"] forBarMetrics: UIBarMetricsDefault];
+//        
+//    }
+//    
+//    UIButton *button_back=[[UIButton alloc]initWithFrame: CGRectMake(5, 3, 12, 43/2)];
+//    
+//    [button_back addTarget:self action:@selector(backto) forControlEvents:UIControlEventTouchUpInside];
+//    [button_back setBackgroundImage:[UIImage imageNamed:@"ios7_back.png"] forState:UIControlStateNormal];
+//    
+//    UIButton *back_view=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 120, 28)];
+//    [back_view addSubview:button_back];
+//    [back_view addTarget:self action:@selector(backto) forControlEvents:UIControlEventTouchUpInside];
+//    UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:back_view];
+//    self.navigationItem.leftBarButtonItem=back_item;
     
     
 	[self scanning];
@@ -145,110 +154,99 @@
     //    CGRect scanMaskRect = CGRectMake(37,80,251,312-80);
     
     
-    line = [[UIImageView alloc] initWithFrame:CGRectMake(35,30,250,7.5)];
+    float height = iPhone5?0:-60;
     
-    line.backgroundColor = [UIColor clearColor];
+    //半透明的浮层
+    UIImageView *backImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0,0,320,(iPhone5?568:480)-64)];
+    backImageView.image = [UIImage imageNamed:@"saoyisao_bg_640_996.png"];
+    [myReaderView addSubview:backImageView];
+	
     
-    line.image = [UIImage imageNamed:@"qrcode_light.png"];
-    
-    [myReaderView addSubview:line];
-    
-    
-    
-    [UIView beginAnimations:@"animation" context:nil];
-    
-    [UIView setAnimationDuration:2];
-    
-    [UIView setAnimationRepeatAutoreverses:YES];
-    
-    [UIView setAnimationRepeatCount:HUGE_VALF];
-    
-    line.frame = CGRectMake(35,280-7.5,250,7.5);
-    
-    [UIView commitAnimations];
+    UILabel * labIntroudction= [[UILabel alloc] initWithFrame:CGRectMake(15,40+height,290,50)];
+    labIntroudction.backgroundColor = [UIColor clearColor];
+    labIntroudction.numberOfLines=2;
+    labIntroudction.textColor=[UIColor whiteColor];
+    //labIntroudction.text=@"将二维码图像置于矩形方框内，离手机摄像头10CM左右，系统会自动识别。";
+    [myReaderView addSubview:labIntroudction];
     
     
     
-    
-    //最上部view
-    upView = [[UIView alloc] initWithFrame:CGRectMake(0,0,320,30)];
-    
-    //    upView.alpha = 0.6;
-    
-    upView.backgroundColor = RGBCOLOR(28,28,28);
-    
-    [myReaderView addSubview:upView];
-    
-    UIImageView * kuang_image = [[UIImageView alloc] initWithFrame:CGRectMake(35,30,250,250)];
-    
-    kuang_image.backgroundColor = [UIColor clearColor];
-    
-    kuang_image.image = [UIImage imageNamed:@"qrcode_focus.png"];
-    
-    [myReaderView addSubview:kuang_image];
+    //四个角
+    UIImageView * imageView = [[UIImageView alloc]initWithFrame:CGRectMake(50,89+height,220,220)];
+    imageView.image = [UIImage imageNamed:@"saoyisao_440_440.png"];
+    [myReaderView addSubview:imageView];
     
     
+    //文字提示label
     
-    //左侧的view
-    leftView = [[UIView alloc] initWithFrame:CGRectMake(0,30,35,250)];
-    
-    //    leftView.alpha = 0.6;
-    
-    leftView.backgroundColor = RGBCOLOR(28,28,28);
-    
-    [myReaderView addSubview:leftView];
-    
-    
-    //右侧的view
-    rightView = [[UIView alloc] initWithFrame:CGRectMake(285,30,35,250)];
-    
-    //    rightView.alpha = 0.6;
-    
-    rightView.backgroundColor = RGBCOLOR(28,28,28);
-    
-    [myReaderView addSubview:rightView];
+    UILabel *tishiLabel = [[UILabel alloc]initWithFrame:CGRectMake(100,CGRectGetMaxY(imageView.frame)+19,120,50)];
+    tishiLabel.numberOfLines = 0;
+    tishiLabel.textAlignment = NSTextAlignmentCenter;
+    tishiLabel.font = [UIFont systemFontOfSize:13];
+    tishiLabel.textColor = [UIColor whiteColor];
+    tishiLabel.backgroundColor = [UIColor clearColor];
+    tishiLabel.text = @"将取景框对准二维码即可自动扫描";
+    [myReaderView addSubview:tishiLabel];
     
     
-    //底部view
+    upOrdown = NO;
+    num =0;
     
-    downView = [[UIView alloc] initWithFrame:CGRectMake(0,280,320,iPhone5?180+88:180)];
-    
-    //    downView.alpha = 0.6;
-    
-    downView.backgroundColor = RGBCOLOR(28,28,28);
-    
-    [myReaderView addSubview:downView];
+    //上下滚动的条
+    _line = [[UIImageView alloc] initWithFrame:CGRectMake(50,90+height,220,num)];
+    _line.image = [UIImage imageNamed:@"11.png"];
+    [myReaderView addSubview:_line];
     
     
+    UIView * function_view = [[UIView alloc] initWithFrame:CGRectMake(0,(iPhone5?568:480)-64-100,320,100)];
     
-    UILabel * tishi_label = [[UILabel alloc] initWithFrame:CGRectMake(0,290,320,30)];
+    function_view.backgroundColor = RGBCOLOR(53,53,51);
     
-    tishi_label.text = @"对准二维码到绿色框扫描";
+    [myReaderView addSubview:function_view];
     
-    tishi_label.textAlignment = NSTextAlignmentCenter;
+    NSArray * image_array = [NSArray arrayWithObjects:@"saoyisao_photo",@"saoyisao_kacha",@"saoyisao_ma",nil];
     
-    tishi_label.font = [UIFont systemFontOfSize:13];
+    NSArray * name_array = [NSArray arrayWithObjects:@"相册",@"开灯",@"我的二维码",nil];
     
-    tishi_label.backgroundColor = [UIColor clearColor];
-    
-    tishi_label.textColor = [UIColor whiteColor];
-    
-    
-    [myReaderView addSubview:tishi_label];
+    for (int i = 0;i < 3;i++)
+    {
+        UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
+        
+        button.backgroundColor = [UIColor clearColor];
+        
+        button.frame = CGRectMake(5+105*i,0,90,100);
+        
+        button.tag = 10000 + i;
+        
+        [button setImage:[UIImage imageNamed:[image_array objectAtIndex:i]] forState:UIControlStateNormal];
+        
+        [button setTitle:[name_array objectAtIndex:i] forState:UIControlStateNormal];
+        
+        button.titleLabel.font = [UIFont systemFontOfSize:16];
+        
+        [button setTitleColor:RGBCOLOR(197,196,194) forState:UIControlStateNormal];
+        
+        [button setImageEdgeInsets:UIEdgeInsetsMake(0,22.25,20,0)];
+        
+        [button setTitleEdgeInsets:UIEdgeInsetsMake(70,-50,0,0)];
+        
+        [button addTarget:self action:@selector(buttonTap:) forControlEvents:UIControlEventTouchUpInside];
+        
+        [function_view addSubview:button];
+    }
     
     
     
-    
-    loadingView = [[UIView alloc] initWithFrame:CGRectMake(39.5,34.5,241,241)];
+    loadingView = [[UIView alloc] initWithFrame:CGRectMake(2,2,216,216)];
     
     loadingView.backgroundColor = RGBCOLOR(6,0,0);
     
-    [myReaderView addSubview:loadingView];
+    [imageView addSubview:loadingView];
     
     
     UIActivityIndicatorView * activity = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0,0,30,30)];
     
-    activity.center = CGPointMake(125,125);
+    activity.center = CGPointMake(loadingView.frame.size.width/2,loadingView.frame.size.height/2);
     
     activity.backgroundColor = [UIColor clearColor];
     
@@ -259,7 +257,7 @@
     
     UILabel * loadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,280,241,40)];
     
-    loadingLabel.center = CGPointMake(125,125+40);
+    loadingLabel.center = CGPointMake(loadingView.frame.size.width/2,loadingView.frame.size.height/2 + 40);
     
     loadingLabel.text = @"准备中...";
     
@@ -272,43 +270,41 @@
     [loadingView addSubview:loadingLabel];
     
     
-    UIButton * location_button = [UIButton buttonWithType:UIButtonTypeCustom];
-    
-    location_button.frame = CGRectMake(50,330,65,67);
-    
-    location_button.backgroundColor = [UIColor clearColor];
-    
-    
-    [location_button setImage:[UIImage imageNamed:@"qrcode_scan_btn_photo_down.png"] forState:UIControlStateSelected];
-    
-    [location_button setImage:[UIImage imageNamed:@"qrcode_scan_btn_photo_nor.png"] forState:UIControlStateNormal];
-    
-    //    [location_button setTitle:@"相册" forState:UIControlStateNormal];
-    
-    [location_button addTarget:self action:@selector(locationPhotos:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [myReaderView addSubview:location_button];
-    
-    
-    
-    UIButton * light_button = [UIButton buttonWithType:UIButtonTypeCustom];
-    
-    light_button.frame = CGRectMake(210,330,65,67);
-    
-    light_button.backgroundColor = [UIColor clearColor];
-    
-    //    [light_button setTitle:@"闪光灯" forState:UIControlStateNormal];
-    
-    
-    [light_button setImage:[UIImage imageNamed:@"qrcode_scan_btn_scan_off.png"] forState:UIControlStateSelected];
-    
-    [light_button setImage:[UIImage imageNamed:@"qrcode_scan_btn_flash_nor.png"] forState:UIControlStateNormal];
-    
-    [light_button addTarget:self action:@selector(lightButton:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [myReaderView addSubview:light_button];
-    
-    
+//    UIButton * location_button = [UIButton buttonWithType:UIButtonTypeCustom];
+//    
+//    location_button.frame = CGRectMake(50,330,65,67);
+//    
+//    location_button.backgroundColor = [UIColor clearColor];
+//    
+//    
+//    [location_button setImage:[UIImage imageNamed:@"qrcode_scan_btn_photo_down.png"] forState:UIControlStateSelected];
+//    
+//    [location_button setImage:[UIImage imageNamed:@"qrcode_scan_btn_photo_nor.png"] forState:UIControlStateNormal];
+//    
+//    //    [location_button setTitle:@"相册" forState:UIControlStateNormal];
+//    
+//    [location_button addTarget:self action:@selector(locationPhotos:) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    [myReaderView addSubview:location_button];
+//    
+//    
+//    
+//    UIButton * light_button = [UIButton buttonWithType:UIButtonTypeCustom];
+//    
+//    light_button.frame = CGRectMake(210,330,65,67);
+//    
+//    light_button.backgroundColor = [UIColor clearColor];
+//    
+//    //    [light_button setTitle:@"闪光灯" forState:UIControlStateNormal];
+//    
+//    
+//    [light_button setImage:[UIImage imageNamed:@"qrcode_scan_btn_scan_off.png"] forState:UIControlStateSelected];
+//    
+//    [light_button setImage:[UIImage imageNamed:@"qrcode_scan_btn_flash_nor.png"] forState:UIControlStateNormal];
+//    
+//    [light_button addTarget:self action:@selector(lightButton:) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    [myReaderView addSubview:light_button];
     
     
     
@@ -332,6 +328,90 @@
     myReaderView.scanCrop = CGRectMake(0.2,0.05,0.5,0.8);
     //    [myReaderView start];
 }
+
+
+-(void)buttonTap:(UIButton *)button
+{
+    switch (button.tag - 10000)
+    {
+        case 0:
+        {
+            [self locationPhotos:button];
+        }
+            break;
+        case 1:
+        {
+            [self lightButton:button];
+        }
+            break;
+        case 2:
+        {
+            BOOL islogIn = [self isLogIn];
+            
+            if (islogIn)
+            {
+                QrcodeViewController * qrcode = [[QrcodeViewController alloc] init];
+                
+                [self.navigationController pushViewController:qrcode animated:YES];
+            }
+        }
+            break;
+            
+        default:
+            break;
+    }
+}
+
+
+
+#pragma mark - 判断是否登录
+
+
+-(BOOL)isLogIn
+{
+    BOOL islogin = [[NSUserDefaults standardUserDefaults] boolForKey:USER_IN];
+    
+    if (!islogin)
+    {
+        LogInViewController * logIn = [LogInViewController sharedManager];
+        
+        [self presentViewController:logIn animated:YES completion:NULL];
+    }
+    return islogin;
+}
+
+
+#pragma mark - 扫描动画
+
+
+-(void)animation1
+{
+    //一个图
+    if (upOrdown == NO) {
+        num ++;
+        
+        _line.image = [UIImage imageNamed:@"saoyisao_line33.png"];
+        _line.frame = CGRectMake(50,_line.frame.origin.y, 220, num);
+        _line.alpha = num/220.0f;
+        if (num == 220) {
+            upOrdown = YES;
+            num = 0;
+        }
+    }
+    else {
+        num ++;
+        
+        _line.image = [UIImage imageNamed:@"saoyisao_line33.png"];
+        _line.frame = CGRectMake(50,_line.frame.origin.y, 220, num);
+        if (num == 220) {
+            upOrdown = NO;
+            _line.alpha = num/220.0f;
+            num = 0;
+        }
+    }
+}
+
+
 
 
 -(CGRect)getScanCrop:(CGRect)rect readerViewBounds:(CGRect)readerViewBounds

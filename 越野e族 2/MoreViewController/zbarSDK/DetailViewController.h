@@ -20,7 +20,14 @@
 @interface DetailViewController : MyViewController< ZBarReaderDelegate,UIAlertViewDelegate,ZBarReaderViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 {
     ZBarReaderView * myReaderView;
+    
+    int num;
+    BOOL upOrdown;
+    NSTimer * timer;
 }
+
+@property (nonatomic, retain) UIImageView * line;
+
 
 @property(nonatomic,assign)id<DetailViewControllerDelegate>delegate;
 

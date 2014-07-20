@@ -974,6 +974,7 @@
         [user setObject:@"" forKey:USER_PW] ;
         [user setObject:@"" forKey:USER_AUTHOD] ;
         [user setObject:@"" forKey:USER_UID] ;
+        [user setObject:@"" forKey:USER_FACE];
         string_follownumber=@"";
         string_fansnumber=@"";
         

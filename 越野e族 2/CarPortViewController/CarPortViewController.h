@@ -15,7 +15,7 @@
 #import "EGORefreshTableHeaderView.h"
 
 
-@interface CarPortViewController : UIViewController<CarPortSegDelegate,UITableViewDataSource,UITableViewDelegate,ASIHTTPRequestDelegate,AsyncImageDelegate,EGORefreshTableHeaderDelegate,AlertRePlaceViewDelegate>
+@interface CarPortViewController : MyViewController<CarPortSegDelegate,UITableViewDataSource,UITableViewDelegate,ASIHTTPRequestDelegate,AsyncImageDelegate,EGORefreshTableHeaderDelegate,AlertRePlaceViewDelegate>
 {
     EGORefreshTableHeaderView *_refreshHeaderView;
     
