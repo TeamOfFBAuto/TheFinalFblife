@@ -50,12 +50,13 @@
     self.navigationItem.leftBarButtonItem=back_item;
     
     newsScrow=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 320, iPhone5?568-64:480-64)];
-    newsScrow.contentSize=CGSizeMake(320*4, 0);
+    newsScrow.contentSize=CGSizeMake(320*2, 0);
     newsScrow.pagingEnabled=YES;
     newsScrow.delegate=self;
     newsScrow.showsHorizontalScrollIndicator=NO;
     newsScrow.showsVerticalScrollIndicator=NO;
     newsScrow.backgroundColor=[UIColor whiteColor];
+    newsScrow.scrollEnabled = NO;
     
     [self.view addSubview:newsScrow];
     
@@ -66,9 +67,6 @@
         mytesttab.delegate=self;
         [newsScrow addSubview:mytesttab];
         mytesttab.backgroundColor=[UIColor redColor];
-        
-        
-        
     }
     
     

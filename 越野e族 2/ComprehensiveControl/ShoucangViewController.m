@@ -71,6 +71,7 @@
     newsScrow.showsHorizontalScrollIndicator=NO;
     newsScrow.showsVerticalScrollIndicator=NO;
     newsScrow.backgroundColor=[UIColor whiteColor];
+    newsScrow.scrollEnabled = NO;
     
     [self.view addSubview:newsScrow];
     

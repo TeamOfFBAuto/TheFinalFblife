@@ -267,16 +267,6 @@
     }
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     return cell;
     
 }
@@ -452,6 +442,75 @@
     
 }
 
+#pragma - mark 删除操作
+
+-(void)deleteWithInfo:(NSDictionary *)dic{
+    
+    NSLog(@"删除数据==%@",dic);
+    
+    NSString *string_code = @"U2VRMgdnVzVQZlc8AnkKelo7A25fd1JhCWEANw";
+    
+    SzkLoadData *loaddata=[[SzkLoadData alloc]init];
+    
+    NSString *str_delete;
+    
+    switch (self.mytype) {
+        case FinalshoucangViewTypeNews:{ //新闻取消收藏
+            
+            str_delete = [NSString stringWithFormat:@"http://cmstest.fblife.com/ajax.php?c=newstwo&a=delfavorites&type=xml&took=%@&id=%@",string_code,[dic objectForKey:@"nid"]];
+        }
+            
+            break;
+            
+        case FinalshoucangViewTypeTiezi://删除帖子
+        {
+            str_delete = [NSString stringWithFormat:@"http://demo03.fblife.com/bbsapinew/delfavoritesthread.php?delid=%@&formattype=json&authcode=%@",[dic objectForKey:@"tid"],@"U2VRMgdnVzVQZlc8AnkKelo7A25fd1JhCWEANw"];
+        }
+            break;
+            
+        case FinalshoucangViewTypebankuai:{ //删除板块
+            
+            str_delete = [NSString stringWithFormat:@"http://demo03.fblife.com/bbsapinew/delfavorites.php?delid=%@&formattype=json&authcode=%@",[dic objectForKey:@"fid"],string_code];
+        }
+            
+            break;
+            
+        case FinalshoucangViewTypetuji:{ //图集取消收藏
+            
+            str_delete = [NSString stringWithFormat:@"http://cmstest.fblife.com/ajax.php?c=photo&a=delfavorites&type=xml&took=%@&id=%@",string_code,[dic objectForKey:@"nid"]];
+        }
+            
+            break;
+            
+        case FinalshoucangViewTypeMyComment:{ //我回复的
+            
+            //没有删除
+            
+        }
+            
+            break;
+        case FinalshoucangViewTypeMyWrite://我的发布
+        {
+            
+        }
+            break;
+            
+    }
+    
+    [loaddata SeturlStr:str_delete mytest:^(NSDictionary *dicinfo, int errcode) {
+        
+        NSLog(@"dicinfo %@ %d",dicinfo,errcode);
+        
+        NSLog(@"dicinfo %@",[dicinfo objectForKey:@"bbsinfo"]);
+        
+    }];
+    
+//    [tab_ reloadData];
+}
+
+
+#pragma - mark UITableViewDataSource
+
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -534,6 +593,51 @@
     
     
 }
+
+//要求委托方的编辑风格在表视图的一个特定的位置。
+-(UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
+    UITableViewCellEditingStyle result = UITableViewCellEditingStyleNone;//默认没有编辑风格
+    if ([tableView isEqual:tab_]) {
+        
+        if (self.mytype != FinalshoucangViewTypeMyComment && self.mytype != FinalshoucangViewTypeMyWrite) { //我的回复不需要删除
+            
+           result = UITableViewCellEditingStyleDelete;//设置编辑风格为删除风格
+        }
+        
+    }
+    return result;
+}
+
+-(void)setEditing:(BOOL)editing animated:(BOOL)animated{//设置是否显示一个可编辑视图的视图控制器。
+
+    if (self.mytype != FinalshoucangViewTypeMyComment && self.mytype != FinalshoucangViewTypeMyWrite) {
+        [tab_ setEditing:editing animated:animated];//切换接收者的进入和退出编辑模式。
+    }
+}
+
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{//请求数据源提交的插入或删除指定行接收者。
+    
+    if (self.mytype == FinalshoucangViewTypeMyComment || self.mytype == FinalshoucangViewTypeMyWrite)
+    {
+        return;
+    }
+    
+    if (editingStyle ==UITableViewCellEditingStyleDelete) {//如果编辑样式为删除样式
+        
+        if (indexPath.row<[self.normalarray count]) {
+            
+            NSDictionary *dic=[self.normalarray objectAtIndex:indexPath.row];
+            
+            [self.normalarray removeObjectAtIndex:indexPath.row];//移除数据源的数据
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationLeft];//移除tableView中的数据
+            //板块 fid
+            
+            [self deleteWithInfo:dic];
+        }
+    }
+}
+
+
 #pragma mark EGORefreshTableHeaderDelegate Methods
 
 -(void)refreshwithrag:(int)tag{

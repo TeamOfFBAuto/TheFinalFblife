@@ -23,11 +23,6 @@ typedef enum {
     FinalshoucangViewTypetuji=3,
     FinalshoucangViewTypeMyWrite=4,
     FinalshoucangViewTypeMyComment=5,
-
-    
-    
-
-
     
 }FinalshoucangViewType;//枚举名称
 
