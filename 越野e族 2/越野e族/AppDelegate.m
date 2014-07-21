@@ -827,6 +827,8 @@
                 
             }
             NSLog(@"dic===%@",dic__);
+            
+            NSLog(@"");
             if (![bbsInfo isEqualToString:NOW_VERSION])
             {
                 int i=12;

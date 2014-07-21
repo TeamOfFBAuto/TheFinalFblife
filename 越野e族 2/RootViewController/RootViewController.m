@@ -565,7 +565,7 @@
 //    self.navigationController.navigationBar.alpha=1;
     
     _titleView = [[UIScrollView alloc] initWithFrame:CGRectMake(0,0,320,37)];
-    _titleView.backgroundColor = [UIColor whiteColor];
+    _titleView.backgroundColor = RGBCOLOR(245, 245, 245);
     _titleView.contentSize = CGSizeMake(635,0);
     _titleView.showsHorizontalScrollIndicator = NO;
     _titleView.showsVerticalScrollIndicator = NO;

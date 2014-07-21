@@ -38,7 +38,8 @@
 }
 -(void)viewWillAppear:(BOOL)animated{
     self.navigationController.navigationBarHidden=NO;
-    
+    [[UIApplication sharedApplication] setStatusBarHidden:NO ];
+
     [MobClick beginEvent:@"fbWebViewController"];
 
 }
@@ -52,6 +53,8 @@
 
 - (void)viewDidLoad
 {
+    [[UIApplication sharedApplication] setStatusBarHidden:NO];
+
     self.navigationController.navigationBarHidden=NO;
 
     [super viewDidLoad];

@@ -1902,6 +1902,12 @@ static NSOperationQueue *sharedQueue = nil;
 }
 
 
+/**
+ *  Printing description of self->didReceiveResponseHeadersSelector:
+ (SEL) didReceiveResponseHeadersSelector = "request:didReceiveResponseHeaders:"
+
+ */
+
 /* ALWAYS CALLED ON MAIN THREAD! */
 - (void)requestReceivedResponseHeaders:(NSMutableDictionary *)newResponseHeaders
 {

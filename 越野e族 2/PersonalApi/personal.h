@@ -60,9 +60,16 @@
 +(float)celllength:(float)length lablefont:(UIFont*)font labeltext:(NSString *)text;
 +(NSString *)getuidwithstring:(NSString *)stringsymbaldata;
 +(NSString*)testtime:(NSString *)test;
+//MD5加密字符串
+
+-(NSString *)mds:(NSString *)str;
+
+
 /**
  *  播放系统声音
  */
+
+//
 
 //+(void)playsysy;
 @end

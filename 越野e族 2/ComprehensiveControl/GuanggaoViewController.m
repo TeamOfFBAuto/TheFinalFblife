@@ -25,6 +25,16 @@
     return self;
 }
 
+
+-(void)viewWillAppear:(BOOL)animated{
+
+    [super viewWillAppear:YES];
+    
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
+
+    
+
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -264,7 +274,10 @@
 
 
 
+-(void)seccesDownLoad:(UIImage *)image{
 
+
+}
 
 
 /*

@@ -39,7 +39,7 @@
 
 #import "ShowImagesViewController.h"
 
-
+#import <CommonCrypto/CommonDigest.h> // Need to import for CC_MD5 access
 
 
 @interface ComprehensiveViewController (){
@@ -66,11 +66,33 @@
     }
     return self;
 }
+- (NSString *)md5:(NSString *)str
+{
+    const char *cStr = [str UTF8String];
+    unsigned char result[16];
+    CC_MD5(cStr, strlen(cStr), result); // This is the md5 call
+    return [NSString stringWithFormat:
+            @"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
+            result[0], result[1], result[2], result[3],
+            result[4], result[5], result[6], result[7],
+            result[8], result[9], result[10], result[11],
+            result[12], result[13], result[14], result[15]
+            ]; 
+}
+
+
+
 
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+
+    
+  NSLog(@"shizhongkun转化成MD5加密后的字符串为=%@",[self md5:@"shizhongkun"])  ;
+    
+    
     
     isloadsuccess = YES;
     
@@ -79,12 +101,6 @@
     
     [XTSideMenuManager resetSideMenuRecognizerEnable:NO];
     
-    [[NSNotificationCenter defaultCenter]
-     
-     addObserver:self selector:@selector(ssTurntoFbWebview:) name:@"TouchGuanggao" object:nil];
-    
-    
-    [self turnToguanggao];
     
     
     
@@ -92,7 +108,13 @@
     
     [self prepairNavigationBar];
     
+    [[NSNotificationCenter defaultCenter]
+     
+     addObserver:self selector:@selector(ssTurntoFbWebview:) name:@"TouchGuanggao" object:nil];
     
+    
+    [self turnToguanggao];
+
     
     self.view.backgroundColor=[UIColor redColor];
     
@@ -100,6 +122,8 @@
     
     [self loadHuandeng];
     [self loadNomalData];
+    
+    
 
     
 }
@@ -109,6 +133,7 @@
     
     fbWebViewController *fbweb=[[fbWebViewController alloc]init];
     fbweb.urlstring=[NSString stringWithFormat:@"%@",[sender.userInfo objectForKey:@"link"]];
+    [fbweb viewWillAppear:YES];
     
     [self.navigationController pushViewController:fbweb animated:YES];
 
@@ -123,7 +148,8 @@
 
 
     GuanggaoViewController *_guanggaoVC=[[GuanggaoViewController alloc]init];
-    
+    [[UIApplication sharedApplication] setStatusBarHidden:NO ];
+
     [self presentViewController:_guanggaoVC animated:NO completion:NULL];
 
 }
@@ -223,6 +249,8 @@
 -(void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:NO];
+    
+    [[UIApplication sharedApplication] setStatusBarHidden:NO];
     
 //  [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
     

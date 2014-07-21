@@ -14,8 +14,8 @@
 
 + (void)resetSideMenuRecognizerEnable:(BOOL)canOpen
 {
-    MMDrawerController *menu = (MMDrawerController *)[[[UIApplication sharedApplication] keyWindow] rootViewController];
-    menu.openDrawerGestureModeMask = MMOpenDrawerGestureModeNone;
+//    MMDrawerController *menu = (MMDrawerController *)[[[UIApplication sharedApplication] keyWindow] rootViewController];
+//    menu.openDrawerGestureModeMask = MMOpenDrawerGestureModeNone;
 }
 
 @end
