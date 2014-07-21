@@ -116,6 +116,11 @@
     
     int count = array.count;
     
+    
+    if (count > 10 && theType == 1) {
+        count = 10;
+    }
+    
     _myScrollView.contentSize = CGSizeMake(20+90*count+(count-1)*10,0);
     
     NSString * string = @"";
@@ -131,7 +136,12 @@
             string = [[array objectAtIndex:i] objectForKey:@"name"];
         }else if (theType == 1)
         {
-            testbase * base = [array objectAtIndex:i];
+            if (i > 9)
+            {
+                return;
+            }
+            
+            testbase * base = [array objectAtIndex:(array.count-1)-i];
             
             string = base.name;
         }

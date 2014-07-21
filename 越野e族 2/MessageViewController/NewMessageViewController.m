@@ -47,7 +47,7 @@
 
 -(void)backto
 {
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 
@@ -469,7 +469,9 @@
     
     list.title_name_string = @"联系人";
     
-    [self presentModalViewController:list animated:YES];
+    UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:list];
+    
+    [self presentViewController:nav animated:YES completion:NULL];
 }
 
 

@@ -32,6 +32,7 @@
 @synthesize read_page = _read_page;
 @synthesize uRead_page = _uRead_page;
 @synthesize loadingView = _loadingView;
+@synthesize myScrollView = _myScrollView;
 
 
 
@@ -53,7 +54,7 @@
     bbs_page=1;
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = RGBCOLOR(248,248,248);
     
     _read_array = [[NSMutableArray alloc] init];
     
@@ -73,14 +74,14 @@
 //    self.navigationController.navigationBar.titleTextAttributes = dict;
     
     
-    _slsV=[[SliderSegmentView alloc]initWithFrame:CGRectMake(0,0,150,44)];
-    _slsV.delegate=self;
-    [_slsV NewloadContent:[NSArray arrayWithObjects:@"FB通知",@"论坛通知",nil]];
-    
-    UIView *view_title=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 170, 44)];
-    view_title.backgroundColor=[UIColor clearColor];
-    [view_title addSubview:_slsV];
-    self.navigationItem.titleView=_slsV;
+//    _slsV=[[SliderSegmentView alloc]initWithFrame:CGRectMake(0,0,150,44)];
+//    _slsV.delegate=self;
+//    [_slsV NewloadContent:[NSArray arrayWithObjects:@"FB通知",@"论坛通知",nil]];
+//    
+//    UIView *view_title=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 170, 44)];
+//    view_title.backgroundColor=[UIColor clearColor];
+//    [view_title addSubview:_slsV];
+//    self.navigationItem.titleView=_slsV;
     
     //        _slsV.backgroundColor=[UIColor orangeColor];
     
@@ -111,9 +112,41 @@
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
     
     
+    seg_view = [[SliderBBSTitleView alloc] initWithFrame:CGRectMake(0,0,190,44)];
+
+    
+    __weak typeof(self) bself = self;
+    
+    [seg_view setAllViewsWith:[NSArray arrayWithObjects:@"FB通知",@"论坛通知",nil] withBlock:^(int index) {
+        
+        [bself.myScrollView setContentOffset:CGPointMake(340*index,0) animated:YES];
+        
+    }];
+    
+    self.navigationItem.titleView = seg_view;
+    
+    
+    
+    _myScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0,0,340, iPhone5?568-44-25:480-44-25)];
+    
+    _myScrollView.showsHorizontalScrollIndicator = NO;
+    
+    _myScrollView.showsVerticalScrollIndicator = NO;
+    
+    _myScrollView.delegate = self;
+    
+    _myScrollView.pagingEnabled = YES;
+    
+    _myScrollView.contentSize = CGSizeMake(680,0);
+    
+    [self.view addSubview:_myScrollView];
+    
+    
+    
+    
     fbnoti_tab=[[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, iPhone5?568-44-25:480-44-25)];
     
-    fbnoti_tab.backgroundColor=[UIColor whiteColor];
+    fbnoti_tab.backgroundColor=RGBCOLOR(248,248,248);
     
     fbnoti_tab.delegate=self;
     
@@ -121,12 +154,12 @@
     
     fbnoti_tab.separatorColor=[UIColor clearColor];
     
-    self.view=fbnoti_tab;
+    [_myScrollView addSubview:fbnoti_tab];
     
     
-    bbs_tab=[[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, iPhone5?568-44-25:480-44-25)];
+    bbs_tab=[[UITableView alloc]initWithFrame:CGRectMake(340, 0, 320, iPhone5?568-44-25:480-44-25)];
     
-    bbs_tab.backgroundColor=[UIColor whiteColor];
+    bbs_tab.backgroundColor=RGBCOLOR(248,248,248);
     
     bbs_tab.delegate=self;
     
@@ -134,8 +167,7 @@
     
     bbs_tab.separatorColor=[UIColor clearColor];
     
-    
-    
+    [_myScrollView addSubview:bbs_tab];
     
     
     if (!_loadingView)
@@ -506,6 +538,10 @@
         [cell.contentView addSubview:labelcontent];
         
     }
+    
+    cell.backgroundColor = RGBCOLOR(248,248,248);
+    
+    cell.contentView.backgroundColor = RGBCOLOR(248,248,248);
     
     cell.selectionStyle=UITableViewCellSelectionStyleNone;
     
@@ -1105,6 +1141,20 @@
 
 
 #pragma mark-scrollViewDelegate
+
+
+-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    //判断选择 精选推荐 还是 全部版块
+    if (scrollView == _myScrollView)
+    {
+        CGFloat pageWidth = scrollView.frame.size.width;
+        // 根据当前的x坐标和页宽度计算出当前页数
+        int current_page = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
+        
+        [seg_view MyButtonStateWithIndex:current_page];
+    }
+}
 
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate

@@ -28,6 +28,8 @@
 @interface RightViewController ()
 {
     AppDelegate * myDelegate;
+    
+    UIScrollView * _rootScrollView;
 }
 
 @end
@@ -48,6 +50,8 @@
     [super viewWillAppear:YES];
     
     self.navigationController.navigationBarHidden = YES;
+    
+    [self setup];
 }
 
 
@@ -55,25 +59,30 @@
 {
     [super viewDidLoad];
     
-    self.view.backgroundColor=RGBCOLOR(242,242,242);
+    self.view.backgroundColor = RGBCOLOR(237,238,243);
     
-    if (MY_MACRO_NAME)
-    {
+    if (MY_MACRO_NAME) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
+        
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+        
     }
     
     myDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
     self.navigationController.navigationBarHidden = YES;
-    
-    [self setup];
 }
 
 
 
 -(void)setup
 {
-    UIScrollView * _rootScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0,0,298,(iPhone5?568:480))];
+    
+    if (_rootScrollView) {
+        return;
+    }
+    
+    _rootScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0,0,298,(iPhone5?568:480))];
     
     _rootScrollView.contentSize = CGSizeMake(0,568);
     
@@ -85,6 +94,8 @@
     
     _rootScrollView.bounces = NO;
     
+    _rootScrollView.backgroundColor = [UIColor clearColor];
+    
     [self.view addSubview:_rootScrollView];
     
     
@@ -95,9 +106,9 @@
     
     user_Info_BackView.layer.masksToBounds = NO;
     
-    user_Info_BackView.layer.shadowColor = RGBCOLOR(216,216,216).CGColor;//RGBCOLOR(216,216,216).CGColor;
+    user_Info_BackView.layer.shadowColor = RGBCOLOR(216,216,216).CGColor;
     
-    user_Info_BackView.layer.shadowOffset = CGSizeMake(2,2);
+    user_Info_BackView.layer.shadowOffset = CGSizeMake(2,1);
     
     user_Info_BackView.layer.shadowRadius = 5;
     
@@ -111,7 +122,7 @@
     
     
     
-    headerImageView = [[AsyncImageView alloc] initWithFrame:CGRectMake(104,44,82,82)];
+    headerImageView = [[AsyncImageView alloc] initWithFrame:CGRectMake(103,44,82,82)];
     
     headerImageView.image = [UIImage imageNamed:@"SliderRightLogin.png"];
     
@@ -134,7 +145,7 @@
     
     
     
-    LogIn_label = [[UILabel alloc] initWithFrame:CGRectMake(0,155,298,20)];
+    LogIn_label = [[UILabel alloc] initWithFrame:CGRectMake(0,155,288,25)];
     
     LogIn_label.text = @"点击立即登录";
     
@@ -175,9 +186,11 @@
                 
                 [button setImageEdgeInsets:UIEdgeInsetsMake(0,0,25,0)];
                 
-                [button setTitleEdgeInsets:UIEdgeInsetsMake(50,-40.5,0,-2)];
+                [button setTitleEdgeInsets:UIEdgeInsetsMake(50,-45,0,-3)];
                 
                 button.tag = 1000 + i*3+j;
+                
+                button.backgroundColor = [UIColor clearColor];
                 
                 [button addTarget:self action:@selector(buttonTap:) forControlEvents:UIControlEventTouchUpInside];
                 
@@ -336,11 +349,16 @@
 
 -(void)buttonTap:(UIButton *)sender
 {
-    BOOL islogIn = [self isLogIn];
-    
-    if (!islogIn) {
-        return;
+    if (sender.tag - 1000 != 7)
+    {
+        BOOL islogIn = [self isLogIn];
+        
+        if (!islogIn) {
+            return;
+        }
     }
+    
+    
         
     switch (sender.tag - 1000) {
         case 0:
@@ -368,7 +386,13 @@
         {
             FriendListViewController * friend = [[FriendListViewController alloc] init];
             
-            [myDelegate.root_nav pushViewController:friend animated:YES];
+            friend.title_name_string = @"联系人";
+            
+            friend.delegate = self;
+            
+            UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:friend];
+            
+            [self presentViewController:nav animated:YES completion:NULL];
             
         }
             break;
@@ -474,6 +498,20 @@
     
     return appdelegate;
 }
+
+
+
+#pragma mark - 联系人代理，跳转到个人界面
+
+-(void)returnUserName:(NSString *)username Uid:(NSString *)uid
+{
+    NewMineViewController * mine = [[NewMineViewController alloc] init];
+    
+    mine.uid = uid;
+    
+    [[self getAppDelegate].root_nav pushViewController:mine animated:YES];
+}
+
 
 
 - (void)didReceiveMemoryWarning

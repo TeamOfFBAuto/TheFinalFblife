@@ -14,6 +14,10 @@
 
 #import "UIViewController+MMDrawerController.h"
 
+#import "ShowImagesViewController.h"
+
+#import "NewMainViewModel.h"
+
 
 @interface PicShowViewController ()
 
@@ -243,7 +247,9 @@
     
     [super viewWillAppear:NO];
     
-    //  [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
+    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleDefault animated:NO];
+    
+    [[UIApplication sharedApplication] setStatusBarHidden:NO];
     
     //    self.navigationController.navigationBarHidden=YES;
     
@@ -294,6 +300,17 @@
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
+    NSDictionary *dic=[normalinfoAllArray objectAtIndex:indexPath.row];
+    
+    NewMainViewModel *_newmodel=[[NewMainViewModel alloc]init];
+    
+    [_newmodel NewMainViewModelSetdic:dic];
+    
+    ShowImagesViewController * showImage = [[ShowImagesViewController alloc] init];
+    
+    showImage.id_atlas = _newmodel.tid;
+    
+    [self.navigationController pushViewController:showImage animated:YES];
     
     
 }

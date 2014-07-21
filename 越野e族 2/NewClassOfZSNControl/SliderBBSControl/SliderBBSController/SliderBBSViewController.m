@@ -136,6 +136,8 @@
         
         [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:MY_MACRO_NAME?@"sliderBBSNavigationBarImage":@"sliderBBSNavigationBarImage_ios6"] forBarMetrics: UIBarMetricsDefault];
     }
+    
+    [self loadRecentlyLookData];
 }
 
 -(void)rightButtonTap:(UIButton *)sender
@@ -252,7 +254,7 @@
     
     
     
-    _myTableView2 = [[UITableView alloc] initWithFrame:CGRectMake(340,63,320,_myScrollView.frame.size.height)];
+    _myTableView2 = [[UITableView alloc] initWithFrame:CGRectMake(340,63,320,_myScrollView.frame.size.height-63)];
     
     _myTableView2.delegate = self;
     
@@ -447,6 +449,11 @@
         for (NSDictionary * dic in dictionary)
         {
             SliderBBSForumModel * model = [[SliderBBSForumModel alloc] initWithDictionary:dic];
+            
+            if (dictionary.count == 1 && model.forum_isHave_sub)
+            {
+                model.forum_isOpen = YES;
+            }
             
             [[_forum_temp_array objectAtIndex:current_forum] addObject:model];
         }
@@ -681,6 +688,11 @@
             for (NSDictionary * dic in array)
             {
                 SliderBBSForumModel * model = [[SliderBBSForumModel alloc] initWithDictionary:dic];
+                
+                if (array.count == 1 && model.forum_isHave_sub)
+                {
+                    model.forum_isOpen = YES;
+                }
                 
                 [[_forum_temp_array objectAtIndex:request.tag-417] addObject:model];
             }
@@ -960,6 +972,17 @@
         top_line_view.backgroundColor = RGBCOLOR(228,228,228);
         
         [view addSubview:top_line_view];
+        
+        
+        
+        if (section == [[_forum_temp_array objectAtIndex:current_forum] count]-1)
+        {
+            UIView * top_line_view = [[UIView alloc] initWithFrame:CGRectMake(0,43.5,320,0.5)];
+            
+            top_line_view.backgroundColor = RGBCOLOR(228,228,228);
+            
+            [view addSubview:top_line_view];
+        }
         
         
         

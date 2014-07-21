@@ -11,6 +11,7 @@
 #import "loadingimview.h"
 #import "LoadingIndicatorView.h"
 #import "downloadtool.h"
+#import "SliderBBSTitleView.h"
 
 #import "SliderSegmentView.h"//选择微博还是贴子
 
@@ -36,6 +37,8 @@
     
     SliderSegmentView *_slsV;
     
+    SliderBBSTitleView * seg_view;//标题选择
+    
     BOOL isbbs;
 
     NSArray *bbs_array;
@@ -49,5 +52,7 @@
 @property(nonatomic,assign)int read_page;
 @property(nonatomic,assign)int uRead_page;
 @property(nonatomic,strong)LoadingIndicatorView * loadingView;
+
+@property(nonatomic,strong)UIScrollView * myScrollView;
 
 @end

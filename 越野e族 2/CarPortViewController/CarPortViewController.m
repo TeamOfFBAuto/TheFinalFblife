@@ -471,9 +471,9 @@
     
     self.navigationItem.title = @"车库";
     
-    self.leftImageName = @"ios7logo";
+    self.leftImageName = @"slider_bbs_home";
     
-    self.rightImageName = @"ios7_refresh4139";
+    self.rightImageName = @"slider_bbs_me";
     
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeOther WithRightButtonType:MyViewControllerRightbuttonTypeOther];
     
@@ -587,12 +587,12 @@
 
 -(void)rightButtonTap:(UIButton *)sender
 {
-    
+    [self.mm_drawerController toggleDrawerSide:MMDrawerSideRight animated:YES completion:nil];
 }
 
 -(void)leftButtonTap:(UIButton *)sender
 {
-    [self refreshData:sender];
+    [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 }
 
 

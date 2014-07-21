@@ -315,11 +315,11 @@
     
     ios7_height = 0;
     
-    if (IOS_VERSION>=7.0)
-    {
-        ios7_height = 20;
-    }
-    
+//    if (IOS_VERSION>=7.0)
+//    {
+//        ios7_height = 20;
+//    }
+//    
     
     searchOrCancell = NO;
     
@@ -407,8 +407,7 @@
 //    NavTitle.titleView = title_label;
     
     
-    
-    self.title = @"联系人";
+    self.title = self.title_name_string;
     
     self.rightImageName = @"ios7_refresh4139.png";
     
@@ -491,6 +490,12 @@
 }
 
 
+-(void)leftButtonTap:(UIButton *)sender
+{
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+
 -(void)rightButtonTap:(UIButton *)sender
 {
     [self refreshData:nil];
@@ -514,7 +519,7 @@
 {
     [UIView animateWithDuration:0.4 animations:^{
         
-        nav.frame = CGRectMake(0,-(44+ios7_height),320,44+ios7_height);
+        nav.frame = CGRectMake(0,-(ios7_height),320,44+ios7_height);
         search_view.frame = CGRectMake(0,ios7_height,320,40);
         _myTableView.frame = CGRectMake(0,40+ios7_height,320,iPhone5?508:420);
         
@@ -546,11 +551,11 @@
     
     [UIView animateWithDuration:0.4 animations:^
      {
-         nav.frame = CGRectMake(0,0,320,44+ios7_height);
+         nav.frame = CGRectMake(0,0,320,ios7_height);
          
-         search_view.frame = CGRectMake(0,44+ios7_height,320,40);
+         search_view.frame = CGRectMake(0,ios7_height,320,40);
          
-         _myTableView.frame = CGRectMake(0,84+ios7_height,320,iPhone5?548-44-40:460-44-40);
+         _myTableView.frame = CGRectMake(0,40+ios7_height,320,iPhone5?548-44-40:460-44-40);
          
          
          imgbc.frame = CGRectMake(10,6,300,56/2);
@@ -871,7 +876,7 @@
     
     _isloadingIv = nil;
     
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:NULL];
     
     PersonInfo * info = [[PersonInfo alloc] init];
     
@@ -917,11 +922,11 @@
     
     [UIView animateWithDuration:0.4 animations:^
      {
-         nav.frame = CGRectMake(0,0,320,44+ios7_height);
+         nav.frame = CGRectMake(0,0,320,ios7_height);
          
-         search_view.frame = CGRectMake(0,44+ios7_height,320,40);
+         search_view.frame = CGRectMake(0,ios7_height,320,40);
          
-         _myTableView.frame = CGRectMake(0,84+ios7_height,320,iPhone5?548-44-40:460-44-40);
+         _myTableView.frame = CGRectMake(0,40+ios7_height,320,iPhone5?548-44-40:460-44-40);
          
          imgbc.frame = CGRectMake(10,6,300,56/2);
          

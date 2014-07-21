@@ -1011,7 +1011,7 @@
     _RootVC=[[MMDrawerController alloc]initWithCenterViewController:_navigationController leftDrawerViewController:menuViewController rightDrawerViewController:rightVC];
     
     
-    [_RootVC setMaximumRightDrawerWidth:298];
+    [_RootVC setMaximumRightDrawerWidth:288];
     [_RootVC setMaximumLeftDrawerWidth:287];
     _RootVC.shouldStretchDrawer = NO;
     [_RootVC setOpenDrawerGestureModeMask:MMOpenDrawerGestureModePanningNavigationBar];

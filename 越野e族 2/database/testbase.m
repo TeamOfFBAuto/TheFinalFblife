@@ -22,7 +22,7 @@
 +(NSMutableArray *)findall{
     sqlite3 *db =[dataBase openDB];
     sqlite3_stmt *stmt=nil;
-    int result=sqlite3_prepare_v2(db,"select * from look ",-1,&stmt,nil);
+    int result=sqlite3_prepare_v2(db,"select * from look",-1,&stmt,nil);
     if (result == SQLITE_OK) {
         NSMutableArray *array=[[NSMutableArray alloc]init];
         while (SQLITE_ROW == sqlite3_step(stmt)) {

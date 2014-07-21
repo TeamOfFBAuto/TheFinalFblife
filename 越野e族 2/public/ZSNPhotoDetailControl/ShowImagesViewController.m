@@ -729,7 +729,7 @@
 #pragma mark-UIScrollViewDelegate
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
-{NSLog(@"111111--------%f",scrollView.contentOffset.x);
+{
     CGFloat pageWidth = scrollView.frame.size.width;
     // 根据当前的x坐标和页宽度计算出当前页数
     int page = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
