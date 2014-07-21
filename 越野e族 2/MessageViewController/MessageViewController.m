@@ -203,8 +203,7 @@
 {
     NewMessageViewController * newMessage = [[NewMessageViewController alloc] init];
     newMessage.delegate = self;
-    [self.leveyTabBarController hidesTabBar:YES animated:YES];
-    [self presentModalViewController:newMessage animated:YES];
+    [self presentViewController:newMessage animated:YES completion:NULL];
 }
 
 -(void)cleanTheOldData
@@ -258,7 +257,6 @@
 }
 - (void)viewDidLoad
 {
-    NSLog(@"aha==%s",__FUNCTION__);
     [super viewDidLoad];
     
     [[NSNotificationCenter defaultCenter]
@@ -275,7 +273,7 @@
     
     self.data_array = [[NSMutableArray alloc] init];
     
-    self.navigationController.navigationBarHidden=NO;
+//    self.navigationController.navigationBarHidden=NO;
     
 //    self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
 //    
@@ -317,8 +315,6 @@
     self.rightImageName = @"weibo_write_image";
     
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeOther];
-    
-    
     
     
     if (_refreshHeaderView == nil) {

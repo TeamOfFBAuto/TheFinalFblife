@@ -570,6 +570,10 @@
         
         [self.navigationController pushViewController:fbweb animated:YES];
     }
+    
+    if (buttonIndex == 0) {
+        [myReaderView stop];
+    }
 }
 
 

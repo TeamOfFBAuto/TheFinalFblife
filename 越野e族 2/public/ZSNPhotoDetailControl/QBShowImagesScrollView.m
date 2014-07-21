@@ -111,22 +111,61 @@
         
         [self addSubview:_locationImageView];
         
+        
+        loading_view = [[UIView alloc] initWithFrame:CGRectMake(0,0,160,100)];
+        
+        loading_view.center = CGPointMake(160,(iPhone5?568:480)/2-20);
+        
+        loading_view.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
+        
+        [self addSubview:loading_view];
+        
+        
+        activity_view = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0,0,30,30)];
+        
+        activity_view.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhite;
+        
+        activity_view.center = CGPointMake(80,40);
+        
+        [loading_view addSubview:activity_view];
+        
+        [activity_view startAnimating];
+        
+        
+        
+        UILabel * logo_label = [[UILabel alloc] initWithFrame:CGRectMake(0,60,160,30)];
+        
+        logo_label.text = @"FBLIFE.COM";
+        
+        logo_label.textAlignment = NSTextAlignmentCenter;
+        
+        logo_label.textColor = RGBCOLOR(63,63,63);
+        
+        logo_label.font = [UIFont boldSystemFontOfSize:20];
+        
+        logo_label.backgroundColor = [UIColor clearColor];
+        
+        [loading_view addSubview:logo_label];
+        
+        
+        
+        
                 
-        if (theUrl.length > 0) {
-            placeHolderButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            
-            placeHolderButton.userInteractionEnabled = NO;
-            
-            placeHolderButton.backgroundColor = RGBCOLOR(229,229,229);
-            
-            placeHolderButton.frame =  [UIScreen mainScreen].bounds;
-            
-            placeHolderButton.center = CGPointMake(160,(iPhone5?568:480)/2);
-            
-            [placeHolderButton setImage:[UIImage imageNamed:@"bigImagesPlaceHolder.png"] forState:UIControlStateNormal];
-            
-            [self addSubview:placeHolderButton];
-        }
+//        if (theUrl.length > 0) {
+//            placeHolderButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//            
+//            placeHolderButton.userInteractionEnabled = NO;
+//            
+//            placeHolderButton.backgroundColor = RGBCOLOR(229,229,229);
+//            
+//            placeHolderButton.frame =  [UIScreen mainScreen].bounds;
+//            
+//            placeHolderButton.center = CGPointMake(160,(iPhone5?568:480)/2);
+//            
+//            [placeHolderButton setImage:[UIImage imageNamed:@"bigImagesPlaceHolder.png"] forState:UIControlStateNormal];
+//            
+//            [self addSubview:placeHolderButton];
+//        }
         
     }
     
@@ -256,6 +295,8 @@
 -(void)succesDownLoadWithImageView:(UIImageView *)imageView Image:(UIImage *)image
 {
     placeHolderButton.hidden = YES;
+    
+    loading_view.hidden = YES;
 }
 
 

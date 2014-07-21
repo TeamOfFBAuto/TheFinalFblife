@@ -172,6 +172,8 @@
 //    
 //    self.navigationController.navigationBar.titleTextAttributes = dict;
 
+    self.title = @"草稿箱";
+    
     self.rightImageName = @"ios7_lese";
 
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeOther];
@@ -527,7 +529,7 @@
     
     float heightOfLabel_Content=[personal celllength:300 lablefont:[UIFont systemFontOfSize:16] labeltext:str];
     
-    NSLog(@"===height====%f",heightOfLabel_Content);
+    NSLog(@"===height====%@",base_.columns);
 
     
     UILabel *label_content=[[UILabel alloc]initWithFrame:CGRectMake(10, 8,tab_.editing?200:300, heightOfLabel_Content)];
@@ -539,6 +541,10 @@
     
     UILabel *label_fborbbs=[[UILabel alloc]initWithFrame:CGRectMake(10, 10+heightOfLabel_Content, 40,20 )];
     label_fborbbs.text=base_.columns;
+    if ([base_.columns isEqualToString:@"微博"])
+    {
+        label_fborbbs.text = @"自留地";
+    }
     label_fborbbs.backgroundColor=[UIColor clearColor];
     label_fborbbs.font=[UIFont systemFontOfSize:12.5];
     label_fborbbs.textColor=RGBCOLOR(154, 154, 154);

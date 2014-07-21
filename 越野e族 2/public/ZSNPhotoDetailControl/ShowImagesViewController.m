@@ -89,7 +89,7 @@
     
     [button_back addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     
-    [button_back setImage:[UIImage imageNamed:@"ios7_back"] forState:UIControlStateNormal];
+    [button_back setImage:[UIImage imageNamed:@"atlas_fanhui"] forState:UIControlStateNormal];
     
     button_back.center = CGPointMake(20,42);
     
@@ -368,9 +368,9 @@
         
         [bself.allImagesUrlArray addObjectsFromArray:array];
         
-        [bself loadImageView];
-        
         AtlasModel * model = [self.allImagesUrlArray objectAtIndex:bself.currentPage];
+        
+        [bself loadCurrentImageWithUrl:model.atlas_photo];
         
         [bself loadImageInformationWith:model];
         
@@ -394,6 +394,35 @@
 
 #pragma mark - 加载图片
 
+
+-(void)loadCurrentImageWithUrl:(NSString *)theUrl
+{
+    QBShowImagesScrollView * his_scrollview = (QBShowImagesScrollView *)[_myScrollView viewWithTag:1000+_currentPage];
+    
+    if (his_scrollview)
+    {
+        if (!his_scrollview.locationImageView.image)
+        {
+            [his_scrollview.locationImageView loadImageFromURL:theUrl withPlaceholdImage:nil];
+        }
+        
+        return;
+    }
+    
+    QBShowImagesScrollView * scrollView = [[QBShowImagesScrollView alloc] initWithFrame:CGRectMake(340*_currentPage,0,320,_myScrollView.frame.size.height) WithUrl:theUrl];
+    
+    scrollView.aDelegate = self;
+    
+    scrollView.tag = 1000+_currentPage;
+    
+    scrollView.backgroundColor = [UIColor blackColor];//RGBCOLOR(242,242,242);
+    
+    [_myScrollView addSubview:scrollView];
+}
+
+
+
+
 -(void)loadImageView
 {
     if ([[self.allImagesUrlArray objectAtIndex:0] isKindOfClass:[UIImage class]])
@@ -415,10 +444,9 @@
         
     }else if ([[self.allImagesUrlArray objectAtIndex:0] isKindOfClass:[AtlasModel class]])
     {
-        
         for (int i = 0;i < self.allImagesUrlArray.count;i++)
         {
-            AtlasModel * model = [self.allImagesUrlArray objectAtIndex:i];
+            AtlasModel * model = [self.allImagesUrlArray objectAtIndex:_currentPage];
             
             NSString * string = model.atlas_photo;
             
@@ -426,11 +454,11 @@
                 string=[string stringByReplacingOccurrencesOfString:@"small" withString:@"ori"];
             }
             
-            QBShowImagesScrollView * scrollView = [[QBShowImagesScrollView alloc] initWithFrame:CGRectMake(340*i,0,320,_myScrollView.frame.size.height) WithUrl:string];
+            QBShowImagesScrollView * scrollView = [[QBShowImagesScrollView alloc] initWithFrame:CGRectMake(340*_currentPage,0,320,_myScrollView.frame.size.height) WithUrl:nil];
             
             scrollView.aDelegate = self;
             
-            scrollView.tag = 1000+i;
+            scrollView.tag = 1000+_currentPage;
             
             scrollView.backgroundColor = [UIColor blackColor];//RGBCOLOR(242,242,242);
             
@@ -464,9 +492,13 @@
 {
     [super viewDidLoad];
     
-    self.edgesForExtendedLayout = UIRectEdgeNone;
+    if (MY_MACRO_NAME) {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+        
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+
+    }
     
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
     self.navigationController.navigationBar.tintColor = [UIColor blackColor];
     
@@ -499,6 +531,9 @@
     [self.view addSubview:_myScrollView];
     
     _myScrollView.contentOffset = CGPointMake(340*_currentPage,0);
+    
+    
+    [self loadCurrentImageWithUrl:nil];
     
     
     
@@ -670,6 +705,13 @@
 
 -(void)showInputView:(UITapGestureRecognizer *)sender
 {
+    BOOL islogin = [self isLogIn];
+    
+    if (!islogin)
+    {
+        return;
+    }
+    
     [text_input_view becomeFirstResponder];
 }
 
@@ -687,7 +729,7 @@
 #pragma mark-UIScrollViewDelegate
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
+{NSLog(@"111111--------%f",scrollView.contentOffset.x);
     CGFloat pageWidth = scrollView.frame.size.width;
     // 根据当前的x坐标和页宽度计算出当前页数
     int page = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
@@ -700,6 +742,8 @@
         AtlasModel * model = [self.allImagesUrlArray objectAtIndex:page];
         
         [self loadImageInformationWith:model];
+        
+        [self loadCurrentImageWithUrl:model.atlas_photo];
     }
 }
 

@@ -38,6 +38,19 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+}
+
+
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    if (MY_MACRO_NAME) {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+    }
+    
+    self.view.backgroundColor = RGBCOLOR(214,214,214);
     
     
     if([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)] )
@@ -52,19 +65,7 @@
     NSDictionary * dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:cc,[UIFont systemFontOfSize:20],[UIColor clearColor],nil] forKeys:[NSArray arrayWithObjects:UITextAttributeTextColor,UITextAttributeFont,UITextAttributeTextShadowColor,nil]];
     
     self.navigationController.navigationBar.titleTextAttributes = dict;
-}
-
-
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
     
-    if (MY_MACRO_NAME) {
-        self.edgesForExtendedLayout = UIRectEdgeNone;
-    }
-    
-    self.view.backgroundColor = RGBCOLOR(214,214,214);
 	
     
     spaceButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];

@@ -47,17 +47,32 @@
     
     [super viewWillAppear:YES];
     
-    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleDefault animated:NO];
-    
-    
+    self.navigationController.navigationBarHidden = YES;
 }
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     self.view.backgroundColor=RGBCOLOR(242,242,242);
+    
+    if (MY_MACRO_NAME)
+    {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+    }
     
     myDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
+    self.navigationController.navigationBarHidden = YES;
+    
+    [self setup];
+}
+
+
+
+-(void)setup
+{
     UIScrollView * _rootScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0,0,298,(iPhone5?568:480))];
     
     _rootScrollView.contentSize = CGSizeMake(0,568);
@@ -95,7 +110,7 @@
     [self receivemyimage_head];
     
     
-	    
+    
     headerImageView = [[AsyncImageView alloc] initWithFrame:CGRectMake(104,44,82,82)];
     
     headerImageView.image = [UIImage imageNamed:@"SliderRightLogin.png"];
@@ -137,7 +152,7 @@
     NSArray * arrary = [NSArray arrayWithObjects:@"SliderRighttiezi.png",@"SliderRightstar.png",@"SliderRightfriend.png",@"SliderRightfbgray73_67.png",@"SliderRightmessage.png",@"SliderRighttongzhi.png",@"SliderRightcaogaoxiangRes61_69.png",@"SliderRightsaoyisao.png",nil];
     
     NSArray * arrary1 = [NSArray arrayWithObjects:@"帖子",@"收藏",@"好友",@"自留地",@"私信",@"通知",@"草稿箱",@"扫一扫",nil];
-
+    
     
     
     
@@ -145,7 +160,7 @@
         for (int j = 0;j < 3;j++)
         {
             if (i*3 + j < 8)
-            {                
+            {
                 UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
                 
                 button.frame = CGRectMake(40 + 90*j,254+90*i,40,60);
@@ -215,7 +230,6 @@
     
     [[NSNotificationCenter defaultCenter]
      addObserver:self selector:@selector(LogOutNotification) name:@"logoutToChangeHeader" object:nil];//退出登陆通知
-    
 }
 
 
@@ -333,7 +347,7 @@
         {
             NSLog(@"帖子");
             MyWriteAndCommentViewController * shoucangVC = [[MyWriteAndCommentViewController alloc] init];
-            
+                        
             [myDelegate.root_nav pushViewController:shoucangVC animated:YES];
 
   

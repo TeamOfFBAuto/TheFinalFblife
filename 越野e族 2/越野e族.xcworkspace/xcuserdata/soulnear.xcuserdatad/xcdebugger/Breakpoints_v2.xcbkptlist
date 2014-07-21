@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "NewClassOfZSNControl/SliderBBSControl/SliderBBSViews/SliderBBSSectionView.m"
-            timestampString = "427536367.716698"
+            filePath = "MessageViewController/MessageViewController.m"
+            timestampString = "427619298.280004"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "149"
-            endingLineNumber = "149"
-            landmarkName = "-setAllViewsWithArray:WithType:withBlock:"
+            startingLineNumber = "797"
+            endingLineNumber = "797"
+            landmarkName = "-dealloc"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

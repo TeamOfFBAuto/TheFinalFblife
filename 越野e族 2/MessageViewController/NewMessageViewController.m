@@ -190,7 +190,7 @@
     float ios7_height = IOS_VERSION>=7.0?20:0;
     
     
-    self.view.backgroundColor = RGBCOLOR(210,217,233);
+    self.view.backgroundColor = [UIColor whiteColor];
     
     UIView *view_daohang=[[UIView alloc]initWithFrame:CGRectMake(0,0,320,44+ios7_height)];
     
@@ -220,7 +220,7 @@
     
     UIView * backGround_view = [[UIView alloc] initWithFrame:CGRectMake(0,44+ios7_height,320,HEIGHT)];
     
-    backGround_view.backgroundColor = [UIColor whiteColor];
+    backGround_view.backgroundColor = RGBCOLOR(248,248,248);
     
     [self.view addSubview:backGround_view];
     
@@ -256,7 +256,7 @@
     
     UIButton * button = [UIButton buttonWithType:UIButtonTypeContactAdd];
     
-    button.frame = CGRectMake(290,5,30,30);
+    button.frame = CGRectMake(285,5,30,30);
     
     
     [button addTarget:self action:@selector(friendList:) forControlEvents:UIControlEventTouchUpInside];

@@ -55,9 +55,50 @@
     
     shangjia_new_request.shouldAttemptPersistentConnection = NO;
     
-    shangjia_new_request.delegate = self;
+    __block typeof(shangjia_new_request) request = shangjia_new_request;
     
-    shangjia_new_request.tag = 1000;
+    
+    [request setCompletionBlock:^{
+        @try {
+            NSDictionary * dic = [shangjia_new_request.responseData objectFromJSONData];
+            
+            NSString * errcode = [dic objectForKey:@"errcode"];
+            
+            if ([errcode intValue] == 0)
+            {
+                NSDictionary * data = [dic objectForKey:@"data"];
+                
+                NSArray * array = [data allValues];
+                
+                
+                for (NSDictionary * dic1 in array)
+                {
+                    ShangJiaNewsInfo * info = [[ShangJiaNewsInfo alloc] initWithDic:dic1];
+                    
+                    [_zixin_array addObject:info];
+                }
+                
+                
+                [self shangjiaDataView];
+                
+                [_myTableView reloadData];
+            }
+
+        }
+        @catch (NSException *exception) {
+            
+        }
+        @finally {
+            
+        }
+    }];
+    
+    
+    [request setFailedBlock:^{
+        _replaceAlertView.hidden = NO;
+        [_replaceAlertView hide];
+    }];
+    
     
     [shangjia_new_request startAsynchronous];
 }
@@ -80,9 +121,63 @@
     
     request_weibo = [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:fullURL]];
     
-    request_weibo.delegate = self;
+    __block typeof(request_weibo) request = request_weibo;
     
-    request_weibo.tag = 1001;
+    [request setCompletionBlock:^{
+        @try {
+            NSDictionary * dic = [request_weibo.responseData objectFromJSONData];
+            
+            NSString * errcode = [dic objectForKey:@"errcode"];
+            
+            [loadview stopLoading:1];
+            
+            if ([errcode intValue] == 0)
+            {
+                NSDictionary * weiboinfo = [dic objectForKey:@"weiboinfo"];
+                
+                
+                if (pageCount != 1)
+                {
+                    if ([weiboinfo isEqual:[NSNull null]])
+                    {
+                        loadview.normalLabel.text = @"没有更多了";
+                        return;
+                    }
+                }else
+                {
+                    [_data_array removeAllObjects];
+                }
+                
+                
+                if ([weiboinfo isEqual:[NSNull null]])
+                {
+                    loadview.normalLabel.text = @"没有更多了";
+                    //如果没有微博的话
+                    NSLog(@"------------没有微博信息---------------");
+                }else
+                {
+                    
+                    [self.data_array addObjectsFromArray:[zsnApi conversionFBContent:weiboinfo isSave:NO WithType:0]];
+                    
+                    [_myTableView reloadData];
+                }
+            }
+
+        }
+        @catch (NSException *exception) {
+            
+        }
+        @finally {
+            
+        }
+    }];
+    
+    
+    [request setFailedBlock:^{
+        _replaceAlertView.hidden = NO;
+        [_replaceAlertView hide];
+    }];
+    
     
     [request_weibo startAsynchronous];
 }
@@ -109,9 +204,86 @@
     
     request_mine.shouldAttemptPersistentConnection = NO;
     
-    request_mine.delegate = self;
+
+    __block typeof(request_mine) request = request_mine;
     
-    request_mine.tag = 999;
+    
+    [request setCompletionBlock:^{
+        
+        @try {
+            NSDictionary * dic = [request_mine.responseData objectFromJSONData];
+            
+            if ([[dic objectForKey:@"errcode"] intValue] != 0)
+            {
+                UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"数据请求失败,请重试" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+                [alert show];
+                return;
+            }
+            
+            NSDictionary * dictionary = [[[dic objectForKey:@"data"] allValues] objectAtIndex:0];
+            
+            NSString * user_uid = [NSString stringWithFormat:@"%@",[dictionary objectForKey:@"uid"]];
+            
+            
+            if ([user_uid isEqualToString:@"(null)"] || user_uid.length == 0 || [user_uid isEqualToString:@"0"] || [user_uid isEqualToString:@""])
+            {
+                UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"该用户未开通FB" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil,nil];
+                alert.tag = 111111;
+                [alert show];
+                
+                return;
+            }
+            
+            _per_info = [[PersonInfo alloc] initWithDictionary:dictionary];
+            
+            
+            _top_view.info = _per_info;
+            
+            if ([_per_info.is_shangjia isEqualToString:@"1"])
+            {
+                self.title = @"企业主页";
+                
+                [self getShangJiaNews];
+                
+                [_top_view setAllViewWithPerson:_per_info type:1];
+            }else
+            {
+                self.title = @"个人主页";
+                
+                [_top_view setAllViewWithPerson:_per_info type:1];
+            }
+            
+            
+            if ([_per_info.isbuddy intValue] == 1)
+            {
+                attention_flg = YES;
+            }else if([_per_info.isbuddy intValue] == 0)
+            {
+                attention_flg = NO;
+            }
+            
+            NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:0];
+            [_myTableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
+
+        }
+        @catch (NSException *exception) {
+            
+        }
+        @finally {
+            
+        }
+    }];
+    
+    
+    
+    [request setFailedBlock:^{
+        
+        _replaceAlertView.hidden = NO;
+        [_replaceAlertView hide];
+        
+    }];
+    
+    
     
     [request_mine startAsynchronous];
 }

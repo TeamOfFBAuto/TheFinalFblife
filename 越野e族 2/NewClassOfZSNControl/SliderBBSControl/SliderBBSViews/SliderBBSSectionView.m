@@ -105,11 +105,8 @@
 {
     sectionView_block = theBlock;
     
-    NSLog(@"array ----  %@",array);
-    
     if (_myScrollView)//如果有数据，把之前的数据干掉
     {
-        
         for (UIView * view in _myScrollView.subviews)
         {
             [view removeFromSuperview];
@@ -139,34 +136,15 @@
             string = base.name;
         }
         
-        CGSize titleSize = [string sizeWithFont:[UIFont systemFontOfSize:13] constrainedToSize:CGSizeMake(MAXFLOAT, 30)];
-        
-        
-        [button setTitle:string forState:UIControlStateNormal];
+        CGSize titleSize = [string sizeWithFont:[UIFont systemFontOfSize:15] constrainedToSize:CGSizeMake(MAXFLOAT, 30)];
         
         button.tag = 1000+i;
         
         [button addTarget:self action:@selector(buttonSelectedTap:) forControlEvents:UIControlEventTouchUpInside];
         
-        [button setTitleColor:RGBCOLOR(105,105,105) forState:UIControlStateNormal];
-        
         button.layer.masksToBounds = NO;
         
         button.backgroundColor = [UIColor whiteColor];
-        
-        
-        NSLog(@"string ----  %@",string);
-        
-        if (titleSize.width > 90)
-        {
-            button.titleLabel.font = [UIFont systemFontOfSize:13];
-            
-            button.titleLabel.textAlignment = NSTextAlignmentCenter;
-            
-        }else
-        {
-            button.titleLabel.font = [UIFont systemFontOfSize:15];
-        }
         
         
         button.layer.borderColor = RGBCOLOR(194,194,194).CGColor;
@@ -174,10 +152,35 @@
         button.layer.borderWidth = 0.5;
         
         [_myScrollView addSubview:button];
+        
+        
+        UILabel * name_label = [[UILabel alloc] initWithFrame:CGRectMake(4,0,82,63.0/2)];
+        
+        name_label.text = string;
+        
+        name_label.numberOfLines = 0;
+        
+        name_label.textAlignment = NSTextAlignmentCenter;
+        
+        name_label.textColor = RGBCOLOR(105,105,105);
+        
+        name_label.backgroundColor = [UIColor clearColor];
+        
+        
+        if (titleSize.width > 90)
+        {
+            name_label.font = [UIFont systemFontOfSize:10];
+            
+        }else
+        {
+            name_label.font = [UIFont systemFontOfSize:15];
+        }
+        
+        [button addSubview:name_label];
     }
     
  /*
-    
+  
     int row = count/3 + (count%3?1:0);
     
     for (int i = 0;i < row;i++) {

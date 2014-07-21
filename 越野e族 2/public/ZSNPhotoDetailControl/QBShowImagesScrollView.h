@@ -33,6 +33,11 @@ typedef enum
     
     UIButton * placeHolderButton;
     
+    UIView * loading_view;//菊花背景
+    
+    UIActivityIndicatorView * activity_view;//菊花
+    
+    BOOL is_load;//判断图片是否加载完成
 }
 
 

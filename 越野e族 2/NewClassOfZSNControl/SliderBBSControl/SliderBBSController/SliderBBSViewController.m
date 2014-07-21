@@ -191,7 +191,7 @@
     
     [seg_view setAllViewsWith:[NSArray arrayWithObjects:@"精选推荐",@"全部版块",nil] withBlock:^(int index) {
         
-        [bself.myScrollView setContentOffset:CGPointMake(320*index,0) animated:YES];
+        [bself.myScrollView setContentOffset:CGPointMake(340*index,0) animated:YES];
         
     }];
     
@@ -203,12 +203,12 @@
     
     [self loadLuntanJingXuanData];
     
-    _myScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0,0,320,(iPhone5?568:480)-64)];
-                                                                   
-    _myScrollView.contentSize = CGSizeMake(640,0);
+    _myScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0,0,340,(iPhone5?568:480)-64)];
     
     _myScrollView.delegate = self;
     
+    _myScrollView.bounces = NO;
+        
     _myScrollView.showsHorizontalScrollIndicator = NO;
     
     _myScrollView.showsVerticalScrollIndicator = NO;
@@ -217,9 +217,10 @@
     
     [self.view addSubview:_myScrollView];
     
+    _myScrollView.contentSize = CGSizeMake(340*2,0);
     
     
-    _myTableView1 = [[UITableView alloc] initWithFrame:_myScrollView.bounds];
+    _myTableView1 = [[UITableView alloc] initWithFrame:CGRectMake(0,0,320,_myScrollView.frame.size.height)];
     
     _myTableView1.delegate = self;
     
@@ -251,7 +252,7 @@
     
     
     
-    _myTableView2 = [[UITableView alloc] initWithFrame:CGRectMake(320,63,320,_myScrollView.frame.size.height)];
+    _myTableView2 = [[UITableView alloc] initWithFrame:CGRectMake(340,63,320,_myScrollView.frame.size.height)];
     
     _myTableView2.delegate = self;
     
@@ -268,7 +269,7 @@
     current_forum = 0;
     
     
-    SliderBBSForumSegmentView * forumSegmentView = [[SliderBBSForumSegmentView alloc] initWithFrame:CGRectMake(320,0,320,63)];
+    SliderBBSForumSegmentView * forumSegmentView = [[SliderBBSForumSegmentView alloc] initWithFrame:CGRectMake(340,0,320,63)];
     
     [forumSegmentView setAllViewsWithTextArray:[NSArray arrayWithObjects:@"地区",@"车型",@"主题",@"交易",nil] WithImageArray:[NSArray arrayWithObjects:@"bbs_forum_earth",@"bbs_forum_car",@"bbs_forum_zhuti",@"bbs_forum_jiaoyi",@"bbs_forum_earth-1",@"bbs_forum_car-1",@"bbs_forum_zhuti-1",@"bbs_forum_jiaoyi-1",nil] WithBlock:^(int index) {
         
@@ -544,7 +545,7 @@
 
 -(void)loadMyCollectionData
 {//张少南此处需要把auther替换掉
-    NSString * fullUrl = [NSString stringWithFormat:@"http://bbs.fblife.com/bbsapinew/favoritesforums.php?authcode=%@&action=query&formattype=json" ,@"AjxSNlEwBW8HOAdqBH8LfwRvUCEAMwI+BGcENQkj"];//[[NSUserDefaults standardUserDefaults]objectForKey:USER_AUTHOD]];
+    NSString * fullUrl = [NSString stringWithFormat:@"http://bbs.fblife.com/bbsapinew/favoritesforums.php?authcode=%@&action=query&formattype=json" ,AUTHKEY];//[[NSUserDefaults standardUserDefaults]objectForKey:USER_AUTHOD]];
     
     NSLog(@"我的订阅 ---- %@",fullUrl);
     
@@ -1005,22 +1006,26 @@
 {
     if (tableView == _myTableView1)
     {
-        SliderBBSJingXuanModel * model = [self.data_array objectAtIndex:indexPath.row];
+        NSDictionary * dictemp = [self.data_array objectAtIndex:indexPath.row];
+        
+        NewMainViewModel *_newmodel=[[NewMainViewModel alloc]init];
+        
+        [_newmodel NewMainViewModelSetdic:dictemp];
         
         bbsdetailViewController * bbsdetail = [[bbsdetailViewController alloc] init];
         
-        bbsdetail.bbsdetail_tid = model.jx_id;
+        bbsdetail.bbsdetail_tid = _newmodel.tid;
         
         [self.navigationController pushViewController:bbsdetail animated:YES];
         
         
         NSMutableArray *array_select=[NSMutableArray array];
         
-        array_select= [newslooked findbytheid:model.jx_id];
+        array_select= [newslooked findbytheid:_newmodel.tid];
         
         if (array_select.count==0)
         {
-            [newslooked addid:model.jx_id];
+            [newslooked addid:_newmodel.tid];
         }
         
         NSIndexPath  *indexPath_1=[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
@@ -1212,8 +1217,10 @@
     //判断选择 精选推荐 还是 全部版块
     if (scrollView == _myScrollView)
     {
-        int current_page = scrollView.contentOffset.x/320;
-        
+        CGFloat pageWidth = scrollView.frame.size.width;
+        // 根据当前的x坐标和页宽度计算出当前页数
+        int current_page = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
+
         [seg_view MyButtonStateWithIndex:current_page];
     }else if (scrollView == _myTableView1)
     {
