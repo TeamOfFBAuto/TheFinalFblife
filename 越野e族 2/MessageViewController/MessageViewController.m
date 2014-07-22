@@ -241,6 +241,19 @@
         //        [self presentViewController:login animated:YES completion:nil];
     }
     
+    
+//    self.navigationController.navigationBarHidden = NO;
+//    
+//    if([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)] )
+//    {
+//        //iOS 5 new UINavigationBar custom background
+//        
+//        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:MY_MACRO_NAME?IOS7DAOHANGLANBEIJING:IOS6DAOHANGLANBEIJING] forBarMetrics: UIBarMetricsDefault];
+//    }
+//    
+//    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+    
+    
 }
 
 
@@ -317,6 +330,8 @@
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeOther];
     
     
+ 
+
     if (_refreshHeaderView == nil) {
 		
 		EGORefreshTableHeaderView *view = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, - self.myTableView.bounds.size.height, self.view.frame.size.width, self.myTableView.bounds.size.height)];
@@ -355,6 +370,7 @@
     self.myTableView.tableFooterView = vvvv;
     
     [self getmychachearray];
+ 
 }
 
 

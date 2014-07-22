@@ -145,7 +145,7 @@
 -(void)scanning
 {
     myReaderView = [[ZBarReaderView alloc]init];
-    myReaderView.frame = CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height);
+    myReaderView.frame = CGRectMake(0,0,self.view.frame.size.width,self.view.frame.size.height);
     myReaderView.readerDelegate = self;
     myReaderView.tracksSymbols = NO;
     //关闭闪光灯
@@ -320,12 +320,15 @@
     [self.view addSubview:myReaderView];
     
     
-    //    CGRect scanMaskRect = CGRectMake(64,48,150.4,384);
-    
-    
     //扫描区域计算
+    
+    CGRect scanMaskRect = CGRectMake(40,79+height,230,230);
+    
+    myReaderView.scanCrop = [self getScanCrop:scanMaskRect readerViewBounds:myReaderView.bounds];
+    
+    
     //    myReaderView.scanCrop = CGRectMake(0.2,0.05,0.47,0.8);
-    myReaderView.scanCrop = CGRectMake(0.2,0.05,0.5,0.8);
+//    myReaderView.scanCrop = CGRectMake(0.2,0.05,0.5,0.8);
     //    [myReaderView start];
 }
 
@@ -416,13 +419,25 @@
 
 -(CGRect)getScanCrop:(CGRect)rect readerViewBounds:(CGRect)readerViewBounds
 {
-    CGFloat x,y,width,height;
+//    CGFloat x,y,width,height;
+//    
+//    x = rect.origin.x / readerViewBounds.size.width;
+//    y = rect.origin.y / readerViewBounds.size.height;
+//    width = rect.size.width / readerViewBounds.size.width;
+//    height = rect.size.height / readerViewBounds.size.height;
+//    
+//    NSLog(@"---=-=---  %f ---  %f ---  %f ---  %f",x,y,width,height);
+//    
+//    return CGRectMake(x,y,width,height);
     
-    x = rect.origin.x / readerViewBounds.size.width;
-    y = rect.origin.y / readerViewBounds.size.height;
-    width = rect.size.width / readerViewBounds.size.width;
-    height = rect.size.height / readerViewBounds.size.height;
-    return CGRectMake(x,y,width,height);
+    
+    
+    CGFloat x,y,width,height;
+    x = rect.origin.y / readerViewBounds.size.height;
+    y = 1 - (rect.origin.x + rect.size.width) / readerViewBounds.size.width;
+    width = (rect.origin.y + rect.size.height) / readerViewBounds.size.height;
+    height = 1 - rect.origin.x / readerViewBounds.size.width;
+    return CGRectMake(x, y, width, height);
 }
 
 -(void)lightButton:(UIButton *)sender
@@ -443,7 +458,7 @@
     
     pickerView.allowsEditing = YES;
     
-    [self presentModalViewController:pickerView animated:YES];
+    [self presentViewController:pickerView animated:YES completion:NULL];
 }
 
 
@@ -456,7 +471,7 @@
     UIImage* image = [info objectForKey: UIImagePickerControllerOriginalImage];
     CGImageRef cgImageRef = image.CGImage;
     
-    [picker dismissModalViewControllerAnimated:YES];
+    [picker dismissViewControllerAnimated:YES completion:NULL];
     
     ZBarSymbol* symbol = nil;
     
@@ -572,7 +587,7 @@
     }
     
     if (buttonIndex == 0) {
-        [myReaderView stop];
+        [myReaderView start];
     }
 }
 

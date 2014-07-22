@@ -12,13 +12,20 @@ typedef void(^SliderBBSSectionViewBlock)(int index);//选择收藏内容
 
 typedef void(^SliderBBSSectionSegmentBlock)(int index);//选择订阅 最近浏览 还是排行榜
 
+typedef void(^SliderBBSSectionSegmentLogInBlock)(void);//登录块
+
+
 @interface SliderBBSSectionView : UIView
 {
     SliderBBSSectionViewBlock sectionView_block;
     
+    SliderBBSSectionSegmentLogInBlock logIn_block;
+    
     SliderBBSSectionSegmentBlock sliderBBSSectionSegmentBlock;
     
     UIImageView * background_imageview;//背景
+    
+    UILabel * no_data_name_label;
 }
 
 
@@ -29,6 +36,6 @@ typedef void(^SliderBBSSectionSegmentBlock)(int index);//选择订阅 最近浏�
 -(void)setAllViewsWithArray:(NSArray *)array WithType:(int)theType withBlock:(SliderBBSSectionViewBlock)theBlock;
 
 //加载segment
-- (id)initWithFrame:(CGRect)frame WithBlock:(SliderBBSSectionSegmentBlock)theBlock;
+- (id)initWithFrame:(CGRect)frame WithBlock:(SliderBBSSectionSegmentBlock)theBlock WithLogInBlock:(SliderBBSSectionSegmentLogInBlock)theLogIn;
 
 @end

@@ -229,6 +229,9 @@
         BOOL isLogIn = [[NSUserDefaults standardUserDefaults] boolForKey:USER_IN];
         
         
+        NSLog(@"dadajsdlajdaksj 0--------%d",isLogIn);
+        
+        
         logOut_button = [UIButton buttonWithType:UIButtonTypeCustom];
         
         logOut_button.frame = CGRectMake(14,23,584/2,85/2);
@@ -322,13 +325,12 @@
 
 -(void)logOutTap:(UIButton *)sender
 {
-    
     BOOL isLogIn = [[NSUserDefaults standardUserDefaults] boolForKey:USER_IN];
-    
-    [logOut_button setTitle:isLogIn?@"立即登录":@"退出登录" forState:UIControlStateNormal];
     
     if (isLogIn)
     {
+        [logOut_button setTitle:@"立即登录" forState:UIControlStateNormal];
+        
         [self deletetoken];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:@"clearolddata" object:nil];
@@ -357,10 +359,26 @@
     {
         LogInViewController * logIn = [LogInViewController sharedManager];
         
+        logIn.delegate = self;
+        
         [self presentViewController:logIn animated:YES completion:^{
             
         }];
     }
+}
+
+
+#pragma mark - 登录代理
+
+
+-(void)successToLogIn
+{
+    [logOut_button setTitle:@"退出登录" forState:UIControlStateNormal];
+}
+
+-(void)failToLogIn
+{
+    
 }
 
 

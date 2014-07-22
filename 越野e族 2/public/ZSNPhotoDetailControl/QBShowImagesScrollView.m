@@ -103,6 +103,9 @@
         self.showsVerticalScrollIndicator = NO;
         
         
+        is_load = NO;
+        
+        
         _locationImageView = [[AsyncImageView alloc] initWithFrame:CGRectMake(0,0,frame.size.width,frame.size.height)];
         _locationImageView.contentMode = UIViewContentModeScaleAspectFit;
         _locationImageView.delegate = self;
@@ -115,6 +118,8 @@
         loading_view = [[UIView alloc] initWithFrame:CGRectMake(0,0,160,100)];
         
         loading_view.center = CGPointMake(160,(iPhone5?568:480)/2-20);
+        
+        loading_view.userInteractionEnabled = NO;
         
         loading_view.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
         
@@ -132,21 +137,31 @@
         [activity_view startAnimating];
         
         
+        load_again = [[UILabel alloc] initWithFrame:CGRectMake(0,20,160,30)];
         
-        UILabel * logo_label = [[UILabel alloc] initWithFrame:CGRectMake(0,60,160,30)];
+        load_again.text = @"点击加载";
         
-        logo_label.text = @"FBLIFE.COM";
+        load_again.hidden = YES;
         
-        logo_label.textAlignment = NSTextAlignmentCenter;
+        load_again.textAlignment = NSTextAlignmentCenter;
         
-        logo_label.textColor = RGBCOLOR(63,63,63);
+        load_again.textColor = RGBCOLOR(78,78,78);
         
-        logo_label.font = [UIFont boldSystemFontOfSize:20];
+        load_again.font = [UIFont systemFontOfSize:15];
         
-        logo_label.backgroundColor = [UIColor clearColor];
+        [loading_view addSubview:load_again];
         
-        [loading_view addSubview:logo_label];
         
+        UIImageView * place_imageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"atlas_logo"]];
+        
+        place_imageview.center = CGPointMake(80,80);
+        
+        [loading_view addSubview:place_imageview];
+        
+        
+        UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(loaddataAgain:)];
+        
+        [loading_view addGestureRecognizer:tap];
         
         
         
@@ -190,7 +205,13 @@
 
 
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    if (!is_load)
+    {
+        return;
+    }
+    
 	UITouch *touch = [[event allTouches] anyObject];
 	
 	if (touch.tapCount == 2) {
@@ -235,6 +256,10 @@
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    if (!is_load) {
+        return;
+    }
+    
 	if([[event allTouches] count] == 1 ) {
 		UITouch *touch = [[event allTouches] anyObject];
 		if( touch.tapCount == 1 ) {
@@ -294,9 +319,120 @@
 
 -(void)succesDownLoadWithImageView:(UIImageView *)imageView Image:(UIImage *)image
 {
-    placeHolderButton.hidden = YES;
+    if (image)
+    {
+        placeHolderButton.hidden = YES;
+        
+        loading_view.hidden = YES;
+        
+        is_load = YES;
+    }
+}
+
+#pragma mark - 加载失败
+
+-(void)loadDataFailed
+{
+    [activity_view stopAnimating];
     
-    loading_view.hidden = YES;
+    loading_view.userInteractionEnabled = YES;
+    
+    load_again.hidden = NO;
+    
+    
+    if (!load_failed_view) {
+        
+        load_failed_view = [[UIView alloc] initWithFrame:CGRectMake(0,0,175,100)];
+        
+        load_failed_view.center = CGPointMake(160,(iPhone5?568:480)/2-20);
+        
+        load_failed_view.hidden = YES;
+        
+        load_failed_view.backgroundColor = RGBCOLOR(30,30,30);
+        
+        
+        load_failed_view.layer.masksToBounds = NO;
+        
+        load_failed_view.layer.borderColor = RGBCOLOR(25,25,25).CGColor;
+        
+        load_failed_view.layer.borderWidth = 0.5;
+        
+        load_failed_view.layer.cornerRadius = 5;
+        
+        
+        [self addSubview:load_failed_view];
+        
+        
+        UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(0,0,175,30)];
+        
+        label.center = CGPointMake(175/2,50);
+        
+        label.text = @"加载图片失败";
+        
+        label.font = [UIFont systemFontOfSize:15];
+        
+        label.textAlignment = NSTextAlignmentCenter;
+        
+        label.textColor = [UIColor whiteColor];
+        
+        label.backgroundColor = [UIColor clearColor];
+        
+        [load_failed_view addSubview:label];
+        
+    }
+    
+    load_failed_view.hidden = NO;
+    
+    [self performSelector:@selector(hiddenLoadFailedView) withObject:nil afterDelay:1.0];
+    
+}
+
+-(void)hiddenLoadFailedView
+{
+    [UIView animateWithDuration:0.5 animations:^{
+        
+        load_failed_view.alpha = 0;
+        
+    } completion:^(BOOL finished) {
+        
+        load_failed_view.hidden = YES;
+        
+        load_failed_view.alpha = 1;
+    }];
+}
+
+
+#pragma mark - 点击重新加载数据
+
+
+-(void)loaddataAgain:(UITapGestureRecognizer *)sender
+{
+    [self reLoadPictureData];
+}
+
+
+#pragma mark - 重新加载数据
+
+-(void)reLoadPictureData
+{
+    placeHolderButton.hidden = NO;
+    
+    loading_view.hidden = NO;
+    
+    is_load = NO;
+    
+    loading_view.userInteractionEnabled = NO;
+    
+    load_again.hidden = YES;
+    
+    activity_view.hidden = NO;
+    
+    [activity_view startAnimating];
+    
+    if (_aDelegate && [_aDelegate respondsToSelector:@selector(reloadAtlasData)])
+    {
+        [_aDelegate reloadAtlasData];
+    }
 }
 
 

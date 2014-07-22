@@ -368,18 +368,18 @@ alpha:(a)]
 
 //排行榜接口
 
-#define RANKING_LIST @"http://demo03.fblife.com/bbsapinew/cmsappgetranking.php?type=%d&formattype=json"
+#define RANKING_LIST @"http://bbs.fblife.com/bbsapinew/cmsappgetranking.php?type=%d&formattype=json"
 
 
 
 #pragma mark - 查看某个图集接口
 
 
-#define GET_PICTURES_URL @"http://cmstest.fblife.com/ajax.php?c=photo&a=getphotolist&id=%@&type=json"
+#define GET_PICTURES_URL @"http://cmsweb.fblife.com/ajax.php?c=photo&a=getphotolist&id=%@&type=json"
 
 #pragma mark - 查看图集的收藏接口
 
-#define GET_ATLAS_COLLECTION_URL @"http://cmstest.fblife.com/ajax.php?c=photo&a=favoriteslist&type=json&took=%@"
+#define GET_ATLAS_COLLECTION_URL @"http://cmsweb.fblife.com/ajax.php?c=photo&a=favoriteslist&type=json&took=%@"
 
 
 #pragma MARK - 图集评论接口
@@ -388,16 +388,16 @@ alpha:(a)]
 
 #pragma mark - 赞图集的接口
 
-#define ATLAS_PRAISE_URL @"http://cmstest.fblife.com/ajax.php?c=photo&a=addlikes&type=json&id=%@"
+#define ATLAS_PRAISE_URL @"http://cmsweb.fblife.com/ajax.php?c=photo&a=addlikes&type=json&id=%@"
 
 
 #pragma mark - 获取所有收藏的板块接口
 
-#define GET_ALL_COLLECTION_SECTION @"http://demo03.fblife.com/bbsapinew/favoritesthread.php?authcode=%@&formattype=json&page=%d&pagesize=%d"
+#define GET_ALL_COLLECTION_SECTION @"http://bbs.fblife.com/bbsapinew/favoritesthread.php?authcode=%@&formattype=json&page=%d&pagesize=%d"
 
 #pragma mark - 收藏论坛版块接口-新接口
 
-#define COLLECTION_FORUM_SECTION_URL @"http://demo03.fblife.com/bbsapinew/addfavoritesthread.php?authcode=%@&tid=%@&formattype=json"
+#define COLLECTION_FORUM_SECTION_URL @"http://bbs.fblife.com/bbsapinew/addfavoritesthread.php?authcode=%@&tid=%@&formattype=json"
 
 #pragma mark - 收藏论坛版块接口-旧接口
 
@@ -406,12 +406,12 @@ alpha:(a)]
 
 #pragma mark - 获取论坛精选数据
 
-#define BBS_JINGXUAN_URL @"http://cmstest.fblife.com/ajax.php?c=newstwo&a=getappindex&page=%d&type=json&pagesize=20&datatype=3&type=json"
+#define BBS_JINGXUAN_URL @"http://cmsweb.fblife.com/ajax.php?c=newstwo&a=getappindex&page=%d&type=json&pagesize=20&datatype=3&type=json"
 
 
 #pragma mark - 取消收藏论坛版块接口-新接口
 
-#define COLLECTION_CANCEL_FORUM_SECTION_URL @"http://demo03.fblife.com/bbsapinew/delfavoritesthread.php?delid=%@&formattype=json&authcode=%@"
+#define COLLECTION_CANCEL_FORUM_SECTION_URL @"http://bbs.fblife.com/bbsapinew/delfavoritesthread.php?delid=%@&formattype=json&authcode=%@"
 
 #pragma mark - 取消收藏论坛版块接口-旧接口
 

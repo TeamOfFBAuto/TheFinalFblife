@@ -137,7 +137,12 @@
         [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:MY_MACRO_NAME?@"sliderBBSNavigationBarImage":@"sliderBBSNavigationBarImage_ios6"] forBarMetrics: UIBarMetricsDefault];
     }
     
-    [self loadRecentlyLookData];
+    if (current_seg_index == 1)
+    {
+        [self loadRecentlyLookData];
+    }
+    
+    
 }
 
 -(void)rightButtonTap:(UIButton *)sender
@@ -270,6 +275,8 @@
     
     current_forum = 0;
     
+    current_seg_index = 0;
+    
     
     SliderBBSForumSegmentView * forumSegmentView = [[SliderBBSForumSegmentView alloc] initWithFrame:CGRectMake(340,0,320,63)];
     
@@ -294,7 +301,11 @@
         [self loadMyCollectionData];
 //    }
     
-    sectionView = [[SliderBBSSectionView alloc] initWithFrame:CGRectMake(0,0,320,113.5) WithBlock:^(int index) {
+    
+    
+    
+    sectionView = [[SliderBBSSectionView alloc] initWithFrame:CGRectMake(0,0,320,101) WithBlock:^(int index) {
+        
         
         current_dingyue_zuijin = index;
         
@@ -305,15 +316,28 @@
             rankingList.bbs_forum_collection_array = bself.forum_section_collection_array;
             
             [bself.navigationController pushViewController:rankingList animated:YES];
+            
         }else if (index == 1)
         {
+            current_seg_index = 1;
+            
             [bself loadRecentlyLookData];
-        }else
+        }else if(index == 0)
         {
+            current_seg_index = 0;
+            
             [bself loadSectionViewDataWithType:0 WithArray:bself.array_collect];
         }
         
+    } WithLogInBlock:^{
+        
+        LogInViewController *  logInVC = [LogInViewController sharedManager];
+        
+        logInVC.delegate = self;
+        
+        [self presentViewController:logInVC animated:YES completion:NULL];
     }];
+    
     
     _myTableView1.tableHeaderView = sectionView;
     
@@ -348,7 +372,7 @@
              string_id=[NSString stringWithFormat:@"%@",[dic_info objectForKey:@"fid"]];
          }else
          {
-             testbase * base = [bself.recently_look_array objectAtIndex:index];
+             testbase * base = [bself.recently_look_array objectAtIndex:(bself.recently_look_array.count-1)-index];
              
              string_name = base.name;
              
@@ -551,8 +575,8 @@
 
 
 -(void)loadMyCollectionData
-{//张少南此处需要把auther替换掉
-    NSString * fullUrl = [NSString stringWithFormat:@"http://bbs.fblife.com/bbsapinew/favoritesforums.php?authcode=%@&action=query&formattype=json" ,AUTHKEY];//[[NSUserDefaults standardUserDefaults]objectForKey:USER_AUTHOD]];
+{
+    NSString * fullUrl = [NSString stringWithFormat:@"http://bbs.fblife.com/bbsapinew/favoritesforums.php?authcode=%@&action=query&formattype=json" ,AUTHKEY];
     
     NSLog(@"我的订阅 ---- %@",fullUrl);
     
@@ -577,13 +601,16 @@
         if (issuccess==0)
         {
             [bself setCollectionViewsWith:array_test];
+        }else
+        {
+            [bself setCollectionViewsWith:[NSArray array]];
         }
     }];
     
     
     [request setFailedBlock:^{
         
-        
+        [bself setCollectionViewsWith:[NSArray array]];
         
     }];
     
@@ -643,9 +670,9 @@
     }
     
     for (int i = 0;i < 4;i++)
-    {//张少南 此处需要替换autherkey
+    {
         
-        NSString * fullUrl = [NSString stringWithFormat:@"http://bbs.fblife.com/bbsapinew/getforumsbycategory.php?categorytype=%@&formattype=json&authocode=%@",[forum_title_array objectAtIndex:i],@"AjxSNlEwBW8HOAdqBH8LfwRvUCEAMwI+BGcENQkj"];
+        NSString * fullUrl = [NSString stringWithFormat:@"http://bbs.fblife.com/bbsapinew/getforumsbycategory.php?categorytype=%@&formattype=json&authocode=%@",[forum_title_array objectAtIndex:i],AUTHKEY];
         
         NSLog(@"请求版块接口-----%@",fullUrl);
         
@@ -1363,6 +1390,21 @@
 	
 }
 
+
+
+#pragma mark - 登录完成代理
+
+
+-(void)successToLogIn
+{
+    [self loadMyCollectionData];
+}
+
+
+-(void)failToLogIn
+{
+    
+}
 
 
 

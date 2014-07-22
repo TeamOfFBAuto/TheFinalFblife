@@ -8,6 +8,11 @@
 
 #import "SliderBBSTitleView.h"
 
+#define SELECTED_COLOR RGBCOLOR(3,3,3)
+
+#define UNSELECTED_CORLOR RGBCOLOR(120,120,120)
+
+
 @implementation SliderBBSTitleView
 
 - (id)initWithFrame:(CGRect)frame
@@ -40,15 +45,17 @@
         
         [button setTitle:[array objectAtIndex:i] forState:UIControlStateNormal];
         
+        button.titleLabel.font = [UIFont systemFontOfSize:18];
+        
         [button addTarget:self action:@selector(buttonTap:) forControlEvents:UIControlEventTouchUpInside];
         
         if (i == 0) {
-            [button setTitleColor:RGBCOLOR(60,60,60) forState:UIControlStateNormal];
+            [button setTitleColor:SELECTED_COLOR forState:UIControlStateNormal];
             
             lineImageView.center = CGPointMake(button.center.x,self.frame.size.height-1);
         }else
         {
-            [button setTitleColor:RGBCOLOR(118,118,118) forState:UIControlStateNormal];
+            [button setTitleColor:UNSELECTED_CORLOR forState:UIControlStateNormal];
             
         }
         
@@ -73,8 +80,8 @@
     }
     
     [UIView animateWithDuration:0.3 animations:^{
-        [sender setTitleColor:RGBCOLOR(60,60,60) forState:UIControlStateNormal];
-        [button setTitleColor:RGBCOLOR(118,118,118) forState:UIControlStateNormal];
+        [sender setTitleColor:SELECTED_COLOR forState:UIControlStateNormal];
+        [button setTitleColor:UNSELECTED_CORLOR forState:UIControlStateNormal];
         lineImageView.center = CGPointMake(sender.center.x,self.frame.size.height-1);
     } completion:^(BOOL finished) {
         

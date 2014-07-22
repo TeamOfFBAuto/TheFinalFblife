@@ -47,7 +47,7 @@ typedef enum{
 
 
 
-@interface SliderBBSViewController : MyViewController<UITableViewDataSource,UITableViewDelegate,EGORefreshTableHeaderDelegate>
+@interface SliderBBSViewController : MyViewController<UITableViewDataSource,UITableViewDelegate,EGORefreshTableHeaderDelegate,LogInViewControllerDelegate>
 {
     int data_currentPage;//论坛精选加载页数
     
@@ -70,6 +70,8 @@ typedef enum{
     
     
     SliderForumCollectionModel * collection_model;//所有收藏的论坛版块数据
+    
+    int current_seg_index;//存储当前的选择(我的订阅，最近浏览，排行榜)
     
 }
 

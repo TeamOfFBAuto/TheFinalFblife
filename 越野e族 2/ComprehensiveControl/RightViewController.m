@@ -84,8 +84,6 @@
     
     _rootScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0,0,298,(iPhone5?568:480))];
     
-    _rootScrollView.contentSize = CGSizeMake(0,568);
-    
     _rootScrollView.backgroundColor = RGBCOLOR(242,242,242);
     
     _rootScrollView.showsVerticalScrollIndicator = NO;
@@ -100,7 +98,7 @@
     
     
     
-    UIView * user_Info_BackView = [[UIView alloc] initWithFrame:CGRectMake(0,0,298,214)];
+    UIView * user_Info_BackView = [[UIView alloc] initWithFrame:CGRectMake(0,0,298,191)];
     
     user_Info_BackView.backgroundColor = RGBCOLOR(248,248,248);
     
@@ -145,7 +143,7 @@
     
     
     
-    LogIn_label = [[UILabel alloc] initWithFrame:CGRectMake(0,155,288,25)];
+    LogIn_label = [[UILabel alloc] initWithFrame:CGRectMake(0,145,288,25)];
     
     LogIn_label.text = @"点击立即登录";
     
@@ -167,6 +165,7 @@
     
     
     
+    
     for (int i = 0;i < 3;i++) {
         for (int j = 0;j < 3;j++)
         {
@@ -174,9 +173,7 @@
             {
                 UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
                 
-                button.frame = CGRectMake(40 + 90*j,254+90*i,40,60);
-                
-                [button setImage:[UIImage imageNamed:[arrary objectAtIndex:j+i*3]] forState:UIControlStateNormal];
+                button.frame = CGRectMake(40 + 90*j,(iPhone5?230:210)+(iPhone5?90:75)*i,44,60);
                 
                 [button setTitle:[arrary1 objectAtIndex:j+i*3] forState:UIControlStateNormal];
                 
@@ -184,9 +181,7 @@
                 
                 button.titleLabel.font = [UIFont systemFontOfSize:15];
                 
-                [button setImageEdgeInsets:UIEdgeInsetsMake(0,0,25,0)];
-                
-                [button setTitleEdgeInsets:UIEdgeInsetsMake(50,-45,0,-3)];
+                [button setTitleEdgeInsets:UIEdgeInsetsMake(50,-5,0,-5)];
                 
                 button.tag = 1000 + i*3+j;
                 
@@ -196,13 +191,20 @@
                 
                 [_rootScrollView addSubview:button];
                 
+                
+                UIImageView * imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[arrary objectAtIndex:j+i*3]]];
+                
+                imageView.center = CGPointMake(22,23);
+                
+                [button addSubview:imageView];
+                
             }
         }
     }
     
     
     
-    UILabel * version_label = [[UILabel alloc] initWithFrame:CGRectMake(40,_rootScrollView.contentSize.height-50,100,30)];
+    UILabel * version_label = [[UILabel alloc] initWithFrame:CGRectMake(40,_rootScrollView.frame.size.height-(iPhone5?50:40),100,30)];
     
     version_label.text = [NSString stringWithFormat:@"v %@",NOW_VERSION];
     
@@ -220,7 +222,7 @@
     
     UIButton * setting_button = [UIButton buttonWithType:UIButtonTypeCustom];
     
-    setting_button.frame = CGRectMake(207,_rootScrollView.contentSize.height-48,60,30);
+    setting_button.frame = CGRectMake(207,_rootScrollView.frame.size.height-(iPhone5?48:38),60,30);
     
     [setting_button setTitle:@"设置" forState:UIControlStateNormal];
     
@@ -235,7 +237,6 @@
     [setting_button addTarget:self action:@selector(settingButtonTap:) forControlEvents:UIControlEventTouchUpInside];
     
     [_rootScrollView addSubview:setting_button];
-    
     
     
     [[NSNotificationCenter defaultCenter]
@@ -412,6 +413,10 @@
 //            }];
             
             [myDelegate.root_nav pushViewController:message animated:YES];
+            
+            
+            
+            
             
         }
             break;

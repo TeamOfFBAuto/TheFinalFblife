@@ -25,6 +25,8 @@
 @interface WeiBoCustomSegmentView : UIView
 {
     UIImageView * lineImageView;
+    
+    int history_index;
 }
 
 

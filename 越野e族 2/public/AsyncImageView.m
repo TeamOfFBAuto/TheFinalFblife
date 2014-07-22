@@ -239,7 +239,10 @@
             self.request = nil;
             [self.delegate handleImageLayout:nil];
             NSLog(@"async image download failed");
-            
+            if (self.delegate && [self.delegate respondsToSelector:@selector(succesDownLoadWithImageView:Image:)])
+            {
+                [self.delegate succesDownLoadWithImageView:self Image:nil];
+            }
             
         }];
         

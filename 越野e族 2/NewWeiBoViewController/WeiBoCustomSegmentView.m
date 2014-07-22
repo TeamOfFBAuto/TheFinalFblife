@@ -8,6 +8,12 @@
 
 #import "WeiBoCustomSegmentView.h"
 
+#define SELECTED_COLOR RGBCOLOR(3,3,3)
+
+#define UNSELECTED_COLOR RGBCOLOR(118,118,118)
+
+
+
 @implementation WeiBoCustomSegmentView
 @synthesize delegate = _delegate;
 
@@ -16,9 +22,9 @@
     self = [super initWithFrame:frame];
     if (self)
     {
-        lineImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0,frame.size.height,self.frame.size.width/3-23,2)];
+        lineImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0,frame.size.height,self.frame.size.width/3-23,1)];
         
-        lineImageView.backgroundColor = RGBCOLOR(88,88,88);
+        lineImageView.backgroundColor = RGBCOLOR(3,3,3);
         
         lineImageView.image = [UIImage imageNamed:@"ios7_huandongtiao.png"];
         
@@ -31,6 +37,8 @@
 
 -(void)setAllViewsWith:(NSArray *)array index:(int)index
 {
+
+    history_index = index;
     
     for (int i = 0;i < 3;i++)
     {
@@ -38,10 +46,10 @@
         
         if (i == 0)
         {
-            button.frame = CGRectMake(8,0,self.frame.size.width/array.count,self.frame.size.height-2);
+            button.frame = CGRectMake(0,0,self.frame.size.width/array.count,self.frame.size.height-2);
         }else if (i == 1)
         {
-            button.frame = CGRectMake((self.frame.size.width/array.count)+3,0,self.frame.size.width/array.count,self.frame.size.height-2);
+            button.frame = CGRectMake((self.frame.size.width/array.count)+2,0,self.frame.size.width/array.count,self.frame.size.height-2);
         }else if (i == 2)
         {
             button.frame = CGRectMake((self.frame.size.width/array.count)*2+3,0,self.frame.size.width/array.count,self.frame.size.height-2);
@@ -51,6 +59,12 @@
         if (index == i)
         {
             lineImageView.center = CGPointMake(button.center.x,self.frame.size.height-1);
+            
+            [button setTitleColor:SELECTED_COLOR forState:UIControlStateNormal];
+        }else
+        {
+            [button setTitleColor:UNSELECTED_COLOR forState:UIControlStateNormal];
+
         }
         
         
@@ -60,9 +74,9 @@
         
         [button setTitle:[array objectAtIndex:i] forState:UIControlStateNormal];
         
-        [button setTitleColor:RGBCOLOR(51,51,51) forState:UIControlStateNormal];
-        
         button.titleLabel.textAlignment = NSTextAlignmentLeft;
+        
+        button.backgroundColor = [UIColor clearColor];
         
         [button addTarget:self action:@selector(chooseButton:) forControlEvents:UIControlEventTouchUpInside];
         
@@ -93,11 +107,23 @@
         [self.delegate ClickWeiBoCustomSegmentWithIndex:sender.tag-100];
     }
     
+    
+    UIButton * button = (UIButton *)[self viewWithTag:history_index+100];
+    
+    [button setTitleColor:UNSELECTED_COLOR forState:UIControlStateNormal];
+    
+    [sender setTitleColor:SELECTED_COLOR forState:UIControlStateNormal];
+    
+    
+    
     [UIView animateWithDuration:0.3 animations:^{
         lineImageView.center = CGPointMake(sender.center.x,self.frame.size.height-1);
     } completion:^(BOOL finished) {
         
     }];
+    
+    
+    history_index = sender.tag - 100;
 }
 
 
@@ -105,11 +131,21 @@
 {
     UIButton * sender = (UIButton *)[self viewWithTag:index+100];
     
+    UIButton * button = (UIButton *)[self viewWithTag:history_index+100];
+    
+    [button setTitleColor:UNSELECTED_COLOR forState:UIControlStateNormal];
+
+    [sender setTitleColor:SELECTED_COLOR forState:UIControlStateNormal];
+    
+    
     [UIView animateWithDuration:0.3 animations:^{
         lineImageView.center = CGPointMake(sender.center.x,self.frame.size.height-1);
     } completion:^(BOOL finished) {
         
     }];
+    
+    
+    history_index = index;
 }
 
 

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SliderRightSettingViewController : MyViewController<UITableViewDataSource,UITableViewDelegate>
+@interface SliderRightSettingViewController : MyViewController<UITableViewDataSource,UITableViewDelegate,LogInViewControllerDelegate>
 {
     NSArray * title_array;//标题
 }

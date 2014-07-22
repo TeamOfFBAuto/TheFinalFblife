@@ -676,7 +676,8 @@
             //@某人
             FriendListViewController * list = [[FriendListViewController alloc] init];
             list.delegate = self;
-            [self presentModalViewController:list animated:YES];
+            
+            [self presentViewController:list animated:YES completion:NULL];
         }
             break;
         case 4:
@@ -795,7 +796,7 @@
     
     if ((myTextView.tag == 100 && [myTextView.text isEqualToString:@"分享新鲜事......"])||[theText isEqualToString:myTextView.text])
     {
-        [self dismissModalViewControllerAnimated:YES];
+        [self dismissViewControllerAnimated:YES completion:NULL];
     }else
     {
         UIActionSheet * sheet = [[UIActionSheet alloc] initWithTitle:@"" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"保存草稿",@"不保存",nil];
@@ -1096,14 +1097,14 @@
             NSLog(@"request.tag1111 = 2 ==%@",[jieguo objectForKey:@"data"]);
             [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshmydata" object:myTextView.text];
             
-            [self dismissModalViewControllerAnimated:YES];
+            [self dismissViewControllerAnimated:YES completion:NULL];
         }else if (request.tag == 3)
         {
             nav.userInteractionEnabled = YES;
             [hud hide];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshmydata" object:myTextView.text];
             
-            [self dismissModalViewControllerAnimated:YES];
+            [self dismissViewControllerAnimated:YES completion:NULL];
             NSLog(@"request.tag22222 = 2 ==%@",[request responseString]);
         }
     }
@@ -1266,11 +1267,11 @@
         {
             [self saveWeiBo];
             
-            [self dismissModalViewControllerAnimated:YES];
+            [self dismissViewControllerAnimated:YES completion:NULL];
             
         }else if(buttonIndex ==1)
         {
-            [self dismissModalViewControllerAnimated:YES];
+            [self dismissViewControllerAnimated:YES completion:NULL];
         }
     }else if (actionSheet.tag == 1000001)
     {

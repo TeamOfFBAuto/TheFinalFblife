@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MessageViewController/MessageViewController.m"
-            timestampString = "427619298.280004"
+            timestampString = "427693288.947664"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "797"
-            endingLineNumber = "797"
+            startingLineNumber = "813"
+            endingLineNumber = "813"
             landmarkName = "-dealloc"
             landmarkType = "5">
          </BreakpointContent>

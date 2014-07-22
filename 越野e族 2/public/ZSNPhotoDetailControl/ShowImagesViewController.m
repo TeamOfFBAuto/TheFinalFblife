@@ -9,6 +9,7 @@
 #import "ShowImagesViewController.h"
 #import "AtlasModel.h"
 #import "PraiseAndCollectedModel.h"
+#import "CustomInputView.h"
 
 
 
@@ -31,6 +32,8 @@
     
     PraiseAndCollectedModel * praise_model;
 
+    
+    CustomInputView * input_view;//输入框
 }
 
 @end
@@ -102,6 +105,8 @@
         UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
         
         button.frame = CGRectMake(130 + 70*i,20,60,44);
+        
+        button.userInteractionEnabled = NO;
         
         button.tag = 10000 + i;
         
@@ -242,11 +247,13 @@
     
     __block typeof(p_request) request = p_request;
     
+    __weak typeof(self) bself = self;
+    
     [request setCompletionBlock:^{
         
         isPraise = YES;
         
-        [PraiseAndCollectedModel addIntoDataSourceWithId:self.id_atlas WithPraise:[NSNumber numberWithBool:isPraise]];
+        [PraiseAndCollectedModel addIntoDataSourceWithId:bself.id_atlas WithPraise:[NSNumber numberWithBool:isPraise]];
         
         UIButton * button = (UIButton *)[navImageView viewWithTag:10000];
         
@@ -352,6 +359,13 @@
     
 }
 
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [input_view.text_background_view removeFromSuperview];
+    
+    input_view.text_background_view = nil;
+}
+
 
 #pragma mark - 获取图集数据
 
@@ -363,7 +377,6 @@
     {
         _allImagesUrlArray = [NSMutableArray array];
     }
-    //张少南 这里需要图集id
     [atlasModel loadAtlasDataWithId:self.id_atlas WithCompleted:^(NSMutableArray *array) {
         
         [bself.allImagesUrlArray addObjectsFromArray:array];
@@ -374,12 +387,29 @@
         
         [bself loadImageInformationWith:model];
         
-        [pinglun_button setTitle:model.atlas_likes forState:UIControlStateNormal];
+        [input_view.pinglun_button setTitle:model.atlas_likes forState:UIControlStateNormal];
         
         bself.myScrollView.contentSize = CGSizeMake(340*self.allImagesUrlArray.count,0);
         bself.myScrollView.contentOffset = CGPointMake(340*_currentPage,0);
         
+        
+        commit_label.userInteractionEnabled = YES;
+        
+        pinglun_button.userInteractionEnabled = NO;
+        
+        for (int i = 0;i < 3;i++)
+        {
+            UIButton * button = (UIButton *)[navImageView viewWithTag:10000+i];
+            
+            button.userInteractionEnabled = YES;
+        }
+
+        
     } WithFailedBlock:^(NSString *string) {
+        
+        QBShowImagesScrollView * scrollView = (QBShowImagesScrollView *)[bself.myScrollView viewWithTag:bself.currentPage+1000];
+        
+        [scrollView loadDataFailed];
         
     }];
 }
@@ -545,184 +575,155 @@
     
     
     
-    input_back_view = [[UIView alloc] initWithFrame:CGRectMake(0,content_back_view.frame.origin.y + content_back_view.frame.size.height,320,44)];
+    input_view = [[CustomInputView alloc] initWithFrame:CGRectMake(0,content_back_view.frame.origin.y + content_back_view.frame.size.height,320,44)];
     
-    input_back_view.backgroundColor = RGBCOLOR(3,3,3);
+    [input_view loadAllViewWithPinglunCount:@"0" WithPushBlock:^{
+        
+        NSLog(@"跳到评论");
+        
+    } WithSendBlock:^(NSString *content, BOOL isForward) {
+        
+        NSLog(@"发表评论");
+    }];
     
-    [self.view addSubview:input_back_view];
-    
-    
-    commit_label = [[UILabel alloc] initWithFrame:CGRectMake(11,7,255,30)];
-    
-    commit_label.userInteractionEnabled = YES;
-    
-    commit_label.backgroundColor = RGBCOLOR(24,26,25);
-    
-    commit_label.textColor = RGBCOLOR(52,63,62);
-    
-    commit_label.text = @"我来说两句...";
-    
-    commit_label.font = [UIFont systemFontOfSize:14];
-    
-    commit_label.textAlignment = NSTextAlignmentLeft;
-    
-    [input_back_view addSubview:commit_label];
+    [self.view addSubview:input_view];
     
     
-    UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showInputView:)];
+    input_view.backgroundColor = RGBCOLOR(3,3,3);
     
-    [commit_label addGestureRecognizer:tap];
+    input_view.commot_background_view.backgroundColor = RGBCOLOR(24,26,25);
+    
+    input_view.commot_background_view.layer.borderWidth = 0;
+    
+    input_view.commit_label.textColor = RGBCOLOR(52,63,62);
+    
+    [input_view.pinglun_button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    input_view.text_input_view.layer.borderColor = RGBCOLOR(211,211,211).CGColor;
     
     
     
+//    input_back_view = [[UIView alloc] initWithFrame:CGRectMake(0,content_back_view.frame.origin.y + content_back_view.frame.size.height,320,44)];
+//    
+//    input_back_view.backgroundColor = RGBCOLOR(3,3,3);
+//    
+//    [self.view addSubview:input_back_view];
+//    
+//    
+//    
+//    UIView * commot_background_view = [[UIView alloc] initWithFrame:CGRectMake(11,7,255,30)];
+//    
+//    commot_background_view.backgroundColor = RGBCOLOR(24,26,25);
+//    
+//    [input_back_view addSubview:commot_background_view];
+//    
+//    
+//    commit_label = [[UILabel alloc] initWithFrame:CGRectMake(5,0,245,30)];
+//    
+//    commit_label.userInteractionEnabled = NO;
+//    
+//    commit_label.backgroundColor = [UIColor clearColor];
+//    
+//    commit_label.textColor = RGBCOLOR(52,63,62);
+//    
+//    commit_label.text = @"我来说两句...";
+//    
+//    commit_label.font = [UIFont systemFontOfSize:14];
+//    
+//    commit_label.textAlignment = NSTextAlignmentLeft;
+//    
+//    [commot_background_view addSubview:commit_label];
+//    
+//    
+//    UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showInputView:)];
+//    
+//    [commit_label addGestureRecognizer:tap];
+//    
+//    
+//    
+//    
+//    pinglun_button = [UIButton buttonWithType:UIButtonTypeCustom];
+//    
+//    pinglun_button.frame = CGRectMake(275,7,30,30);
+//    
+//    pinglun_button.userInteractionEnabled = NO;
+//    
+//    pinglun_button.titleLabel.textAlignment = NSTextAlignmentRight;
+//    
+//    [pinglun_button setTitle:@"0" forState:UIControlStateNormal];
+//    
+//    pinglun_button.titleLabel.font = [UIFont systemFontOfSize:14];
+//    
+//    [pinglun_button addTarget:self action:@selector(pushToPinglunTap:) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    [input_back_view addSubview:pinglun_button];
+//    
+//    
+//    
+//    UIImageView * pinglun_image_view = [[UIImageView alloc] initWithFrame:CGRectMake(20,0,11,11.5)];
+//    
+//    pinglun_image_view.image = [UIImage imageNamed:@"atlas_talk"];
+//    
+//    [pinglun_button addSubview:pinglun_image_view];
+//    
+//    
+//    
+//    
+//    text_background_view = [[UIView alloc] initWithFrame:CGRectMake(0,(iPhone5?568:480),320,164)];
+//    
+//    text_background_view.backgroundColor = RGBCOLOR(249,248,249);
+//    
+//    [self.view addSubview:text_background_view];
+//    
+//    
+//    text_input_view = [[UITextView alloc] initWithFrame:CGRectMake(20,20,280,84)];
+//    
+//    text_input_view.layer.masksToBounds = NO;
+//    
+//    text_input_view.delegate = self;
+//    
+//    text_input_view.layer.borderColor = RGBCOLOR(211,211,211).CGColor;
+//    
+//    text_input_view.layer.borderWidth = 0.5;
+//    
+//    [text_background_view addSubview:text_input_view];
+//    
+//    
+//    send_button = [UIButton buttonWithType:UIButtonTypeCustom];
+//    
+//    send_button.frame = CGRectMake(240,120,60,30);
+//    
+//    send_button.enabled = NO;
+//    
+//    [send_button setTitle:@"发送" forState:UIControlStateNormal];
+//    
+//    [send_button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//    
+//    send_button.backgroundColor = RGBCOLOR(221,221,221);
+//    
+//    [send_button addTarget:self action:@selector(submitPingLunTap:) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    [text_background_view addSubview:send_button];
+//    
+//    
+
+//    
+//    
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//											 selector:@selector(handleWillShowKeyboard:)
+//												 name:UIKeyboardWillShowNotification
+//                                               object:nil];
+//    
+//	[[NSNotificationCenter defaultCenter] addObserver:self
+//											 selector:@selector(handleWillHideKeyboard:)
+//												 name:UIKeyboardWillHideNotification
+//                                               object:nil];
     
-    pinglun_button = [UIButton buttonWithType:UIButtonTypeCustom];
-    
-    pinglun_button.frame = CGRectMake(275,7,30,30);
-    
-    pinglun_button.titleLabel.textAlignment = NSTextAlignmentRight;
-    
-    [pinglun_button setTitle:@"0" forState:UIControlStateNormal];
-    
-    pinglun_button.titleLabel.font = [UIFont systemFontOfSize:14];
-    
-    [pinglun_button addTarget:self action:@selector(pushToPinglunTap:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [input_back_view addSubview:pinglun_button];
-    
-    
-    
-    UIImageView * pinglun_image_view = [[UIImageView alloc] initWithFrame:CGRectMake(20,0,11,11.5)];
-    
-    pinglun_image_view.image = [UIImage imageNamed:@"atlas_talk"];
-    
-    [pinglun_button addSubview:pinglun_image_view];
-    
-    
-    
-    
-    text_background_view = [[UIView alloc] initWithFrame:CGRectMake(0,(iPhone5?568:480),320,164)];
-    
-    text_background_view.backgroundColor = RGBCOLOR(249,248,249);
-    
-    [self.view addSubview:text_background_view];
-    
-    
-    text_input_view = [[UITextView alloc] initWithFrame:CGRectMake(20,20,280,84)];
-    
-    text_input_view.layer.masksToBounds = NO;
-    
-    text_input_view.delegate = self;
-    
-    text_input_view.layer.borderColor = RGBCOLOR(211,211,211).CGColor;
-    
-    text_input_view.layer.borderWidth = 0.5;
-    
-    [text_background_view addSubview:text_input_view];
-    
-    
-    send_button = [UIButton buttonWithType:UIButtonTypeCustom];
-    
-    send_button.frame = CGRectMake(240,120,60,30);
-    
-    send_button.enabled = NO;
-    
-    [send_button setTitle:@"发送" forState:UIControlStateNormal];
-    
-    [send_button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    send_button.backgroundColor = RGBCOLOR(221,221,221);
-    
-    [send_button addTarget:self action:@selector(submitPingLunTap:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [text_background_view addSubview:send_button];
     
     
     [self panduanCollection];
-    
+
     [self setNavgationBar];
-    
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(handleWillShowKeyboard:)
-												 name:UIKeyboardWillShowNotification
-                                               object:nil];
-    
-	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(handleWillHideKeyboard:)
-												 name:UIKeyboardWillHideNotification
-                                               object:nil];
-    
-    
-}
-
-
-#pragma mark - 监测键盘弹出收起以及高度变化
-
--(void)handleWillShowKeyboard:(NSNotification *)notification
-{
-    CGRect keyboardRect = [[notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    
-    CGFloat keyboardY = [self.view convertRect:keyboardRect fromView:nil].origin.y;
-    
-    [UIView animateWithDuration:0.3 animations:^{
-        
-        CGRect frame = text_background_view.frame;
-        
-        frame.origin.y = keyboardY - frame.size.height;;
-        
-        text_background_view.frame = frame;
-        
-        _theTouchView.frame = CGRectMake(0,0,320,text_background_view.frame.origin.y);
-        
-    } completion:^(BOOL finished) {
-        
-    }];
-
-}
-
-
--(void)handleWillHideKeyboard:(NSNotification *)notification
-{
-    [self hiddenInputView];
-}
-
-
--(void)hiddenInputView
-{
-    [UIView animateWithDuration:0.3 animations:^{
-        _theTouchView.hidden = YES;
-        text_background_view.frame = CGRectMake(0,(iPhone5?568:480),320,164);
-    } completion:^(BOOL finished) {
-        
-    }];
-}
-
-
-
-
-#pragma mark - 弹出输入框
-
--(void)showInputView:(UITapGestureRecognizer *)sender
-{
-    BOOL islogin = [self isLogIn];
-    
-    if (!islogin)
-    {
-        return;
-    }
-    
-    [text_input_view becomeFirstResponder];
-}
-
-
-#pragma mark - 跳到评论界面
-
--(void)pushToPinglunTap:(UIButton *)sender
-{
-    
-    
-    
 }
 
 
@@ -773,6 +774,14 @@
     } completion:^(BOOL finished) {
         
     }];
+}
+
+
+//重新加载数据
+
+-(void)reloadAtlasData
+{
+    [self loadData];
 }
 
 
@@ -860,7 +869,7 @@
             
             model.atlas_likes = [NSString stringWithFormat:@"%d",count+1];
             
-            [pinglun_button setTitle:model.atlas_likes forState:UIControlStateNormal];
+            [input_view.pinglun_button setTitle:model.atlas_likes forState:UIControlStateNormal];
         }else
         {
             UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:[allDic objectForKey:@"data"] message:nil delegate:nil cancelButtonTitle:@"确认" otherButtonTitles:nil,nil];
@@ -883,12 +892,84 @@
 
 
 
+
+#pragma mark - 分享
+
+
+//-(void)ShareMore{
+//    
+//    my_array =[[NSMutableArray alloc]init];
+//    UIActionSheet * editActionSheet = [[UIActionSheet alloc] initWithTitle:@"图文分享" delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
+//    editActionSheet.actionSheetStyle = UIActivityIndicatorViewStyleGray;
+//    
+//    [editActionSheet addButtonWithTitle:@"分享到自留地"];
+//    
+//    for (NSString *snsName in [UMSocialSnsPlatformManager sharedInstance].allSnsValuesArray) {
+//        /*2013-07-22 17:09:59.546 UMSocial[4631:907] name==qzone
+//         2013-07-22 17:09:59.55x3 UMSocial[4631:907] name==sina
+//         2013-07-22 17:09:59.559 UMSocial[4631:907] name==tencent
+//         2013-07-22 17:09:59.564 UMSocial[4631:907] name==renren
+//         2013-07-22 17:09:59.575 UMSocial[4631:907] name==douban
+//         2013-07-22 17:09:59.578 UMSocial[4631:907] name==wechat
+//         2013-07-22 17:09:59.583 UMSocial[4631:907] name==wxtimeline
+//         2013-07-22 17:09:59.587 UMSocial[4631:907] name==email
+//         2013-07-22 17:09:59.592 UMSocial[4631:907] name==sms
+//         2013-07-22 17:09:59.595 UMSocial[4631:907] name==facebook
+//         2013-07-22 17:09:59.598 UMSocial[4631:907] name==twitter*/
+//        
+//        if ([snsName isEqualToString:@"facebook"]||[snsName isEqualToString:@"twitter"]||[snsName isEqualToString:@"renren"]||[snsName isEqualToString:@"qzone"]||[snsName isEqualToString:@"douban"]||[snsName isEqualToString:@"tencent"]||[snsName isEqualToString:@"sms"]||[snsName isEqualToString:@"wxtimeline"]) {
+//        }else{
+//            NSLog(@"weishenmehaiyu===%@",my_array);
+//            [my_array addObject:snsName];
+//            if ([snsName isEqualToString:@"sina"]) {
+//                [editActionSheet addButtonWithTitle:@"分享到新浪微博"];
+//                
+//            }
+//            if ([snsName isEqualToString:@"email"]) {
+//                
+//            }
+//            
+//            //            else if([snsName isEqualToString:@"wechat"])
+//            //            {
+//            //                [editActionSheet addButtonWithTitle:@"分享给微信好友"];
+//            //
+//            //
+//            //            }
+//            //            else if([snsName isEqualToString:@"wxtimeline"])
+//            //            {
+//            //                [editActionSheet addButtonWithTitle:@"分享到微信朋友圈"];
+//            //
+//            //            }
+//            //            else{
+//            //                [editActionSheet addButtonWithTitle:@"短信分享"];
+//            //
+//            //            }
+//            //
+//            
+//        }
+//        
+//        
+//    }
+//    [editActionSheet addButtonWithTitle:@"分享给微信好友"];
+//    [editActionSheet addButtonWithTitle:@"分享到微信朋友圈"];
+//    [editActionSheet addButtonWithTitle:@"分享到邮箱"];
+//    
+//    [editActionSheet addButtonWithTitle:@"取消"];
+//    editActionSheet.cancelButtonIndex = editActionSheet.numberOfButtons - 1;
+//    // [editActionSheet showFromTabBar:self.tabBarController.tabBar];
+//    [editActionSheet showFromRect:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height) inView:self.view animated:YES];
+//    editActionSheet.delegate = self;
+//}
+
+
+
 -(void)dealloc
 {
     myAlertView = nil;
     
     
 }
+
 
 
 - (void)didReceiveMemoryWarning

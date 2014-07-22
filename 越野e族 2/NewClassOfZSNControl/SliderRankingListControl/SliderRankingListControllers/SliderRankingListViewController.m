@@ -144,8 +144,7 @@
         [_bbs_post_collection_array removeAllObjects];
     }
     
-    //张少南 更换autherkey
-    NSString * fullUrl = [NSString stringWithFormat:GET_COLLECTION_BBS_POST_URL,@"U2VRMgdnVzVQZlc8AnkKelo7A25fd1JhCWEANw"];
+    NSString * fullUrl = [NSString stringWithFormat:GET_COLLECTION_BBS_POST_URL,AUTHKEY];
     
     NSLog(@"获取收藏帖子接口 --   %@",fullUrl);
     
@@ -282,7 +281,6 @@
     
     BOOL isCollected;
     
-    //张少南 更换autherkey
     if (self.currentPage == 1)
     {
         isCollected = [self.bbs_post_collection_array containsObject:model.ranking_id];
@@ -291,10 +289,10 @@
         
         if (!isCollected)
         {
-            fullUrl = [NSString stringWithFormat:COLLECTION_BBS_POST_URL,@"U2VRMgdnVzVQZlc8AnkKelo7A25fd1JhCWEANw",model.ranking_id];
+            fullUrl = [NSString stringWithFormat:COLLECTION_BBS_POST_URL,AUTHKEY,model.ranking_id];
         }else
         {
-            fullUrl = [NSString stringWithFormat:DELETE_COLLECTION_BBS_POST_URL,model.ranking_id,@"U2VRMgdnVzVQZlc8AnkKelo7A25fd1JhCWEANw"];
+            fullUrl = [NSString stringWithFormat:DELETE_COLLECTION_BBS_POST_URL,model.ranking_id,AUTHKEY];
         }
         
     }else

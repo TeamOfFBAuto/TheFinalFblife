@@ -14,6 +14,8 @@
 
 -(void)singleClicked;
 
+-(void)reloadAtlasData;//重新加载数据
+
 @end
 
 
@@ -38,6 +40,11 @@ typedef enum
     UIActivityIndicatorView * activity_view;//菊花
     
     BOOL is_load;//判断图片是否加载完成
+    
+    UILabel * load_again;//重新加载
+    
+    
+    UIView * load_failed_view;//加载失败弹框
 }
 
 
@@ -57,4 +64,16 @@ typedef enum
 
 -(void)resetImageView:(UIImage *)theImage;
 
+
+//加载数据失败
+-(void)loadDataFailed;
+
+
 @end
+
+
+
+
+
+
+

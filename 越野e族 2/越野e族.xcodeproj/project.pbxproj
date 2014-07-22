@@ -180,6 +180,10 @@
 		561B65CF1965679600572350 /* SliderBBSJingXuanCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 561B65CD1965679600572350 /* SliderBBSJingXuanCell.m */; };
 		561B65D219668B4200572350 /* SliderBBSForumSegmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 561B65D119668B4200572350 /* SliderBBSForumSegmentView.m */; };
 		561B65D319668B4200572350 /* SliderBBSForumSegmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 561B65D119668B4200572350 /* SliderBBSForumSegmentView.m */; };
+		56203CA4197E31400005D720 /* newWriteBlogButtonImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 56203CA3197E31400005D720 /* newWriteBlogButtonImage@2x.png */; };
+		56203CA5197E31400005D720 /* newWriteBlogButtonImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 56203CA3197E31400005D720 /* newWriteBlogButtonImage@2x.png */; };
+		56203CA7197E3F7A0005D720 /* atlas_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 56203CA6197E3F7A0005D720 /* atlas_logo@2x.png */; };
+		56203CA8197E3F7A0005D720 /* atlas_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 56203CA6197E3F7A0005D720 /* atlas_logo@2x.png */; };
 		563022871978C9BE00F85B11 /* bbs_rankinglist_chexing@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5630227F1978C9BE00F85B11 /* bbs_rankinglist_chexing@2x.png */; };
 		563022881978C9BE00F85B11 /* bbs_rankinglist_chexing@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5630227F1978C9BE00F85B11 /* bbs_rankinglist_chexing@2x.png */; };
 		563022891978C9BE00F85B11 /* bbs_rankinglist_chexing1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 563022801978C9BE00F85B11 /* bbs_rankinglist_chexing1@2x.png */; };
@@ -585,6 +589,7 @@
 		5643879B1963FA3D00152B2D /* QBShowImagesScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 564387991963FA3D00152B2D /* QBShowImagesScrollView.m */; };
 		5643879E1963FAE100152B2D /* FBQuanAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5643879D1963FAE100152B2D /* FBQuanAlertView.m */; };
 		5643879F1963FAE100152B2D /* FBQuanAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5643879D1963FAE100152B2D /* FBQuanAlertView.m */; };
+		564B91CA197E95A50081D103 /* CustomInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 564B91C9197E95A50081D103 /* CustomInputView.m */; };
 		565008E21861374800EFD08D /* filmios7@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 565008E11861374800EFD08D /* filmios7@2x.png */; };
 		565008E41861664600EFD08D /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 565008E31861664600EFD08D /* MapKit.framework */; };
 		565008E718616CFA00EFD08D /* FBMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 565008E618616CFA00EFD08D /* FBMapViewController.m */; };
@@ -1541,6 +1546,8 @@
 		561B65CD1965679600572350 /* SliderBBSJingXuanCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SliderBBSJingXuanCell.m; sourceTree = "<group>"; };
 		561B65D019668B4200572350 /* SliderBBSForumSegmentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SliderBBSForumSegmentView.h; sourceTree = "<group>"; };
 		561B65D119668B4200572350 /* SliderBBSForumSegmentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SliderBBSForumSegmentView.m; sourceTree = "<group>"; };
+		56203CA3197E31400005D720 /* newWriteBlogButtonImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "newWriteBlogButtonImage@2x.png"; sourceTree = "<group>"; };
+		56203CA6197E3F7A0005D720 /* atlas_logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "atlas_logo@2x.png"; sourceTree = "<group>"; };
 		5630227F1978C9BE00F85B11 /* bbs_rankinglist_chexing@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bbs_rankinglist_chexing@2x.png"; sourceTree = "<group>"; };
 		563022801978C9BE00F85B11 /* bbs_rankinglist_chexing1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bbs_rankinglist_chexing1@2x.png"; sourceTree = "<group>"; };
 		563022811978C9BE00F85B11 /* bbs_rankinglist_dadui@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bbs_rankinglist_dadui@2x.png"; sourceTree = "<group>"; };
@@ -1967,6 +1974,8 @@
 		564387991963FA3D00152B2D /* QBShowImagesScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBShowImagesScrollView.m; sourceTree = "<group>"; };
 		5643879C1963FAE100152B2D /* FBQuanAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBQuanAlertView.h; sourceTree = "<group>"; };
 		5643879D1963FAE100152B2D /* FBQuanAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBQuanAlertView.m; sourceTree = "<group>"; };
+		564B91C8197E95A50081D103 /* CustomInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomInputView.h; sourceTree = "<group>"; };
+		564B91C9197E95A50081D103 /* CustomInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomInputView.m; sourceTree = "<group>"; };
 		565008E11861374800EFD08D /* filmios7@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "filmios7@2x.png"; sourceTree = "<group>"; };
 		565008E31861664600EFD08D /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		565008E518616CFA00EFD08D /* FBMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBMapViewController.h; sourceTree = "<group>"; };
@@ -3868,6 +3877,7 @@
 		5634CB4A185FDE6A003868D7 /* weiboImage */ = {
 			isa = PBXGroup;
 			children = (
+				56203CA3197E31400005D720 /* newWriteBlogButtonImage@2x.png */,
 				5634D4A818605BFC003868D7 /* 1111@2x.png */,
 				5634CB4B185FDE73003868D7 /* photo_default.png */,
 				5634CB4C185FDE73003868D7 /* photo_default@2x.png */,
@@ -3982,6 +3992,8 @@
 			children = (
 				56576EE219750F8900BB1357 /* AtlasContentView.h */,
 				56576EE319750F8900BB1357 /* AtlasContentView.m */,
+				564B91C8197E95A50081D103 /* CustomInputView.h */,
+				564B91C9197E95A50081D103 /* CustomInputView.m */,
 			);
 			path = AtlasViews;
 			sourceTree = "<group>";
@@ -3989,6 +4001,7 @@
 		565D325E1976119900AF0881 /* AtlasImages */ = {
 			isa = PBXGroup;
 			children = (
+				56203CA6197E3F7A0005D720 /* atlas_logo@2x.png */,
 				561432CF197CE7A300CD9908 /* atlas_fanhui@2x.png */,
 				563022A61979250C00F85B11 /* atlas_collect-1@2x.png */,
 				563022A71979250C00F85B11 /* atlas_zan-2@2x.png */,
@@ -6036,6 +6049,7 @@
 				19ECDAB4186EDCE2002B2281 /* searchbbs297_57@2x.png in Resources */,
 				56C9561E185EEEB700763E69 /* xiangxikuang@2x.png in Resources */,
 				563365F21862E7590069F838 /* blacksearch@2x.png in Resources */,
+				56203CA4197E31400005D720 /* newWriteBlogButtonImage@2x.png in Resources */,
 				563364421862E7490069F838 /* deletbutton.png in Resources */,
 				563365E11862E7590069F838 /* 20130502_face.png in Resources */,
 				566E7934185EE75D00BB88C5 /* face45_1.png in Resources */,
@@ -6068,6 +6082,7 @@
 				563365C51862E7590069F838 /* pinglunicon3430@2x.png in Resources */,
 				19CF417B186D885400AA51A9 /* WriteBlog_face_image@2x.png in Resources */,
 				563364491862E7490069F838 /* 2_141_132@2x.png in Resources */,
+				56203CA7197E3F7A0005D720 /* atlas_logo@2x.png in Resources */,
 				56C955FA185EEEB700763E69 /* bianji_sel.png in Resources */,
 				563363831862E68D0069F838 /* ios7_jiaoyi@2x.png in Resources */,
 				563363881862E68D0069F838 /* ios7_zhuti@2x.png in Resources */,
@@ -6647,6 +6662,7 @@
 				566075FF188F5D2E00C25ACE /* zbar-back.png in Resources */,
 				565D326A197611F300AF0881 /* atlas_zhuanfa@2x.png in Resources */,
 				564387841963F65200152B2D /* SliderRightfbgray73_67@2x.png in Resources */,
+				56203CA8197E3F7A0005D720 /* atlas_logo@2x.png in Resources */,
 				19B11863186871B600CA4C07 /* llongInBackImage@2x.png in Resources */,
 				56607603188F5D2E00C25ACE /* zbar-helpicons.png in Resources */,
 				565D3268197611F300AF0881 /* atlas_zan-1@2x.png in Resources */,
@@ -6696,6 +6712,7 @@
 				5660757D188F5D1200C25ACE /* UMSCommentInputControlleriPad.xib in Resources */,
 				19A9611118B5F05200F064F1 /* selectsearchbbsleft150_55@2x.png in Resources */,
 				5660756B188F5D1200C25ACE /* UMUFP.bundle in Resources */,
+				56203CA5197E31400005D720 /* newWriteBlogButtonImage@2x.png in Resources */,
 				56607601188F5D2E00C25ACE /* zbar-help.html in Resources */,
 				561432D1197CE7A300CD9908 /* atlas_fanhui@2x.png in Resources */,
 				5643878E1963F65200152B2D /* SliderRightstar@2x.png in Resources */,
@@ -6791,6 +6808,7 @@
 				5675DE28196D3C6B001926E1 /* RankingListModel.m in Sources */,
 				566E7A58185EE80100BB88C5 /* SMPageControl.m in Sources */,
 				56607568188F5D1200C25ACE /* UMTableViewLoadingCell.m in Sources */,
+				564B91CA197E95A50081D103 /* CustomInputView.m in Sources */,
 				563365281862E7510069F838 /* DraftBoxViewController.m in Sources */,
 				563365271862E7510069F838 /* DraftBoxView.m in Sources */,
 				563365231862E7510069F838 /* UMFeedbackTableViewCellLeft.m in Sources */,

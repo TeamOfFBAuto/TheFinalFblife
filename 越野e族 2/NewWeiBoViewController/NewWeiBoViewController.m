@@ -548,10 +548,9 @@
     negativeSpacer.width = MY_MACRO_NAME?-5:5;
     
     
-    
     UIButton * leftbutton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [leftbutton setImage:[UIImage imageNamed:@"weibo_write_image.png"] forState:UIControlStateNormal];
-    [leftbutton addTarget:self action:@selector(WriteBolg:) forControlEvents:UIControlEventTouchUpInside];
+    [leftbutton setImage:[UIImage imageNamed:@"slider_bbs_home"] forState:UIControlStateNormal];
+    [leftbutton addTarget:self action:@selector(leftButtonTap:) forControlEvents:UIControlEventTouchUpInside];
     
     leftbutton.frame = CGRectMake(MY_MACRO_NAME?0:8,0,38/2,38/2);
     
@@ -562,23 +561,23 @@
     
     UIButton *rightview=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 37, 37/2)];
     rightview.backgroundColor=[UIColor clearColor];
-    [rightview addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventTouchUpInside];
+    [rightview addTarget:self action:@selector(rightButtonTap:) forControlEvents:UIControlEventTouchUpInside];
     
     UIButton * searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [searchButton setImage:[UIImage imageNamed:@"ios7_newssearch.png"] forState:UIControlStateNormal];
+    [searchButton setImage:[UIImage imageNamed:@"slider_bbs_me"] forState:UIControlStateNormal];
     searchButton.userInteractionEnabled = NO;
     searchButton.frame = CGRectMake(MY_MACRO_NAME?25:10,0,37/2,37/2);
     [rightview addSubview:searchButton];
     
     self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithCustomView:rightview];
     
-    _weibo_seg = [[WeiBoCustomSegmentView alloc] initWithFrame:CGRectMake(15,0,240,44)];
+    _weibo_seg = [[WeiBoCustomSegmentView alloc] initWithFrame:CGRectMake(15,0,200,44)];
     
     _weibo_seg.delegate = self;
     
     _weibo_seg.backgroundColor = [UIColor clearColor];
     
-    [_weibo_seg setAllViewsWith:[NSArray arrayWithObjects:@"我关注的",@"微博广场",@"我的微博",nil] index:selectedView];
+    [_weibo_seg setAllViewsWith:[NSArray arrayWithObjects:@"关注",@"广场",@"我的",nil] index:selectedView];
     
     self.navigationItem.titleView = _weibo_seg;
     
@@ -763,7 +762,9 @@
         searchloadingview.normalLabel.text=@"上拉加载更多";
     }
     
+ //搜索
     
+
     if (!xiala_tab)
     {
         xiala_tab=[[UITableView alloc]initWithFrame:CGRectMake(0,MY_MACRO_NAME?108:88,320,iPhone5?(568-19-44-36):(480-19-44-36)) style:UITableViewStylePlain];
@@ -780,7 +781,23 @@
         
         [self.view addSubview:xiala_tab];
     }
+ 
+
     
+    
+    //发送微博按钮
+    
+    UIButton * Write_blog_button = [UIButton buttonWithType:UIButtonTypeCustom];
+    
+    Write_blog_button.frame = CGRectMake(0,0,60,60);
+    
+    Write_blog_button.center = CGPointMake(42,(iPhone5?568:480)-42-64);
+    
+    [Write_blog_button setImage:[UIImage imageNamed:@"newWriteBlogButtonImage"] forState:UIControlStateNormal];
+    
+    [Write_blog_button addTarget:self action:@selector(WriteBolg:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.view addSubview:Write_blog_button];
     
     
     
@@ -808,6 +825,19 @@
     _myTableView2.scrollsToTop = NO;
     
 }
+
+
+
+-(void)rightButtonTap:(UIButton *)sender
+{
+    [self.mm_drawerController toggleDrawerSide:MMDrawerSideRight animated:YES completion:nil];
+}
+
+-(void)leftButtonTap:(UIButton *)sender
+{
+    [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+}
+
 
 
 -(void)WriteBolg:(UIButton *)sender

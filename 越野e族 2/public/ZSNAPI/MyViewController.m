@@ -50,7 +50,9 @@
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
     
-    self.view.backgroundColor = RGBCOLOR(214,214,214);
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+    
+//    self.view.backgroundColor = RGBCOLOR(214,214,214);
     
     
     if([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)] )

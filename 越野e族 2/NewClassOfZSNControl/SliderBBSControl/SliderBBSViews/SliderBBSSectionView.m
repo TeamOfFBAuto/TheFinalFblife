@@ -9,13 +9,18 @@
 #import "SliderBBSSectionView.h"
 #import "testbase.h"
 
+#define selected_color RGBCOLOR(86,86,86)
+
+#define unselected_color RGBCOLOR(164,164,164)
+
+
 @implementation SliderBBSSectionView
 @synthesize myScrollView = _myScrollView;
 
 
 
 
-- (id)initWithFrame:(CGRect)frame WithBlock:(SliderBBSSectionSegmentBlock)theBlock
+- (id)initWithFrame:(CGRect)frame WithBlock:(SliderBBSSectionSegmentBlock)theBlock WithLogInBlock:(SliderBBSSectionSegmentLogInBlock)theLogIn
 {
     self = [super initWithFrame:frame];
     if (self)
@@ -24,11 +29,13 @@
         
         sliderBBSSectionSegmentBlock = theBlock;
         
+        logIn_block = theLogIn;
+        
         for (int i = 0;i < 3;i++)
         {
             UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
             
-            button.titleLabel.font = [UIFont systemFontOfSize:16];
+            button.titleLabel.font = [UIFont systemFontOfSize:15];
             
             button.tag = 100 + i;
             
@@ -38,9 +45,9 @@
             {
                 button.frame = CGRectMake(0,0,111,44);
                 
-                [button setTitle:@"我的订阅" forState:UIControlStateNormal];
+                [button setTitle:@"我的收藏" forState:UIControlStateNormal];
                 
-                [button setTitleColor:RGBCOLOR(86,86,86) forState:UIControlStateNormal];
+                [button setTitleColor:selected_color forState:UIControlStateNormal];
                 
                 UIView * line_view = [[UIView alloc] initWithFrame:CGRectMake(0,0,1,15)];
                 
@@ -55,7 +62,7 @@
                 
                 [button setTitle:@"最新浏览" forState:UIControlStateNormal];
                 
-                [button setTitleColor:RGBCOLOR(164,164,164) forState:UIControlStateNormal];
+                [button setTitleColor:unselected_color forState:UIControlStateNormal];
                 
                 UIView * line_view = [[UIView alloc] initWithFrame:CGRectMake(0,0,1,15)];
                 
@@ -114,12 +121,78 @@
     }
     
     
+    UIButton * button1 = (UIButton *)[self viewWithTag:100];
+    
+    UIButton * button2 = (UIButton *)[self viewWithTag:101];
+    
+    if (theType == 0)
+    {
+        [button1 setTitleColor:selected_color forState:UIControlStateNormal];
+        
+        [button2 setTitleColor:unselected_color forState:UIControlStateNormal];
+    }else
+    {
+        [button2 setTitleColor:selected_color forState:UIControlStateNormal];
+        
+        [button1 setTitleColor:unselected_color forState:UIControlStateNormal];
+    }
+
+    
     int count = array.count;
     
     
-    if (count > 10 && theType == 1) {
+    if (count > 10 && theType == 1)
+    {
         count = 10;
     }
+    
+    
+    if (count == 0)
+    {
+        if (!no_data_name_label)
+        {
+            no_data_name_label = [[UILabel alloc] initWithFrame:_myScrollView.frame];
+            
+            no_data_name_label.textAlignment = NSTextAlignmentCenter;
+            
+            no_data_name_label.userInteractionEnabled = YES;
+            
+            no_data_name_label.font = [UIFont systemFontOfSize:15];
+            
+            no_data_name_label.textColor = RGBCOLOR(135,135,135);
+            
+            no_data_name_label.backgroundColor = [UIColor clearColor];
+            
+            [background_imageview addSubview:no_data_name_label];
+        }
+        
+        no_data_name_label.hidden = NO;
+        
+        if (theType == 0)
+        {
+            BOOL islogIn = [[NSUserDefaults standardUserDefaults] boolForKey:USER_IN];
+            
+            no_data_name_label.text = islogIn?@"你还没有收藏版块":@"点击立即登录";
+            
+        }else if(theType == 1)
+        {
+            no_data_name_label.text = @"你还没有浏览记录";
+        }
+        
+        
+        UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(logInTap:)];
+        
+        [no_data_name_label addGestureRecognizer:tap];
+        
+        
+        return;
+    }else
+    {
+        no_data_name_label.hidden = YES;
+    }
+    
+    
+    
     
     _myScrollView.contentSize = CGSizeMake(20+90*count+(count-1)*10,0);
     
@@ -256,6 +329,19 @@
     
     
     sectionView_block(sender.tag-1000);
+}
+
+
+
+#pragma mark - 点击登陆
+
+
+-(void)logInTap:(UITapGestureRecognizer *)sender
+{
+    if ([no_data_name_label.text isEqualToString:@"点击立即登录"])
+    {
+        logIn_block();
+    }
 }
 
 

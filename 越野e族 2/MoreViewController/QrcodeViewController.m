@@ -255,9 +255,7 @@
         writeBlogView.allImageArray1=array_shareimg;
         writeBlogView.allAssesters1=array_none;
         
-        
-        [self presentModalViewController:writeBlogView animated:YES];
-        
+        [self presentViewController:writeBlogView animated:YES completion:NULL];
     }
     else{
         //没有激活fb，弹出激活提示

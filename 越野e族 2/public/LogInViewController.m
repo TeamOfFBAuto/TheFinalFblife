@@ -134,7 +134,7 @@
     
     UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:button_back];
     
-    NavTitle.rightBarButtonItems=@[spaceBar,back_item];
+    NavTitle.leftBarButtonItems=@[spaceBar,back_item];
     
     
     //设置barbutton
