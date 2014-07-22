@@ -13,8 +13,12 @@
 -(void)startloadimageWithtype:(int)____type  words:(NSString *)str_words{
   //type=1外观，2内饰，3细节
         NSString * fullURL= [NSString stringWithFormat:@"http://carport.fblife.com/carapi/getphotolist.php?words=%@&datatype=json&page=1&pagesize=200&type=%d",str_words,____type];
-        NSLog(@"1请求的url = %@",fullURL);
-        request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:fullURL]];
+    
+    NSString *newUrlStr=[NSString stringWithFormat:@"http://carport.fblife.com/carapi/getphotolist.php?words=%@&datatype=json&page=1&pagesize=100&type=9",str_words];
+    
+    
+        NSLog(@"1请求的url = %@",newUrlStr);
+        request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:newUrlStr]];
         
         __block ASIHTTPRequest * _requset = request;
         

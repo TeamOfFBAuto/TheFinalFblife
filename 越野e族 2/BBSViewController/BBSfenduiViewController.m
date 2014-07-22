@@ -970,7 +970,7 @@
             case 0:
                 if (jinghua>0) {
                     Essence_imageV=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"jinghua_31x31.png"]];
-                    Essence_imageV.frame=CGRectMake(8, 6, 16, 16);
+                    Essence_imageV.frame=CGRectMake(8, 12, 16, 16);
                     [imageviewcell addSubview:Essence_imageV];
                     titleLabel.text=[NSString stringWithFormat:@"      %@",[dic objectForKey:@"title"]];
                     
@@ -980,14 +980,14 @@
                 break;
             case 1:{
                 Essence_imageV=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"1_31x31.png"]];
-                Essence_imageV.frame=CGRectMake(8, 6, 16, 16);
+                Essence_imageV.frame=CGRectMake(8, 12, 16, 16);
                 [imageviewcell addSubview:Essence_imageV];
                 titleLabel.text=[NSString stringWithFormat:@"      %@",[dic objectForKey:@"title"]];
             }
                 break;
             case 2:{
                 Essence_imageV=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"2_31x31.png"]];
-                Essence_imageV.frame=CGRectMake(8, 6, 16, 16);
+                Essence_imageV.frame=CGRectMake(8, 12, 16, 16);
                 [imageviewcell addSubview:Essence_imageV];
                 titleLabel.text=[NSString stringWithFormat:@"      %@",[dic objectForKey:@"title"]];
                 
@@ -995,7 +995,7 @@
                 break;
             case 3:{
                 Essence_imageV=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"3_31x31.png"]];
-                Essence_imageV.frame=CGRectMake(8, 6, 16, 16);
+                Essence_imageV.frame=CGRectMake(8, 12, 16, 16);
                 [imageviewcell addSubview:Essence_imageV];
                 titleLabel.text=[NSString stringWithFormat:@"      %@",[dic objectForKey:@"title"]];
                 
@@ -1044,13 +1044,13 @@
     
     CGSize constraintSize = CGSizeMake(290, MAXFLOAT);
     CGSize labelSize = [titleLabel.text sizeWithFont:titleLabel.font constrainedToSize:constraintSize lineBreakMode:UILineBreakModeWordWrap];
-    titleLabel.frame=CGRectMake(8, 5, 290, labelSize.height);
+    titleLabel.frame=CGRectMake(8, 12, 290, labelSize.height);
     
     
     authorLabel.text=[dic objectForKey:@"author"];
-    authorLabel.frame=CGRectMake(8, titleLabel.frame.size.height+2, 80, 20);
-    createTimeLabel.frame=CGRectMake(100, titleLabel.frame.size.height+2, 80, 20);
-    repliesLabel.frame=CGRectMake(215, titleLabel.frame.size.height+2, 80, 20);
+    authorLabel.frame=CGRectMake(8, titleLabel.frame.size.height+20, 80, 20);
+    createTimeLabel.frame=CGRectMake(100, titleLabel.frame.size.height+20, 80, 20);
+    repliesLabel.frame=CGRectMake(215, titleLabel.frame.size.height+20, 80, 20);
     NSString *string_time=[personal timchange:[dic objectForKey:@"time"]];
     createTimeLabel.text=string_time;
     repliesLabel.text=[NSString stringWithFormat:@"%@ / %@",[dic objectForKey:@"replies" ],[dic objectForKey:@"views"]];
@@ -1122,18 +1122,18 @@
     if (string_chushouqiugou.length==0) {
         if (jinghua>0||displayorder>0) {
             CGSize labelSize = [[NSString stringWithFormat:@"      %@",[dic objectForKey:@"title"]] sizeWithFont:[UIFont fontWithName:@"Helvetica" size:15.0]constrainedToSize:constraintSize lineBreakMode:NSLineBreakByCharWrapping];
-            return labelSize.height+20+5;
+            return labelSize.height+40+5;
             
         }else{
             
             CGSize labelSize = [[NSString stringWithFormat:@"           %@",[dic objectForKey:@"title"]] sizeWithFont:[UIFont fontWithName:@"Helvetica" size:15.0]constrainedToSize:constraintSize lineBreakMode:UILineBreakModeWordWrap];
-            return labelSize.height+20+5;
+            return labelSize.height+40+5;
             
         }
         
     }else{
         CGSize labelSize = [[NSString stringWithFormat:@"                      %@",[dic objectForKey:@"title"]] sizeWithFont:[UIFont fontWithName:@"Helvetica" size:15.0]constrainedToSize:constraintSize lineBreakMode:UILineBreakModeWordWrap];
-        return labelSize.height+20+5;
+        return labelSize.height+40+5;
     }
     
     

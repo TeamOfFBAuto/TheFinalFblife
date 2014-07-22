@@ -30,6 +30,8 @@
 
 #import "XTSideMenuManager.h"
 
+#import "SzkLoadData.h"
+
 
 #import "AppDelegate.h"
 #import "MyNavigationController.h"

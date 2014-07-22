@@ -715,6 +715,15 @@
             ]; 
 }
 
++(NSString *)getMyAuthkey{
+
+
+    NSString *str_authkey=[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:USER_AUTHOD]];
+    return str_authkey;
+
+
+}
+
 
 //
 //#pragma mark--播放系统声音

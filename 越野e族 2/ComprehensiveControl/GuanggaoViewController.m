@@ -84,11 +84,17 @@
     
     //点击跳过的button
     
-    UIButton *buttonTiaoguo=[[UIButton alloc]initWithFrame:CGRectMake(245, 20, 65, 30)];
+    UIButton *buttonTiaoguo=[[UIButton alloc]initWithFrame:CGRectMake(245, 20, 62, 30)];
     [buttonTiaoguo setTitle:@"点击跳过" forState:UIControlStateNormal];
     buttonTiaoguo.titleLabel.font=[UIFont systemFontOfSize:14];
-    [buttonTiaoguo setBackgroundColor:RGBCOLOR(250, 250, 250)];
-    [buttonTiaoguo setTitleColor:RGBCOLOR(50, 50, 50) forState:UIControlStateNormal];
+    [buttonTiaoguo setBackgroundColor:RGBACOLOR(245, 245, 245, 0.7)];
+    [buttonTiaoguo setTitleColor:RGBCOLOR(80, 80, 80) forState:UIControlStateNormal];
+    
+    CALayer *l = [buttonTiaoguo layer];   //获取ImageView的层
+    [l setMasksToBounds:YES];
+    [l setCornerRadius:2.0f];
+    
+    
     [buttonTiaoguo addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     [bigimageview addSubview:buttonTiaoguo];
     

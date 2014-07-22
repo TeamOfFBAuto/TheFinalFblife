@@ -100,7 +100,7 @@
   
     
     //车系图片的tableview
-    imagetableview=[[UITableView alloc]initWithFrame:CGRectMake(0, 33.5+33, 320, iPhone5?568-20-33.5-44-33:480-20-33.5-44-33)];
+    imagetableview=[[UITableView alloc]initWithFrame:CGRectMake(0, 33.5, 320, iPhone5?568-20-33.5-44:480-20-33.5-44)];
     imagetableview.separatorColor=[UIColor clearColor];
     imagetableview.delegate=self;
     imagetableview.dataSource=self;
@@ -489,7 +489,7 @@
                     [threeseg setNameArray:[NSArray arrayWithObjects:@"外观",@"内饰",@"细节", nil]];
                     [threeseg setType:2];
                     threeseg.delegate=self;
-                    [self.view addSubview:threeseg];
+                    //[self.view addSubview:threeseg];
                 }
             
                 threeseg.hidden=NO;

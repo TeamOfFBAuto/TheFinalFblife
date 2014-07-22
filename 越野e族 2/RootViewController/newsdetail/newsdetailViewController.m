@@ -40,6 +40,22 @@
 @implementation newsdetailViewController
 @synthesize _pages,string_Id = _string_Id,title_Str=_title_Str,weburl_Str=_weburl_Str,imgforshare=_imgforshare;
 
+/**
+ *  <#Description#>
+ *
+ *  @param response <#response description#>
+ */
+-(void)didReceiveWeiboResponse:(WBBaseResponse *)response{
+
+
+
+}
+
+-(void)didReceiveWeiboRequest:(WBBaseRequest *)request{
+    
+    
+}
+
 - (id)initWithID:(NSString*)id
 {
     self = [super init];
@@ -91,7 +107,10 @@
     self.navigationController.navigationBarHidden=NO;
     self.view.frame=CGRectMake(0, 0, 320, 1000);
     self.view.backgroundColor=[UIColor greenColor];
-
+    //准备导航栏
+    [self prepairNavigationbar];
+    
+    
     jiushizhegele=1;
     [super viewDidLoad];
     currentpage=1;
@@ -111,121 +130,12 @@
     [self.view addSubview:aview];;
     
     self.view.backgroundColor=[UIColor colorWithRed:245/255.f green:245/255.f blue:245/255.f alpha:1];
-    self.navigationItem.title = @"新闻中心";
-    
-    UIColor * cc = [UIColor blackColor];
-    
-    NSDictionary * dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:cc,[UIFont systemFontOfSize:20],[UIColor clearColor],nil] forKeys:[NSArray arrayWithObjects:UITextAttributeTextColor,UITextAttributeFont,UITextAttributeTextShadowColor,nil]];
-    
-    self.navigationController.navigationBar.titleTextAttributes = dict;
-
-    
-
+ 
    
-
-    if([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)] ) {
-        //iOS 5 new UINavigationBar custom background
-            [self.navigationController.navigationBar setBackgroundImage:MY_MACRO_NAME?[UIImage imageNamed:IOS7DAOHANGLANBEIJING]:[UIImage imageNamed:@"ios7eva320_44.png"] forBarMetrics: UIBarMetricsDefault];
-
-    }
     
-    UIButton *button_back=[[UIButton alloc]initWithFrame: CGRectMake(MY_MACRO_NAME? -5:5, 3, 12, 43/2)];
-    
-    [button_back addTarget:self action:@selector(backto) forControlEvents:UIControlEventTouchUpInside];
-    [button_back setBackgroundImage:[UIImage imageNamed:@"ios7_back.png"] forState:UIControlStateNormal];
-    
-    UIButton *back_view=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50, 28)];
-    [back_view addSubview:button_back];
-    back_view.backgroundColor=[UIColor clearColor];
-    [back_view addTarget:self action:@selector(backto) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:back_view];
-    self.navigationItem.leftBarButtonItem=back_item;
-    
-    button_comment=[[UIButton alloc]initWithFrame:CGRectMake(MY_MACRO_NAME?35-3: 25-3, (44-37/2)/2, 43/2, 37/2)];
-    
-    
-    button_comment.tag=26;
-    
-    //[button_comment setTitle:@"评论" forState:UIControlStateNormal];
-    button_comment.titleLabel.font=[UIFont systemFontOfSize:14];
-    [button_comment addTarget:self action:@selector(ShareMore) forControlEvents:UIControlEventTouchUpInside];
-    [button_comment setBackgroundImage:[UIImage imageNamed:@"ios_zhuanfa44_37.png"] forState:UIControlStateNormal];
-    button_comment.userInteractionEnabled=NO;
-    
-    rightView=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50, 44)];
-    [rightView addTarget:self action:@selector(ShareMore) forControlEvents:UIControlEventTouchUpInside];
-    [rightView addSubview:button_comment];
-    rightView.backgroundColor=[UIColor clearColor];
-    rightView.userInteractionEnabled=NO;
-    
-    
-    
-    
-    
-    UIBarButtonItem *comment_item=[[UIBarButtonItem alloc]initWithCustomView:rightView];
-    
-    self.navigationItem.rightBarButtonItem=comment_item;
     //  self.navigationItem.title=@"新闻中心";
     
-    if (isiphone5) {
-        Scrowview_zhengwen=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 320, 314+88+105-44)];
-    }else{
-        Scrowview_zhengwen=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 320, 314+105-44)];
-        
-    }
-    // Scrowview_zhengwen.pagingEnabled=YES;
-    Scrowview_zhengwen.delegate=self;
-    Scrowview_zhengwen.backgroundColor=[UIColor clearColor];
-    //  [aview addSubview:Scrowview_zhengwen];
-    //标题部分
-    
-    label_bigbiaoti=[[UILabel alloc]initWithFrame:CGRectMake(5, 52-44, 310, 40)];
-    label_bigbiaoti.font= [UIFont fontWithName:@"Helvetica" size:16];
-    //[Scrowview_zhengwen addSubview:label_bigbiaoti];
-    label_bigbiaoti.numberOfLines=0;
-    label_bigbiaoti.backgroundColor=[UIColor clearColor];
-    label_bigbiaoti.textColor=[UIColor blackColor];
-    
-    label_time=[[UILabel alloc]initWithFrame:CGRectMake(8, 93-44, 140, 15)];
-    //label_time.text=@"2013-1-7 17:43";
-    label_time.font= [UIFont fontWithName:@"Helvetica" size:12];
-    //[Scrowview_zhengwen addSubview:label_time];
-    label_time.backgroundColor=[UIColor clearColor];
-    label_time.textColor=[UIColor grayColor];
-    
-    label_yuanchuang=[[UILabel alloc]initWithFrame:CGRectMake(260, 93-44, 60, 15)];
-    //label_yuanchuang.text=@"狼东蒙";
-    label_yuanchuang.font= [UIFont fontWithName:@"Helvetica" size:15];
-    // [Scrowview_zhengwen addSubview:label_yuanchuang];
-    label_yuanchuang.backgroundColor=[UIColor clearColor];
-    label_yuanchuang.textColor=[UIColor grayColor];
-    
-    label_resource=[[UILabel alloc]initWithFrame:CGRectMake(130, 93-44, 80, 15)];
-    // label_resource.font= [UIFont fontWithName:@"Helvetica" size:15];
-    [Scrowview_zhengwen
-     addSubview:label_resource];
-    label_resource.backgroundColor=[UIColor clearColor];
-    label_resource.textColor=[UIColor grayColor];
-    
-    UIImageView *image_xian=[[UIImageView alloc]initWithFrame:CGRectMake(0, 110-44, 320, 1)];
-    //  [Scrowview_zhengwen addSubview:image_xian];
-    image_xian.backgroundColor=[UIColor blackColor];
-    
-    //正文部分（test版）
-    
-    scro_content=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 105, 310, 314)];
-    scro_content.pagingEnabled=YES;
-    Scrowview_zhengwen.contentSize=CGSizeMake(0, 500);
-    //scro_content.contentSize=CGSizeMake(0, 700);
-    //[aview addSubview:scro_content];
-    
-    labelcontent=[[UILabel alloc]init];
-    //labelcontent.text=@"越野e族";
-    //labelcontent.font= [UIFont fontWithName:@"Helvetica" size:15];
-    [scro_content addSubview:labelcontent];
-    labelcontent.backgroundColor=[UIColor clearColor];
-    labelcontent.textColor=[UIColor blackColor];
-    _webView=[[UIWebView alloc] init];
+      _webView=[[UIWebView alloc] init];
     secondWebView=[[UIWebView alloc]init];
     secondWebView.backgroundColor=[UIColor clearColor];
     _webView.backgroundColor=[UIColor clearColor];
@@ -340,6 +250,284 @@
     
 	// Do any additional setup after loading the view.
 }
+
+
+
+#pragma mark--准备导航栏
+-(void)prepairNavigationbar{
+
+
+    
+    
+    
+    
+    
+    if([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)] ) {
+        //iOS 5 new UINavigationBar custom background
+        [self.navigationController.navigationBar setBackgroundImage:MY_MACRO_NAME?[UIImage imageNamed:IOS7DAOHANGLANBEIJING]:[UIImage imageNamed:@"ios7eva320_44.png"] forBarMetrics: UIBarMetricsDefault];
+        
+    }
+    
+    UIButton *button_back=[[UIButton alloc]initWithFrame: CGRectMake(MY_MACRO_NAME? -5:5, 3, 12, 43/2)];
+    
+    [button_back addTarget:self action:@selector(backto) forControlEvents:UIControlEventTouchUpInside];
+    [button_back setBackgroundImage:[UIImage imageNamed:@"ios7_back.png"] forState:UIControlStateNormal];
+    
+    UIButton *back_view=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50, 28)];
+    [back_view addSubview:button_back];
+    back_view.backgroundColor=[UIColor clearColor];
+    [back_view addTarget:self action:@selector(backto) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:back_view];
+    self.navigationItem.leftBarButtonItem=back_item;
+    
+    
+    //点赞的
+    
+    UIButton *heartButton=[[UIButton alloc]initWithFrame:CGRectMake(10, (44-37/2)/2, 42/2, 37/2)];
+    [heartButton addTarget:self action:@selector(dianzan:) forControlEvents:UIControlEventTouchUpInside];
+    [heartButton setBackgroundImage:[UIImage imageNamed:@"blackheart42_37.png"] forState:UIControlStateNormal];
+    
+    
+    //收藏的
+    
+    UIButton *collectButton=[[UIButton alloc]initWithFrame:CGRectMake(70, (44-43/2)/2, 44/2, 43/2)];
+    [collectButton addTarget:self action:@selector(shoucang:) forControlEvents:UIControlEventTouchUpInside];
+   // [collectButton setBackgroundImage:[UIImage imageNamed:@"newsuncollect44_43.png"] forState:UIControlStateNormal];
+
+    
+
+    
+    button_comment=[[UIButton alloc]initWithFrame:CGRectMake(MY_MACRO_NAME?140: 25-3, (44-37/2)/2, 43/2, 37/2)];
+    
+    
+    button_comment.tag=26;
+    
+    //[button_comment setTitle:@"评论" forState:UIControlStateNormal];
+    button_comment.titleLabel.font=[UIFont systemFontOfSize:14];
+    [button_comment addTarget:self action:@selector(ShareMore) forControlEvents:UIControlEventTouchUpInside];
+    [button_comment setBackgroundImage:[UIImage imageNamed:@"ios_zhuanfa44_37.png"] forState:UIControlStateNormal];
+    button_comment.userInteractionEnabled=NO;
+    
+    rightView=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 160, 44)];
+   // [rightView addTarget:self action:@selector(ShareMore) forControlEvents:UIControlEventTouchUpInside];
+    [rightView addSubview:button_comment];
+    
+    rightView.backgroundColor=[UIColor clearColor];
+    
+    
+    [rightView addSubview:heartButton];
+    [rightView addSubview:collectButton];
+    
+    
+    
+    
+    UIBarButtonItem *comment_item=[[UIBarButtonItem alloc]initWithCustomView:rightView];
+    
+    self.navigationItem.rightBarButtonItem=comment_item;
+
+    [self panduanIsshoucang:collectButton];
+
+
+
+}
+
+#pragma mark--点赞的
+
+-(void)dianzan:(UIButton *)sender{
+    
+    [sender setBackgroundImage:[UIImage imageNamed:@"redheart42_37@2x.png"] forState:UIControlStateNormal];
+    
+    [UIView animateWithDuration:0.6 animations:^{
+        
+        sender.frame=CGRectMake(sender.frame.origin.x-5, sender.frame.origin.y-5, 1.4*sender.frame.size.width,  1.4*sender.frame.size.height);
+        
+        
+        
+        
+    } completion:^(BOOL finished) {}];
+    
+    [UIView animateWithDuration:0.6 animations:^{
+        
+        sender.frame=CGRectMake(sender.frame.origin.x+5, sender.frame.origin.y+5, 0.71428571*sender.frame.size.width,  0.71428571*sender.frame.size.height);
+        
+        
+    } completion:^(BOOL finished) {}];
+    
+    
+    
+    SzkLoadData *loaddata=[[SzkLoadData alloc]init];
+    
+    
+    
+    [loaddata SeturlStr:[NSString stringWithFormat:@"http://cmsweb.fblife.com/ajax.php?c=newstwo&a=addnewslikes&type=json&id=%@",self.string_Id] mytest:^(NSDictionary *dicinfo, int errcode) {
+        
+        
+        
+        NSLog(@"点赞返回的数据===%@",dicinfo);
+        
+        
+        
+        
+        
+    }];
+   // sender.userInteractionEnabled=NO;
+
+    
+
+
+}
+
+#pragma mark-判断是否收藏
+
+-(void)panduanIsshoucang:(UIButton *)sender{
+
+    sender.userInteractionEnabled=NO;
+    
+    
+    
+    
+    SzkLoadData *loaddata=[[SzkLoadData alloc]init];
+    
+    __weak typeof(self) weself=self;
+    
+    __weak typeof(sender) wsender=sender;
+    
+    [loaddata SeturlStr:[NSString stringWithFormat:@"http://cmsweb.fblife.com/ajax.php?c=newstwo&a=addfavorites&type=json&took=%@&id=%@",[personal getMyAuthkey],self.string_Id] mytest:^(NSDictionary *dicinfo, int errcode) {
+        
+        
+        NSLog(@"收藏返回的数据===%@",dicinfo);
+        
+        if ([[dicinfo objectForKey:@"errno"] intValue]==0) {
+            
+            sender.userInteractionEnabled=YES;
+            
+            
+            
+            
+            
+            [weself quxiaoShoucang:wsender];
+
+            
+        }else{
+            
+            sender.userInteractionEnabled=YES;
+            
+            [sender setBackgroundImage:[UIImage imageNamed:@"newscollect44_43.png"] forState:UIControlStateNormal];
+
+            
+            
+            
+        }
+        
+        
+    }];
+    
+
+
+}
+
+
+#pragma mark-收藏
+
+-(void)shoucang:(UIButton *)sender{
+
+    sender.userInteractionEnabled=NO;
+
+
+    
+    
+    SzkLoadData *loaddata=[[SzkLoadData alloc]init];
+
+    __weak typeof(self) weself=self;
+
+    __weak typeof(sender) wsender=sender;
+
+    [loaddata SeturlStr:[NSString stringWithFormat:@"http://cmsweb.fblife.com/ajax.php?c=newstwo&a=addfavorites&type=json&took=%@&id=%@",[personal getMyAuthkey],self.string_Id] mytest:^(NSDictionary *dicinfo, int errcode) {
+
+
+        NSLog(@"收藏返回的数据===%@",dicinfo);
+        
+        if ([[dicinfo objectForKey:@"errno"] intValue]==0) {
+            
+            sender.userInteractionEnabled=YES;
+
+            
+            [sender setBackgroundImage:[UIImage imageNamed:@"newscollect44_43.png"] forState:UIControlStateNormal];
+            
+            [UIView animateWithDuration:0.6 animations:^{
+                
+                sender.frame=CGRectMake(sender.frame.origin.x-5, sender.frame.origin.y-5, 1.4*sender.frame.size.width,  1.4*sender.frame.size.height);
+                
+                
+                
+                
+            } completion:^(BOOL finished) {}];
+            
+            [UIView animateWithDuration:0.6 animations:^{
+                
+                sender.frame=CGRectMake(sender.frame.origin.x+5, sender.frame.origin.y+5, 0.71428571*sender.frame.size.width,  0.71428571*sender.frame.size.height);
+                
+                
+            } completion:^(BOOL finished) {}];
+            
+            
+            
+        }else{
+
+        
+            [weself quxiaoShoucang:wsender];
+            
+        
+        
+        }
+        
+
+    }];
+
+    
+
+}
+
+//取消收藏
+
+
+
+
+
+-(void)quxiaoShoucang:(UIButton *)sender{
+    
+    sender.userInteractionEnabled=YES;
+
+    
+    SzkLoadData *loaddata=[[SzkLoadData alloc]init];
+    
+   // __weak typeof(self) weself=self;
+    
+    [loaddata SeturlStr:[NSString stringWithFormat:@"http://cmsweb.fblife.com/ajax.php?c=newstwo&a=delfavorites&type=xml&took=%@&id=%@",[personal getMyAuthkey],self.string_Id] mytest:^(NSDictionary *dicinfo, int errcode) {
+        
+        
+        
+        
+        if ([[dicinfo objectForKey:@"errno"] intValue]==0) {
+        
+            [sender setBackgroundImage:[UIImage imageNamed:@"newsuncollect44_43.png"] forState:UIControlStateNormal];
+
+        
+        }
+
+        
+    }];
+
+    
+    
+    
+}
+
+
+#pragma mark-上下滚动
+
+
+
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView1
 {
     //获取当前页码
@@ -1292,6 +1480,7 @@
         
         
         if ([snsName isEqualToString:@"facebook"]||[snsName isEqualToString:@"twitter"]||[snsName isEqualToString:@"renren"]||[snsName isEqualToString:@"qzone"]||[snsName isEqualToString:@"douban"]||[snsName isEqualToString:@"tencent"]||[snsName isEqualToString:@"sms"]||[snsName isEqualToString:@"wxtimeline"]||[snsName isEqualToString:@"wechat"]||[snsName isEqualToString:@"email"]) {
+            
         }else{
             [my_array addObject:snsName];
             //    UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:snsName];
@@ -1348,7 +1537,6 @@
             LogInViewController *login=[[LogInViewController alloc]init];
             [self presentViewController:login animated:YES completion:nil];
         }
-        
         
     }else if(buttonIndex==1){
         NSLog(@"到新浪微博界面的");

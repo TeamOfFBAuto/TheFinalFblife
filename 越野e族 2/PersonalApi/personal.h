@@ -64,6 +64,10 @@
 
 -(NSString *)mds:(NSString *)str;
 
+//获取自己的authoeky
+
++(NSString *)getMyAuthkey;
+
 
 /**
  *  播放系统声音

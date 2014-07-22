@@ -277,7 +277,8 @@
     
     NSLog(@"pagegeg===%d",numberofpage);
     
-    
+    NSString *string_code = [personal getMyAuthkey];
+
     __weak typeof(self) wself =self;
     
     SzkLoadData *loaddata=[[SzkLoadData alloc]init];
@@ -287,38 +288,38 @@
     switch (self.mytype) {
         case FinalshoucangViewTypeNews:{
             
-            str_search=[NSString stringWithFormat:@"http://cmstest.fblife.com/ajax.php?c=newstwo&a=favoriteslist&type=json&took=U2VRMgdnVzVQZlc8AnkKelo7A25fd1JhCWEANw&datatype=1&page=%d&pagesize=10",numberofpage];
+            str_search=[NSString stringWithFormat:@"http://cmsweb.fblife.com/ajax.php?c=newstwo&a=favoriteslist&type=json&took=%@&datatype=1&page=%d&pagesize=10",string_code,numberofpage];
         }
             
             break;
             
         case FinalshoucangViewTypeTiezi:{
             
-            str_search=[NSString stringWithFormat:@"http://demo03.fblife.com/bbsapinew/favoritesthread.php?authcode=U2VRMgdnVzVQZlc8AnkKelo7A25fd1JhCWEANw&action=query&formattype=json&page=1&pagesize=2&page=%d&pagesize=10",numberofpage];        }
+            str_search=[NSString stringWithFormat:@"http://bbs.fblife.com/bbsapinew/favoritesthread.php?authcode=%@&action=query&formattype=json&page=1&pagesize=2&page=%d&pagesize=10",string_code,numberofpage];        }
             
             break;
             
         case FinalshoucangViewTypebankuai:{
-            str_search=[NSString stringWithFormat:@"http://demo03.fblife.com/bbsapinew/favoritesforums.php?authcode=U2VRMgdnVzVQZlc8AnkKelo7A25fd1JhCWEANw&action=query&formattype=json"];
+            str_search=[NSString stringWithFormat:@"http://bbs.fblife.com/bbsapinew/favoritesforums.php?authcode=%@&action=query&formattype=json",string_code];
         }
             
             break;
             
         case FinalshoucangViewTypetuji:{
             
-            str_search=[NSString stringWithFormat:@"http://cmstest.fblife.com/ajax.php?c=photo&a=favoriteslist&type=json&took=U2VRMgdnVzVQZlc8AnkKelo7A25fd1JhCWEANw&page=%d&pagesize=10",numberofpage];
+            str_search=[NSString stringWithFormat:@"http://cmsweb.fblife.com/ajax.php?c=photo&a=favoriteslist&type=json&took=%@&page=%d&pagesize=10",string_code,numberofpage];
         }
             
             break;
         case FinalshoucangViewTypeMyWrite:{
             
-            str_search=[NSString stringWithFormat:@"http://demo03.fblife.com/bbsapinew/getappmythread.php?authcode=U2VRMgdnVzVQZlc8AnkKelo7A25fd1JhCWEANw&page=%d&pagesize=10",numberofpage];
+            str_search=[NSString stringWithFormat:@"http://bbs.fblife.com/bbsapinew/getappmythread.php?authcode=%@&page=%d&pagesize=10",string_code,numberofpage];
         }
             
             break;
         case FinalshoucangViewTypeMyComment:{
             
-            str_search=[NSString stringWithFormat:@"http://demo03.fblife.com/bbsapinew/getappmyposts.php?authcode=U2VRMgdnVzVQZlc8AnkKelo7A25fd1JhCWEANw&page=%d&pagesize=10",numberofpage];
+            str_search=[NSString stringWithFormat:@"http://bbs.fblife.com/bbsapinew/getappmyposts.php?authcode=%@&page=%d&pagesize=10",string_code,numberofpage];
         }
             
             break;
@@ -448,7 +449,7 @@
     
     NSLog(@"删除数据==%@",dic);
     
-    NSString *string_code = @"U2VRMgdnVzVQZlc8AnkKelo7A25fd1JhCWEANw";
+    NSString *string_code = [personal getMyAuthkey];
     
     SzkLoadData *loaddata=[[SzkLoadData alloc]init];
     
@@ -457,27 +458,27 @@
     switch (self.mytype) {
         case FinalshoucangViewTypeNews:{ //新闻取消收藏
             
-            str_delete = [NSString stringWithFormat:@"http://cmstest.fblife.com/ajax.php?c=newstwo&a=delfavorites&type=xml&took=%@&id=%@",string_code,[dic objectForKey:@"nid"]];
+            str_delete = [NSString stringWithFormat:@"http://cmsweb.fblife.com/ajax.php?c=newstwo&a=delfavorites&type=json&took=%@&id=%@",string_code,[dic objectForKey:@"nid"]];
         }
             
             break;
             
         case FinalshoucangViewTypeTiezi://删除帖子
         {
-            str_delete = [NSString stringWithFormat:@"http://demo03.fblife.com/bbsapinew/delfavoritesthread.php?delid=%@&formattype=json&authcode=%@",[dic objectForKey:@"tid"],@"U2VRMgdnVzVQZlc8AnkKelo7A25fd1JhCWEANw"];
+            str_delete = [NSString stringWithFormat:@"http://bbs.fblife.com/bbsapinew/delfavoritesthread.php?delid=%@&formattype=json&authcode=%@",[dic objectForKey:@"tid"],string_code];
         }
             break;
             
         case FinalshoucangViewTypebankuai:{ //删除板块
             
-            str_delete = [NSString stringWithFormat:@"http://demo03.fblife.com/bbsapinew/delfavorites.php?delid=%@&formattype=json&authcode=%@",[dic objectForKey:@"fid"],string_code];
+            str_delete = [NSString stringWithFormat:@"http://bbs.fblife.com/bbsapinew/delfavorites.php?delid=%@&formattype=json&authcode=%@",[dic objectForKey:@"fid"],string_code];
         }
             
             break;
             
         case FinalshoucangViewTypetuji:{ //图集取消收藏
             
-            str_delete = [NSString stringWithFormat:@"http://cmstest.fblife.com/ajax.php?c=photo&a=delfavorites&type=xml&took=%@&id=%@",string_code,[dic objectForKey:@"nid"]];
+            str_delete = [NSString stringWithFormat:@"http://cmsweb.fblife.com/ajax.php?c=photo&a=delfavorites&type=json&took=%@&id=%@",string_code,[dic objectForKey:@"nid"]];
         }
             
             break;

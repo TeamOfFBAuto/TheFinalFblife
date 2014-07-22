@@ -25,8 +25,8 @@
         [self.button_show.titleLabel setFont:[UIFont systemFontOfSize:10]];
         
         
-        _button_refresh=[[UIButton alloc]initWithFrame:CGRectMake(12, (41-39/2)/2, 41/2, 39/2)];
-        [_button_refresh setBackgroundImage:[UIImage imageNamed:@"ios7_refresh4139.png"] forState:UIControlStateNormal];
+        _button_refresh=[[UIButton alloc]initWithFrame:CGRectMake(12, (41-52/2)/2, 38/2, 52/2)];
+        [_button_refresh setBackgroundImage:[UIImage imageNamed:@"louzhu38_52.png"] forState:UIControlStateNormal];
         [_button_refresh addTarget:self action:@selector(refreshdata:) forControlEvents:UIControlEventTouchUpInside];
         _button_refresh.tag=201;
         [self addSubview:_button_refresh];

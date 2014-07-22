@@ -50,7 +50,6 @@
     
     BOOL isjianpan;//判断是facebutton是键盘还是face
     
-    UIScrollView * Scrowview_zhengwen;
     UIScrollView * scro_web;
     
     downloadtool *newstool;

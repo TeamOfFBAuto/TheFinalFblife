@@ -118,7 +118,7 @@ typedef enum {
 
 -(void)normalsetDic:(NSDictionary *)theDic cellStyle:(CompreTableViewCellStyle)theStyle thecellbloc:(CompreTableViewCellBloc)thebloc;
 
--(UIView *)getHeaderViewWithDic:(NSDictionary*)headerDic headerbloc:(CompreTableViewCellBloc)hhbloc;
+//-(UIView *)getHeaderViewWithDic:(NSDictionary*)headerDic headerbloc:(CompreTableViewCellBloc)hhbloc;
 
 
 
