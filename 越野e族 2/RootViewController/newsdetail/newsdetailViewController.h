@@ -93,6 +93,8 @@
     
     UIButton *rightView;
     
+    int zanNumber;
+    
     
 }
 

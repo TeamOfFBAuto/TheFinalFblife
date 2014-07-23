@@ -81,6 +81,14 @@
 
 - (void)viewDidLoad
 {    isauthor=NO;//默认是全部
+    
+    zanNumber=0;
+
+    
+    self.thezkingAlertV=[[ZkingAlert alloc]initWithFrame:CGRectMake(0, 0, 320, 480) labelString:@""];
+    _thezkingAlertV.hidden=YES;
+    [[UIApplication sharedApplication].keyWindow
+     addSubview:_thezkingAlertV];
 
     jiushizhegele=1;
     [super viewDidLoad];
@@ -334,7 +342,7 @@
     
     UIButton *collectButton=[[UIButton alloc]initWithFrame:CGRectMake(70, (44-43/2)/2, 44/2, 43/2)];
     [collectButton addTarget:self action:@selector(shoucang:) forControlEvents:UIControlEventTouchUpInside];
-    // [collectButton setBackgroundImage:[UIImage imageNamed:@"newsuncollect44_43.png"] forState:UIControlStateNormal];
+    [collectButton setBackgroundImage:[UIImage imageNamed:@"newsuncollect44_43.png"] forState:UIControlStateNormal];
     
     
     
@@ -377,6 +385,10 @@ UIButton *    rightView=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 160, 44)
 
 -(void)dianzan:(UIButton *)sender{
     
+    if (zanNumber<32) {
+        zanNumber++;
+    
+    
     [sender setBackgroundImage:[UIImage imageNamed:@"redheart42_37@2x.png"] forState:UIControlStateNormal];
     
     [UIView animateWithDuration:0.6 animations:^{
@@ -411,7 +423,13 @@ UIButton *    rightView=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 160, 44)
         
         
         
-    }];
+    }];}else{
+    
+        [self.thezkingAlertV zkingalertShowWithString:@"32个赞了，休息下看看别的文章吧~"];
+        
+       // sender.userInteractionEnabled=NO;
+
+    }
     // sender.userInteractionEnabled=NO;
     
     
@@ -477,8 +495,7 @@ UIButton *    rightView=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 160, 44)
             
             
             
-            
-            [weself quxiaoShoucang:wsender];
+            [weself tempQuxiaoshoucang:wsender];
             
             
         }else{
@@ -499,6 +516,32 @@ UIButton *    rightView=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 160, 44)
     
 }
 
+-(void)tempQuxiaoshoucang:(UIButton *)sender{
+
+    sender.userInteractionEnabled=YES;
+    
+    
+    SzkLoadData *loaddata=[[SzkLoadData alloc]init];
+    
+    // __weak typeof(self) weself=self;
+    
+    [loaddata SeturlStr:[NSString stringWithFormat:@"http://bbs.fblife.com/bbsapinew/delfavoritesthread.php?delid=%@&formattype=json&authcode=%@",self.bbsdetail_tid,[personal getMyAuthkey]] mytest:^(NSDictionary *dicinfo, int errcode) {
+        
+        NSLog(@"取消该收藏的dic==%@",dicinfo);
+        
+        
+        if ([[dicinfo objectForKey:@"errcode"] intValue]==0) {
+            
+            [sender setBackgroundImage:[UIImage imageNamed:@"newsuncollect44_43.png"] forState:UIControlStateNormal];
+            
+            
+        }
+        
+        
+    }];
+
+
+}
 
 #pragma mark-收藏
 
@@ -523,7 +566,7 @@ UIButton *    rightView=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 160, 44)
         if ([[dicinfo objectForKey:@"errcode"] intValue]==0) {
             
             sender.userInteractionEnabled=YES;
-            
+            [self.thezkingAlertV zkingalertShowWithString:@"收藏成功"];
             
             [sender setBackgroundImage:[UIImage imageNamed:@"newscollect44_43.png"] forState:UIControlStateNormal];
             
@@ -583,8 +626,9 @@ UIButton *    rightView=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 160, 44)
         
         if ([[dicinfo objectForKey:@"errcode"] intValue]==0) {
             
+            [self.thezkingAlertV zkingalertShowWithString:@"已取消收藏"];
+
             [sender setBackgroundImage:[UIImage imageNamed:@"newsuncollect44_43.png"] forState:UIControlStateNormal];
-            
             
         }
         

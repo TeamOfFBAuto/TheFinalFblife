@@ -18,6 +18,7 @@
 #import "loadingimview.h"
 #import <MessageUI/MessageUI.h>
 #import "WeiboSDK.h"
+#import "ZkingAlert.h"
 #import <MessageUI/MFMailComposeViewController.h>
 @interface bbsdetailViewController : UIViewController<downloaddelegate,BottombarviewDelegate,SelectNumberViewDelegate,AlertRePlaceViewDelegate,UIWebViewDelegate,MWPhotoBrowserDelegate,UIScrollViewDelegate,UIActionSheetDelegate,WXApiDelegate,MFMailComposeViewControllerDelegate,WeiboSDKDelegate>{
     
@@ -68,9 +69,15 @@
     NSString *string_url;//论坛在网页的链接
     
     int jiushizhegele;//多连几次
+    
+    int zanNumber;
+
 
     
 }
+@property(nonatomic,strong)ZkingAlert *thezkingAlertV;
+
+
 @property(nonatomic,strong)NSString *bbsdetail_tid;
 @property(nonatomic,strong)UIImage * imgforshare;
 

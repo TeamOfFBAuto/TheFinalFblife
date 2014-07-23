@@ -94,7 +94,7 @@
    [super viewDidLoad];
     _firstVC=[[ComprehensiveViewController alloc]init];
     
-    titles = @[@"综合",@"资讯",@"图集", @"论坛", @"自留", @"车库"];
+    titles = @[@"综合",@"资讯",@"图集", @"论坛", @"自留地", @"车库"];
     
     imageArr=@[@"zonghegray50_48.png",@"zixungray47_42.png",@"tujigray.png",@"luntangray48_41.png",@"ziliudigray44_4.png",@"chekugray54_35.png",@"zonghered50_48.png",@"zixunred47_42.png",@"tujired.png",@"luntanred48_41.png",@"ziliudired44_40.png",@"chekured54_35.png"];
     
@@ -146,6 +146,14 @@
         [tabbutton setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
         
         [tabbutton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 30)];
+        
+        if (i==4) {
+            
+            [tabbutton setTitleEdgeInsets:UIEdgeInsetsMake(0, 12, 0, 0)];
+            
+            [tabbutton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 10)];
+            
+        }
 
         [tabbutton setTitleColor:RGBCOLOR(131, 134, 139) forState:UIControlStateNormal];
         

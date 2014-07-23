@@ -86,7 +86,7 @@
     
     UIButton *buttonTiaoguo=[[UIButton alloc]initWithFrame:CGRectMake(245, 20, 62, 30)];
     [buttonTiaoguo setTitle:@"点击跳过" forState:UIControlStateNormal];
-    buttonTiaoguo.titleLabel.font=[UIFont systemFontOfSize:14];
+    buttonTiaoguo.titleLabel.font=[UIFont systemFontOfSize:12];
     [buttonTiaoguo setBackgroundColor:RGBACOLOR(245, 245, 245, 0.7)];
     [buttonTiaoguo setTitleColor:RGBCOLOR(80, 80, 80) forState:UIControlStateNormal];
     

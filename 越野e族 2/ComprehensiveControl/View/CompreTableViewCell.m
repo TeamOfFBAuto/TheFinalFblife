@@ -33,6 +33,8 @@
         _myDic=[NSDictionary dictionary];
         
         
+   
+        
         NSLog(@"xxxx==%f=====w==%f",self.contentView.frame.size.height,self.contentView.frame.size.width);
         
         
@@ -68,7 +70,9 @@
         self.normalLine=[[UIView alloc]init];
         
         self.textBigLabel=[[UILabel alloc]init];
-        self.fenGeLine=[[UIView alloc]init];
+        self.fenGeLine=[[UILabel alloc]init];
+        
+        self.littleAndBigLine=[[UIImageView alloc]init];
         
         
         [self addSubview:self.bigLabel];
@@ -91,19 +95,22 @@
         
         [self addSubview:self.normalLine];
         
-        [self addSubview:self.fenGeLine];
+       // [self addSubview:self.fenGeLine];
+        
+        self.littleAndBigLine.image=[UIImage imageNamed:@"bigandlittle.png"];
+        [self addSubview:self.littleAndBigLine];
         
         
         
-        _bigLeixing.titleLabel.font=[UIFont systemFontOfSize:12];
+        _bigLeixing.titleLabel.font=[UIFont systemFontOfSize:11];
         [_bigLeixing setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        _bigLeixing.backgroundColor=RGBCOLOR(240, 240, 240);
+        _bigLeixing.backgroundColor=RGBCOLOR(245, 245, 245);
         [_bigLeixing addTarget:self action:@selector(clickBigButton:) forControlEvents:UIControlEventTouchUpInside];
         
         
         _littleLeixing.titleLabel.font=[UIFont systemFontOfSize:11];
         [_littleLeixing setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        _littleLeixing.backgroundColor=RGBCOLOR(240, 240, 240);
+        _littleLeixing.backgroundColor=RGBCOLOR(245, 245, 245);
         [_littleLeixing addTarget:self action:@selector(clickSmallButton:) forControlEvents:UIControlEventTouchUpInside];
         
         _zanlabel.font=[UIFont systemFontOfSize:10];
@@ -114,7 +121,7 @@
         
         _fenGeLine.backgroundColor=RGBCOLOR(142, 142, 142);
         
-        
+     //   self.littleAndBigLine.backgroundColor=[UIColor redColor];
         
     }
     return self;
@@ -126,6 +133,8 @@
     
     _myDic=theDic;
     
+    
+
     _mybloc=thebloc;
     
     @try {
@@ -135,7 +144,7 @@
             {
                 
                 _zanImageV.center=CGPointMake(290, 122);
-                _zanlabel.frame=CGRectMake(290,115 , 320-290-12, 11);
+                _zanlabel.frame=CGRectMake(290,115 , 320-290-10, 11);
                 
                 NewMainViewModel *_newmodel=[[NewMainViewModel alloc]init];
                 [_newmodel NewMainViewModelSetdic:theDic];
@@ -153,13 +162,13 @@
                 
                 if (_newmodel.photo.count>=3) {
                     
-                    _leftImageV.frame=CGRectMake(12+102*0, 36, 90, 62);
+                    _leftImageV.frame=CGRectMake(12+102*0, 36, 90, 60);
                     [_leftImageV loadImageFromURL:[NSString stringWithFormat:@"%@",[_newmodel.photo objectAtIndex:0]] withPlaceholdImage:[UIImage imageNamed:@"smallimplace.png"]];
                     
-                    _centerImageV.frame=CGRectMake(12+102*1, 36, 90, 62);
+                    _centerImageV.frame=CGRectMake(12+102*1, 36, 90, 60);
                     [_centerImageV loadImageFromURL:[NSString stringWithFormat:@"%@",[_newmodel.photo objectAtIndex:1]] withPlaceholdImage:[UIImage imageNamed:@"smallimplace.png"]];
                     
-                    _rightImageV.frame=CGRectMake(12+102*2, 36, 90, 62);
+                    _rightImageV.frame=CGRectMake(12+102*2, 36, 90, 60);
                     [_rightImageV loadImageFromURL:[NSString stringWithFormat:@"%@",[_newmodel.photo objectAtIndex:2]] withPlaceholdImage:[UIImage imageNamed:@"smallimplace.png"]];
                 }
                 
@@ -192,8 +201,8 @@
                 
             case CompreTableViewCellStyleText:
             {
-                _zanImageV.center=CGPointMake(290, 60);
-                _zanlabel.frame=CGRectMake(290,BIGORIGIN-2 , 320-290-12, 11);
+                _zanImageV.center=CGPointMake(290, 64);
+                _zanlabel.frame=CGRectMake(290,BIGORIGIN+2 , 320-290-10, 11);
                 
                 
                 
@@ -205,21 +214,21 @@
                 _zanlabel.text=_newmodel.likes;
                 
                 
-                _leftImageV.frame=CGRectMake(12, 12, 80, 60);
+                _leftImageV.frame=CGRectMake(12, 12, 90, 60);
                 if (_newmodel.photo.count) {
                     [_leftImageV loadImageFromURL:[NSString stringWithFormat:@"%@",[_newmodel.photo objectAtIndex:0]] withPlaceholdImage:[UIImage imageNamed:@"smallimplace.png"]];
                     
                 }
                 
-                _bigLabel.frame=CGRectMake(100, 12, 320-100-12, 16);
-                _bigLabel.font=[UIFont boldSystemFontOfSize:15];
+                _bigLabel.frame=CGRectMake(100+10, 12, 320-100-12-10, 16);
+                _bigLabel.font=[UIFont systemFontOfSize:16];
                 _bigLabel.text=_newmodel.title;
                 _bigLabel.backgroundColor=[UIColor whiteColor];
                 _bigLabel.textAlignment=NSTextAlignmentLeft;
-                [self.contentView addSubview:_bigLabel];
+//                [self.contentView addSubview:_bigLabel];
                 
                 
-                _textBigLabel.frame=CGRectMake(100, 34, 320-100-12, 16);
+                _textBigLabel.frame=CGRectMake(100+10, 34, 320-100-12-10, 16);
                 _textBigLabel.font=[UIFont systemFontOfSize:11];
                 _textBigLabel.text=_newmodel.stitle;
                 _textBigLabel.textColor=[UIColor lightGrayColor];
@@ -228,7 +237,7 @@
                 
                 
                 
-                _fenGeLine.frame=CGRectMake(132, BIGORIGIN+7, 5, 1);
+                _fenGeLine.frame=CGRectMake(132+10, BIGORIGIN+7, 5, 1);
                 
                 
                 //底部的线
@@ -246,12 +255,14 @@
                 
                 
                 if ([_newmodel.type isEqualToString:@"1"]) {
-                    _bigLeixing.frame=CGRectMake(100, BIGORIGIN, 30, 15);
+                    _bigLeixing.frame=CGRectMake(100+10, BIGORIGIN, 30, 18);
                     
                     CGSize titleSize = [_newmodel.channel_name sizeWithFont:[UIFont systemFontOfSize:12] constrainedToSize:CGSizeMake(MAXFLOAT, 20)];
                     [_littleLeixing setTitle:_newmodel.channel_name forState:UIControlStateNormal];
-                    [_bigLeixing setTitle:@"新闻" forState:UIControlStateNormal];
-                    _littleLeixing.frame=CGRectMake(140, BIGORIGIN, titleSize.width, 15);
+                    [_bigLeixing setTitle:@"资讯" forState:UIControlStateNormal];
+                    _littleLeixing.frame=CGRectMake(140+10, BIGORIGIN, titleSize.width+2, 18);
+                    
+                    self.littleAndBigLine.frame=CGRectMake(142, BIGORIGIN+9, 5, 1);
                     
                     
                 }else if([_newmodel.type isEqualToString:@"2"]){
@@ -262,11 +273,11 @@
                 }else if([_newmodel.type isEqualToString:@"3"]){
                     
                     
-                    _bigLeixing.frame=CGRectMake(100, BIGORIGIN, 30, 15);
+                    _bigLeixing.frame=CGRectMake(100+10, BIGORIGIN, 30, 15);
                     
                     CGSize titleSize = [_newmodel.forumname sizeWithFont:[UIFont systemFontOfSize:12] constrainedToSize:CGSizeMake(MAXFLOAT, 30)];
                     [_littleLeixing setTitle:_newmodel.forumname forState:UIControlStateNormal];
-                    _littleLeixing.frame=CGRectMake(140, BIGORIGIN, titleSize.width, 15);
+                    _littleLeixing.frame=CGRectMake(140+10, BIGORIGIN, titleSize.width, 15);
                     
                     [_bigLeixing setTitle:@"论坛" forState:UIControlStateNormal];
                     
@@ -311,7 +322,6 @@
     
 }
 #pragma mark--普通的用这个
-
 
 
 
@@ -371,7 +381,7 @@
             UIButton *rightbutton=[[UIButton alloc] initWithFrame:CGRectMake(52, 114, 30, 20)];
             [self.contentView addSubview:rightbutton];
             rightbutton.backgroundColor=RGBCOLOR(244, 244, 244);
-            [rightbutton setTitle:@"新闻" forState:UIControlStateNormal];
+            [rightbutton setTitle:@"资讯" forState:UIControlStateNormal];
             
             
             if ([_newmodel.type isEqualToString:@"0"]) {
@@ -457,7 +467,7 @@
 
 
 -(void)layoutSubviews{
-    
+    [super layoutSubviews];
     
     
     

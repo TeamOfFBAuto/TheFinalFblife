@@ -73,6 +73,9 @@
 - (void)reloadTableViewDataSource;
 - (void)doneLoadingTableViewData;
 
+
+@property(nonatomic,strong)ZkingAlert *thezkingAlertV;
+
 @property(nonatomic,strong)NSString *string_content;
 @property(nonatomic,assign)int pageN;
 @property(nonatomic,assign)int allcount;

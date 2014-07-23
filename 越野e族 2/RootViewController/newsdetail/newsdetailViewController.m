@@ -35,7 +35,7 @@
     NewMineViewController *_people;
     AlertRePlaceView *_alertnodata;
     
-    
+    CustomInputView *inputV;//这个是新换的条
     
 }
 @end
@@ -91,6 +91,7 @@
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"newsid"];
     
 
+    [inputV addKeyBordNotification];
     
 }
 
@@ -98,7 +99,7 @@
 {
     _isloadingIv.hidden=YES;
 
-    
+    [inputV deleteKeyBordNotification];
     [MobClick endEvent:@"newsdetailViewController"];
 
     //  self.navigationController.navigationBarHidden = YES;
@@ -107,11 +108,13 @@
 - (void)viewDidLoad
 {
     
+    zanNumber=0;
+    
     
     self.thezkingAlertV=[[ZkingAlert alloc]initWithFrame:CGRectMake(0, 0, 320, 480) labelString:@""];
     _thezkingAlertV.hidden=YES;
     [[UIApplication sharedApplication].keyWindow
-     addSubview:_replaceAlertView];
+     addSubview:_thezkingAlertV];
     
     
     self.navigationController.navigationBarHidden=NO;
@@ -193,11 +196,6 @@
     [self prepairCommentTiao];
     
     
-    
-    
-    
-    
-    
     [view_pinglun setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"640x82.png"]]];
     
     UIImageView *image_write=[[UIImageView alloc]initWithFrame:CGRectMake(5.5,5, 200, 30)];
@@ -273,16 +271,38 @@
 
 -(void)prepairCommentTiao{
 
-    CustomInputView *inputV=[[CustomInputView alloc]initWithFrame:CGRectMake(0,iPhone5?419+88-42:377, 320, 41)];
+    inputV=[[CustomInputView alloc]initWithFrame:CGRectMake(0,iPhone5?419+88-42:377, 320, 41)];
     
-    [inputV loadAllViewWithPinglunCount:@"2" WithPushBlock:^{
+    
+    __weak typeof(self)wself=self;
+    
+    
+    [inputV loadAllViewWithPinglunCount:@"0" WithPushBlock:^{
         
-        
-        
-        
-        
+        [wself commentyemian];
+
     } WithSendBlock:^(NSString *content, BOOL isForward) {
         //发表
+        
+        if (content.length==0) {
+            [self.thezkingAlertV zkingalertShowWithString:@"辛苦下，写几个字再评论"];
+            return ;
+        }
+        
+        NSRange _range = [content rangeOfString:@" "];
+        if (_range.location != NSNotFound) {
+            
+            
+            
+            
+            //有空格
+        }else {
+            
+            
+            //没有空格
+        }
+        
+        
         
         
         SzkLoadData *loaddata=[[SzkLoadData alloc]init];
@@ -295,32 +315,27 @@
         [loaddata SeturlStr:string_102 mytest:^(NSDictionary *dicinfo, int errcode) {
             
             
-            
-            
-            NSLog(@"评论返回的数据===%@",dicinfo);
-            
-            
-            
-        }];
+            if ([[dicinfo objectForKey:@"errcode"] intValue]==0) {
+                
+                [inputV hiddeninputViewTap];
+                [inputV.pinglun_button setTitle:[NSString stringWithFormat:@"%d",[str_commentnumberofnews intValue]+1] forState:UIControlStateNormal];
+                
+                [_thezkingAlertV zkingalertShowWithString:@"评论成功"];
 
-        
-        
+            }
+            
+            
+             NSLog(@"评论返回的数据===%@",dicinfo);
+          }];
     }];
     
     [aview addSubview:inputV];
-    
-
-
 }
+
 
 #pragma mark--准备导航栏
 -(void)prepairNavigationbar{
 
-
-    
-    
-    
-    
     
     if([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)] ) {
         //iOS 5 new UINavigationBar custom background
@@ -352,7 +367,7 @@
     
     UIButton *collectButton=[[UIButton alloc]initWithFrame:CGRectMake(70, (44-43/2)/2, 44/2, 43/2)];
     [collectButton addTarget:self action:@selector(shoucang:) forControlEvents:UIControlEventTouchUpInside];
-   // [collectButton setBackgroundImage:[UIImage imageNamed:@"newsuncollect44_43.png"] forState:UIControlStateNormal];
+    [collectButton setBackgroundImage:[UIImage imageNamed:@"newsuncollect44_43.png"] forState:UIControlStateNormal];
 
     
 
@@ -395,41 +410,53 @@
 
 -(void)dianzan:(UIButton *)sender{
     
-    [sender setBackgroundImage:[UIImage imageNamed:@"redheart42_37@2x.png"] forState:UIControlStateNormal];
     
-    [UIView animateWithDuration:0.6 animations:^{
+    if (zanNumber<32) {
+        zanNumber++;
+
         
-        sender.frame=CGRectMake(sender.frame.origin.x-5, sender.frame.origin.y-5, 1.4*sender.frame.size.width,  1.4*sender.frame.size.height);
+        [self.thezkingAlertV zkingalertShowWithString:[NSString stringWithFormat:@"赞+%d" ,zanNumber]];
+        
+        [sender setBackgroundImage:[UIImage imageNamed:@"redheart42_37@2x.png"] forState:UIControlStateNormal];
+
+        
+        [UIView animateWithDuration:0.6 animations:^{
+            
+            sender.frame=CGRectMake(sender.frame.origin.x-5, sender.frame.origin.y-5, 1.4*sender.frame.size.width,  1.4*sender.frame.size.height);
+            
+            
+            
+            
+        } completion:^(BOOL finished) {}];
+        
+        [UIView animateWithDuration:0.6 animations:^{
+            
+            sender.frame=CGRectMake(sender.frame.origin.x+5, sender.frame.origin.y+5, 0.71428571*sender.frame.size.width,  0.71428571*sender.frame.size.height);
+            
+            
+        } completion:^(BOOL finished) {}];
         
         
         
+        SzkLoadData *loaddata=[[SzkLoadData alloc]init];
         
-    } completion:^(BOOL finished) {}];
+        
+        
+        [loaddata SeturlStr:[NSString stringWithFormat:@"http://cmsweb.fblife.com/ajax.php?c=newstwo&a=addnewslikes&type=json&id=%@",self.string_Id] mytest:^(NSDictionary *dicinfo, int errcode) {
+            
+            NSLog(@"点赞返回的数据===%@",dicinfo);
+            
+            
+        }];
+    }else{
     
-    [UIView animateWithDuration:0.6 animations:^{
-        
-        sender.frame=CGRectMake(sender.frame.origin.x+5, sender.frame.origin.y+5, 0.71428571*sender.frame.size.width,  0.71428571*sender.frame.size.height);
-        
-        
-    } completion:^(BOOL finished) {}];
+        [self.thezkingAlertV zkingalertShowWithString:@"32个赞了，休息下看看别的文章吧~"];
+
     
     
-    
-    SzkLoadData *loaddata=[[SzkLoadData alloc]init];
-    
+    }
     
     
-    [loaddata SeturlStr:[NSString stringWithFormat:@"http://cmsweb.fblife.com/ajax.php?c=newstwo&a=addnewslikes&type=json&id=%@",self.string_Id] mytest:^(NSDictionary *dicinfo, int errcode) {
-        
-        
-        
-        NSLog(@"点赞返回的数据===%@",dicinfo);
-        
-        
-        
-        
-        
-    }];
    // sender.userInteractionEnabled=NO;
 
     
@@ -442,9 +469,7 @@
 -(void)panduanIsshoucang:(UIButton *)sender{
 
     sender.userInteractionEnabled=NO;
-    
-    
-    
+ 
     
     SzkLoadData *loaddata=[[SzkLoadData alloc]init];
     
@@ -493,22 +518,16 @@
     // __weak typeof(self) weself=self;
     
     [loaddata SeturlStr:[NSString stringWithFormat:@"http://cmsweb.fblife.com/ajax.php?c=newstwo&a=delfavorites&type=json&took=%@&id=%@",[personal getMyAuthkey],self.string_Id] mytest:^(NSDictionary *dicinfo, int errcode) {
-        
-        
-        
-        
+ 
         if ([[dicinfo objectForKey:@"errno"] intValue]==0) {
             
             
             [sender setBackgroundImage:[UIImage imageNamed:@"newsuncollect44_43.png"] forState:UIControlStateNormal];
             
-            
         }
-        
         
     }];
     
-
 
 }
 
@@ -599,6 +618,8 @@
         
         
         if ([[dicinfo objectForKey:@"errno"] intValue]==0) {
+            
+            
             
             _thezkingAlertV.hidden=NO;
             _thezkingAlertV.textLabel.text=@"已取消收藏";
@@ -1131,7 +1152,7 @@
         _isloadingIv.hidden=YES;
         NSLog(@"已经得到数据");
         dic = [data objectFromJSONData];
-        NSLog(@"dic==%@",dic);
+        NSLog(@"新闻的总数据dic==%@",dic);
         NSLog(@"dic.count==%d",dic.count);
         
         if (dic.count>0) {
@@ -1198,6 +1219,7 @@
                         string_pinglun=@"0";
                     }
                     str_commentnumberofnews=string_pinglun;
+                    [inputV.pinglun_button setTitle:string_pinglun forState:UIControlStateNormal];
                     //[button_comment setTitle:[NSString stringWithFormat:@"%@ 评",string_pinglun] forState:UIControlStateNormal];
                     [barview setcommentimage1:[NSString stringWithFormat:@"%@",string_pinglun]];
                     
@@ -1919,16 +1941,22 @@
     
     NSLog(@"key===%@",[personal getMyAuthkey ]);
     
+    
+    
     if ([[personal getMyAuthkey ] isEqualToString:@"(null)"]||[personal getMyAuthkey ].length==0) {
-        
+
         
         LogInViewController *loginV=[[LogInViewController alloc]init];
         
+        
         [self presentViewController:loginV animated:YES completion:^{
+            
+            [inputV hiddeninputViewTap];
+
             
             
         }];
-        
+
         
     }
     

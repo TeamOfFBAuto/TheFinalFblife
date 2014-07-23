@@ -647,6 +647,10 @@
                 
                 [wself turntoOtherVCwithtype:thebuttontype thedic:dic theid:theWhateverid];
             }];
+            
+            UIView *selectback=[[UIView alloc]initWithFrame:cell.frame];
+            selectback.backgroundColor=RGBCOLOR(242, 242, 242);
+            cell.selectedBackgroundView=selectback;
             return cell;
 
             
@@ -675,6 +679,13 @@
                 
             }];
         
+            
+            
+            UIView *selectback=[[UIView alloc]initWithFrame:cell.frame];
+            selectback.backgroundColor=RGBCOLOR(242, 242, 242);
+            cell.selectedBackgroundView=selectback;
+            
+
             return cell;
 
         }

@@ -17,6 +17,9 @@
 #import "NewsCommentModel.h"
 #import "NewMineViewController.h"
 
+#import "CustomInputView.h"//少男写的公共评论条
+
+
 @interface commentViewController (){
     NSDictionary * _dic ;
     NSDictionary *dic_info;
@@ -28,6 +31,9 @@
     
     NSString *string_106;//发送评论的评论
     NewMineViewController *_people;
+    
+    CustomInputView *inputV;//这个是新换的条
+
     
 }
 @end
@@ -63,13 +69,20 @@
     NSUserDefaults *user_=[NSUserDefaults standardUserDefaults];
     NSString *string_=@"refresh";
     [user_ setObject:string_ forKey:@"last"];
-    
+    [inputV addKeyBordNotification];
+
     [self fasongpinglunqingqiu];
+    
+    
+    
+    
     
     
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
+    [inputV deleteKeyBordNotification];
+
     self.navigationController.navigationBarHidden = YES;
     
     [MobClick endEvent:@"commentViewController"];
@@ -77,6 +90,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    //提醒的
+    self.thezkingAlertV=[[ZkingAlert alloc]initWithFrame:CGRectMake(0, 0, 320, 480) labelString:@""];
+    _thezkingAlertV.hidden=YES;
+    [[UIApplication sharedApplication].keyWindow
+     addSubview:_thezkingAlertV];
+    
     
     whichsectionopend=100000;
     isopen=YES;
@@ -204,10 +224,10 @@
     
     
     
+    [self prepairCommentTiao];
     
-    
-    
-    [aview addSubview:view_pinglun];
+
+  //  [aview addSubview:view_pinglun];
     view_pinglun.backgroundColor=RGBCOLOR(243, 243, 243);
     
     UIImageView *image_write=[[UIImageView alloc]initWithFrame:CGRectMake(40,(41-58/2)/2, 421/2, 58/2)];
@@ -392,6 +412,59 @@
     label_meiduoshao.alpha=0.7;
     label_meiduoshao.textColor=[UIColor lightGrayColor];
 }
+
+
+#pragma mark--新版的评论条
+
+-(void)prepairCommentTiao{
+    
+    inputV=[[CustomInputView alloc]initWithFrame:CGRectMake(0,iPhone5?419+88-42:377, 320, 41)];
+    
+    
+    __weak typeof(self)wself=self;
+    
+    
+    [inputV loadAllViewWithPinglunCount:@"0" WithPushBlock:^{
+        
+        
+    } WithSendBlock:^(NSString *content, BOOL isForward) {
+        //发表
+        
+        
+        SzkLoadData *loaddata=[[SzkLoadData alloc]init];
+        
+        NSString *string_102=[[NSString alloc]initWithFormat:@"http://fb.fblife.com/openapi/index.php?mod=comment&code=commentadd&sort=7&sortid=%d&content=%@&title=%@&fromtype=b5eeec0b&authkey=%@",[self.string_ID integerValue],[content stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],[self.string_title stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],[[NSUserDefaults standardUserDefaults]objectForKey:USER_AUTHOD]];
+        
+        
+        NSLog(@"str102===%@",string_102);
+        
+        [loaddata SeturlStr:string_102 mytest:^(NSDictionary *dicinfo, int errcode) {
+            
+            
+            if ([[dicinfo objectForKey:@"errcode"] intValue]==0) {
+                
+                [inputV hiddeninputViewTap];
+                [inputV.pinglun_button setTitle:[NSString stringWithFormat:@"%d",[self.string_commentnumber intValue]+1] forState:UIControlStateNormal];
+                
+                [_thezkingAlertV zkingalertShowWithString:@"评论成功"];
+                
+                [wself fasongpinglunqingqiu];
+
+                
+            }
+            
+            
+            
+            NSLog(@"评论返回的数据===%@",dicinfo);
+        }];
+    }];
+    
+    [aview addSubview:inputV];
+}
+
+
+
+
 #pragma mark-开始编辑评论内容
 -(void)textwrotebecomfirstresponder{
     [self textFieldDidBeginEditing:text_write];
@@ -1389,112 +1462,34 @@
 #pragma mark 输入评论内容的代理
 - (void) keyboardWillShow:(NSNotification *)notification {
     
-    /*
-     2013-12-19 11:27:00.909 FBLife[2529:60b] keyboardheight===252.000000
-     2013-12-19 11:27:16.114 FBLife[2529:60b] keyboardheight===216.000000
-     2013-12-19 11:27:21.464 FBLife[2529:60b] keyboardheight===184.000000
-     2013-12-19 11:27:23.634 FBLife[2529:60b] keyboardheight===251.500000
-     */
-    NSDictionary * info = [notification userInfo];
-    CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    NSLog(@"key===%@",[personal getMyAuthkey ]);
     
     
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:0.1];
     
-    NSLog(@"keyboardheight===%f",kbSize.height);
-//    if (kbSize.height == 252)//中文键盘
-//    {
-//        if (isiphone5) {
-//            aview.frame=CGRectMake(0,-252-1, 320, 568);
-//            
-//        }else{
-//            aview.frame=CGRectMake(0,-252-1, 320, 480);
-//        }
-//    }else//英文键盘
-//    {
-//        if (isiphone5) {
-//            aview.frame=CGRectMake(0,-249+31, 320, 568);
-//            
-//        }else{
-//            aview.frame=CGRectMake(0,-249+31, 320, 480);
-//        }
-//    }
-    int heightofkeyboard=(int)kbSize.height;
-    switch (heightofkeyboard) {
-        case 252:
-        {
-        if (isiphone5) {
-            aview.frame=CGRectMake(0,-252-1, 320, 568);
-
-        }else{
-            aview.frame=CGRectMake(0,-252-1, 320, 480);
-        }
-
+    if ([[personal getMyAuthkey ] isEqualToString:@"(null)"]||[personal getMyAuthkey ].length==0) {
+        
+        
+        LogInViewController *loginV=[[LogInViewController alloc]init];
+        
+        
+        [self presentViewController:loginV animated:YES completion:^{
             
-        }
-            break;
+            [inputV hiddeninputViewTap];
             
             
-        case 216:
-        {
-        if (isiphone5) {
-            aview.frame=CGRectMake(0,-249+31, 320, 568);
-
-        }else{
-            aview.frame=CGRectMake(0,-249+31, 320, 480);
-        }
             
-            
-        }
-            break;
-        case 251:
-        {
-            if (isiphone5) {
-                aview.frame=CGRectMake(0,-252-1, 320, 568);
-                
-            }else{
-                aview.frame=CGRectMake(0,-252-1, 320, 480);
-            }
-            
-            
-        }
-            break;
-        case 184:
-        {
-            if (isiphone5) {
-                aview.frame=CGRectMake(0,-249+31+216-184, 320, 568);
-                
-            }else{
-                aview.frame=CGRectMake(0,-249+31+216-184, 320, 480);
-            }
-            
-            
-        }
-            break;
-
-            
-            
-        default:
-            break;
+        }];
+        
+        
     }
     
     
-    [UIView commitAnimations];
+
+
 }
 - (void)keyboardWillHide:(NSNotification *)note
 {
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:0.3];
-    if (isiphone5) {
-        aview.frame = CGRectMake(0,0, 320, 568);
-        
-    }else{
-        aview.frame = CGRectMake(0,0, 320, 480);
-        
-    }
     
-    [UIView commitAnimations];
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{

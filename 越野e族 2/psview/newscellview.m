@@ -16,7 +16,7 @@
     
     self = [super initWithFrame:frame];
     if (self) {
-        _imagev=[[AsyncImageView alloc]initWithFrame:CGRectMake( 12, 8,90 , 60)];
+        _imagev=[[AsyncImageView alloc]initWithFrame:CGRectMake( 12, 8, 90, 60)];
         [self addSubview:_imagev];
         _title_label=[[UILabel alloc]init];
         [self addSubview:_title_label];

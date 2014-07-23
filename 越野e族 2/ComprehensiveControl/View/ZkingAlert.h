@@ -14,6 +14,7 @@
 
 - (id)initWithFrame:(CGRect)frame labelString:(NSString *)_string;
 
+-(void)zkingalertShowWithString:(NSString *)thestr;
 
 
 -(void)ZkingAlerthide;

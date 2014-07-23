@@ -95,11 +95,13 @@ typedef enum {
 
 @property(nonatomic,strong)UIView *normalLine;//分割线
 
+@property(nonatomic,strong)UIImageView *littleAndBigLine;
+
 
 
 @property(nonatomic,strong)UIView *testV;
 
-@property(nonatomic,strong)UIView *fenGeLine;
+@property(nonatomic,strong)UILabel *fenGeLine;
 
 //数据处理
 
