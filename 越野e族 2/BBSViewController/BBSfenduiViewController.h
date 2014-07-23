@@ -60,5 +60,6 @@
 @property(nonatomic,strong)NSString *string_id;
 @property(nonatomic,strong)NSString *string_name;
 @property(nonatomic,strong)NSMutableArray *array_info;
+@property(nonatomic,strong)NSMutableArray * collection_array;//保存收藏数据
 
 @end

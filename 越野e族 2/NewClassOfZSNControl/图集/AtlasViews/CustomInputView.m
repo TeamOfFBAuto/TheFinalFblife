@@ -11,7 +11,7 @@
 @implementation CustomInputView
 @synthesize commit_label,pinglun_button,text_background_view,text_input_view,send_button,commot_background_view;
 
-
+@synthesize content_dictionary = _content_dictionary;
 
 
 - (id)initWithFrame:(CGRect)frame
@@ -161,7 +161,7 @@
     
     UILabel * content_label = [[UILabel alloc] initWithFrame:CGRectMake(42,126,200,15)];
     
-    content_label.text = @"同时转发到FB圈";
+    content_label.text = @"同时转发到自留地";
     
     content_label.font = [UIFont systemFontOfSize:15];
     
@@ -233,18 +233,21 @@
 
 
 
-
-
 #pragma  mark - 弹出评论框
 
 -(void)showInputView:(UITapGestureRecognizer *)sender
 {
-//    BOOL islogin = [self isLogIn];
-//    
-//    if (!islogin)
-//    {
-//        return;
-//    }
+    BOOL islogin = [[NSUserDefaults standardUserDefaults] boolForKey:USER_IN];
+    
+    if (!islogin)
+    {
+        
+        LogInViewController * logIn = [LogInViewController sharedManager];
+        
+        [[(AppDelegate *)[UIApplication sharedApplication].delegate RootVC] presentViewController:logIn animated:YES completion:NULL];
+        
+        return;
+    }
     
     [text_input_view becomeFirstResponder];
 }
@@ -352,6 +355,177 @@
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
+
+
+
+#pragma mark - 同步到自留地
+
+
+-(void)ForwardingToWeiBoWith:(NSDictionary *)theDictionary
+{
+    self.content_dictionary = theDictionary;
+    
+    UIImage * image = (UIImage *)[theDictionary objectForKey:@"image"];
+    
+    NSMutableArray * arry = [NSMutableArray arrayWithObjects:image,nil];
+
+    [self uploadImageWithImage:arry];
+}
+
+
+
+#pragma mark - 发送
+
+#define TT_CACHE_EXPIRATION_AGE_NEVER     (1.0 / 0.0)   // inf
+
+
+#pragma mark - 上传图片
+- (void)uploadImageWithImage:(NSMutableArray *)allImageArray
+{
+    
+    NSString* fullURL = [NSString stringWithFormat:URLIMAGE,[[NSUserDefaults standardUserDefaults] objectForKey:USER_AUTHOD]];
+    //  NSString * fullURL = [NSString stringWithFormat:@"http://t.fblife.com/openapi/index.php?mod=doweibo&code=addpicmuliti&fromtype=b5eeec0b&authkey=UmZaPlcyXj8AMQRoDHcDvQehBcBYxgfbtype=json"];
+    
+    
+    NSLog(@"上传图片的url  ——--  %@",fullURL);
+    ASIFormDataRequest * request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:fullURL]];
+    
+    //得到图片的data
+    NSData* data;
+    //获取图片质量
+    //  NSString *tupianzhiliang=[[NSUserDefaults standardUserDefaults] objectForKey:TUPIANZHILIANG];
+    
+    NSMutableData *myRequestData=[NSMutableData data];
+    
+    for (int i = 0;i < allImageArray.count; i++)
+    {
+        [request setPostFormat:ASIMultipartFormDataPostFormat];
+        
+        UIImage *image=[allImageArray objectAtIndex:i];
+        
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,     NSUserDomainMask, YES);
+        NSString *documentsDirectory = [paths objectAtIndex:0];
+        NSString *savedImagePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"savedImage%d.png",i]];
+        //also be .jpg or another
+        NSData *imageData = UIImagePNGRepresentation(image);
+        //UIImageJPEGRepresentation(image)
+        [imageData writeToFile:savedImagePath atomically:NO];
+        
+        
+        UIImage * newImage = [personal scaleToSizeWithImage:image size:CGSizeMake(image.size.width>1024?1024:image.size.width,image.size.width>1024?image.size.height*1024/image.size.width:image.size.height)];
+        
+        data = UIImageJPEGRepresentation(newImage,0.5);
+        
+        
+        [request addRequestHeader:@"Content-Length" value:[NSString stringWithFormat:@"%d", [myRequestData length]]];
+        
+        //设置http body
+        
+        [request addData:data withFileName:[NSString stringWithFormat:@"boris%d.png",i] andContentType:@"image/PNG" forKey:@"topic[]"];
+        
+        //  [request addData:myRequestData forKey:[NSString stringWithFormat:@"boris%d",i]];
+        
+    }
+    
+    [request setRequestMethod:@"POST"];
+    
+    request.cachePolicy = TT_CACHE_EXPIRATION_AGE_NEVER;
+    
+    request.cacheStoragePolicy = ASICacheForSessionDurationCacheStoragePolicy;
+    
+    [request startAsynchronous];
+    
+    
+    __block typeof(request) theRequest = request;
+    
+    [theRequest setCompletionBlock:^{
+        
+        @try {
+            NSDictionary * dic = [[NSDictionary alloc] initWithDictionary:[request.responseData objectFromJSONData]];
+            
+            NSLog(@"上传图片返回结果 ------   %@",dic);
+            //    NSString *errcode = [dic objectForKey:ERRCODE];
+            
+            
+            if ([[dic objectForKey:@"errcode"] intValue] == 0)
+            {
+                
+                NSDictionary * dictionary = [dic objectForKey:DATA];
+                
+                NSArray * array2 = [dictionary allKeys];
+                
+                NSArray *array = [array2 sortedArrayUsingSelector:@selector(compare:)];
+                
+                NSString* authod = @"";
+                
+                
+                for (int i = 0;i < array.count;i++)
+                {
+                    if (i == 0)
+                    {
+                        authod = [array objectAtIndex:i];
+                    }else
+                    {
+                        authod = [NSString stringWithFormat:@"%@|%@",authod,[array objectAtIndex:i]];
+                    }
+                }
+                
+                NSLog(@"authod -------   %@",authod);
+                
+                
+                [self sendWeiBoWithAuthod:authod];
+                
+                
+            }
+        }
+        @catch (NSException *exception)
+        {
+            
+        }
+        @finally
+        {
+            
+        }
+        
+        
+    }];
+    
+    [theRequest setFailedBlock:^{
+        
+    }];
+}
+
+
+#pragma mark - 发布微博
+
+-(void)sendWeiBoWithAuthod:(NSString *)authod
+{
+    NSString* fullURL;
+    fullURL = [NSString stringWithFormat:URLIMAGEID,[[self.content_dictionary objectForKey:@"content"] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],[authod stringByAddingPercentEscapesUsingEncoding:  NSUTF8StringEncoding],AUTHKEY];
+    
+    NSLog(@"19请求的url：%@",fullURL);
+    
+    
+    ASIHTTPRequest * request1 = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:fullURL]];
+    
+    __block typeof(request1) request  = request1;
+    
+    [request setCompletionBlock:^{
+        NSDictionary * jieguo = [request1.responseData objectFromJSONData];
+        
+        NSLog(@"request.tag1111 = 2 ==%@",[jieguo objectForKey:@"data"]);
+    }];
+    
+    [request setFailedBlock:^{
+        
+    }];
+    
+    [request1 startAsynchronous];
+}
+
+
+
+
 
 
 

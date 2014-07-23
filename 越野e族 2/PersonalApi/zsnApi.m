@@ -1133,6 +1133,38 @@
             obj.rcontent = [zsnApi exchangeString:obj.rcontent];
         }
         
+        
+        
+        obj.content = [obj.content stringByReplacingOccurrencesOfString:@"&#8203;" withString:@""];
+        
+         obj.rcontent = [obj.content stringByReplacingOccurrencesOfString:@"&#8203;" withString:@""];
+        
+         obj.rtitle_content = [obj.content stringByReplacingOccurrencesOfString:@"&#8203;" withString:@""];
+        
+         obj.title_content = [obj.content stringByReplacingOccurrencesOfString:@"&#8203;" withString:@""];
+        
+        
+        
+        
+        
+        obj.content = [obj.content stringByReplacingOccurrencesOfString:@"<a>" withString:@"<a href=\"fb://shareshop\">"];
+        
+        obj.rcontent = [obj.rcontent stringByReplacingOccurrencesOfString:@"<a>" withString:@"<a href=\"fb://shareshop\">"];
+        
+        obj.title_content = [obj.title_content stringByReplacingOccurrencesOfString:@"<a>" withString:@"<a href=\"fb://shareshop\">"];
+        
+        obj.rtitle_content = [obj.rtitle_content stringByReplacingOccurrencesOfString:@"<a>" withString:@"<a href=\"fb://shareshop\">"];
+        
+        
+        obj.content = [obj.content stringByReplacingOccurrencesOfString:@"<ahref" withString:@"<a href"];
+        
+        obj.rcontent = [obj.rcontent stringByReplacingOccurrencesOfString:@"<ahref" withString:@"<a href"];
+        
+        obj.title_content = [obj.title_content stringByReplacingOccurrencesOfString:@"<ahref" withString:@"<a href"];
+        
+        obj.rtitle_content = [obj.rtitle_content stringByReplacingOccurrencesOfString:@"<ahref" withString:@"<a href"];
+        
+        
         [data_array addObject:obj];
         
         

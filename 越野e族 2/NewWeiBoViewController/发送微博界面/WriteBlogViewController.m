@@ -133,10 +133,10 @@
     
     
     //创建barbutton 创建系统样式的
-    UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(10,IOS_VERSION>=7.0?0:8,12,21.5)];
+    UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(10,8,31/2,32/2)];
     
     [button_back addTarget:self action:@selector(backH) forControlEvents:UIControlEventTouchUpInside];
-    [button_back setBackgroundImage:[UIImage imageNamed:@"ios7_back.png"] forState:UIControlStateNormal];
+    [button_back setBackgroundImage:[UIImage imageNamed:@"logIn_close.png"] forState:UIControlStateNormal];
     
     UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:button_back];
     NavTitle.leftBarButtonItems=@[space_button,back_item];
@@ -677,7 +677,9 @@
             FriendListViewController * list = [[FriendListViewController alloc] init];
             list.delegate = self;
             
-            [self presentViewController:list animated:YES completion:NULL];
+            UINavigationController * list_nav = [[UINavigationController alloc] initWithRootViewController:list];
+            
+            [self presentViewController:list_nav animated:YES completion:NULL];
         }
             break;
         case 4:
@@ -1023,15 +1025,8 @@
             //    NSString *errcode = [dic objectForKey:ERRCODE];
             
             
-            if ([[dic objectForKey:@"errcode"] intValue] == 1)
+            if ([[dic objectForKey:@"errcode"] intValue] == 0)
             {
-                nav.userInteractionEnabled = YES;
-                [hud hide];
-                UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"图片上传失败,请重新上传" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
-                [alert show];
-            }else
-            {
-                
                 NSDictionary * dictionary = [dic objectForKey:DATA];
                 
                 NSArray * array2 = [dictionary allKeys];
@@ -1052,7 +1047,6 @@
                     }
                     
                 }
-                
                 
                 NSLog(@"authod -------   %@",authod);
                 
@@ -1084,9 +1078,13 @@
                 request1.delegate = self;
                 
                 [request1 startAsynchronous];
+            }else
+            {
+                nav.userInteractionEnabled = YES;
+                [hud hide];
+                UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"图片上传失败,请重新上传" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+                [alert show];
             }
-            
-            
             
         }else if (request.tag == 2)
         {

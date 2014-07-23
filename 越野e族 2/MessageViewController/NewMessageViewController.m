@@ -65,7 +65,9 @@
 -(void)sendPressed:(UIButton *)button
 {
     
-    if (self.name_textField.text.length == 0)
+    NSString * name_text = [self.name_textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet ]];
+    
+    if (name_text.length == 0)
     {
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"请输入用户名" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil,nil];
         
@@ -76,8 +78,9 @@
         return;
     }
     
+    NSString * content_text = [self.inputToolBarView.textView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet ]];
     
-    if (self.inputToolBarView.textView.text.length == 0)
+    if (content_text.length == 0)
     {
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"请输入私信内容" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil,nil];
         

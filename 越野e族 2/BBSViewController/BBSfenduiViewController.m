@@ -26,7 +26,7 @@
 }
 @end
 @implementation BBSfenduiViewController
-@synthesize string_id,string_name,array_info=_array_info;
+@synthesize string_id,string_name,array_info=_array_info,collection_array;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -833,6 +833,7 @@
                         
                         [button_collect setBackgroundImage:[UIImage imageNamed:@"ios7_collectselect.png"] forState:UIControlStateNormal];
                         
+                        [self.collection_array addObject:self.string_id];
                         
                         //                UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"haha" message:@"收藏成功" delegate:nil cancelButtonTitle:@"yes" otherButtonTitles:nil, nil];
                         //                [alert show];
@@ -850,6 +851,8 @@
                     NSLog(@"%sdasfkalklic203==%@",__FUNCTION__,dic);
                     
                     [button_collect setBackgroundImage:[UIImage imageNamed:@"ios7_collect44_42.png"] forState:UIControlStateNormal];
+                    
+                    [self.collection_array removeObject:self.string_id];
                     
                     //            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"haha" message:[NSString stringWithFormat:@"%@",[dic objectForKey:@"bbsinfo"]] delegate:nil cancelButtonTitle:@"yes" otherButtonTitles:nil, nil];
                     //            [alert show];

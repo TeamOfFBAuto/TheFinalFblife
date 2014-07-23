@@ -355,6 +355,10 @@
         
         [user synchronize];
         
+        
+        [FbFeed deleteAllByType:0];
+        [FbFeed deleteAllByType:2];
+        
     }else
     {
         LogInViewController * logIn = [LogInViewController sharedManager];
@@ -438,7 +442,7 @@
     
     [[SDImageCache sharedImageCache] clearDisk];
     [[FullyLoaded sharedFullyLoaded] removeAllCacheDownloads];
-    NSIndexPath *reloadIndexPath = [NSIndexPath indexPathForRow:7 inSection:0];
+    NSIndexPath *reloadIndexPath = [NSIndexPath indexPathForRow:1 inSection:0];
     NSArray *arra=[NSArray arrayWithObject:reloadIndexPath];
     [ _myTableView reloadRowsAtIndexPaths:arra withRowAnimation:UITableViewRowAnimationNone];
     

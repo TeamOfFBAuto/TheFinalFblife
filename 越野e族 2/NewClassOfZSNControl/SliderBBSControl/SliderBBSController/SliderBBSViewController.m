@@ -143,7 +143,7 @@
         [self loadRecentlyLookData];
     }
     
-    
+    [self.myTableView2 reloadData];
 }
 
 -(void)rightButtonTap:(UIButton *)sender
@@ -265,6 +265,8 @@
     _myTableView2.delegate = self;
     
     _myTableView2.dataSource = self;
+    
+    _myTableView2.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     [_myScrollView addSubview:_myTableView2];
     
@@ -651,6 +653,8 @@
 {
     BBSfenduiViewController * _fendui=[[BBSfenduiViewController alloc]init];
     
+    _fendui.collection_array = self.forum_section_collection_array;
+    
     _fendui.string_name=theName;
     
     _fendui.string_id=theId;
@@ -794,7 +798,6 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     if (tableView ==_myTableView1)
     {
         static NSString * identifier = @"identifier";
@@ -862,7 +865,7 @@
             //收藏按钮
             ZSNButton * collection_button = [ZSNButton buttonWithType:UIButtonTypeCustom];
             
-            collection_button.frame = CGRectMake(280,7,30,30);
+            collection_button.frame = CGRectMake(271,0,49,44);
             
             collection_button.myDictionary = [NSDictionary dictionaryWithObject:second_model.forum_fid forKey:@"tid"];
             
@@ -884,7 +887,7 @@
             {
                 ZSNButton * accessory_button = [ZSNButton buttonWithType:UIButtonTypeCustom];
                 
-                accessory_button.frame = CGRectMake(240,0,25,44);
+                accessory_button.frame = CGRectMake(225,0,40,44);
                 
                 [accessory_button setImage:[UIImage imageNamed:@"bbs_forum_jiantou"] forState:UIControlStateNormal];
                 
@@ -897,6 +900,19 @@
                 [accessory_button addTarget:self action:@selector(ShowAndHiddenThirdView:) forControlEvents:UIControlEventTouchUpInside];
                 
                 [cell.contentView addSubview:accessory_button];
+            }
+            
+            
+            UIView * single_line_view = [[UIView alloc] initWithFrame:CGRectMake(16,43.5,320,0.5)];
+            
+            single_line_view.backgroundColor = RGBCOLOR(225,225,225);
+            
+            [cell.contentView addSubview:single_line_view];
+            
+            
+            if (indexPath.row == model.forum_sub.count - 1)
+            {
+                single_line_view.frame = CGRectMake(0,43.5,320,0.5);
             }
             
             
@@ -995,17 +1011,17 @@
         [view addSubview:line_view];
         
         
-        UIView * top_line_view = [[UIView alloc] initWithFrame:CGRectMake(0,0,320,0.5)];
+        UIView * bottom_line_view = [[UIView alloc] initWithFrame:CGRectMake(0,43.5,320,0.5)];
         
-        top_line_view.backgroundColor = RGBCOLOR(228,228,228);
+        bottom_line_view.backgroundColor = RGBCOLOR(228,228,228);
         
-        [view addSubview:top_line_view];
+        [view addSubview:bottom_line_view];
         
         
         
-        if (section == [[_forum_temp_array objectAtIndex:current_forum] count]-1)
+        if (section == 0)
         {
-            UIView * top_line_view = [[UIView alloc] initWithFrame:CGRectMake(0,43.5,320,0.5)];
+            UIView * top_line_view = [[UIView alloc] initWithFrame:CGRectMake(0,0,320,0.5)];
             
             top_line_view.backgroundColor = RGBCOLOR(228,228,228);
             
@@ -1018,7 +1034,7 @@
         {
             UIButton * fenlei_button = [UIButton buttonWithType:UIButtonTypeCustom];
             
-            fenlei_button.frame = CGRectMake(280,7,30,30);
+            fenlei_button.frame = CGRectMake(271,0,49,44);
             
             [fenlei_button setImage:[UIImage imageNamed:@"bbs_forum_fenlei"] forState:UIControlStateNormal];
             
@@ -1033,14 +1049,14 @@
         
         
         
-        if (model.forum_isOpen)
-        {
-            UIView * bottom_view = [[UIView alloc] initWithFrame:CGRectMake(0,43.5,320,0.5)];
-            
-            bottom_view.backgroundColor = RGBCOLOR(228,228,228);
-            
-            [view addSubview:bottom_view];
-        }
+//        if (model.forum_isOpen)
+//        {
+//            UIView * bottom_view = [[UIView alloc] initWithFrame:CGRectMake(0,43.5,320,0.5)];
+//            
+//            bottom_view.backgroundColor = RGBCOLOR(228,228,228);
+//            
+//            [view addSubview:bottom_view];
+//        }
         
         
         //跳转到对应的版块页
@@ -1109,6 +1125,8 @@
     BBSfenduiViewController * fendui = [[BBSfenduiViewController alloc] init];
     
     fendui.string_id = theId;
+    
+    fendui.collection_array = self.forum_section_collection_array;
     
     [self.navigationController pushViewController:fendui animated:YES];
 }
@@ -1315,11 +1333,14 @@
     
     if (isCollected)
     {
-        fullUrl = [NSString stringWithFormat:COLLECTION_FORUM_SECTION_URL_OLD,tid,AUTHKEY];
+        fullUrl = [NSString stringWithFormat:COLLECTION_CANCEL_FORUM_SECTION_URL_OLD,tid,AUTHKEY];
     }else
     {
-        fullUrl = [NSString stringWithFormat:COLLECTION_CANCEL_FORUM_SECTION_URL_OLD,tid,AUTHKEY];
+        fullUrl = [NSString stringWithFormat:COLLECTION_FORUM_SECTION_URL_OLD,tid,AUTHKEY];
     }
+    
+    
+    NSLog(@"收藏取消收藏接口 ----   %@",fullUrl);
     
     NSURL * url = [NSURL URLWithString:fullUrl];
     
@@ -1332,17 +1353,28 @@
     
     [request setCompletionBlock:^{
         
-//        [bself.myTableView2 reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
+        NSDictionary * dictionary = [collect_request.responseString objectFromJSONString];
         
-        if (isCollected)
+        NSLog(@"收藏取消收藏 ----  %@",dictionary);
+        
+        
+        if ([[dictionary objectForKey:@"errcode"] intValue] == 0)
         {
-            [bself.forum_section_collection_array removeObject:tid];
+            if (isCollected)
+            {
+                [bself.forum_section_collection_array removeObject:tid];
+            }else
+            {
+                [bself.forum_section_collection_array addObject:tid];
+            }
+            
+            [bself.myTableView2 reloadData];
         }else
         {
-            [bself.forum_section_collection_array addObject:tid];
+            UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:[dictionary objectForKey:@"bbsinfo"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+            
+            [alertView show];
         }
-        
-        [bself.myTableView2 reloadData];
     }];
     
     [request setFailedBlock:^{
@@ -1488,6 +1520,8 @@
                 BBSfenduiViewController *_bbsVC=[[BBSfenduiViewController alloc]init];\
                 
                 _bbsVC.string_id=_newmodel.bbsfid;
+                
+                _bbsVC.collection_array = self.forum_section_collection_array;
                 
                 [self.navigationController pushViewController:_bbsVC animated:YES];
             }

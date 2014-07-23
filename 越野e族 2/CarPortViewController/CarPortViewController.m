@@ -631,8 +631,10 @@
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    [_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
     
+    if (scrollView == _myTableView) {
+        [_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
+    }
     
     if (_silder_view.frame.origin.x != 322 && scrollView == _myTableView)
     {
@@ -656,7 +658,12 @@
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-    [_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+    
+    if (scrollView == _myTableView) {
+        [_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+    }
+    
+    
     
     if(_Screening_tableView.contentOffset.y > (_Screening_tableView.contentSize.height - _Screening_tableView.frame.size.height+40) && _Screening_tableView.contentOffset.y > 0 && scrollView == _Screening_tableView)
     {

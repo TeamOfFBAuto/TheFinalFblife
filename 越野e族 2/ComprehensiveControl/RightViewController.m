@@ -173,7 +173,7 @@
             {
                 UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
                 
-                button.frame = CGRectMake(40 + 90*j,(iPhone5?230:210)+(iPhone5?90:75)*i,44,60);
+                button.frame = CGRectMake(30 + 90*j,(iPhone5?230:210)+(iPhone5?90:75)*i,44,60);
                 
                 [button setTitle:[arrary1 objectAtIndex:j+i*3] forState:UIControlStateNormal];
                 

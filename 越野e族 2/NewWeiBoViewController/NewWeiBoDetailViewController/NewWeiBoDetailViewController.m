@@ -263,10 +263,10 @@
     UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
     negativeSpacer.width = MY_MACRO_NAME?-4:5;
     
-    UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(30,8,12,21.5)];
+    UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(10,8,31/2,32/2)];
     
     [button_back addTarget:self action:@selector(backH:) forControlEvents:UIControlEventTouchUpInside];
-    [button_back setBackgroundImage:[UIImage imageNamed:@"ios7_back"] forState:UIControlStateNormal];
+    [button_back setBackgroundImage:[UIImage imageNamed:@"logIn_close"] forState:UIControlStateNormal];
     
     UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:button_back];
     

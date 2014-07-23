@@ -391,6 +391,18 @@ alpha:(a)]
 #define ATLAS_PRAISE_URL @"http://cmsweb.fblife.com/ajax.php?c=photo&a=addlikes&type=json&id=%@"
 
 
+#pragma mark - 收藏图集的接口
+
+#define ATLAS_COLLECTION_URL @"http://cmsweb.fblife.com/ajax.php?c=photo&a=addfavorites&type=json&took=%@&id=%@"
+
+
+#pragma mark - 取消图集收藏的接口
+
+
+#define ATLAS_CANCEL_COLLECTION_URL @"http://cmsweb.fblife.com/ajax.php?c=photo&a=delfavorites&type=json&took=%@&id=%@"
+
+
+
 #pragma mark - 获取所有收藏的板块接口
 
 #define GET_ALL_COLLECTION_SECTION @"http://bbs.fblife.com/bbsapinew/favoritesthread.php?authcode=%@&formattype=json&page=%d&pagesize=%d"
@@ -403,7 +415,6 @@ alpha:(a)]
 
 #define COLLECTION_FORUM_SECTION_URL_OLD @"http://bbs.fblife.com/bbsapinew/favoritesforums.php?fid=%@&action=add&formattype=json&authcode=%@"
 
-
 #pragma mark - 获取论坛精选数据
 
 #define BBS_JINGXUAN_URL @"http://cmsweb.fblife.com/ajax.php?c=newstwo&a=getappindex&page=%d&type=json&pagesize=20&datatype=3&type=json"
@@ -415,12 +426,12 @@ alpha:(a)]
 
 #pragma mark - 取消收藏论坛版块接口-旧接口
 
-#define COLLECTION_CANCEL_FORUM_SECTION_URL_OLD @"http://bbs.fblife.com/bbsapinew/favoritesforums.php?fid=%@&action=add&formattype=json&authcode=%@"
+#define COLLECTION_CANCEL_FORUM_SECTION_URL_OLD @"http://bbs.fblife.com/bbsapinew/delfavorites.php?delid=%@&formattype=json&authcode=%@"
 
 
 #pragma mark - 收藏帖子接口
 
-#define COLLECTION_BBS_POST_URL @"http://bbs.fblife.com/bbsapinew/addfavoritesthread.php?authcode=%@&addtid=%@&formattype=json"
+#define COLLECTION_BBS_POST_URL @"http://bbs.fblife.com/bbsapinew/addfavoritesthread.php?authcode=%@&tid=%@&formattype=json"
 
 #pragma mark - 查看收藏的帖子
 

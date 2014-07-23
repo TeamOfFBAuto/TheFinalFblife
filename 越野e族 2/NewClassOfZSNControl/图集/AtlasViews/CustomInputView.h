@@ -38,6 +38,8 @@ typedef void(^InputViewSendToPinglunBlock)(NSString * content,BOOL isForward);//
 
 @property(nonatomic,strong)UIButton * send_button;//发送评论按钮
 
+@property(nonatomic,strong)NSDictionary * content_dictionary;//同步到自留地内容(key: content:发布内容  image:发布的图片)
+
 
 //count：评论数
 

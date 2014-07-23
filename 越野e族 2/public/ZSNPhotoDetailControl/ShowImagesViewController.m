@@ -151,7 +151,7 @@
                 
                 for (NSDictionary * dic in array)
                 {
-                    if ([[dic objectForKey:@"id"] isEqualToString:bself.id_atlas])
+                    if ([[dic objectForKey:@"nid"] isEqualToString:bself.id_atlas])
                     {
                         UIButton * button = (UIButton *)[navImageView viewWithTag:10001];
                         
@@ -281,10 +281,10 @@
     
     if (isCollected)
     {
-        fullUrl = [NSString stringWithFormat:DELETE_COLLECTION_BBS_POST_URL,self.id_atlas,AUTHKEY];//取消收藏帖子
+        fullUrl = [NSString stringWithFormat:ATLAS_CANCEL_COLLECTION_URL,AUTHKEY,self.id_atlas];//取消收藏帖子
     }else
     {
-        fullUrl = [NSString stringWithFormat:COLLECTION_BBS_POST_URL,AUTHKEY,self.id_atlas];//收藏帖子
+        fullUrl = [NSString stringWithFormat:ATLAS_COLLECTION_URL,AUTHKEY,self.id_atlas];//收藏帖子
     }
     
     NSLog(@"收藏或取消收藏接口----%@",fullUrl);
@@ -354,9 +354,19 @@
     
 //    self.navigationController.navigationBarHidden = YES;
 
+    [input_view addKeyBordNotification];
+    
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [input_view deleteKeyBordNotification];
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -524,9 +534,6 @@
     
     if (MY_MACRO_NAME) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
-        
-        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-
     }
     
     

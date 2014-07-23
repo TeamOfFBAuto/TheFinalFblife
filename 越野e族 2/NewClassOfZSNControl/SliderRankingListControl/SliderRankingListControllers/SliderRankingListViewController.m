@@ -284,9 +284,7 @@
     if (self.currentPage == 1)
     {
         isCollected = [self.bbs_post_collection_array containsObject:model.ranking_id];
-        
-         NSLog(@"怎么回事删除呢 ------  %@ ---- %@",model.ranking_id,self.bbs_post_collection_array);
-        
+                
         if (!isCollected)
         {
             fullUrl = [NSString stringWithFormat:COLLECTION_BBS_POST_URL,AUTHKEY,model.ranking_id];
@@ -321,9 +319,6 @@
     __weak typeof(self) bself = self;
     
     [request setCompletionBlock:^{
-        
-        NSLog(@"收藏取消 ---   %@",[collect_request.responseString objectFromJSONString]);
-        
         
         cell.collection_button.selected = !isCollected;
         

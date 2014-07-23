@@ -73,6 +73,8 @@ typedef enum{
     
     int current_seg_index;//存储当前的选择(我的订阅，最近浏览，排行榜)
     
+    int history_forum_on;//记录上次展开的
+    
 }
 
 

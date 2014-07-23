@@ -648,7 +648,6 @@
     _myTableView2.sectionFooterHeight = 50;
     _myTableView2.tableFooterView = loadview3;
     
-    
     [_rootScrollView addSubview:_myTableView];
     [_rootScrollView addSubview:_myTableView1];
     [_rootScrollView addSubview:_myTableView2];

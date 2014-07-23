@@ -59,7 +59,6 @@
     
     [MobClick beginEvent:@"LogInViewController"];
     
-    
     if (isShow && logoImageView)
     {
         [self loadDown];
@@ -173,7 +172,7 @@
     userNameField.delegate=self;
     userNameField.font = [UIFont systemFontOfSize:16];
     [denglu_imageView addSubview:userNameField];
-    
+        
     pwNameField=[[UITextField alloc] initWithFrame:CGRectMake(70,74,[UIScreen mainScreen].applicationFrame.size.width-110,42)];
     pwNameField.delegate = self;
     pwNameField.backgroundColor=[UIColor clearColor];
@@ -304,7 +303,7 @@
     
     UINavigationController * naVC = [[UINavigationController alloc] initWithRootViewController:zhuce];
     
-    [self presentModalViewController:naVC animated:YES];
+    [self presentViewController:naVC animated:YES completion:NULL];
 }
 
 -(void)zhaohuiButton:(UIButton *)sender
@@ -318,6 +317,8 @@
 
 -(void)backH
 {
+    [self loadDown];
+    
     [self dismissViewControllerAnimated:YES completion:^(void){
         [_delegate failToLogIn];
     }];
@@ -442,8 +443,9 @@
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"LogIn" object:nil];
                 
+                [self loadDown];
                 
-                [self dismissModalViewControllerAnimated:YES];
+                [self dismissViewControllerAnimated:YES completion:NULL];
                 
             }else
             {
@@ -464,6 +466,8 @@
             {
                 NSLog(@"开通成功");
                 
+                [self loadDown];
+                
                 //激活成功保存用户信息
                 [[NSUserDefaults standardUserDefaults] setObject:userNameField.text forKey:USER_NAME] ;
                 [[NSUserDefaults standardUserDefaults] setObject:pwNameField.text forKey:USER_PW] ;
@@ -477,7 +481,7 @@
                 [[NSNotificationCenter defaultCenter] postNotificationName:USER_AUTHOD object:[dictionary objectForKey:@"bbsinfo"]];
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"clearolddata" object:nil];
                 
-                [self dismissModalViewControllerAnimated:YES];
+                [self dismissViewControllerAnimated:YES completion:NULL];
             }else
             {
                 NSLog(@"开通时候的dic=%@",dic);
@@ -561,7 +565,7 @@
     
     [userNameField resignFirstResponder];
     
-    [UIView animateWithDuration:0.4 animations:^{
+    [UIView animateWithDuration:0.3 animations:^{
         logoImageView.center = CGPointMake(160,42 + 49.5/2 + (IOS_VERSION>=7.0?64:44));
         
         denglu_imageView.frame = CGRectMake(23.5/2,logoImageView.center.y+25+10,296.5,185);

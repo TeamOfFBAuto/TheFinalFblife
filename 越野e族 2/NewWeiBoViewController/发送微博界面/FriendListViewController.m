@@ -460,7 +460,7 @@
     }
     
     
-    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,40,320,(iPhone5?568:480)-44) style:UITableViewStylePlain];
+    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,40,320,(iPhone5?568:480)-64-40) style:UITableViewStylePlain];
     
     if (IOS_VERSION >=6.0)
     {

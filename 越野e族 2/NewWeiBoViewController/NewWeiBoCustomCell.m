@@ -529,6 +529,8 @@
         total_height = total_height + the_height + 10 + 20;
     }
     
+    
+    
     return total_height + 10;
 }
 

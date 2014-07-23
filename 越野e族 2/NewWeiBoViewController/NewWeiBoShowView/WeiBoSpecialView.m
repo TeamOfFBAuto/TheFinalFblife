@@ -236,6 +236,8 @@
     {
         _content_label.frame = rect1;
         
+        NSLog(@"错误处在这里 ---- %@",content_text);
+        
         _content_label.text = content_text;
         
         optimumSize1 = [_content_label optimumSize];
