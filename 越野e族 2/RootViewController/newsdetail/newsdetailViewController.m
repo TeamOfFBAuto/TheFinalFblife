@@ -20,6 +20,8 @@
 #import "WriteBlogViewController.h"
 #import "SSWBViewController.h"
 
+#import "CustomInputView.h"//少男写的公共评论条
+
 
 #define TEXT_COLOR	 [UIColor colorWithRed:87.0/255.0 green:108.0/255.0 blue:137.0/255.0 alpha:1.0]
 @interface newsdetailViewController (){
@@ -178,7 +180,15 @@
     [barview setcommentimage1:@"0"];
     barview.delegate=self;
     barview.userInteractionEnabled=NO;
-    [aview addSubview:barview];
+   // [aview addSubview:barview];
+    
+    [self prepairCommentTiao];
+    
+    
+    
+    
+    
+    
     
     [view_pinglun setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"640x82.png"]]];
     
@@ -251,7 +261,27 @@
 	// Do any additional setup after loading the view.
 }
 
+#pragma mark--新版的评论条
 
+-(void)prepairCommentTiao{
+
+    CustomInputView *inputV=[[CustomInputView alloc]initWithFrame:CGRectMake(0,iPhone5?419+88-42:377, 320, 41)];
+    
+    [inputV loadAllViewWithPinglunCount:@"2" WithPushBlock:^{
+        
+        
+        
+    } WithSendBlock:^(NSString *content, BOOL isForward) {
+        
+        
+        
+    }];
+    
+    [aview addSubview:inputV];
+    
+
+
+}
 
 #pragma mark--准备导航栏
 -(void)prepairNavigationbar{
@@ -1823,42 +1853,42 @@
 #pragma mark - Text Notification
 - (void) keyboardWillShow:(NSNotification *)notification {
     
-    NSDictionary * info = [notification userInfo];
-    CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
-    
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:0.1];
-    
-    if (kbSize.height == 252)//中文键盘
-    {
-        if (isiphone5) {
-            aview.frame=CGRectMake(0,-252, 320, 568);
-            
-        }else{
-            aview.frame=CGRectMake(0,-252-2, 320, 480);
-        }
-    }else//英文键盘
-    {
-        if (isiphone5) {
-            aview.frame=CGRectMake(0,-249+31, 320, 568);
-            
-        }else{
-            aview.frame=CGRectMake(0,-249+31, 320, 480);
-        }
-    }
-    
-    [UIView commitAnimations];
+//    NSDictionary * info = [notification userInfo];
+//    CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+//    
+//    [UIView beginAnimations:nil context:nil];
+//    [UIView setAnimationDuration:0.1];
+//    
+//    if (kbSize.height == 252)//中文键盘
+//    {
+//        if (isiphone5) {
+//          //  aview.frame=CGRectMake(0,-252, 320, 568);
+//            
+//        }else{
+//            aview.frame=CGRectMake(0,-252-2, 320, 480);
+//        }
+//    }else//英文键盘
+//    {
+//        if (isiphone5) {
+//            aview.frame=CGRectMake(0,-249+31, 320, 568);
+//            
+//        }else{
+//            aview.frame=CGRectMake(0,-249+31, 320, 480);
+//        }
+//    }
+//    
+//    [UIView commitAnimations];
 }
 - (void)keyboardWillHide:(NSNotification *)note
 {
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:0.3];
-    if (isiphone5) {
-        aview.frame = CGRectMake(0,0, 320, 568);
-    }else{
-        aview.frame = CGRectMake(0,0, 320, 480);
-    }
-    [UIView commitAnimations];
+//    [UIView beginAnimations:nil context:nil];
+//    [UIView setAnimationDuration:0.3];
+//    if (isiphone5) {
+//        aview.frame = CGRectMake(0,0, 320, 568);
+//    }else{
+//        aview.frame = CGRectMake(0,0, 320, 480);
+//    }
+//    [UIView commitAnimations];
 }
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     

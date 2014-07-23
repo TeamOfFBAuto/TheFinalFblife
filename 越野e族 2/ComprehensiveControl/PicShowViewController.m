@@ -170,7 +170,7 @@
     
     SzkLoadData *loaddata=[[SzkLoadData alloc]init];
     
-    NSString *str_search=[NSString stringWithFormat:@"http://cmstest.fblife.com/ajax.php?c=newstwo&a=getappindex&page=%d&type=json&pagesize=10&datatype=2",numberofpage];
+    NSString *str_search=[NSString stringWithFormat:@"http://cmsweb.fblife.com/ajax.php?c=newstwo&a=getappindex&page=%d&type=json&pagesize=10&datatype=2",numberofpage];
     
     [loaddata SeturlStr:str_search mytest:^(NSDictionary *dicinfo, int errcode) {
         

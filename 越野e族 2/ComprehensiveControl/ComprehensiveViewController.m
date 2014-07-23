@@ -268,7 +268,7 @@
 
     SzkLoadData *loaddata=[[SzkLoadData alloc]init];
     
-    NSString *str_search=[NSString stringWithFormat:@"http://cmstest.fblife.com/ajax.php?c=newstwo&a=newsslide&classname=appnew&type=json"];
+    NSString *str_search=[NSString stringWithFormat:@"http://cmsweb.fblife.com/ajax.php?c=newstwo&a=newsslide&classname=zuixin&type=json"];
     
     [loaddata SeturlStr:str_search mytest:^(NSDictionary *dicinfo, int errcode) {
         
@@ -329,7 +329,7 @@
     
     SzkLoadData *loaddata=[[SzkLoadData alloc]init];
     
-    NSString *str_search=[NSString stringWithFormat:@"http://cmstest.fblife.com/ajax.php?c=newstwo&a=getappindex&page=%d&type=json&pagesize=10",numberofpage];
+    NSString *str_search=[NSString stringWithFormat:@"http://cmsweb.fblife.com/ajax.php?c=newstwo&a=getappindex&page=%d&type=json&pagesize=10",numberofpage];
     
     [loaddata SeturlStr:str_search mytest:^(NSDictionary *dicinfo, int errcode) {
         
@@ -413,6 +413,22 @@
 #pragma mark--幻灯的View
 
 -(UIView *)getHeaderViewWithDic:(NSDictionary*)headerDic {
+    
+    
+    
+    NSLog(@"最新的幻灯的数据===%@",huandengDic);
+    
+    
+    /**
+     *   id = 119049;
+     link = "http://drive.fblife.com/html/20140722/119049.html";
+     photo = "http://cmsweb.fblife.com/attachments/20140722/14060219878454.gif";
+     stitle = "2015\U6b3e\U798f\U7279\U5f81\U670d\U8005\U524d\U77bb";
+     title = "\U7f8e\U5f0f\U5168\U5c3a\U5bf8SUV 2015\U6b3e\U798f\U7279\U5f81\U670d\U8005\U524d\U77bb";
+     type = 1;
+
+     */
+    
     
     com_id_array=[NSMutableArray array];
     com_link_array=[NSMutableArray array];
