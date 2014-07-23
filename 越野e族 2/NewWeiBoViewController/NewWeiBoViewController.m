@@ -329,6 +329,8 @@
                 {
                     NSMutableArray * temp_array = [zsnApi conversionFBContent:userinfo isSave:pageCount[selectedView]>1?NO:YES WithType:selectedView];
                     
+                    
+                    
                     if (selectedView == 1)
                     {
                         [_array2 addObjectsFromArray:temp_array];
@@ -605,7 +607,7 @@
     loadview=[[LoadingIndicatorView alloc]initWithFrame:CGRectMake(0, 900, 320, 40)];
     loadview1=[[LoadingIndicatorView alloc]initWithFrame:CGRectMake(0, 900, 320, 40)];
     loadview3=[[LoadingIndicatorView alloc]initWithFrame:CGRectMake(0, 900, 320, 40)];
-    
+    //微博广场
     _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(320,0,320,iPhone5?548-44:460-44) style:UITableViewStylePlain];
     
     if (IOS_VERSION>=7.0)
@@ -620,7 +622,7 @@
     _myTableView.tableFooterView = loadview;
     
     
-    
+    //我关注的
     _myTableView1 = [[UITableView alloc] initWithFrame:CGRectMake(0,0,320,iPhone5?548-44:460-44) style:UITableViewStylePlain];
     
     if (IOS_VERSION>=7.0)
@@ -1454,7 +1456,7 @@
     
     [self.leveyTabBarController hidesTabBar:YES animated:YES];
     
-    [self presentModalViewController:logIn animated:YES];
+    [self presentViewController:logIn animated:YES completion:NULL];
 }
 
 
@@ -2252,7 +2254,7 @@
     forward.theIndexPath = theIndexpath.row;
     forward.theSelectViewIndex = selectedView;
     [self.leveyTabBarController hidesTabBar:YES animated:YES];
-    [self presentModalViewController:forward animated:YES];
+    [self presentViewController:forward animated:YES completion:NULL];
 }
 
 -(void)presentToCommentControllerWithInfo:(FbFeed *)info WithCell:(NewWeiBoCustomCell *)theCell
@@ -2290,7 +2292,8 @@
     forward.theIndexPath = theIndexpath.row;
     forward.theSelectViewIndex = selectedView;
     [self.leveyTabBarController hidesTabBar:YES animated:YES];
-    [self presentModalViewController:forward animated:YES];
+    
+    [self presentViewController:forward animated:YES completion:NULL];
 }
 
 
@@ -2468,7 +2471,7 @@
     
     [self.leveyTabBarController hidesTabBar:YES animated:YES];
     
-    [self presentModalViewController:browser animated:YES];
+    [self presentViewController:browser animated:YES completion:NULL];
 }
 
 

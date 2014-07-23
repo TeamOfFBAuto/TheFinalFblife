@@ -634,7 +634,7 @@
     [_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
     
     
-    if (_silder_view.frame.origin.x != 320 && scrollView == _myTableView)
+    if (_silder_view.frame.origin.x != 322 && scrollView == _myTableView)
     {
         if (request2)
         {
@@ -645,7 +645,7 @@
             request2 = nil;
         }
         [UIView animateWithDuration:0.2 animations:^{
-            _silder_view.frame = CGRectMake(320,self.myTableView.frame.origin.y,_silder_view.frame.size.width,self.myTableView.frame.size.height);
+            _silder_view.frame = CGRectMake(322,self.myTableView.frame.origin.y,_silder_view.frame.size.width,self.myTableView.frame.size.height);
         } completion:^(BOOL finished)
          {
              
@@ -1262,7 +1262,7 @@
 {
     if (!_silder_view)
     {
-        _silder_view = [[UIView alloc] initWithFrame:CGRectMake(320,self.myTableView.frame.origin.y,240,self.myTableView.frame.size.height)];
+        _silder_view = [[UIView alloc] initWithFrame:CGRectMake(322,self.myTableView.frame.origin.y,240,self.myTableView.frame.size.height)];
         
         _silder_view.layer.shadowColor = [UIColor blackColor].CGColor;
         
@@ -1370,7 +1370,7 @@
 -(void)doButton:(UIButton *)button
 {
     [UIView animateWithDuration:0.4 animations:^{
-        _silder_view.frame = CGRectMake(320,self.myTableView.frame.origin.y,_silder_view.frame.size.width,self.myTableView.frame.size.height);
+        _silder_view.frame = CGRectMake(322,self.myTableView.frame.origin.y,_silder_view.frame.size.width,self.myTableView.frame.size.height);
     } completion:^(BOOL finished) {
         
     }];
@@ -1489,7 +1489,7 @@
             }
             
             [UIView animateWithDuration:0.4 animations:^{
-                _silder_view.frame = CGRectMake(320,self.myTableView.frame.origin.y,_silder_view.frame.size.width,self.myTableView.frame.size.height);
+                _silder_view.frame = CGRectMake(322,self.myTableView.frame.origin.y,_silder_view.frame.size.width,self.myTableView.frame.size.height);
             } completion:^(BOOL finished)
              {
                  
@@ -1512,7 +1512,7 @@
         }
         
         [UIView animateWithDuration:0.4 animations:^{
-            _silder_view.frame = CGRectMake(320,self.myTableView.frame.origin.y,_silder_view.frame.size.width,self.myTableView.frame.size.height);
+            _silder_view.frame = CGRectMake(322,self.myTableView.frame.origin.y,_silder_view.frame.size.width,self.myTableView.frame.size.height);
         } completion:^(BOOL finished)
          {
              

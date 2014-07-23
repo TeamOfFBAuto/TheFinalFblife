@@ -573,7 +573,7 @@
     
     [self.view addSubview:content_back_view];
     
-    
+    __weak typeof(self) bself = self;
     
     input_view = [[CustomInputView alloc] initWithFrame:CGRectMake(0,content_back_view.frame.origin.y + content_back_view.frame.size.height,320,44)];
     
@@ -584,6 +584,9 @@
     } WithSendBlock:^(NSString *content, BOOL isForward) {
         
         NSLog(@"发表评论");
+        
+        [bself submitPingLunTap:nil];
+        
     }];
     
     [self.view addSubview:input_view];

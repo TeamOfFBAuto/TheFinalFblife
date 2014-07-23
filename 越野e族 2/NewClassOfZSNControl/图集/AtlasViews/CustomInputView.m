@@ -176,12 +176,12 @@
     
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(handleWillShowKeyboard:)
+                                             selector:@selector(handleWillShowKeyboardForCustomInputView:)
                                                  name:UIKeyboardWillShowNotification
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(handleWillHideKeyboard:)
+                                             selector:@selector(handleWillHideKeyboardForCustomInputView:)
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
 }
@@ -200,7 +200,7 @@
 
 #pragma mark - 监测键盘弹出收起以及高度变化
 
--(void)handleWillShowKeyboard:(NSNotification *)notification
+-(void)handleWillShowKeyboardForCustomInputView:(NSNotification *)notification
 {
     __weak typeof(self) bself = self;
     
@@ -225,7 +225,7 @@
 }
 
 
--(void)handleWillHideKeyboard:(NSNotification *)notification
+-(void)handleWillHideKeyboardForCustomInputView:(NSNotification *)notification
 {
     [self hiddenInputView];
 }

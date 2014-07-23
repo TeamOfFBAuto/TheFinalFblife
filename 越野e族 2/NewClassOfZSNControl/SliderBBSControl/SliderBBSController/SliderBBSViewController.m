@@ -20,6 +20,7 @@
 #import "NewMainViewModel.h"
 #import "CompreTableViewCell.h"
 #import "UIViewController+MMDrawerController.h"
+#import "PicShowViewController.h"
 
 
 
@@ -810,7 +811,7 @@
         
         [cell normalsetDic:dictemp cellStyle:CompreTableViewCellStyleText thecellbloc:^(NSString *thebuttontype,NSDictionary *dic,NSString * theWhateverid) {
             
-//                [wself turntoOtherVCwithtype:thebuttontype thedic:dic theid:theWhateverid];
+                [wself turntoOtherVCwithtype:thebuttontype thedic:dic theid:theWhateverid];
         }];
         
         return cell;
@@ -1216,7 +1217,7 @@
     
     model.forum_isOpen = !model.forum_isOpen;
     
-    [_myTableView2 reloadSections:[NSIndexSet indexSetWithIndex:sender.tag-10000] withRowAnimation:UITableViewRowAnimationNone];
+    [_myTableView2 reloadSections:[NSIndexSet indexSetWithIndex:sender.tag-10000] withRowAnimation:UITableViewRowAnimationFade];
 }
 
 
@@ -1406,6 +1407,108 @@
     
 }
 
+
+#pragma mark--处理各种跳转
+
+-(void)turntoOtherVCwithtype:(NSString *)thebuttontype thedic:(NSDictionary *)mydic theid:(NSString *)theWhateverid{
+    //（1新闻，2图集，3论坛，4商城
+    
+    NewMainViewModel *_newmodel=[[NewMainViewModel alloc]init];
+    [_newmodel NewMainViewModelSetdic:mydic];
+    
+    if ([thebuttontype isEqualToString:@"big"]) {
+        //点击的是大的button
+        
+        switch ([_newmodel.type intValue]) {
+            case 1:
+            {
+                
+                RootViewController *rootV=[[RootViewController alloc]init];
+                
+                [self.navigationController pushViewController:rootV animated:YES];
+                
+                
+            }
+                break;
+            case 2:
+            {
+                PicShowViewController *TestVC=[[PicShowViewController alloc]init];
+                
+                
+                [self.navigationController pushViewController:TestVC animated:YES];
+                
+                
+            }
+                break;
+            case 3:
+            {
+                [seg_view MyButtonStateWithIndex:1];
+            }
+                break;
+            case 4:
+            {
+                
+            }
+                break;
+                
+            default:
+                break;
+        }
+        
+        
+    }else if([thebuttontype isEqualToString:@"small"]) {
+        
+        switch ([_newmodel.type intValue]) {
+            case 1:
+            {
+                
+                RootViewController *rootV=[[RootViewController alloc]init];
+                rootV.str_dijige=_newmodel.shownum;
+                
+                
+                
+                NSLog(@"self.diji===%@",rootV.str_dijige);
+                
+                [self.navigationController pushViewController:rootV animated:YES];
+             
+                
+            }
+                break;
+            case 2:
+            {
+                PicShowViewController *TestVC=[[PicShowViewController alloc]init];
+                
+                
+                [self.navigationController pushViewController:TestVC animated:YES];
+                
+            }
+                break;
+            case 3:
+            {
+                BBSfenduiViewController *_bbsVC=[[BBSfenduiViewController alloc]init];\
+                
+                _bbsVC.string_id=_newmodel.bbsfid;
+                
+                [self.navigationController pushViewController:_bbsVC animated:YES];
+            }
+                break;
+            case 4:
+            {
+                
+                
+            }
+                break;
+                
+            default:
+                break;
+        }
+    }
+    
+    //   NSLog(@"xxxx==%@",mydic);
+    //
+    
+    
+}
 
 
 - (void)didReceiveMemoryWarning
