@@ -154,6 +154,7 @@
 		19F9364A197E6BBD00288E6C /* newsuncollect44_43@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 19F93648197E6BBD00288E6C /* newsuncollect44_43@2x.png */; };
 		19F9364D197E9FD600288E6C /* louzhured38_52@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 19F9364B197E9FD600288E6C /* louzhured38_52@2x.png */; };
 		19F9364E197E9FD600288E6C /* louzhu38_52@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 19F9364C197E9FD600288E6C /* louzhu38_52@2x.png */; };
+		19F93651197F9BAE00288E6C /* ZkingAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 19F93650197F9BAE00288E6C /* ZkingAlert.m */; };
 		560AD6EB197A6DAA003CEBF7 /* saoyisao_440_440@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 560AD6EA197A6DAA003CEBF7 /* saoyisao_440_440@2x.png */; };
 		560AD6EC197A6DAA003CEBF7 /* saoyisao_440_440@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 560AD6EA197A6DAA003CEBF7 /* saoyisao_440_440@2x.png */; };
 		560AD6EE197A6DF2003CEBF7 /* saoyisao_line33@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 560AD6ED197A6DF2003CEBF7 /* saoyisao_line33@2x.png */; };
@@ -1526,6 +1527,8 @@
 		19F93648197E6BBD00288E6C /* newsuncollect44_43@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "newsuncollect44_43@2x.png"; sourceTree = "<group>"; };
 		19F9364B197E9FD600288E6C /* louzhured38_52@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "louzhured38_52@2x.png"; sourceTree = "<group>"; };
 		19F9364C197E9FD600288E6C /* louzhu38_52@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "louzhu38_52@2x.png"; sourceTree = "<group>"; };
+		19F9364F197F9BAE00288E6C /* ZkingAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZkingAlert.h; sourceTree = "<group>"; };
+		19F93650197F9BAE00288E6C /* ZkingAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZkingAlert.m; sourceTree = "<group>"; };
 		560AD6EA197A6DAA003CEBF7 /* saoyisao_440_440@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "saoyisao_440_440@2x.png"; sourceTree = "<group>"; };
 		560AD6ED197A6DF2003CEBF7 /* saoyisao_line33@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "saoyisao_line33@2x.png"; sourceTree = "<group>"; };
 		560AD6F0197A71CB003CEBF7 /* saoyisao_kacha@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "saoyisao_kacha@2x.png"; sourceTree = "<group>"; };
@@ -3110,6 +3113,8 @@
 				19E29911197145A3007B36E0 /* ShoucangSeg.m */,
 				190F034019764A4700EC6C47 /* PicShowTableViewCell.h */,
 				190F034119764A4700EC6C47 /* PicShowTableViewCell.m */,
+				19F9364F197F9BAE00288E6C /* ZkingAlert.h */,
+				19F93650197F9BAE00288E6C /* ZkingAlert.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -6958,6 +6963,7 @@
 				566E7A53185EE80100BB88C5 /* loadingview.m in Sources */,
 				5675DE20196D2E8F001926E1 /* SliderRankingListViewController.m in Sources */,
 				56C9557D185EEE3E00763E69 /* FbNewsFeed.m in Sources */,
+				19F93651197F9BAE00288E6C /* ZkingAlert.m in Sources */,
 				566E7970185EE75D00BB88C5 /* QBImagePickerGroupCell.m in Sources */,
 				195F6B45196E85DD00BBC334 /* NewshoucangTableViewCell.m in Sources */,
 				563365481862E7510069F838 /* testimgViewController.m in Sources */,

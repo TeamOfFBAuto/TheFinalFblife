@@ -15,6 +15,7 @@
 @end
 @interface AlertRePlaceView : UIImageView
 - (id)initWithFrame:(CGRect)frame labelString:(NSString *)_string;
+
 -(void)hide;
 @property(assign,nonatomic)id<AlertRePlaceViewDelegate>delegate;
 @end

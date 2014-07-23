@@ -106,6 +106,14 @@
 
 - (void)viewDidLoad
 {
+    
+    
+    self.thezkingAlertV=[[ZkingAlert alloc]initWithFrame:CGRectMake(0, 0, 320, 480) labelString:@""];
+    _thezkingAlertV.hidden=YES;
+    [[UIApplication sharedApplication].keyWindow
+     addSubview:_replaceAlertView];
+    
+    
     self.navigationController.navigationBarHidden=NO;
     self.view.frame=CGRectMake(0, 0, 320, 1000);
     self.view.backgroundColor=[UIColor greenColor];
@@ -271,8 +279,30 @@
         
         
         
-    } WithSendBlock:^(NSString *content, BOOL isForward) {
         
+        
+    } WithSendBlock:^(NSString *content, BOOL isForward) {
+        //发表
+        
+        
+        SzkLoadData *loaddata=[[SzkLoadData alloc]init];
+        
+              NSString *string_102=[[NSString alloc]initWithFormat:@"http://fb.fblife.com/openapi/index.php?mod=comment&code=commentadd&sort=7&sortid=%d&content=%@&title=%@&fromtype=b5eeec0b&authkey=%@",[self.string_Id integerValue],[content stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],[self.title_Str stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],[[NSUserDefaults standardUserDefaults]objectForKey:USER_AUTHOD]];
+        
+        
+        
+        
+        [loaddata SeturlStr:string_102 mytest:^(NSDictionary *dicinfo, int errcode) {
+            
+            
+            
+            
+            NSLog(@"评论返回的数据===%@",dicinfo);
+            
+            
+            
+        }];
+
         
         
     }];
@@ -434,8 +464,7 @@
             
             
             
-            
-            [weself quxiaoShoucang:wsender];
+            [weself tempQuxiaoshoucang:wsender];
 
             
         }else{
@@ -456,6 +485,32 @@
 
 }
 
+-(void)tempQuxiaoshoucang:(UIButton *)sender{
+    
+    
+    SzkLoadData *loaddata=[[SzkLoadData alloc]init];
+    
+    // __weak typeof(self) weself=self;
+    
+    [loaddata SeturlStr:[NSString stringWithFormat:@"http://cmsweb.fblife.com/ajax.php?c=newstwo&a=delfavorites&type=json&took=%@&id=%@",[personal getMyAuthkey],self.string_Id] mytest:^(NSDictionary *dicinfo, int errcode) {
+        
+        
+        
+        
+        if ([[dicinfo objectForKey:@"errno"] intValue]==0) {
+            
+            
+            [sender setBackgroundImage:[UIImage imageNamed:@"newsuncollect44_43.png"] forState:UIControlStateNormal];
+            
+            
+        }
+        
+        
+    }];
+    
+
+
+}
 
 #pragma mark-收藏
 
@@ -478,6 +533,11 @@
         NSLog(@"收藏返回的数据===%@",dicinfo);
         
         if ([[dicinfo objectForKey:@"errno"] intValue]==0) {
+            
+            
+            _thezkingAlertV.hidden=NO;
+            _thezkingAlertV.textLabel.text=@"收藏成功";
+            [_thezkingAlertV ZkingAlerthide];
             
             sender.userInteractionEnabled=YES;
 
@@ -533,12 +593,17 @@
     
    // __weak typeof(self) weself=self;
     
-    [loaddata SeturlStr:[NSString stringWithFormat:@"http://cmsweb.fblife.com/ajax.php?c=newstwo&a=delfavorites&type=xml&took=%@&id=%@",[personal getMyAuthkey],self.string_Id] mytest:^(NSDictionary *dicinfo, int errcode) {
+    [loaddata SeturlStr:[NSString stringWithFormat:@"http://cmsweb.fblife.com/ajax.php?c=newstwo&a=delfavorites&type=json&took=%@&id=%@",[personal getMyAuthkey],self.string_Id] mytest:^(NSDictionary *dicinfo, int errcode) {
         
         
         
         
         if ([[dicinfo objectForKey:@"errno"] intValue]==0) {
+            
+            _thezkingAlertV.hidden=NO;
+            _thezkingAlertV.textLabel.text=@"已取消收藏";
+            [_thezkingAlertV ZkingAlerthide];
+
         
             [sender setBackgroundImage:[UIImage imageNamed:@"newsuncollect44_43.png"] forState:UIControlStateNormal];
 
@@ -547,11 +612,10 @@
 
         
     }];
-
-    
-    
     
 }
+
+
 
 
 #pragma mark-上下滚动
@@ -1337,9 +1401,7 @@
          addSubview:_replaceAlertView];
         _replaceAlertView.hidden=NO;
         [_replaceAlertView hide];
-        
     }
-
 }
 #pragma mark-显示框
 -(void)hidefromview{
@@ -1365,6 +1427,7 @@
         return;
     }
     NSString *string_108=[[NSString alloc]initWithFormat:@"http://fb.fblife.com/openapi/index.php?mod=comment&code=commentadd&sort=7&sortid=%d&content=%@&title=ssfsf&fromtype=b5eeec0b&authkey=%@",[self.string_Id integerValue],[text_write.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],[[NSUserDefaults standardUserDefaults] objectForKey:USER_AUTHOD]];
+    
     NSURL *url108 = [NSURL URLWithString:string_108];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url108];
     request.tag=108;
@@ -1852,6 +1915,24 @@
 
 #pragma mark - Text Notification
 - (void) keyboardWillShow:(NSNotification *)notification {
+    
+    
+    NSLog(@"key===%@",[personal getMyAuthkey ]);
+    
+    if ([[personal getMyAuthkey ] isEqualToString:@"(null)"]||[personal getMyAuthkey ].length==0) {
+        
+        
+        LogInViewController *loginV=[[LogInViewController alloc]init];
+        
+        [self presentViewController:loginV animated:YES completion:^{
+            
+            
+        }];
+        
+        
+    }
+    
+    
     
 //    NSDictionary * info = [notification userInfo];
 //    CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;

@@ -20,6 +20,7 @@
 #import "WXApi.h"
 #import <MessageUI/MessageUI.h>
 #import "WeiboSDK.h"
+#import "ZkingAlert.h"
 #import <MessageUI/MFMailComposeViewController.h>
 
 @interface newsdetailViewController : UIViewController<NSURLConnectionDataDelegate,UITextFieldDelegate,UIWebViewDelegate,UIScrollViewDelegate,UIActionSheetDelegate,downloaddelegate,MWPhotoBrowserDelegate,AlertRePlaceViewDelegate,BottombarviewDelegate,SelectNumberViewDelegate,WXApiDelegate,MFMailComposeViewControllerDelegate,WeiboSDKDelegate>{
@@ -94,6 +95,9 @@
     
     
 }
+
+@property(nonatomic,strong)ZkingAlert *thezkingAlertV;
+
 @property(nonatomic,assign)int _pages;
 @property(nonatomic,strong)NSString * string_Id;
 @property(nonatomic,strong)NSString * title_Str;
