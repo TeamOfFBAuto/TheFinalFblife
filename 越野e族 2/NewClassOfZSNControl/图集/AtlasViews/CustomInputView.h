@@ -43,5 +43,15 @@ typedef void(^InputViewSendToPinglunBlock)(NSString * content,BOOL isForward);//
 
 -(void)loadAllViewWithPinglunCount:(NSString *)theCount WithPushBlock:(InputViewPushToPinglunBlock)thePushBlock WithSendBlock:(InputViewSendToPinglunBlock)theSendBlock;
 
+//添加键盘观察
+
+-(void)addKeyBordNotification;
+
+-(void)deleteKeyBordNotification;
+
+
+//隐藏键盘
+-(void)hiddeninputViewTap;
+
 
 @end

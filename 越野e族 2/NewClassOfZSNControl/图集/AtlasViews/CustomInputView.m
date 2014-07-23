@@ -25,7 +25,6 @@
 }
 
 
-
 -(void)loadAllViewWithPinglunCount:(NSString *)theCount WithPushBlock:(InputViewPushToPinglunBlock)thePushBlock WithSendBlock:(InputViewSendToPinglunBlock)theSendBlock
 {
     
@@ -173,17 +172,6 @@
     content_label.backgroundColor = [UIColor clearColor];
     
     [text_background_view addSubview:content_label];
-    
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(handleWillShowKeyboardForCustomInputView:)
-                                                 name:UIKeyboardWillShowNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(handleWillHideKeyboardForCustomInputView:)
-                                                 name:UIKeyboardWillHideNotification
-                                               object:nil];
 }
 
 
@@ -278,6 +266,8 @@
 }
 
 
+
+
 #pragma mark - UITextViewDelegate
 
 
@@ -287,11 +277,11 @@
     
     if (!_theTouchView)
     {
-        _theTouchView = [[UIView alloc] initWithFrame:CGRectMake(0,0,320,text_background_view.frame.origin.y)];
+        _theTouchView = [[UIView alloc] initWithFrame:CGRectMake(0,0,320,self.text_background_view.frame.origin.y)];
         
         _theTouchView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.3];
         
-        UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hiddeninputViewTap:)];
+        UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hiddeninputViewTap)];
         
         [_theTouchView addGestureRecognizer:tap];
         
@@ -305,9 +295,11 @@
 }
 
 
--(void)hiddeninputViewTap:(UITapGestureRecognizer *)sender
+-(void)hiddeninputViewTap
 {
     [text_input_view resignFirstResponder];
+    
+    _theTouchView.hidden = YES;
 }
 
 
@@ -334,6 +326,33 @@
     
     
 }
+
+
+#pragma mark - 添加删除键盘检测通知
+
+
+-(void)addKeyBordNotification
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleWillShowKeyboardForCustomInputView:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleWillHideKeyboardForCustomInputView:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+}
+
+-(void)deleteKeyBordNotification
+{
+    [self hiddeninputViewTap];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+}
+
 
 
 /*
