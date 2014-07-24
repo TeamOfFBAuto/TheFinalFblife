@@ -81,4 +81,6 @@
 @property(nonatomic,strong)NSString *bbsdetail_tid;
 @property(nonatomic,strong)UIImage * imgforshare;
 
+@property(nonatomic,strong)NSMutableArray * collection_array;//由上个界面传过来，所有收藏的帖子数据
+
 @end

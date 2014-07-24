@@ -28,6 +28,10 @@
     [self loadImageFromURL1:imageURL withPlaceholdImage:nil];
 }
 
+
+
+
+
 - (void) loadImageFromURL:(NSString*)imageURL withPlaceholdImage:(UIImage *)placeholdImage
 {
     // add by stan
@@ -175,6 +179,96 @@
 }
 
 
+
+#pragma mark - 首先加载图片，如果加载失败，调取缓存图片
+
+
+-(void)loadUserHeaderImageFromUrl:(NSString *)imageUrl withPlaceholdImage:(UIImage *)placeholdImage
+{
+    if (!self.image)
+    {
+        self.image = placeholdImage;
+    }
+    
+    if(!imageUrl || [imageUrl isEqualToString:@""])
+    {
+        self.image = placeholdImage;
+        return;
+    }
+    
+    [self downloadImage:imageUrl WithType:0];
+}
+
+
+
+-(void)downloadUserHeaderImage:(NSString *)imageURL
+{
+    [self cancelDownload];
+    
+    NSString * newImageURL = [imageURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    self.request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:newImageURL]];
+    [self.request setDownloadDestinationPath:[[FullyLoaded sharedFullyLoaded] pathForImageURL:imageURL]];
+    [self.request setDelegate:self];
+    [self.request setCompletionBlock:^(void){
+        
+        self.request.delegate = nil;
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"cache" object:nil];
+        
+        NSString * imageURL = [[self.request.originalURL absoluteString] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        
+        self.request = nil;
+        
+        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
+        
+        dispatch_async(queue, ^{
+            
+            UIImage *image = [[FullyLoaded sharedFullyLoaded] imageForURL:imageURL];
+            
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                if (image)
+                {
+                    [self fadeAnimation:image];
+                    
+                    [self.delegate handleImageLayout:self];
+                    
+                }
+                if (self.delegate && [self.delegate respondsToSelector:@selector(seccesDownLoad:)])
+                {
+                    [self.delegate seccesDownLoad:image];
+                }
+                
+                if (self.delegate && [self.delegate respondsToSelector:@selector(succesDownLoadWithImageView:Image:)])
+                {
+                    [self.delegate succesDownLoadWithImageView:self Image:image];
+                }
+                
+            });
+        });}];
+    
+    [self.request setFailedBlock:^(void)
+     {
+         [self.delegate seccesDownLoad:nil];
+         [self.request cancel];
+         self.request.delegate = nil;
+         self.request = nil;
+         NSLog(@"async image download failed");
+         [self.delegate handleImageLayout:nil];
+         
+         if (self.delegate && [self.delegate respondsToSelector:@selector(succesDownLoadWithImageView:Image:)])
+         {
+             [self.delegate succesDownLoadWithImageView:self Image:nil];
+         }
+     }];
+    
+    
+    [self.request startAsynchronous];
+}
+
+
+
+
+
 - (void) downloadImage:(NSString *)imageURL WithType:(int)type
 {
     [self cancelDownload];
@@ -267,15 +361,6 @@
                     {
                         
                         NSLog(@"async image download done");
-                        
-                        
-                        //                        CATransition *animation = [CATransition animation];
-                        //                        animation.delegate = self;
-                        //                        animation.duration = 0.5 ;  // 动画持续时间(秒)
-                        //                        animation.timingFunction = UIViewAnimationCurveEaseInOut;
-                        //                        animation.type = kCATransitionFade;//淡入淡出效果
-                        //
-                        //                        self.image = image;
                         
                         [self fadeAnimation:image];
                         

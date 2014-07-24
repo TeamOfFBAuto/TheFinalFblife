@@ -308,7 +308,7 @@
 
 -(void)zhaohuiButton:(UIButton *)sender
 {
-    UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"" message:@"请登录网站找回密码" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil,nil];
+    UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"请登录FBLIFE.COM找回密码" message:nil delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil,nil];
     
     [alert show];
 }

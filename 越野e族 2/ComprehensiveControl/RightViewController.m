@@ -77,8 +77,15 @@
 
 -(void)setup
 {
-    
-    if (_rootScrollView) {
+    if (_rootScrollView)
+    {
+        BOOL islogin = [[NSUserDefaults standardUserDefaults] boolForKey:USER_IN];
+        
+        if (islogin && [LogIn_label.text isEqualToString:@"点击立即登录"])
+        {
+            [self receivemyimage_head];
+        }
+        
         return;
     }
     
@@ -313,7 +320,9 @@
                 
                 LogIn_label.text = userName;
                 
-                [headerImageView loadImageFromURL:userFace withPlaceholdImage:[UIImage imageNamed:@"SliderRightLogin.png"]];
+//                [headerImageView loadImageFromURL:userFace withPlaceholdImage:[UIImage imageNamed:@"SliderRightLogin.png"]];
+                
+                [headerImageView loadUserHeaderImageFromUrl:userFace withPlaceholdImage:[UIImage imageNamed:@"SliderRightLogin.png"]];
                 
             }
         }

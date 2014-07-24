@@ -35,7 +35,7 @@
 @property(nonatomic,assign)id<RankingListCustomCellDelegate>delegate;
 
 
--(void)setInfoWith:(int)ranking WithModel:(RankingListModel *)model;
+-(void)setInfoWith:(int)ranking WithModel:(RankingListModel *)model WithType:(int)theType;
 
 
 

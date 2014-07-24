@@ -98,13 +98,22 @@
 }
 
 
--(void)setInfoWith:(int)ranking WithModel:(RankingListModel *)model
+-(void)setInfoWith:(int)ranking WithModel:(RankingListModel *)model WithType:(int)theType
 {
     _ranking_label.text = @"";
     
     _title_label.text = @"";
     
     _follow_num_label.text = @"";
+    
+    
+    if (theType == 1)
+    {
+        _title_label.font = [UIFont systemFontOfSize:13];
+    }else
+    {
+        _title_label.font = [UIFont systemFontOfSize:15];
+    }
     
     
     if (ranking <= 3)

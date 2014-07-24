@@ -40,4 +40,22 @@
 - (void) loadImageFromURL:(NSString*)imageURL;
 - (void) loadImageFromURL:(NSString*)imageURL withPlaceholdImage:(UIImage*)image;
 - (void) cancelDownload;
+
+#pragma mark - 每次都请求图片，如果请求失败再调取缓存图片，如果没有缓存图片加载默认图片
+-(void)loadUserHeaderImageFromUrl:(NSString *)imageUrl withPlaceholdImage:(UIImage *)placeholdImage;
+
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+

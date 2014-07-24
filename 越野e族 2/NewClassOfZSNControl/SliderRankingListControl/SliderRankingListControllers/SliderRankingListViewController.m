@@ -50,6 +50,13 @@
         
         [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:MY_MACRO_NAME?@"sliderBBSNavigationBarImage":@"sliderBBSNavigationBarImage_ios6"] forBarMetrics: UIBarMetricsDefault];
     }
+    
+    
+    if (self.currentPage == 1)
+    {
+        [self.myTableView reloadData];
+    }
+    
 }
 
 
@@ -235,7 +242,7 @@
     
     RankingListModel * model = [[_data_array objectAtIndex:_currentPage-1] objectAtIndex:indexPath.row];
     
-    [cell setInfoWith:indexPath.row + 1 WithModel:model];
+    [cell setInfoWith:indexPath.row + 1 WithModel:model WithType:self.currentPage];
     
     cell.collection_button.selected = [self.currentPage==1?self.bbs_post_collection_array:self.bbs_forum_collection_array containsObject:model.ranking_id];
     
@@ -251,6 +258,8 @@
         bbsdetailViewController * detail = [[bbsdetailViewController alloc] init];
         
         detail.bbsdetail_tid = model.ranking_id;
+        
+        detail.collection_array = self.bbs_post_collection_array;
         
         [self.navigationController pushViewController:detail animated:YES];
     }else

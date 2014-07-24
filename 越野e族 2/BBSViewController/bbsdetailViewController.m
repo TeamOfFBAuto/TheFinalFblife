@@ -39,6 +39,7 @@
 ///
 @implementation bbsdetailViewController
 @synthesize bbsdetail_tid,imgforshare;
+@synthesize collection_array = _collection_array;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -597,6 +598,8 @@ UIButton *    rightView=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 160, 44)
         
         if ([[dicinfo objectForKey:@"errcode"] intValue]==0) {
             
+            [self.collection_array addObject:self.bbsdetail_tid];
+            
             sender.userInteractionEnabled=YES;
             [self.thezkingAlertV zkingalertShowWithString:@"收藏成功"];
             
@@ -657,6 +660,8 @@ UIButton *    rightView=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 160, 44)
         
         
         if ([[dicinfo objectForKey:@"errcode"] intValue]==0) {
+            
+            [self.collection_array removeObject:self.bbsdetail_tid];
             
             [self.thezkingAlertV zkingalertShowWithString:@"已取消收藏"];
 
