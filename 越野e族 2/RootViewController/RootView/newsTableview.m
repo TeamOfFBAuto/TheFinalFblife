@@ -295,7 +295,7 @@
         
     }else{
         
-        orcell=[[newscellview alloc]initWithFrame:CGRectMake(0, 0, 320, 77)];
+        orcell=[[newscellview alloc]initWithFrame:CGRectMake(0, 0, 320, 87)];
         [orcell setImv_string:(NSString *)[[self.normalarray objectAtIndex:indexPath.row-1] objectForKey:@"photo"]];
         [orcell setTitle_string:(NSString *)[[self.normalarray objectAtIndex:indexPath.row-1] objectForKey:@"stitle"]];
 
@@ -330,7 +330,7 @@
         height=163;
     }else
     {
-        height=77;
+        height=77+10;
     }
     return height;
 }

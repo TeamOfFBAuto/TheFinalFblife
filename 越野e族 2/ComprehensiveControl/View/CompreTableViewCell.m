@@ -104,18 +104,18 @@
         
         _bigLeixing.titleLabel.font=[UIFont systemFontOfSize:11];
         [_bigLeixing setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        _bigLeixing.backgroundColor=RGBCOLOR(245, 245, 245);
+        _bigLeixing.backgroundColor=RGBCOLOR(244, 244, 244);
         [_bigLeixing addTarget:self action:@selector(clickBigButton:) forControlEvents:UIControlEventTouchUpInside];
         
         
         _littleLeixing.titleLabel.font=[UIFont systemFontOfSize:11];
         [_littleLeixing setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        _littleLeixing.backgroundColor=RGBCOLOR(245, 245, 245);
+        _littleLeixing.backgroundColor=RGBCOLOR(244, 244, 244);
         [_littleLeixing addTarget:self action:@selector(clickSmallButton:) forControlEvents:UIControlEventTouchUpInside];
         
-        _zanlabel.font=[UIFont systemFontOfSize:10];
+        _zanlabel.font=[UIFont systemFontOfSize:9];
         
-        _zanlabel.textColor=RGBCOLOR(232, 94, 105);
+        _zanlabel.textColor=RGBCOLOR(235, 79, 83);
         
         _zanlabel.textAlignment=NSTextAlignmentRight;
         
@@ -143,16 +143,17 @@
             case CompreTableViewCellStylePictures:
             {
                 
-                _zanImageV.center=CGPointMake(290, 122);
-                _zanlabel.frame=CGRectMake(290,115 , 320-290-10, 11);
+                _zanImageV.center=CGPointMake(290, 122-2);
+                _zanlabel.frame=CGRectMake(290,115-2 , 320-290-10, 11);
                 
                 NewMainViewModel *_newmodel=[[NewMainViewModel alloc]init];
                 [_newmodel NewMainViewModelSetdic:theDic];
                 //标题
                 
-                _bigLabel.frame=CGRectMake(12, 12, 320, 16);
-                _bigLabel.font=[UIFont systemFontOfSize:15];
+                _bigLabel.frame=CGRectMake(12, 12, 320, 18);
+                _bigLabel.font=[UIFont systemFontOfSize:16];
                 _bigLabel.text=_newmodel.title;
+                _bigLabel.textColor=RGBCOLOR(49, 49, 49);
                 _bigLabel.textAlignment=NSTextAlignmentLeft;
                 
                 
@@ -173,7 +174,7 @@
                 }
                 
                 
-                _bigLeixing.frame=CGRectMake(12, 107, 30, 20);
+                _bigLeixing.frame=CGRectMake(12, 105, 30, 20);
                 [_bigLeixing setTitle:@"图集" forState:UIControlStateNormal];
                 
                 //  _bigLeixing addTarget:self action:@selector(<#selector#>) forControlEvents:<#(UIControlEvents)#>
@@ -192,7 +193,7 @@
                 //右边的button
                 
                 
-                _normalLine.frame=CGRectMake(12, 133.5, 320-24, 0.5);
+                _normalLine.frame=CGRectMake(12, 133.5+4, 320-24, 0.5);
                 _normalLine.backgroundColor=RGBCOLOR(223, 223, 223);
                 
                 
@@ -214,15 +215,16 @@
                 _zanlabel.text=_newmodel.likes;
                 
                 
-                _leftImageV.frame=CGRectMake(12, 12, 90, 60);
+                _leftImageV.frame=CGRectMake(12, 13, 90, 60);
                 if (_newmodel.photo.count) {
                     [_leftImageV loadImageFromURL:[NSString stringWithFormat:@"%@",[_newmodel.photo objectAtIndex:0]] withPlaceholdImage:[UIImage imageNamed:@"smallimplace.png"]];
                     
                 }
                 
-                _bigLabel.frame=CGRectMake(100+10, 12, 320-100-12-10, 16);
+                _bigLabel.frame=CGRectMake(100+10, 13, 320-100-12-10, 16);
                 _bigLabel.font=[UIFont systemFontOfSize:16];
                 _bigLabel.text=_newmodel.title;
+                _bigLabel.textColor=RGBCOLOR(49, 49, 49);
                 _bigLabel.backgroundColor=[UIColor whiteColor];
                 _bigLabel.textAlignment=NSTextAlignmentLeft;
 //                [self.contentView addSubview:_bigLabel];
@@ -233,7 +235,7 @@
                 _textBigLabel.text=_newmodel.stitle;
                 _textBigLabel.textColor=[UIColor lightGrayColor];
                 _textBigLabel.textAlignment=NSTextAlignmentLeft;
-                _textBigLabel.textColor=[UIColor grayColor];
+                _textBigLabel.textColor=RGBCOLOR(124, 124, 124);
                 
                 
                 
@@ -242,7 +244,7 @@
                 
                 //底部的线
                 
-                _normalLine.frame=CGRectMake(12, 85.5, 320-24, 0.5);
+                _normalLine.frame=CGRectMake(12, 86.5, 320-24, 0.5);
                 _normalLine.backgroundColor=RGBCOLOR(223, 223, 223);
                 
                 
@@ -280,6 +282,10 @@
                     _littleLeixing.frame=CGRectMake(140+10, BIGORIGIN, titleSize.width, 15);
                     
                     [_bigLeixing setTitle:@"论坛" forState:UIControlStateNormal];
+                    //[_bigLabel:RGBCOLOR(103, 103, 103)];
+                    [_bigLeixing setTitleColor:RGBCOLOR(103, 103, 103) forState:UIControlStateNormal];
+                    
+                    
                     
                     
                     
@@ -406,7 +412,7 @@
             
             //底部的线
             
-            UIView *viewLine=[[UIView alloc]initWithFrame:CGRectMake(12, 133.5, 320-24, 0.5)];
+            UIView *viewLine=[[UIView alloc]initWithFrame:CGRectMake(12, 133.5+4, 320-24, 0.5)];
             viewLine.backgroundColor=RGBCOLOR(223, 223, 223);
             [self.contentView addSubview:viewLine];
             
@@ -486,7 +492,7 @@
             
         case CompreTableViewCellStylePictures:
         {
-            return 134;
+            return 134+4;
             
             
         }
@@ -494,7 +500,7 @@
             
         case CompreTableViewCellStyleText:
         {
-            return 86;
+            return 87;
             
         }
             break;

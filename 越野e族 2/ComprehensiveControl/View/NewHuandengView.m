@@ -92,10 +92,10 @@ static CGFloat SWITCH_FOCUS_PICTURE_INTERVAL = 6.0; //switch interval time
 #pragma mark - private methods
 - (void)setupViews
 {
-    greenlabel=[[UILabel alloc]initWithFrame:CGRectMake(12, 160, 320, 19)];
+    greenlabel=[[UILabel alloc]initWithFrame:CGRectMake(12, 164+13, 320, 18)];
     greenlabel.font=[UIFont boldSystemFontOfSize:16];
     greenlabel.textAlignment=NSTextAlignmentLeft;
-    greenlabel.textColor=[UIColor blackColor];
+    greenlabel.textColor=RGBCOLOR(42, 42, 42);
     greenlabel.backgroundColor=[UIColor clearColor];
     
     NSArray *imageItems = objc_getAssociatedObject(self, (const void *)SG_FOCUS_ITEM_ASS_KEY);
@@ -110,7 +110,7 @@ static CGFloat SWITCH_FOCUS_PICTURE_INTERVAL = 6.0; //switch interval time
     _pagecontrol.indicatorMargin=8.0f;
     [_pagecontrol setPageIndicatorImage:[UIImage imageNamed:@"dot.png"]];
     [_pagecontrol setCurrentPageIndicatorImage:[UIImage imageNamed:@"dot1.png"]];
-    _pagecontrol.center=CGPointMake(280, 135);
+    _pagecontrol.center=CGPointMake(280, 135+13);
     
     _pagecontrol.currentPage = 0;
     
@@ -130,13 +130,13 @@ static CGFloat SWITCH_FOCUS_PICTURE_INTERVAL = 6.0; //switch interval time
     [self addSubview:greenlabel];
     //三角
     _sanJiaoImageView=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"sanjiao21_8.png"]];
-    _sanJiaoImageView.center=CGPointMake(255, 148);
+    _sanJiaoImageView.center=CGPointMake(255, 148+13);
     [self addSubview:_sanJiaoImageView];
     
     //line
     
-    UIView *viewLine=[[UIView alloc]initWithFrame:CGRectMake(12, 191-0.5, 320-24, 0.5)];
-    viewLine.backgroundColor=RGBCOLOR(79, 103, 137);
+    UIView *viewLine=[[UIView alloc]initWithFrame:CGRectMake(12, 191-0.5+13, 320-24, 0.5)];
+    viewLine.backgroundColor=RGBCOLOR(76, 104, 138);
     [self addSubview:viewLine];
     
     /*
@@ -161,7 +161,7 @@ static CGFloat SWITCH_FOCUS_PICTURE_INTERVAL = 6.0; //switch interval time
     for (int i = 0; i < imageItems.count; i++) {
         
         //        SGFocusImageItem *item = [imageItems objectAtIndex:i];
-        AsyncImageView *imageView = [[AsyncImageView alloc] initWithFrame:CGRectMake(i * 320, 0, 320, 150) ];
+        AsyncImageView *imageView = [[AsyncImageView alloc] initWithFrame:CGRectMake(i * 320, 0, 320, 163) ];
         //加载图片
          //imageView.backgroundColor = i%2?[UIColor greenColor]:[UIColor blueColor];
         SGFocusImageItem *item = [imageItems objectAtIndex:i];
@@ -273,7 +273,7 @@ static CGFloat SWITCH_FOCUS_PICTURE_INTERVAL = 6.0; //switch interval time
             [self.delegate testfoucusImageFrame:self currentItem:page];
        }
     }
-    _sanJiaoImageView.center=CGPointMake(237+14*_scrollView.contentOffset.x/320, 148);
+    _sanJiaoImageView.center=CGPointMake(237+14*_scrollView.contentOffset.x/320, 148+13);
 
 
     _pagecontrol.currentPage = page;

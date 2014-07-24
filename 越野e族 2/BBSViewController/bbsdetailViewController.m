@@ -347,7 +347,7 @@
     
     
     
-  UIButton *  button_comment=[[UIButton alloc]initWithFrame:CGRectMake(MY_MACRO_NAME?140: 25-3, (44-37/2)/2, 43/2, 37/2)];
+  UIButton *  button_comment=[[UIButton alloc]initWithFrame:CGRectMake(MY_MACRO_NAME?140: 25-3, (44-34/2)/2, 43/2, 34/2)];
     
     
     button_comment.tag=26;
@@ -375,7 +375,13 @@ UIButton *    rightView=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 160, 44)
     
     self.navigationItem.rightBarButtonItem=comment_item;
     
-    [self panduanIsshoucang:collectButton];
+    if ([personal getMyAuthkey].length==0||[[personal getMyAuthkey] isEqualToString:@"(null)"]) {
+        
+    }else{
+        
+        [self panduanIsshoucang:collectButton];
+        
+    }
     
     
     
@@ -470,6 +476,28 @@ UIButton *    rightView=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 160, 44)
 
 #pragma mark-判断是否收藏
 
+
+-(void)panduanIsLogin{
+    
+    if ([personal getMyAuthkey].length==0||[[personal getMyAuthkey] isEqualToString:@"(null)"]) {
+        
+        LogInViewController *login=[[LogInViewController alloc]init];
+        [self presentViewController:login animated:YES completion:^{
+            
+        }];
+        return;
+        
+        
+    }else{
+        
+        
+    }
+    
+    
+}
+
+
+
 -(void)panduanIsshoucang:(UIButton *)sender{
     
     sender.userInteractionEnabled=NO;
@@ -546,6 +574,10 @@ UIButton *    rightView=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 160, 44)
 #pragma mark-收藏
 
 -(void)shoucang:(UIButton *)sender{
+    
+    
+    [self panduanIsLogin];
+    
     
     sender.userInteractionEnabled=NO;
     

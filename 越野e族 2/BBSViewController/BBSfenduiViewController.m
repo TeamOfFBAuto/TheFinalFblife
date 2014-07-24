@@ -924,28 +924,28 @@
     UILabel *locationlabel;
     
     titleLabel=[[UILabel alloc]init];
-    titleLabel.font = [UIFont fontWithName:@"Helvetica" size:15.0];
-    titleLabel.textColor=[UIColor blackColor];
+    titleLabel.font = [UIFont fontWithName:@"Helvetica" size:16.0];
+    titleLabel.textColor=RGBCOLOR(49, 49, 49);
     titleLabel.numberOfLines=0;
     titleLabel.lineBreakMode = UILineBreakModeWordWrap|UILineBreakModeTailTruncation;
     titleLabel.backgroundColor = [UIColor clearColor];
     [imageviewcell addSubview:titleLabel];
     
     authorLabel=[[UILabel alloc]init];
-    authorLabel.font = [UIFont fontWithName:@"Helvetica" size:10.0];
-    authorLabel.textColor=[UIColor grayColor];
+    authorLabel.font = [UIFont fontWithName:@"Helvetica" size:11.0];
+    authorLabel.textColor=RGBCOLOR(103, 103, 103);
     authorLabel.backgroundColor = [UIColor clearColor];
     [imageviewcell addSubview:authorLabel];
     
     createTimeLabel=[[UILabel alloc]init];
-    createTimeLabel.font = [UIFont systemFontOfSize:10];
+    createTimeLabel.font = [UIFont systemFontOfSize:11];
     createTimeLabel.textColor= [UIColor lightGrayColor];
     createTimeLabel.backgroundColor = [UIColor clearColor];
     createTimeLabel.textAlignment=UITextAlignmentRight;
     [imageviewcell addSubview:createTimeLabel];
     
     repliesLabel=[[UILabel alloc]init];
-    repliesLabel.font = [UIFont systemFontOfSize:10];
+    repliesLabel.font = [UIFont systemFontOfSize:11];
     repliesLabel.textColor=[UIColor grayColor];
     repliesLabel.backgroundColor = [UIColor clearColor];
     repliesLabel.textAlignment=UITextAlignmentRight;
@@ -973,7 +973,7 @@
             case 0:
                 if (jinghua>0) {
                     Essence_imageV=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"jinghua_31x31.png"]];
-                    Essence_imageV.frame=CGRectMake(8, 12, 16, 16);
+                    Essence_imageV.frame=CGRectMake(8, 14, 16, 16);
                     [imageviewcell addSubview:Essence_imageV];
                     titleLabel.text=[NSString stringWithFormat:@"      %@",[dic objectForKey:@"title"]];
                     
@@ -983,14 +983,14 @@
                 break;
             case 1:{
                 Essence_imageV=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"1_31x31.png"]];
-                Essence_imageV.frame=CGRectMake(8, 12, 16, 16);
+                Essence_imageV.frame=CGRectMake(8, 14, 16, 16);
                 [imageviewcell addSubview:Essence_imageV];
                 titleLabel.text=[NSString stringWithFormat:@"      %@",[dic objectForKey:@"title"]];
             }
                 break;
             case 2:{
                 Essence_imageV=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"2_31x31.png"]];
-                Essence_imageV.frame=CGRectMake(8, 12, 16, 16);
+                Essence_imageV.frame=CGRectMake(8, 14, 16, 16);
                 [imageviewcell addSubview:Essence_imageV];
                 titleLabel.text=[NSString stringWithFormat:@"      %@",[dic objectForKey:@"title"]];
                 
@@ -998,7 +998,7 @@
                 break;
             case 3:{
                 Essence_imageV=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"3_31x31.png"]];
-                Essence_imageV.frame=CGRectMake(8, 12, 16, 16);
+                Essence_imageV.frame=CGRectMake(8, 14, 16, 16);
                 [imageviewcell addSubview:Essence_imageV];
                 titleLabel.text=[NSString stringWithFormat:@"      %@",[dic objectForKey:@"title"]];
                 
@@ -1047,7 +1047,7 @@
     
     CGSize constraintSize = CGSizeMake(290, MAXFLOAT);
     CGSize labelSize = [titleLabel.text sizeWithFont:titleLabel.font constrainedToSize:constraintSize lineBreakMode:UILineBreakModeWordWrap];
-    titleLabel.frame=CGRectMake(8, 12, 290, labelSize.height);
+    titleLabel.frame=CGRectMake(8, 14, 290, labelSize.height);
     
     
     authorLabel.text=[dic objectForKey:@"author"];
@@ -1124,19 +1124,19 @@
     
     if (string_chushouqiugou.length==0) {
         if (jinghua>0||displayorder>0) {
-            CGSize labelSize = [[NSString stringWithFormat:@"      %@",[dic objectForKey:@"title"]] sizeWithFont:[UIFont fontWithName:@"Helvetica" size:15.0]constrainedToSize:constraintSize lineBreakMode:NSLineBreakByCharWrapping];
-            return labelSize.height+40+5;
+            CGSize labelSize = [[NSString stringWithFormat:@"      %@",[dic objectForKey:@"title"]] sizeWithFont:[UIFont fontWithName:@"Helvetica" size:16.0]constrainedToSize:constraintSize lineBreakMode:NSLineBreakByCharWrapping];
+            return labelSize.height+40+7;
             
         }else{
             
-            CGSize labelSize = [[NSString stringWithFormat:@"           %@",[dic objectForKey:@"title"]] sizeWithFont:[UIFont fontWithName:@"Helvetica" size:15.0]constrainedToSize:constraintSize lineBreakMode:UILineBreakModeWordWrap];
-            return labelSize.height+40+5;
+            CGSize labelSize = [[NSString stringWithFormat:@"           %@",[dic objectForKey:@"title"]] sizeWithFont:[UIFont fontWithName:@"Helvetica" size:16.0]constrainedToSize:constraintSize lineBreakMode:UILineBreakModeWordWrap];
+            return labelSize.height+40+7;
             
         }
         
     }else{
-        CGSize labelSize = [[NSString stringWithFormat:@"                      %@",[dic objectForKey:@"title"]] sizeWithFont:[UIFont fontWithName:@"Helvetica" size:15.0]constrainedToSize:constraintSize lineBreakMode:UILineBreakModeWordWrap];
-        return labelSize.height+40+5;
+        CGSize labelSize = [[NSString stringWithFormat:@"                      %@",[dic objectForKey:@"title"]] sizeWithFont:[UIFont fontWithName:@"Helvetica" size:16.0]constrainedToSize:constraintSize lineBreakMode:UILineBreakModeWordWrap];
+        return labelSize.height+40+7;
     }
     
     

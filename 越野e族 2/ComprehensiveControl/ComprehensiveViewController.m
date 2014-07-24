@@ -158,12 +158,12 @@
 
 -(void)prepairNavigationBar{
 
-    
-    if([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)] ) {
-        //iOS 5 new UINavigationBar custom background
-        [self.navigationController.navigationBar setBackgroundImage:MY_MACRO_NAME?[UIImage imageNamed:IOS7DAOHANGLANBEIJING]:[UIImage imageNamed:@"ios7eva320_44.png"] forBarMetrics: UIBarMetricsDefault];
-        
-    }
+//    
+//    if([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)] ) {
+//        //iOS 5 new UINavigationBar custom background
+//        [self.navigationController.navigationBar setBackgroundImage:MY_MACRO_NAME?[UIImage imageNamed:IOS7DAOHANGLANBEIJING]:[UIImage imageNamed:@"ios7eva320_44.png"] forBarMetrics: UIBarMetricsDefault];
+//        
+//    }
     
     UIButton *button_back=[[UIButton alloc]initWithFrame: CGRectMake(MY_MACRO_NAME? -5:5, (44-33/2)/2, 36/2, 33/2)];
     
@@ -219,7 +219,7 @@
     loadview.backgroundColor=[UIColor clearColor];
 
     
-    mainTabView=[[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, iPhone5?568-64:480-64)];
+    mainTabView=[[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, iPhone5?568:480)];
     mainTabView.delegate=self;
     mainTabView.dataSource=self;
     mainTabView.backgroundColor=[UIColor whiteColor];
@@ -498,12 +498,16 @@
             SGFocusImageItem *item = [[SGFocusImageItem alloc] initWithDict:dict tag:length];
             [itemArray addObject:item];
         }
-        bannerView = [[NewHuandengView alloc] initWithFrame:CGRectMake(0, 0, 320, 191) delegate:self imageItems:itemArray isAuto:YES];
+        bannerView = [[NewHuandengView alloc] initWithFrame:CGRectMake(0, 64, 320, 191+13) delegate:self imageItems:itemArray isAuto:YES];
         [bannerView scrollToIndex:0];
         
  
         
     }
+    
+    UIView *HeaderView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 191+13+64)];
+    HeaderView.backgroundColor=[UIColor whiteColor];
+    [HeaderView addSubview:bannerView];
     
     return bannerView;
     
@@ -974,6 +978,19 @@
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
     //要判断当前是哪一个，有mainTabView/imagesc/twoscrow/sec2
     if (scrollView==mainTabView) {
+        
+        
+        NSLog(@"table.y===%f",mainTabView.contentOffset.y);
+        
+        if (mainTabView.contentOffset.y==0) {
+            
+            
+            mainTabView.contentOffset=CGPointMake(0, -64);
+        }
+        
+        
+        
+        
         [_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
         
         if(mainTabView.contentOffset.y > (mainTabView.contentSize.height - mainTabView.frame.size.height+40)&&isloadsuccess==YES&&normalinfoAllArray.count>=10) {

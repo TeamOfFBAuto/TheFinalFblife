@@ -5,7 +5,7 @@
 //  Created by 史忠坤 on 13-2-25.
 //  Copyright (c) 2013年 szk. All rights reserved.
 //
-#define WEIGTHOFDISCRIBE ALL_FRAME.size.width-85-24-12
+#define WEIGTHOFDISCRIBE ALL_FRAME.size.width-85-24-10
 #import "newscellview.h"
 @implementation newscellview
 @synthesize imagev=_imagev,title_label=_title_label,date_label=_date_label;
@@ -16,20 +16,21 @@
     
     self = [super initWithFrame:frame];
     if (self) {
-        _imagev=[[AsyncImageView alloc]initWithFrame:CGRectMake( 12, 8, 90, 60)];
+        _imagev=[[AsyncImageView alloc]initWithFrame:CGRectMake( 12, 13, 90, 60)];
         [self addSubview:_imagev];
         _title_label=[[UILabel alloc]init];
         [self addSubview:_title_label];
-        _date_label=[[UILabel alloc]initWithFrame:CGRectMake(ALL_FRAME.size.width-10-60-3,55,61.5-3, 10)];
+        _date_label=[[UILabel alloc]initWithFrame:CGRectMake(ALL_FRAME.size.width-10-60-3,55+6,61.5-3, 10)];
         _date_label.textAlignment=UITextAlignmentRight;
         
         self.title_label.font=[UIFont systemFontOfSize:16.0];
+        self.title_label.textColor=RGBCOLOR(49, 49, 49);
         self.title_label.backgroundColor=[UIColor clearColor];
         
         self.date_label.font=[UIFont systemFontOfSize:10];
         
-        UIView *viewline=[[UIView alloc]initWithFrame:CGRectMake(12, 76, 320-24, 1)];
-        viewline.backgroundColor=RGBCOLOR(240, 240, 240);
+        UIView *viewline=[[UIView alloc]initWithFrame:CGRectMake(12, 76+10.5, 320-24, 0.5)];
+        viewline.backgroundColor=RGBCOLOR(223, 223, 223);
         [self addSubview:viewline];
         
     }
@@ -58,7 +59,7 @@
         UIFont *cellFont = [UIFont systemFontOfSize:16.f];
         CGSize constraintSize = CGSizeMake(ALL_FRAME.size.width-85-22-12, MAXFLOAT);
         CGSize labelSize = [cellText sizeWithFont:cellFont constrainedToSize:constraintSize lineBreakMode:UILineBreakModeWordWrap];
-        self.title_label.frame = CGRectMake(101+7, 6,ALL_FRAME.size.width-85-22-12, labelSize.height);
+        self.title_label.frame = CGRectMake(101+7, 11,ALL_FRAME.size.width-85-22-12, labelSize.height);
         
     }
     
@@ -78,7 +79,8 @@
     
     UIView *aview1=[self assembleMessageAtIndex:arraytest];
         aview1.backgroundColor=[UIColor clearColor];
-    aview1.frame=CGRectMake(101+8, 32,ALL_FRAME.size.width-85-24-12, 40);
+    aview1.frame=CGRectMake(101+8, 32+8,WEIGTHOFDISCRIBE, 40);
+    aview1.backgroundColor=[UIColor clearColor];
     [self addSubview:aview1];
     [self addSubview:_date_label];
     
@@ -102,7 +104,7 @@
     UIView *returnView = [[UIView alloc] init];
     
     NSArray *data = [[NSArray alloc]initWithArray:arr];
-    UIFont *fon= [UIFont systemFontOfSize:12];
+    UIFont *fon= [UIFont systemFontOfSize:11];
 	CGFloat upX=0;
     CGFloat upY=0;
     BOOL isdote=0;
@@ -121,7 +123,7 @@
                 
                 
                 
-                if (upX > ALL_FRAME.size.width-85-24-12)
+                if (upX > WEIGTHOFDISCRIBE-10)
                 {
                     upY = upY + KFacialSizeHeight+3;
                     upX = 0;
@@ -139,12 +141,12 @@
                 for (int j = 0; j<[str length]; j++)
                 {
                     NSString *temp = [str substringWithRange:NSMakeRange(j, 1)];
-                    if (upX > ALL_FRAME.size.width-85-24-12-12.5)
+                    if (upX > WEIGTHOFDISCRIBE-10)
                     {
                         upY = upY + KFacialSizeHeight+1;
                         upX = 0;
                     }
-                    CGSize size=[temp sizeWithFont:fon constrainedToSize:CGSizeMake(ALL_FRAME.size.width-85-24-12-12.5, 20)];
+                    CGSize size=[temp sizeWithFont:fon constrainedToSize:CGSizeMake(WEIGTHOFDISCRIBE, 20)];
                     
                     UILabel *la = [[UILabel alloc] initWithFrame:CGRectMake(upX, upY,size.width,size.height)];
                     if (j%2==0) {
@@ -155,7 +157,7 @@
                     }
                     la.font = fon;
                     la.text = temp;
-                    la.textColor=RGBCOLOR(123, 123, 123);
+                    la.textColor=RGBCOLOR(124, 124, 124);
                 
                     if (upY<10) {
                         [returnView addSubview:la];
@@ -166,7 +168,7 @@
                     }else if(upY==19&&isdote==0){
                         isdote=!isdote;
                         UILabel *label_dote=[[UILabel alloc] initWithFrame:CGRectMake(upX, 17, 40, 20)];
-                        label_dote.font=[UIFont systemFontOfSize:12];
+                        label_dote.font=[UIFont systemFontOfSize:11];
                         label_dote.backgroundColor=[UIColor clearColor];
                         label_dote.text=@"...";
                         label_dote.textColor=RGBCOLOR(123, 123, 123);
@@ -197,7 +199,7 @@
     
     NSArray *data = [[NSArray alloc]initWithArray:arr];
     
-    UIFont *fon=   [UIFont fontWithName:@"Helvetica" size:12];
+    UIFont *fon=   [UIFont fontWithName:@"Helvetica" size:11];
     
 	CGFloat upX=0;
     CGFloat upY=0;
@@ -206,7 +208,7 @@
 			NSString *str=[data objectAtIndex:i];
 			if ([str hasPrefix:@"["]&&[str hasSuffix:@"]"])
             {
-                if (upX > ALL_FRAME.size.width-85-24-12)
+                if (upX > WEIGTHOFDISCRIBE)
                 {
                     upY = upY + KFacialSizeHeight+3;
                     upX = 0;
@@ -224,12 +226,12 @@
                 for (int j = 0; j<[str length]; j++)
                 {
                     NSString *temp = [str substringWithRange:NSMakeRange(j, 1)];
-                    if (upX > ALL_FRAME.size.width-85-24-12-12.5)
+                    if (upX > WEIGTHOFDISCRIBE-10)
                     {
                         upY = upY + KFacialSizeHeight+3;
                         upX = 0;
                     }
-                    CGSize size=[temp sizeWithFont:fon constrainedToSize:CGSizeMake(ALL_FRAME.size.width-85-24-12-12.5, 20)];
+                    CGSize size=[temp sizeWithFont:fon constrainedToSize:CGSizeMake(WEIGTHOFDISCRIBE, 20)];
                     
                     UILabel *la = [[UILabel alloc] initWithFrame:CGRectMake(upX, upY,size.width,size.height)];
                     la.font = fon;

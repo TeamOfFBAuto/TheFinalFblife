@@ -56,7 +56,7 @@
         [self addSubview:_normalLine];
         
         
-        _bigLabel.font=[UIFont systemFontOfSize:15];
+        _bigLabel.font=[UIFont systemFontOfSize:16];
         _bigLabel.textAlignment=NSTextAlignmentLeft;
         _textBigLabel.font=[UIFont systemFontOfSize:12];
         _textBigLabel.textAlignment=NSTextAlignmentLeft;
@@ -71,15 +71,15 @@
 -(void)picCellSetDic:(NSDictionary *)theDic{
 
     
-    _zanImageV.center=CGPointMake(290, 122);
-    _zanlabel.frame=CGRectMake(290,115 , 320-290-12, 11);
+    _zanImageV.center=CGPointMake(290, 120);
+    _zanlabel.frame=CGRectMake(290,113 , 320-290-10, 11);
     
     NewMainViewModel *_newmodel=[[NewMainViewModel alloc]init];
     [_newmodel NewMainViewModelSetdic:theDic];
     //标题
     _bigLabel.text=_newmodel.title;
 
-    _bigLabel.frame=CGRectMake(12, 12, 320, 16);
+    _bigLabel.frame=CGRectMake(12, 13, 320, 16);
 
     
     
@@ -89,13 +89,13 @@
     
     if (_newmodel.photo.count>=3) {
         
-        _leftImageV.frame=CGRectMake(12+102*0, 36, 90, 62);
+        _leftImageV.frame=CGRectMake(12+102*0, 38, 90, 62);
         [_leftImageV loadImageFromURL:[NSString stringWithFormat:@"%@",[_newmodel.photo objectAtIndex:0]] withPlaceholdImage:[UIImage imageNamed:@"smallimplace.png"]];
         
-        _centerImageV.frame=CGRectMake(12+102*1, 36, 90, 62);
+        _centerImageV.frame=CGRectMake(12+102*1, 38, 90, 62);
         [_centerImageV loadImageFromURL:[NSString stringWithFormat:@"%@",[_newmodel.photo objectAtIndex:1]] withPlaceholdImage:[UIImage imageNamed:@"smallimplace.png"]];
         
-        _rightImageV.frame=CGRectMake(12+102*2, 36, 90, 62);
+        _rightImageV.frame=CGRectMake(12+102*2, 38, 90, 62);
         [_rightImageV loadImageFromURL:[NSString stringWithFormat:@"%@",[_newmodel.photo objectAtIndex:2]] withPlaceholdImage:[UIImage imageNamed:@"smallimplace.png"]];
     }
     
@@ -108,11 +108,11 @@
     
     _textBigLabel.text=[personal timechange:_newmodel.publishtime ];
     
-    _textBigLabel.frame=CGRectMake(12,115 , 120, 12);
+    _textBigLabel.frame=CGRectMake(12,111 , 120, 12);
     
 
     
-    _normalLine.frame=CGRectMake(12, 133.5, 320-24, 0.5);
+    _normalLine.frame=CGRectMake(12, 133.5+3, 320-24, 0.5);
     _normalLine.backgroundColor=RGBCOLOR(223, 223, 223);
     
 

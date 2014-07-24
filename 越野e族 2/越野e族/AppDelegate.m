@@ -996,7 +996,6 @@
     _navigationController = [[UINavigationController alloc] initWithRootViewController:[[ComprehensiveViewController alloc] init]];
     
     
-    
 //    UINavigationController *ritht = [[UINavigationController alloc] initWithRootViewController:[[RightViewController alloc] init]];
     
 //

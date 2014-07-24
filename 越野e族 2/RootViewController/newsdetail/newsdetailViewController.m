@@ -372,7 +372,7 @@
     
 
     
-    button_comment=[[UIButton alloc]initWithFrame:CGRectMake(MY_MACRO_NAME?140: 25-3, (44-37/2)/2, 43/2, 37/2)];
+    button_comment=[[UIButton alloc]initWithFrame:CGRectMake(MY_MACRO_NAME?140: 25-3, (44-34/2)/2, 34/2, 34/2)];
     
     
     button_comment.tag=26;
@@ -399,8 +399,18 @@
     UIBarButtonItem *comment_item=[[UIBarButtonItem alloc]initWithCustomView:rightView];
     
     self.navigationItem.rightBarButtonItem=comment_item;
+    
+    
+    if ([personal getMyAuthkey].length==0||[[personal getMyAuthkey] isEqualToString:@"(null)"]) {
+        
+    }else{
+    
+        [self panduanIsshoucang:collectButton];
 
-    [self panduanIsshoucang:collectButton];
+    }
+    
+    
+
 
 
 
@@ -484,6 +494,7 @@
         
         if ([[dicinfo objectForKey:@"errno"] intValue]==0) {
             
+            
             sender.userInteractionEnabled=YES;
             
             
@@ -493,6 +504,8 @@
 
             
         }else{
+            
+            //
             
             sender.userInteractionEnabled=YES;
             
@@ -533,7 +546,34 @@
 
 #pragma mark-收藏
 
+-(void)panduanIsLogin{
+
+    if ([personal getMyAuthkey].length==0||[[personal getMyAuthkey] isEqualToString:@"(null)"]) {
+        
+        LogInViewController *login=[[LogInViewController alloc]init];
+        [self presentViewController:login animated:YES completion:^{
+            
+        }];
+        return;
+        
+        
+    }else{
+        
+        
+    }
+    
+
+}
+
+
 -(void)shoucang:(UIButton *)sender{
+    
+    [self panduanIsLogin];
+   
+    
+    
+    
+    
 
     sender.userInteractionEnabled=NO;
 
