@@ -792,7 +792,7 @@
     
     Write_blog_button.frame = CGRectMake(0,0,60,60);
     
-    Write_blog_button.center = CGPointMake(42,(iPhone5?568:480)-42-64);
+    Write_blog_button.center = CGPointMake(35,(iPhone5?568:480)-42-64);
     
     [Write_blog_button setImage:[UIImage imageNamed:@"newWriteBlogButtonImage"] forState:UIControlStateNormal];
     

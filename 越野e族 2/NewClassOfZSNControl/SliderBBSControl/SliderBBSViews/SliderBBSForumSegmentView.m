@@ -8,9 +8,9 @@
 
 #import "SliderBBSForumSegmentView.h"
 
-#define SELECTED_COLOR RGBCOLOR(39,39,39)
+#define SELECTED_COLOR RGBCOLOR(65,65,65)
 
-#define UN_SELECTED_COLOR RGBCOLOR(124,124,124)
+#define UN_SELECTED_COLOR RGBCOLOR(130,130,130)
 
 
 @implementation SliderBBSForumSegmentView
@@ -39,6 +39,8 @@
         button.frame = CGRectMake(80.5*i,0,78.5,61);
         
         button.tag = i + 100;
+        
+        button.titleLabel.font = [UIFont systemFontOfSize:12.5];
         
         [button setBackgroundColor:[UIColor clearColor]];
         

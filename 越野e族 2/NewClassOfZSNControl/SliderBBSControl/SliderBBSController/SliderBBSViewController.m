@@ -297,15 +297,6 @@
     
     [self.myScrollView addSubview:forumSegmentView];
     
-//    BOOL isLogin = [[NSUserDefaults standardUserDefaults] boolForKey:USER_IN];
-    
-//    if (isLogin)
-//    {
-        [self loadMyCollectionData];
-//    }
-    
-    
-    
     
     sectionView = [[SliderBBSSectionView alloc] initWithFrame:CGRectMake(0,0,320,101) WithBlock:^(int index) {
         
@@ -345,7 +336,7 @@
     _myTableView1.tableHeaderView = sectionView;
     
     
-    [self loadCollectionForumSectionData];
+    [self loadMyCollectionData];
     
 //    [self isHaveCacheDataWith:current_forum];
     
@@ -430,14 +421,23 @@
     if (!_forum_section_collection_array)
     {
         _forum_section_collection_array = [NSMutableArray array];
+    }else
+    {
+        [_forum_section_collection_array removeAllObjects];
     }
     
     //第一个参数第一页  第二个参数一页显示多少个，这里要全部的数据所以给1000
-    [collection_model loadCollectionDataWith:1 WithPageSize:1000 WithFinishedBlock:^(NSMutableArray *array) {
+    [collection_model loadCollectionDataWith:1 WithPageSize:100 WithFinishedBlock:^(NSMutableArray *array) {
         
         [bself.forum_section_collection_array addObjectsFromArray:collection_model.collect_id_array];
         
-        [bself.myTableView2 reloadData];
+//        [bself.myTableView2 reloadData];
+        
+//        [bself setCollectionViewsWith:bself.forum_section_collection_array];
+        
+        
+        [self loadSectionViewDataWithType:0 WithArray:bself.forum_section_collection_array];
+        
         
         [[NSUserDefaults standardUserDefaults] setObject:bself.forum_section_collection_array forKey:@"forumSectionCollectionArray"];
         
@@ -445,11 +445,13 @@
         
         bself.forum_section_collection_array = [[NSUserDefaults standardUserDefaults] objectForKey:@"forumSectionCollectionArray"];
         
-        if (bself.forum_section_collection_array.count > 0)
-        {
-            [bself.myTableView2 reloadData];
-        }
+//        if (bself.forum_section_collection_array.count > 0)
+//        {
+//            [bself.myTableView2 reloadData];
+//        }
+//        [bself setCollectionViewsWith:bself.forum_section_collection_array];
         
+        [self loadSectionViewDataWithType:0 WithArray:bself.forum_section_collection_array];
     }];
     
 }
@@ -579,7 +581,7 @@
 
 -(void)loadMyCollectionData
 {
-    NSString * fullUrl = [NSString stringWithFormat:@"http://bbs.fblife.com/bbsapinew/favoritesforums.php?authcode=%@&action=query&formattype=json" ,AUTHKEY];
+    NSString * fullUrl = [NSString stringWithFormat:GET_ALL_COLLECTION_SECTION,AUTHKEY,100];
     
     NSLog(@"我的订阅 ---- %@",fullUrl);
     
@@ -633,12 +635,23 @@
         _array_collect = [NSMutableArray array];
     }
     
+    if (_forum_section_collection_array) {
+        [_forum_section_collection_array removeAllObjects];
+    }else
+    {
+        _forum_section_collection_array = [NSMutableArray array];
+    }
+    
+    
+    
 
     for (int i=0; i<array.count; i++)
     {
         NSDictionary *dicinfo=[array objectAtIndex:i];
         
         [_array_collect addObject:dicinfo];
+        
+        [_forum_section_collection_array addObject:[dicinfo objectForKey:@"fid"]];
     }
     
     [self loadSectionViewDataWithType:0 WithArray:_array_collect];
@@ -848,7 +861,7 @@
             
             second_name_label.font = [UIFont systemFontOfSize:15];
             
-            second_name_label.textColor = RGBCOLOR(116,116,116);
+            second_name_label.textColor = RGBCOLOR(124,124,124);
             
             second_name_label.backgroundColor = [UIColor clearColor];
             
@@ -933,7 +946,7 @@
 {
     if (tableView == _myTableView1)
     {
-        return 85;
+        return [CompreTableViewCell getHeightwithtype:CompreTableViewCellStyleText];
     }else
     {
         SliderBBSForumModel * first_model = [[_forum_temp_array objectAtIndex:current_forum] objectAtIndex:indexPath.section];
@@ -995,9 +1008,11 @@
         
         name_label.text = model.forum_name;
         
+        name_label.font = [UIFont systemFontOfSize:17];
+        
         name_label.textAlignment = NSTextAlignmentLeft;
         
-        name_label.textColor = [UIColor blackColor];
+        name_label.textColor = RGBCOLOR(49,49,49);
         
         name_label.backgroundColor = [UIColor clearColor];
         
@@ -1185,7 +1200,7 @@
                 
                 name_label.textAlignment = NSTextAlignmentLeft;
                 
-                name_label.textColor = RGBCOLOR(106,106,106);
+                name_label.textColor = RGBCOLOR(134,134,134);
                 
                 name_label.backgroundColor = [UIColor clearColor];
                 

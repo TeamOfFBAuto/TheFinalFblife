@@ -10,6 +10,7 @@
 #import "AtlasModel.h"
 #import "PraiseAndCollectedModel.h"
 #import "CustomInputView.h"
+#import "ZkingAlert.h"
 
 
 
@@ -34,6 +35,9 @@
 
     
     CustomInputView * input_view;//输入框
+    
+    
+    ZkingAlert * thezkingAlertV;//提示框
 }
 
 @end
@@ -81,7 +85,7 @@
 //    daohangView.image = [UIImage imageNamed:MY_MACRO_NAME?IOS7DAOHANGLANBEIJING:IOS6DAOHANGLANBEIJING];
     
     
-    daohangView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6];
+    daohangView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
     
     daohangView.userInteractionEnabled = YES;
     
@@ -200,6 +204,23 @@
         case 0://赞
         {
             [self cancelAndPraise];
+            
+            [UIView animateWithDuration:0.4 animations:^{
+                
+                sender.transform = CGAffineTransformMakeScale(1.5,1.5);
+                
+            } completion:^(BOOL finished) {
+                
+                [UIView animateWithDuration:0.4 animations:^{
+                    
+                    sender.transform = CGAffineTransformMakeScale(1,1);
+                    
+                } completion:^(BOOL finished) {
+                    
+                    
+                }];
+                
+            }];
         }
             break;
         case 1://收藏
@@ -209,6 +230,23 @@
             if (islogin)
             {
                 [self cancelAndCollectionAtlas];
+                
+                [UIView animateWithDuration:0.4 animations:^{
+                    
+                    sender.transform = CGAffineTransformMakeScale(1.5,1.5);
+                    
+                } completion:^(BOOL finished) {
+                    
+                    [UIView animateWithDuration:0.4 animations:^{
+                        
+                        sender.transform = CGAffineTransformMakeScale(1,1);
+                        
+                    } completion:^(BOOL finished) {
+                        
+                        
+                    }];
+                    
+                }];
             }
         }
             break;
@@ -240,6 +278,11 @@
         
         return;
     }
+    
+    [thezkingAlertV zkingalertShowWithString:@"感兴趣"];
+    
+    [self performSelector:@selector(ShowAndHiddenAlertView:) withObject:NO afterDelay:0.8];
+    
     
     NSString * fullUrl = [NSString stringWithFormat:ATLAS_PRAISE_URL,self.id_atlas];
     
@@ -295,6 +338,10 @@
     
     [request setCompletionBlock:^{
         
+        [thezkingAlertV zkingalertShowWithString:isCollected?@"取消收藏":@"收藏成功"];
+        
+        [self performSelector:@selector(ShowAndHiddenAlertView:) withObject:NO afterDelay:0.8];
+        
         isCollected = !isCollected;
         
         UIButton * button = (UIButton *)[navImageView viewWithTag:10001];
@@ -343,6 +390,23 @@
     [myAlertView removeFromSuperview];
     
     myAlertView = nil;
+}
+
+
+-(void)ShowAndHiddenAlertView:(BOOL)isShow
+{
+    [UIView animateWithDuration:0.6 animations:^{
+        
+        thezkingAlertV.alpha = 0;
+        
+    } completion:^(BOOL finished) {
+        
+        thezkingAlertV.hidden = YES;
+        
+        thezkingAlertV.alpha = 1;
+        
+    }];
+    
 }
 
 
@@ -592,7 +656,7 @@
         
         NSLog(@"发表评论");
         
-        [bself submitPingLunTap:nil];
+        [bself submitPingLunTap:content];
         
     }];
     
@@ -601,11 +665,13 @@
     
     input_view.backgroundColor = RGBCOLOR(3,3,3);
     
-    input_view.commot_background_view.backgroundColor = RGBCOLOR(24,26,25);
+    input_view.top_line_view.backgroundColor = [UIColor clearColor];
+    
+    input_view.commot_background_view.backgroundColor = RGBCOLOR(24,26,26);
     
     input_view.commot_background_view.layer.borderWidth = 0;
     
-    input_view.commit_label.textColor = RGBCOLOR(52,63,62);
+    input_view.commit_label.textColor = RGBCOLOR(55,61,62);
     
     [input_view.pinglun_button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
@@ -734,6 +800,13 @@
     [self panduanCollection];
 
     [self setNavgationBar];
+    
+    
+    
+    
+    thezkingAlertV=[[ZkingAlert alloc]initWithFrame:CGRectMake(0, 0, 320, 480) labelString:@""];
+    thezkingAlertV.hidden=YES;
+    [self.view addSubview:thezkingAlertV];
 }
 
 
@@ -853,13 +926,13 @@
 #pragma mark - 发送评论
 
 
--(void)submitPingLunTap:(UIButton *)sender
+-(void)submitPingLunTap:(NSString *)content
 {
-    [text_input_view resignFirstResponder];
+    [input_view hiddeninputViewTap];
     
     AtlasModel * model = [self.allImagesUrlArray objectAtIndex:0];
     
-    NSString * fullUrl = [NSString stringWithFormat:ATLAS_COMMENT_URL,model.atlas_id,text_input_view.text,model.atlas_name,model.atlas_name,model.atlas_photo,AUTHKEY];
+    NSString * fullUrl = [NSString stringWithFormat:ATLAS_COMMENT_URL,model.atlas_id,content,model.atlas_name,model.atlas_content,model.atlas_photo,AUTHKEY];
     
     NSLog(@"发表图集评论接口 ---   %@",fullUrl);
     
@@ -872,6 +945,8 @@
     [request setCompletionBlock:^{
         
         NSDictionary * allDic = [comment_request.responseString objectFromJSONString];
+        
+        NSLog(@"发表图集评论结果 ---  %@",allDic);
         
         if ([[allDic objectForKey:@"errcode"] intValue] == 0)
         {

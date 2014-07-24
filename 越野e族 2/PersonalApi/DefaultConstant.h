@@ -384,7 +384,7 @@ alpha:(a)]
 
 #pragma MARK - 图集评论接口
 
-#define ATLAS_COMMENT_URL @"http://t.fblife.com/openapi/index.php?mod=comment&code=commentadd&sort=15&sortid=%@&content=%@&title=%@&intro=%@&photo=%@&fromtype=b5eeec0b&authkey=%@"
+#define ATLAS_COMMENT_URL @"http://fb.fblife.com/openapi/index.php?mod=comment&code=commentadd&sort=15&sortid=%@&content=%@&title=%@&intro=%@&photo=%@&fromtype=b5eeec0b&authkey=%@"
 
 #pragma mark - 赞图集的接口
 
@@ -405,7 +405,7 @@ alpha:(a)]
 
 #pragma mark - 获取所有收藏的板块接口
 
-#define GET_ALL_COLLECTION_SECTION @"http://bbs.fblife.com/bbsapinew/favoritesthread.php?authcode=%@&formattype=json&page=%d&pagesize=%d"
+#define GET_ALL_COLLECTION_SECTION @"http://bbs.fblife.com/bbsapinew/favoritesforums.php?authcode=%@&action=query&formattype=json&pagesize=%d"
 
 #pragma mark - 收藏论坛版块接口-新接口
 

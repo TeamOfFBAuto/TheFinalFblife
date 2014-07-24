@@ -24,7 +24,7 @@
             UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
             
             button.frame = CGRectMake(12 + 100*i,12,96,45);
-            
+                        
             [button setImage:[UIImage imageNamed:[image_array objectAtIndex:i]] forState:UIControlStateNormal];
             
             [button setImage:[UIImage imageNamed:[image_array objectAtIndex:i+3]] forState:UIControlStateSelected];

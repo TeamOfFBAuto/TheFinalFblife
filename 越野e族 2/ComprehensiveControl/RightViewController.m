@@ -104,13 +104,13 @@
     
     user_Info_BackView.layer.masksToBounds = NO;
     
-    user_Info_BackView.layer.shadowColor = RGBCOLOR(216,216,216).CGColor;
+    user_Info_BackView.layer.shadowColor = [UIColor blackColor].CGColor;//RGBCOLOR(216,216,216).CGColor;
     
-    user_Info_BackView.layer.shadowOffset = CGSizeMake(2,1);
+    user_Info_BackView.layer.shadowOffset = CGSizeMake(0.5,0.5);
     
-    user_Info_BackView.layer.shadowRadius = 5;
+    user_Info_BackView.layer.shadowRadius = 1;
     
-    user_Info_BackView.layer.shadowOpacity = 0.8;
+    user_Info_BackView.layer.shadowOpacity = 0.2;
     
     [_rootScrollView addSubview:user_Info_BackView];
     
@@ -120,7 +120,7 @@
     
     
     
-    headerImageView = [[AsyncImageView alloc] initWithFrame:CGRectMake(103,44,82,82)];
+    headerImageView = [[AsyncImageView alloc] initWithFrame:CGRectMake(103,46,82,82)];
     
     headerImageView.image = [UIImage imageNamed:@"SliderRightLogin.png"];
     
@@ -130,9 +130,9 @@
     
     headerImageView.userInteractionEnabled = YES;
     
-    headerImageView.layer.borderColor = RGBCOLOR(120,120,120).CGColor;
+    headerImageView.layer.borderColor = RGBCOLOR(121,121,121).CGColor;
     
-    headerImageView.layer.borderWidth = 0.5;
+    headerImageView.layer.borderWidth = 1;
     
     [user_Info_BackView addSubview:headerImageView];
     
@@ -147,7 +147,7 @@
     
     LogIn_label.text = @"点击立即登录";
     
-    LogIn_label.font = [UIFont systemFontOfSize:19];
+    LogIn_label.font = [UIFont systemFontOfSize:15];
     
     LogIn_label.textAlignment = NSTextAlignmentCenter;
     
@@ -177,11 +177,11 @@
                 
                 [button setTitle:[arrary1 objectAtIndex:j+i*3] forState:UIControlStateNormal];
                 
-                [button setTitleColor:RGBCOLOR(143,143,145) forState:UIControlStateNormal];
+                [button setTitleColor:RGBCOLOR(145,145,145) forState:UIControlStateNormal];
                 
-                button.titleLabel.font = [UIFont systemFontOfSize:15];
+                button.titleLabel.font = [UIFont systemFontOfSize:12];
                 
-                [button setTitleEdgeInsets:UIEdgeInsetsMake(50,-5,0,-5)];
+                [button setTitleEdgeInsets:UIEdgeInsetsMake(60,-5,0,-5)];
                 
                 button.tag = 1000 + i*3+j;
                 
@@ -230,7 +230,7 @@
     
     [setting_button setTitleColor:RGBCOLOR(143,143,145) forState:UIControlStateNormal];
     
-    setting_button.titleLabel.font = [UIFont systemFontOfSize:14];
+    setting_button.titleLabel.font = [UIFont systemFontOfSize:15];
     
     [setting_button setImageEdgeInsets:UIEdgeInsetsMake(0,0,0,40)];
     

@@ -54,7 +54,7 @@
     
     //这是老接口
     
-    NSString * fullUrl = [NSString stringWithFormat:@"http://bbs.fblife.com/bbsapinew/favoritesforums.php?authcode=%@&action=query&formattype=json",AUTHKEY];
+    NSString * fullUrl = [NSString stringWithFormat:GET_ALL_COLLECTION_SECTION,AUTHKEY,pagesize];
     
     
     NSLog(@"请求论坛版块收藏 ---  %@",fullUrl);
@@ -77,7 +77,8 @@
             {
                 NSArray * array = [allDic objectForKey:@"bbsinfo"];
                 
-                for (NSDictionary * dic in array) {
+                for (NSDictionary * dic in array)
+                {
                     
                     SliderForumCollectionModel * model = [[SliderForumCollectionModel alloc] initWithDictionary:dic];
                     

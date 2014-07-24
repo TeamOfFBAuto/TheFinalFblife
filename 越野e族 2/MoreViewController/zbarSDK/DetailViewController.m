@@ -150,6 +150,8 @@
     myReaderView.tracksSymbols = NO;
     //关闭闪光灯
     myReaderView.torchMode = 0;
+    
+    
     //扫描区域
     //    CGRect scanMaskRect = CGRectMake(37,80,251,312-80);
     
@@ -328,7 +330,7 @@
     
     
     //    myReaderView.scanCrop = CGRectMake(0.2,0.05,0.47,0.8);
-//    myReaderView.scanCrop = CGRectMake(0.2,0.05,0.5,0.8);
+    myReaderView.scanCrop = CGRectMake(0.2,0.05,0.5,0.8);
     //    [myReaderView start];
 }
 

@@ -72,7 +72,7 @@
             _UserName_Label = [[UILabel alloc] initWithFrame:CGRectMake(55,7,200,20)];
             _UserName_Label.backgroundColor = [UIColor clearColor];
             _UserName_Label.font = [UIFont boldSystemFontOfSize:15];
-            _UserName_Label.textColor = RGBCOLOR(73,84,132);
+            _UserName_Label.textColor = RGBCOLOR(89,106,149);
             _UserName_Label.textAlignment = NSTextAlignmentLeft;
             [self.contentView addSubview:_UserName_Label];
         }else
@@ -85,8 +85,8 @@
         {
             _DateLine_Label = [[UILabel alloc] initWithFrame:CGRectMake(250,10,60,20)];
             _DateLine_Label.backgroundColor = [UIColor clearColor];
-            _DateLine_Label.font = [UIFont systemFontOfSize:10];
-            _DateLine_Label.textColor = RGBCOLOR(123,123,123);
+            _DateLine_Label.font = [UIFont systemFontOfSize:12];
+            _DateLine_Label.textColor = RGBCOLOR(142,142,142);
             _DateLine_Label.textAlignment = NSTextAlignmentRight;
             [self.contentView addSubview:_DateLine_Label];
             
@@ -100,11 +100,11 @@
         {
             _from_label = [[UILabel alloc] initWithFrame:CGRectMake(55,10,100,20)];
             
-            _from_label.textColor = RGBCOLOR(122,122,122);
+            _from_label.textColor = RGBCOLOR(142,142,142);
             
             _from_label.textAlignment = NSTextAlignmentLeft;
             
-            _from_label.font = [UIFont systemFontOfSize:10];
+            _from_label.font = [UIFont systemFontOfSize:12];
             
             _from_label.backgroundColor = [UIColor clearColor];
             
@@ -115,10 +115,10 @@
         
         if (!_content_view_special)
         {
-            _content_view_special = [[WeiBoSpecialView alloc] initWithFrame:CGRectMake(55,30,255,100)];
+            _content_view_special = [[WeiBoSpecialView alloc] initWithFrame:CGRectMake(55,35,255,100)];
             _content_view_special.delegate = self;
             _content_view_special.line_space = 3;
-            _content_view_special.content_font = 14;
+            _content_view_special.content_font = 16;
             [self.contentView addSubview:_content_view_special];
         }else
         {
@@ -141,7 +141,7 @@
             _content_reply_special = [[WeiBoSpecialView alloc] initWithFrame:CGRectMake(8,10,255-16,0)];
             _content_reply_special.delegate = self;
             _content_reply_special.line_space = 3;
-            _content_reply_special.content_font = 14;
+            _content_reply_special.content_font = 16;
             [_reply_background_view addSubview:_content_reply_special];
         }else
         {
@@ -152,10 +152,10 @@
     {
         if (!_DateLine_Label)
         {
-            _DateLine_Label = [[UILabel alloc] initWithFrame:CGRectMake(10,10,60,20)];
+            _DateLine_Label = [[UILabel alloc] initWithFrame:CGRectMake(12,12,100,20)];
             _DateLine_Label.backgroundColor = [UIColor clearColor];
-            _DateLine_Label.font = [UIFont systemFontOfSize:10];
-            _DateLine_Label.textColor = RGBCOLOR(123,123,123);
+            _DateLine_Label.font = [UIFont systemFontOfSize:12];
+            _DateLine_Label.textColor = RGBCOLOR(142,142,142);
             _DateLine_Label.textAlignment = NSTextAlignmentLeft;
             [self.contentView addSubview:_DateLine_Label];
             
@@ -173,11 +173,11 @@
             
             [_delete_button setTitle:@"删除" forState:UIControlStateNormal];
             
-            [_delete_button setTitleColor:RGBCOLOR(123,123,123) forState:UIControlStateNormal];
+            [_delete_button setTitleColor:RGBCOLOR(142,142,142) forState:UIControlStateNormal];
             
             _delete_button.hidden = YES;
             
-            _delete_button.titleLabel.font = [UIFont systemFontOfSize:10];
+            _delete_button.titleLabel.font = [UIFont systemFontOfSize:12];
             
             _delete_button.backgroundColor = [UIColor clearColor];
             
@@ -192,11 +192,11 @@
         {
             _from_label = [[UILabel alloc] initWithFrame:CGRectMake(10,10,100,20)];
             
-            _from_label.textColor = RGBCOLOR(122,122,122);
+            _from_label.textColor = RGBCOLOR(142,142,142);
             
             _from_label.textAlignment = NSTextAlignmentLeft;
             
-            _from_label.font = [UIFont systemFontOfSize:10];
+            _from_label.font = [UIFont systemFontOfSize:12];
             
             _from_label.backgroundColor = [UIColor clearColor];
             
@@ -206,10 +206,10 @@
         
         if (!_content_view_special)
         {
-            _content_view_special = [[WeiBoSpecialView alloc] initWithFrame:CGRectMake(10,30,300,100)];
+            _content_view_special = [[WeiBoSpecialView alloc] initWithFrame:CGRectMake(10,40,300,100)];
             _content_view_special.delegate = self;
             _content_view_special.line_space = 3;
-            _content_view_special.content_font = 14;
+            _content_view_special.content_font = 16;
             [self.contentView addSubview:_content_view_special];
         }else
         {
@@ -232,7 +232,7 @@
             _content_reply_special = [[WeiBoSpecialView alloc] initWithFrame:CGRectMake(8,10,300-16,0)];
             _content_reply_special.delegate = self;
             _content_reply_special.line_space = 3;
-            _content_reply_special.content_font = 14;
+            _content_reply_special.content_font = 16;
             [_reply_background_view addSubview:_content_reply_special];
         }else
         {
@@ -319,7 +319,7 @@
     
     total_height = rect.size.height;
     
-    reply_frame.origin.y = rect.size.height + 35 + 3;
+    reply_frame.origin.y = rect.size.height + 40 + 3;
     
     
     if (info.rootFlg)
@@ -330,25 +330,25 @@
         
         _content_reply_special.frame = rect1;
         
-        reply_frame.size.height = rect1.size.height + 20;
+        reply_frame.size.height = rect1.size.height + 30;
         
-        total_height = total_height + rect1.size.height + 20;
+        total_height = total_height + rect1.size.height + 30;
         
         _reply_background_view.frame = reply_frame;
         
         _reply_background_view.image = [[UIImage imageNamed:@"newWeiBoBackGroundImage.png"] stretchableImageWithLeftCapWidth:130 topCapHeight:7];
     }
     
-    _pinglun_button.frame = CGRectMake(280,theheight - 25,40,20);
+    _pinglun_button.frame = CGRectMake(280,theheight - 30,40,20);
     [_pinglun_button setTitle:info.replys forState:UIControlStateNormal];
     
-    _zhuanfa_button.frame = CGRectMake(240,theheight - 25,40,20);
+    _zhuanfa_button.frame = CGRectMake(240,theheight - 30,40,20);
     [_zhuanfa_button setTitle:info.forwards forState:UIControlStateNormal];
     
     
     _from_label.text = info.from;
     
-    _from_label.frame = CGRectMake(_from_label.frame.origin.x,theheight-25,100,20);
+    _from_label.frame = CGRectMake(_from_label.frame.origin.x,theheight-30,100,20);
     
     return total_height + 35;
 }
@@ -503,16 +503,16 @@
     
     //0:微博  2:文集  3:图集  4:论坛帖子转发微博  5:论坛分享 6:新闻评论 8:新闻分享  10:资源分享
     
-    CGRect rect = CGRectMake(55,theType?30:35,theType?300:255,100);
+    CGRect rect = CGRectMake(55,theType?35:40,theType?300:255,100);
     
     if (!view_special)
     {
         view_special = [[WeiBoSpecialView alloc] initWithFrame:rect];
         view_special.line_space = 3;
-        view_special.content_font = 14;
+        view_special.content_font = 16;
     }
     
-    total_height = [view_special setAllViewWithFeed:info isReply:NO] + 30;
+    total_height = [view_special setAllViewWithFeed:info isReply:NO] + 40;
     
     
     if (info.rootFlg)
@@ -521,17 +521,15 @@
         {
             content_v2 = [[WeiBoSpecialView alloc] initWithFrame:CGRectMake(8,10,(theType?300:255)-16,10)];
             content_v2.line_space = 3;
-            content_v2.content_font = 14;
+            content_v2.content_font = 16;
         }
         
         float the_height = [content_v2 setAllViewWithFeed:info isReply:YES];
         
-        total_height = total_height + the_height + 10 + 20;
+        total_height = total_height + the_height + 10 + 30;
     }
     
-    
-    
-    return total_height + 10;
+    return total_height + 18;
 }
 
 

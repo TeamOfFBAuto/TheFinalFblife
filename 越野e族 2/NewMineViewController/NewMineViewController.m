@@ -1079,11 +1079,11 @@
     _myTableView.tableFooterView = loadview;
     
     
-    _top_view = [[NewUserMessageTop alloc] initWithFrame:CGRectMake(0,0,320,195)];
+    _top_view = [[NewUserMessageTop alloc] initWithFrame:CGRectMake(0,0,320,201)];
     
     _top_view.delegate = self;
     
-    _top_view.backgroundColor = RGBCOLOR(245,245,245);
+    _top_view.backgroundColor = [UIColor whiteColor];//RGBCOLOR(245,245,245);
     
     _myTableView.tableHeaderView = _top_view;
     

@@ -9,9 +9,9 @@
 #import "SliderBBSSectionView.h"
 #import "testbase.h"
 
-#define selected_color RGBCOLOR(86,86,86)
+#define selected_color RGBCOLOR(63,63,63)
 
-#define unselected_color RGBCOLOR(164,164,164)
+#define unselected_color RGBCOLOR(137,137,137)
 
 
 @implementation SliderBBSSectionView
@@ -49,6 +49,8 @@
                 
                 [button setTitleColor:selected_color forState:UIControlStateNormal];
                 
+                button.titleLabel.font = [UIFont systemFontOfSize:15];
+                
                 UIView * line_view = [[UIView alloc] initWithFrame:CGRectMake(0,0,1,15)];
                 
                 line_view.center = CGPointMake(223.0/2,22);
@@ -61,6 +63,8 @@
                 button.frame = CGRectMake(112,0,223.0/2,44);
                 
                 [button setTitle:@"最新浏览" forState:UIControlStateNormal];
+                
+                button.titleLabel.font = [UIFont systemFontOfSize:15];
                 
                 [button setTitleColor:unselected_color forState:UIControlStateNormal];
                 
@@ -77,7 +81,9 @@
                 
                 [button setTitle:@"排行榜" forState:UIControlStateNormal];
                 
-                [button setTitleColor:RGBCOLOR(255,0,0) forState:UIControlStateNormal];
+                button.titleLabel.font = [UIFont systemFontOfSize:15];
+                
+                [button setTitleColor:RGBCOLOR(235,79,83) forState:UIControlStateNormal];
             }
             
             
@@ -229,8 +235,7 @@
         
         button.backgroundColor = [UIColor whiteColor];
         
-        
-        button.layer.borderColor = RGBCOLOR(194,194,194).CGColor;
+        button.layer.borderColor = RGBCOLOR(195,195,195).CGColor;
         
         button.layer.borderWidth = 0.5;
         
@@ -245,7 +250,7 @@
         
         name_label.textAlignment = NSTextAlignmentCenter;
         
-        name_label.textColor = RGBCOLOR(105,105,105);
+        name_label.textColor = RGBCOLOR(40,40,40);
         
         name_label.backgroundColor = [UIColor clearColor];
         

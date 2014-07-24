@@ -10,7 +10,7 @@
 
 #define SELECTED_COLOR RGBCOLOR(3,3,3)
 
-#define UNSELECTED_COLOR RGBCOLOR(118,118,118)
+#define UNSELECTED_COLOR RGBCOLOR(122,122,122)
 
 
 
@@ -70,7 +70,7 @@
         
         button.tag = 100 + i;
         
-        button.titleLabel.font = [UIFont boldSystemFontOfSize:15];
+        button.titleLabel.font = [UIFont boldSystemFontOfSize:16];
         
         [button setTitle:[array objectAtIndex:i] forState:UIControlStateNormal];
         

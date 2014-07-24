@@ -1134,19 +1134,6 @@
         }
         
         
-        
-        obj.content = [obj.content stringByReplacingOccurrencesOfString:@"&#8203;" withString:@""];
-        
-         obj.rcontent = [obj.content stringByReplacingOccurrencesOfString:@"&#8203;" withString:@""];
-        
-         obj.rtitle_content = [obj.content stringByReplacingOccurrencesOfString:@"&#8203;" withString:@""];
-        
-         obj.title_content = [obj.content stringByReplacingOccurrencesOfString:@"&#8203;" withString:@""];
-        
-        
-        
-        
-        
         obj.content = [obj.content stringByReplacingOccurrencesOfString:@"<a>" withString:@"<a href=\"fb://shareshop\">"];
         
         obj.rcontent = [obj.rcontent stringByReplacingOccurrencesOfString:@"<a>" withString:@"<a href=\"fb://shareshop\">"];

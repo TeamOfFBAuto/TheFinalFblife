@@ -26,6 +26,8 @@ typedef void(^InputViewSendToPinglunBlock)(NSString * content,BOOL isForward);//
     UIImageView * mark;//对号图片
 }
 
+@property(nonatomic,strong)UIView * top_line_view;
+
 @property(nonatomic,strong)UIView * commot_background_view;//评论内容背景框
 
 @property(nonatomic,strong)UILabel * commit_label; //显示评论内容

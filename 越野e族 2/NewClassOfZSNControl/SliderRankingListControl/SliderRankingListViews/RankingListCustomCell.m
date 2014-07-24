@@ -44,9 +44,9 @@
             
             _title_label.textAlignment = NSTextAlignmentLeft;
             
-            _title_label.textColor = RGBCOLOR(47,47,47);
+            _title_label.textColor = RGBCOLOR(49,49,49);
             
-            _title_label.font = [UIFont systemFontOfSize:15];
+            _title_label.font = [UIFont systemFontOfSize:13];
             
             _title_label.numberOfLines = 0;
             
@@ -109,10 +109,10 @@
     
     if (ranking <= 3)
     {
-        _ranking_label.textColor = [UIColor redColor];
+        _ranking_label.textColor = RGBCOLOR(235,79,83);
     }else
     {
-        _ranking_label.textColor = RGBCOLOR(119,119,119);
+        _ranking_label.textColor = RGBCOLOR(122,122,122);
     }
     
     _ranking_label.text = [NSString stringWithFormat:@"%d",ranking];

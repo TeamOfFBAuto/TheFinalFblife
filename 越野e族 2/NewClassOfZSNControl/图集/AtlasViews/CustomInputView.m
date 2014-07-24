@@ -9,7 +9,7 @@
 #import "CustomInputView.h"
 
 @implementation CustomInputView
-@synthesize commit_label,pinglun_button,text_background_view,text_input_view,send_button,commot_background_view;
+@synthesize commit_label,pinglun_button,text_background_view,text_input_view,send_button,commot_background_view,top_line_view;
 
 @synthesize content_dictionary = _content_dictionary;
 
@@ -33,7 +33,14 @@
     sendPingLun_block = theSendBlock;
     
     
-    commot_background_view = [[UIView alloc] initWithFrame:CGRectMake(11,7,255,30)];
+    top_line_view = [[UIView alloc] initWithFrame:CGRectMake(0,0,320,0.5)];
+    
+    top_line_view.backgroundColor = RGBCOLOR(211,211,211);
+    
+    [self addSubview:top_line_view];
+    
+    
+    commot_background_view = [[UIView alloc] initWithFrame:CGRectMake(11,(self.bounds.size.height-30)/2,255,30)];
     
     commot_background_view.backgroundColor = [UIColor whiteColor];
     
@@ -97,7 +104,7 @@
     
     
     
-    text_background_view = [[UIView alloc] initWithFrame:CGRectMake(0,(iPhone5?568:480),320,164)];
+    text_background_view = [[UIView alloc] initWithFrame:CGRectMake(0,(iPhone5?568:480),320,250)];
     
     text_background_view.backgroundColor = RGBCOLOR(249,248,249);
     
@@ -128,6 +135,8 @@
     [send_button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
     send_button.backgroundColor = RGBCOLOR(221,221,221);
+    
+    send_button.titleLabel.font = [UIFont boldSystemFontOfSize:15];
     
     [send_button addTarget:self action:@selector(submitPingLunTap:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -196,11 +205,11 @@
     
     CGFloat keyboardY = [[UIApplication sharedApplication].keyWindow convertRect:keyboardRect fromView:nil].origin.y;
     
-    [UIView animateWithDuration:0.3 animations:^{
+    [UIView animateWithDuration:0.33f animations:^{
         
         CGRect frame = bself.text_background_view.frame;
         
-        frame.origin.y = keyboardY - frame.size.height;;
+        frame.origin.y = keyboardY - 164;;
         
         bself.text_background_view.frame = frame;
         
@@ -223,9 +232,9 @@
 {
     __weak typeof(self) bself = self;
     
-    [UIView animateWithDuration:0.3 animations:^{
+    [UIView animateWithDuration:0.275f animations:^{
         _theTouchView.hidden = YES;
-        bself.text_background_view.frame = CGRectMake(0,(iPhone5?568:480),320,164);
+        bself.text_background_view.frame = CGRectMake(0,(iPhone5?568:480),320,250);
     } completion:^(BOOL finished) {
         
     }];
@@ -282,7 +291,7 @@
     {
         _theTouchView = [[UIView alloc] initWithFrame:CGRectMake(0,0,320,self.text_background_view.frame.origin.y)];
         
-        _theTouchView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.3];
+        _theTouchView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
         
         UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hiddeninputViewTap)];
         
@@ -302,6 +311,10 @@
 {
     [text_input_view resignFirstResponder];
     
+    text_input_view.text = @"";
+    
+    commit_label.text = @"";
+    
     _theTouchView.hidden = YES;
 }
 
@@ -312,7 +325,7 @@
     
     if (text_input_view.text.length > 0)
     {
-        send_button.backgroundColor = [UIColor redColor];
+        send_button.backgroundColor = RGBCOLOR(235,79,83);
         
         send_button.enabled = YES;
     }else

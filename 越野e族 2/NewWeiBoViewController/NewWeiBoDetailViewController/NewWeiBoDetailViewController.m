@@ -266,7 +266,8 @@
     UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(10,8,31/2,32/2)];
     
     [button_back addTarget:self action:@selector(backH:) forControlEvents:UIControlEventTouchUpInside];
-    [button_back setBackgroundImage:[UIImage imageNamed:@"logIn_close"] forState:UIControlStateNormal];
+    
+    [button_back setImage:[UIImage imageNamed:@"ios7_back"] forState:UIControlStateNormal];
     
     UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:button_back];
     
@@ -465,8 +466,8 @@
     
     _DateLine_Label = [[UILabel alloc] initWithFrame:CGRectMake(250,8,60,20)];
     _DateLine_Label.backgroundColor = [UIColor clearColor];
-    _DateLine_Label.font = [UIFont systemFontOfSize:10];
-    _DateLine_Label.textColor = RGBCOLOR(123,123,123);
+    _DateLine_Label.font = [UIFont systemFontOfSize:12];
+    _DateLine_Label.textColor = RGBCOLOR(142,142,142);
     _DateLine_Label.textAlignment = NSTextAlignmentRight;
     [cell.contentView addSubview:_DateLine_Label];
     
@@ -552,8 +553,8 @@
     
     UILabel * userName = [[UILabel alloc] initWithFrame:CGRectMake(55,8,200,20)];
     userName.backgroundColor = [UIColor clearColor];
-    userName.font = [UIFont boldSystemFontOfSize:13];
-    userName.textColor = RGBCOLOR(90,107,151);
+    userName.font = [UIFont boldSystemFontOfSize:15];
+    userName.textColor = RGBCOLOR(89,106,149);
     userName.textAlignment = NSTextAlignmentLeft;
     [weibo_view addSubview:userName];
     
@@ -581,7 +582,7 @@
     }
     
     
-    WeiBoSpecialView *  _content_view_special = [[WeiBoSpecialView alloc] initWithFrame:CGRectMake(55,30,255,100)];
+    WeiBoSpecialView *  _content_view_special = [[WeiBoSpecialView alloc] initWithFrame:CGRectMake(55,35,255,100)];
     
     _content_view_special.line_space = 5;
     
@@ -633,13 +634,13 @@
     
     UILabel * _from_label = [[UILabel alloc] initWithFrame:CGRectMake(55,total_height + 10,100,20)];
     
-    _from_label.textColor = RGBCOLOR(122,122,122);
+    _from_label.textColor = RGBCOLOR(142,142,142);
     
     _from_label.text = self.info.from;
     
     _from_label.textAlignment = NSTextAlignmentLeft;
     
-    _from_label.font = [UIFont systemFontOfSize:10];
+    _from_label.font = [UIFont systemFontOfSize:12];
     
     _from_label.backgroundColor = [UIColor clearColor];
     

@@ -64,6 +64,10 @@
     
     self.myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
+    self.myTableView.showsHorizontalScrollIndicator = NO;
+    
+    self.myTableView.showsVerticalScrollIndicator = NO;
+    
     [self.view addSubview:self.myTableView];
     
     

@@ -20,14 +20,16 @@
     self = [super initWithFrame:frame];
     if (self)
     {
-        self.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6];
+        self.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
         
         
-        _title_label = [[UILabel alloc] initWithFrame:CGRectMake(11,0,260,42)];
+        _title_label = [[UILabel alloc] initWithFrame:CGRectMake(12,17,260,18)];
         
         _title_label.backgroundColor = [UIColor clearColor];
         
-        _title_label.font = [UIFont systemFontOfSize:18];
+        _title_label.contentMode = UIViewContentModeTop;
+        
+        _title_label.font = [UIFont systemFontOfSize:16];
         
         _title_label.textAlignment = NSTextAlignmentLeft;
         
@@ -49,17 +51,19 @@
         
         
         
-        _content_textView = [[UITextView alloc] initWithFrame:CGRectMake(8,35,304,72)];
+        _content_textView = [[UITextView alloc] initWithFrame:CGRectMake(8,45,306,77)];
 
         _content_textView.backgroundColor = [UIColor clearColor];
         
         _content_textView.textAlignment = NSTextAlignmentLeft;
         
+        _content_textView.font = [UIFont systemFontOfSize:12];
+        
         _content_textView.delegate = self;
         
         _content_textView.contentInset = UIEdgeInsetsMake(-5,0,0,0);
         
-        _content_textView.textColor = RGBCOLOR(180,180,180);
+        _content_textView.textColor = RGBCOLOR(181,181,181);
         
         _content_textView.editable = YES;
         
@@ -84,9 +88,9 @@
 //        [str addAttribute:NSForegroundColorAttributeName value:[UIColor blueColor] range:NSMakeRange(0,5)];
 
     
-    [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:16] range:NSMakeRange(0,page.length)];
+    [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:18] range:NSMakeRange(0,page.length)];
     
-    [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12] range:NSMakeRange(page.length,str.length-page.length)];
+    [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:10] range:NSMakeRange(page.length,str.length-page.length)];
         
     _current_page.attributedText = str;
 }

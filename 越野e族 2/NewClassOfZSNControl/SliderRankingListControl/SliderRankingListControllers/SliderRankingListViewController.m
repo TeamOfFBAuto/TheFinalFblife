@@ -71,6 +71,8 @@
     
     _myTableView.dataSource = self;
     
+    _myTableView.separatorColor = RGBCOLOR(223,223,223);
+    
     if (MY_MACRO_NAME) {
         _myTableView.separatorInset = UIEdgeInsetsZero;
     }

@@ -10,7 +10,7 @@
 
 #define SELECTED_COLOR RGBCOLOR(3,3,3)
 
-#define UNSELECTED_CORLOR RGBCOLOR(120,120,120)
+#define UNSELECTED_CORLOR RGBCOLOR(122,122,122)
 
 
 @implementation SliderBBSTitleView
@@ -19,9 +19,9 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        lineImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0,frame.size.height,self.frame.size.width/2-20,2)];
+        lineImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0,frame.size.height,self.frame.size.width/2-20,1)];
         
-        lineImageView.backgroundColor = RGBCOLOR(65,65,65);
+        lineImageView.backgroundColor = RGBCOLOR(3,3,4);
         
 //        lineImageView.image = [UIImage imageNamed:@"ios7_huandongtiao.png"];
         
@@ -45,7 +45,7 @@
         
         [button setTitle:[array objectAtIndex:i] forState:UIControlStateNormal];
         
-        button.titleLabel.font = [UIFont systemFontOfSize:18];
+        button.titleLabel.font = [UIFont systemFontOfSize:16];
         
         [button addTarget:self action:@selector(buttonTap:) forControlEvents:UIControlEventTouchUpInside];
         

@@ -80,7 +80,17 @@
             
             _username_label.textAlignment = NSTextAlignmentLeft;
             
-            _username_label.font = [UIFont systemFontOfSize:17];
+            _username_label.layer.masksToBounds = NO;
+            
+            _username_label.layer.shadowColor = [UIColor blackColor].CGColor;
+            
+            _username_label.layer.shadowOffset = CGSizeMake(0,1);
+            
+            _username_label.layer.shadowRadius = 0.5;
+            
+            _username_label.layer.shadowOpacity = 0.8;
+            
+            _username_label.font = [UIFont systemFontOfSize:19];
             
             [self addSubview:_username_label];
         }
@@ -129,9 +139,17 @@
         {
             UIImageView * backV = [[UIImageView alloc] initWithFrame:CGRectMake(0,145,320,50)];
             
-            backV.image = [UIImage imageNamed:@"di-1.png"];
+//            backV.image = [UIImage imageNamed:@"di-1.png"];
+            
+            backV.backgroundColor = [UIColor whiteColor];
             
             backV.userInteractionEnabled = YES;
+            
+            backV.layer.masksToBounds = NO;
+            
+            backV.layer.borderColor = RGBCOLOR(214,214,214).CGColor;
+            
+            backV.layer.borderWidth = 0.5;
             
             [self addSubview:backV];
             
@@ -148,7 +166,17 @@
         
         
         
+        UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0,195,320,6)];
         
+        view.backgroundColor = RGBCOLOR(248,247,248);
+        
+        [self addSubview:view];
+        
+        UIView * view_line_view = [[UIView alloc] initWithFrame:CGRectMake(0,5.5,320,0.5)];
+        
+        view_line_view.backgroundColor = RGBCOLOR(216,215,216);
+        
+        [view addSubview:view_line_view];
         
         
     }
@@ -268,7 +296,7 @@
         
         [button setTitleColor:RGBCOLOR(76,76,76) forState:UIControlStateNormal];
         
-        button.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+        button.titleLabel.font = [UIFont systemFontOfSize:14];
         
         [button setTitle:title_string forState:UIControlStateNormal];
         
@@ -291,11 +319,11 @@
             
             label.textAlignment = NSTextAlignmentCenter;
             
-            label.font=[UIFont boldSystemFontOfSize:14];
+            label.font=[UIFont systemFontOfSize:14];
             
             label.text = num.length?num:@"0";
             
-            label.textColor = RGBCOLOR(71,102,151);
+            label.textColor = RGBCOLOR(89,106,149);
             
             label.backgroundColor = [UIColor clearColor];
             
