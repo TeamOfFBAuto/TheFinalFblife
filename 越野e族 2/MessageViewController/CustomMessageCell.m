@@ -32,11 +32,11 @@
     
     if (!_headImageView)
     {
-        _headImageView = [[AsyncImageView alloc] initWithFrame:CGRectMake(10,10,40,40)];
+        _headImageView = [[AsyncImageView alloc] initWithFrame:CGRectMake(11.5,13,50,50)];
         
         _headImageView.layer.masksToBounds = YES;
         
-        _headImageView.layer.cornerRadius = 2;
+//        _headImageView.layer.cornerRadius = 2;
         
         [self.contentView addSubview:_headImageView];
         
@@ -50,11 +50,13 @@
     {
         if (!_NameLabel)
         {
-            _NameLabel = [[UILabel alloc] initWithFrame:CGRectMake(60,6,170,20)];
+            _NameLabel = [[UILabel alloc] initWithFrame:CGRectMake(73,10,170,20)];
             
-            _NameLabel.font = [UIFont boldSystemFontOfSize:15];
+            _NameLabel.font = [UIFont systemFontOfSize:15];
             
             _NameLabel.backgroundColor = [UIColor clearColor];
+            
+            _NameLabel.textColor = RGBCOLOR(49,49,49);
             
             _NameLabel.textAlignment = NSTextAlignmentLeft;
             
@@ -75,7 +77,7 @@
             
             _timeLabel.font = [UIFont systemFontOfSize:11];
             
-            _timeLabel.textColor = RGBCOLOR(166,166,166);
+            _timeLabel.textColor = RGBCOLOR(181,181,181);
             
             [self.contentView addSubview:_timeLabel];
         }else
@@ -86,9 +88,9 @@
         
         if (!_contentLabel1)
         {
-            _contentLabel1 = [[UILabel alloc] initWithFrame:CGRectMake(60,30,240,20)];
+            _contentLabel1 = [[UILabel alloc] initWithFrame:CGRectMake(73,40,240,20)];
             
-            _contentLabel1.textColor = RGBCOLOR(79,79,79);
+            _contentLabel1.textColor = RGBCOLOR(120,120,120);
             
             _contentLabel1.backgroundColor = [UIColor clearColor];
             
@@ -112,7 +114,7 @@
             
             _tixing_label.image = [personal getImageWithName:@"newlabel@2x"];
             
-            _tixing_label.center = CGPointMake(50,10);
+            _tixing_label.center = CGPointMake(61.5,13);
             
             [self.contentView addSubview:_tixing_label];
         }
@@ -120,13 +122,13 @@
     {
         if (!_contentLabel)
         {
-            _contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(60,15,260,30)];
+            _contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(73,30,260,30)];
             
-            _contentLabel.textColor = RGBCOLOR(79,79,79);
+            _contentLabel.textColor = RGBCOLOR(120,120,120);
             
             _contentLabel.backgroundColor = [UIColor clearColor];
             
-            _contentLabel.font = [UIFont boldSystemFontOfSize:15];
+            _contentLabel.font = [UIFont systemFontOfSize:15];
             
             _contentLabel.textAlignment = NSTextAlignmentLeft;
             

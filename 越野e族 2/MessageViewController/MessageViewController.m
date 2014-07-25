@@ -323,7 +323,7 @@
 //    self.navigationItem.rightBarButtonItems = @[space_button,[[UIBarButtonItem alloc] initWithCustomView:button_send]];
     
     
-    self.title = @"消息中心";
+    self.title = @"私信";
     
     self.rightImageName = @"weibo_write_image";
     
@@ -347,7 +347,7 @@
     
     self.myTableView.dataSource = self;
     
-    self.myTableView.rowHeight = 60;
+    self.myTableView.rowHeight = 76;
     
     if (MY_MACRO_NAME)
     {
