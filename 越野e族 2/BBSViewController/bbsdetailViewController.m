@@ -661,7 +661,11 @@ UIButton *    rightView=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 160, 44)
         
         if ([[dicinfo objectForKey:@"errcode"] intValue]==0) {
             
-            [self.collection_array removeObject:self.bbsdetail_tid];
+            
+            if ([self.collection_array containsObject:self.bbsdetail_tid])
+            {
+                [self.collection_array removeObject:self.bbsdetail_tid];
+            }
             
             [self.thezkingAlertV zkingalertShowWithString:@"已取消收藏"];
 

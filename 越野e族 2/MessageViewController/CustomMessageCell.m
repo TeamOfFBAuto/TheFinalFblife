@@ -50,7 +50,7 @@
     {
         if (!_NameLabel)
         {
-            _NameLabel = [[UILabel alloc] initWithFrame:CGRectMake(73,10,170,20)];
+            _NameLabel = [[UILabel alloc] initWithFrame:CGRectMake(73,15,170,20)];
             
             _NameLabel.font = [UIFont systemFontOfSize:15];
             
@@ -69,7 +69,7 @@
         
         if (!_timeLabel)
         {
-            _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(220,6,90,20)];
+            _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(220,15,90,20)];
             
             _timeLabel.textAlignment = NSTextAlignmentRight;
             

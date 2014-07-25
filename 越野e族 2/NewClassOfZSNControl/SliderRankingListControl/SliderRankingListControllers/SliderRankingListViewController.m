@@ -272,6 +272,8 @@
         
         detail.string_name = model.ranking_title;
         
+        detail.collection_array = self.bbs_forum_collection_array;
+        
         [self.navigationController pushViewController:detail animated:YES];
     }
 }
@@ -335,10 +337,36 @@
         
         if (isCollected)
         {
-            [bself.currentPage==1?self.bbs_post_collection_array:self.bbs_forum_collection_array removeObject:model.ranking_id];
+            if (bself.currentPage == 1)
+            {
+                if ([bself.bbs_post_collection_array containsObject:model.ranking_id])
+                {
+                    [bself.bbs_post_collection_array removeObject:model.ranking_id];
+                }
+            }else
+            {
+                if ([bself.bbs_forum_collection_array containsObject:model.ranking_id])
+                {
+                    [bself.bbs_forum_collection_array removeObject:model.ranking_id];
+                }
+            }
+            
         }else
         {
-            [bself.currentPage==1?self.bbs_post_collection_array:self.bbs_forum_collection_array addObject:model.ranking_id];
+            if (bself.currentPage == 1)
+            {
+                if (![bself.bbs_post_collection_array containsObject:model.ranking_id])
+                {
+                    [bself.bbs_post_collection_array addObject:model.ranking_id];
+                }
+            }else
+            {
+                if (![bself.bbs_forum_collection_array containsObject:model.ranking_id])
+                {
+                    [bself.bbs_forum_collection_array addObject:model.ranking_id];
+                }
+            }
+            
         }
     }];
     

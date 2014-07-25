@@ -855,7 +855,11 @@
                     
                     [button_collect setBackgroundImage:[UIImage imageNamed:@"ios7_collect44_42.png"] forState:UIControlStateNormal];
                     
-                    [self.collection_array removeObject:self.string_id];
+                    if ([self.collection_array containsObject:self.string_id])
+                    {
+                        [self.collection_array removeObject:self.string_id];
+                    }
+                    
                     
                     //            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"haha" message:[NSString stringWithFormat:@"%@",[dic objectForKey:@"bbsinfo"]] delegate:nil cancelButtonTitle:@"yes" otherButtonTitles:nil, nil];
                     //            [alert show];

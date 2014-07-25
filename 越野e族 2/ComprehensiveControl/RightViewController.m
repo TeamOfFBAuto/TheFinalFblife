@@ -77,13 +77,17 @@
 
 -(void)setup
 {
+    NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    BOOL islogin = [userDefaults boolForKey:USER_IN];
+    
     if (_rootScrollView)
     {
-        BOOL islogin = [[NSUserDefaults standardUserDefaults] boolForKey:USER_IN];
-        
         if (islogin && [LogIn_label.text isEqualToString:@"点击立即登录"])
         {
-            [self receivemyimage_head];
+            LogIn_label.text = [userDefaults objectForKey:USER_NAME];
+            
+            [headerImageView loadUserHeaderImageFromUrl:[userDefaults objectForKey:USER_FACE] withPlaceholdImage:[UIImage imageNamed:@"touxiang"]];
         }
         
         return;
@@ -123,13 +127,19 @@
     
     
     
-    [self receivemyimage_head];
-    
+//    [self receivemyimage_head];
     
     
     headerImageView = [[AsyncImageView alloc] initWithFrame:CGRectMake(103,46,82,82)];
     
-    headerImageView.image = [UIImage imageNamed:@"SliderRightLogin.png"];
+    
+    if (islogin)
+    {
+        [headerImageView loadUserHeaderImageFromUrl:[userDefaults objectForKey:USER_FACE] withPlaceholdImage:[UIImage imageNamed:@"touxiang"]];
+    }else
+    {
+        headerImageView.image = [UIImage imageNamed:@"SliderRightLogin.png"];
+    }
     
     headerImageView.layer.masksToBounds = YES;
     
@@ -148,11 +158,9 @@
     [headerImageView addGestureRecognizer:tap];
     
     
-    
-    
     LogIn_label = [[UILabel alloc] initWithFrame:CGRectMake(0,145,288,25)];
     
-    LogIn_label.text = @"点击立即登录";
+    LogIn_label.text = islogin?[userDefaults objectForKey:USER_NAME]:@"点击立即登录";
     
     LogIn_label.font = [UIFont systemFontOfSize:15];
     
@@ -299,7 +307,6 @@
             {
                 NSDictionary * dictionary = [[[dic objectForKey:@"data"] allValues] objectAtIndex:0];
                 
-                
                 NSString *string_uid=[NSString stringWithFormat:@"%@",[dictionary objectForKey:@"uid"]];
                 
                 NSString * userName = [NSString stringWithFormat:@"%@",[dictionary objectForKey:@"nickname"]];
@@ -322,7 +329,7 @@
                 
 //                [headerImageView loadImageFromURL:userFace withPlaceholdImage:[UIImage imageNamed:@"SliderRightLogin.png"]];
                 
-                [headerImageView loadUserHeaderImageFromUrl:userFace withPlaceholdImage:[UIImage imageNamed:@"SliderRightLogin.png"]];
+                [headerImageView loadUserHeaderImageFromUrl:userFace withPlaceholdImage:[UIImage imageNamed:@"touxiang"]];
                 
             }
         }

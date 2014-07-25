@@ -1340,6 +1340,17 @@
 
 -(void)CollectForumSectionTap:(ZSNButton *)sender
 {
+    BOOL isLogin = [[NSUserDefaults standardUserDefaults] boolForKey:USER_IN];
+    
+
+    if (!isLogin) {
+        LogInViewController * logIn = [LogInViewController sharedManager];
+        
+        [self presentViewController:logIn animated:YES completion:NULL];
+    }
+    
+    
+    
     NSString * tid = [sender.myDictionary objectForKey:@"tid"];
     
     BOOL isCollected = [self.forum_section_collection_array containsObject:tid];

@@ -12,7 +12,7 @@
 
 #import "AtlasContentView.h"
 
-@interface ShowImagesViewController : UIViewController<UIScrollViewDelegate,QBShowImagesScrollViewDelegate,UITextViewDelegate>
+@interface ShowImagesViewController : UIViewController<UIScrollViewDelegate,QBShowImagesScrollViewDelegate,UITextViewDelegate,UIActionSheetDelegate,MFMailComposeViewControllerDelegate>
 {
     UIView * navgationBar;
     
@@ -37,6 +37,14 @@
     BOOL isPraise;
     
     AtlasContentView * content_back_view; //图片标题、简介视图
+    
+    
+    NSMutableArray * my_array;//分享相关
+    
+    NSString * string_title;
+    
+    
+    
 }
 
 @property(nonatomic,strong)NSString * id_atlas;

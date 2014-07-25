@@ -83,7 +83,7 @@
         {
             _collection_button = [UIButton buttonWithType:UIButtonTypeCustom];
             
-            _collection_button.frame = CGRectMake(265,0,45,54);
+            _collection_button.frame = CGRectMake(260,0,60,54);
             
             [_collection_button setImage:[UIImage imageNamed:@"bbs_rankinglist_guanzhu"] forState:UIControlStateNormal];
             

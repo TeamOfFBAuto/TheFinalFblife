@@ -248,6 +248,26 @@
     
     [self.request setFailedBlock:^(void)
      {
+         
+         dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
+         dispatch_async(queue, ^{
+             
+             UIImage *image = [[FullyLoaded sharedFullyLoaded] imageForURL:imageURL];
+      
+             dispatch_sync(dispatch_get_main_queue(), ^{
+                 if (image)
+                 {
+                     self.image = image;
+                 }else
+                 {
+                     
+                 }
+             });
+         });
+
+         
+         
+         
          [self.delegate seccesDownLoad:nil];
          [self.request cancel];
          self.request.delegate = nil;

@@ -326,6 +326,28 @@
 
 -(void)loginH
 {
+    
+    if (userNameField.text.length == 0)
+    {
+        UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"用户名不能为空" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+        
+        [alertView show];
+        
+        return;
+    }
+    
+    if (pwNameField.text.length == 0)
+    {
+        UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"密码不能为空" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+        
+        [alertView show];
+        
+        return;
+    }
+    
+    
+    
+    
     [tool1 stop];
     [tool2 stop];
     [tool3 stop];

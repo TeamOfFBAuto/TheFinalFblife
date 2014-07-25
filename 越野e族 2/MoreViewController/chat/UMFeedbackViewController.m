@@ -361,12 +361,13 @@ static UITapGestureRecognizer *tapRecognizer;
 //        
 //        
 //    }
-UMFeedback *    umFeedback = [UMFeedback sharedInstance];
+
+    UMFeedback *    umFeedback = [UMFeedback sharedInstance];
     [umFeedback setAppkey:@"5153e5e456240b79e20006b9" delegate:self];
 
     
     if (self.mTextField.text.length==0) {
-        UIAlertView *alert_=[[UIAlertView alloc]initWithTitle:@"提示" message:@"反馈内容不能为空" delegate:nil cancelButtonTitle:@"" otherButtonTitles:nil, nil];
+        UIAlertView *alert_=[[UIAlertView alloc]initWithTitle:@"提示" message:@"反馈内容不能为空" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alert_ show];
     }else{
         NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];

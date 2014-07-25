@@ -10,7 +10,9 @@
 #import "AtlasModel.h"
 #import "PraiseAndCollectedModel.h"
 #import "CustomInputView.h"
-
+#import "commentViewController.h"
+#import "UMSocialSnsPlatformManager.h"
+#import "ZkingAlert.h"
 
 
 @interface ShowImagesViewController ()
@@ -34,6 +36,8 @@
 
     
     CustomInputView * input_view;//输入框
+    
+    ZkingAlert * _thezkingAlertV;
 }
 
 @end
@@ -60,10 +64,12 @@
 {
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
     
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     
     [self.navigationController popViewControllerAnimated:YES];
     
     self.navigationController.navigationBarHidden = NO;
+    
 }
 
 
@@ -201,6 +207,8 @@
         case 0://赞
         {
             [self cancelAndPraise];
+            
+            [self changeMySizeAnimationWithView:sender];
         }
             break;
         case 1://收藏
@@ -210,12 +218,14 @@
             if (islogin)
             {
                 [self cancelAndCollectionAtlas];
+                
+                [self changeMySizeAnimationWithView:sender];
             }
         }
             break;
         case 2://转发
         {
-            
+            [self ShareMore];
         }
             break;
             
@@ -250,16 +260,37 @@
     
     __weak typeof(self) bself = self;
     
+    
+    [_thezkingAlertV zkingalertShowWithString:@"感兴趣"];
+    
+    [self performSelector:@selector(ShowAndHiddenAlertView:) withObject:NO afterDelay:0.8];
+    
+    
     [request setCompletionBlock:^{
         
-        isPraise = YES;
-        
-        [PraiseAndCollectedModel addIntoDataSourceWithId:bself.id_atlas WithPraise:[NSNumber numberWithBool:isPraise]];
-        
-        UIButton * button = (UIButton *)[navImageView viewWithTag:10000];
-        
-        button.selected = YES;
-        
+        @try {
+            AtlasModel * model = [self.allImagesUrlArray objectAtIndex:0];
+            
+            int count = [model.atlas_likes intValue];
+            
+            model.atlas_likes = [NSString stringWithFormat:@"%d",count+1];
+            
+            [input_view.pinglun_button setTitle:model.atlas_likes forState:UIControlStateNormal];
+            
+            isPraise = YES;
+            
+            [PraiseAndCollectedModel addIntoDataSourceWithId:bself.id_atlas WithPraise:[NSNumber numberWithBool:isPraise]];
+            
+            UIButton * button = (UIButton *)[navImageView viewWithTag:10000];
+            
+            button.selected = YES;
+        }
+        @catch (NSException *exception) {
+            
+        }
+        @finally {
+            
+        }
     }];
     
     
@@ -296,11 +327,28 @@
     
     [request setCompletionBlock:^{
         
-        isCollected = !isCollected;
+        @try {
+            
+            [_thezkingAlertV zkingalertShowWithString:isCollected?@"取消收藏":@"收藏成功"];
+            
+            [self performSelector:@selector(ShowAndHiddenAlertView:) withObject:NO afterDelay:0.8];
+            
+            isCollected = !isCollected;
+            
+            UIButton * button = (UIButton *)[navImageView viewWithTag:10001];
+            
+            button.selected = isCollected;
+            
+        }
+        @catch (NSException *exception) {
+            
+        }
+        @finally {
+            
+        }
         
-        UIButton * button = (UIButton *)[navImageView viewWithTag:10001];
         
-        button.selected = isCollected;
+        
     }];
     
     
@@ -309,6 +357,30 @@
     }];
     
     [c_request startAsynchronous];
+}
+
+
+#pragma mark - 放到再缩小动画
+
+
+-(void)changeMySizeAnimationWithView:(UIView *)sender
+{
+    [UIView animateWithDuration:0.4 animations:^{
+        
+        sender.transform = CGAffineTransformMakeScale(1.5,1.5);
+        
+    } completion:^(BOOL finished) {
+        
+        [UIView animateWithDuration:0.4 animations:^{
+            
+            sender.transform = CGAffineTransformMakeScale(1,1);
+            
+        } completion:^(BOOL finished) {
+            
+            
+        }];
+        
+    }];
 }
 
 
@@ -346,7 +418,21 @@
     myAlertView = nil;
 }
 
-
+-(void)ShowAndHiddenAlertView:(BOOL)isShow
+{
+    [UIView animateWithDuration:0.6 animations:^{
+        
+        _thezkingAlertV.alpha = 0;
+        
+    } completion:^(BOOL finished) {
+        
+        _thezkingAlertV.hidden = YES;
+        
+        _thezkingAlertV.alpha = 1;
+        
+    }];
+    
+}
 
 
 -(void)viewWillAppear:(BOOL)animated
@@ -366,6 +452,8 @@
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     
     [input_view deleteKeyBordNotification];
 }
@@ -392,13 +480,15 @@
         
         [bself.allImagesUrlArray addObjectsFromArray:array];
         
-        AtlasModel * model = [self.allImagesUrlArray objectAtIndex:bself.currentPage];
+        atlasModel = [bself.allImagesUrlArray objectAtIndex:bself.currentPage];
         
-        [bself loadCurrentImageWithUrl:model.atlas_photo];
+        string_title = atlasModel.atlas_name;
         
-        [bself loadImageInformationWith:model];
+        [bself loadCurrentImageWithUrl:atlasModel.atlas_photo];
         
-        [input_view.pinglun_button setTitle:model.atlas_likes forState:UIControlStateNormal];
+        [bself loadImageInformationWith:atlasModel];
+        
+        [input_view.pinglun_button setTitle:atlasModel.atlas_likes forState:UIControlStateNormal];
         
         bself.myScrollView.contentSize = CGSizeMake(340*self.allImagesUrlArray.count,0);
         bself.myScrollView.contentOffset = CGPointMake(340*_currentPage,0);
@@ -589,11 +679,18 @@
         
         NSLog(@"跳到评论");
         
+        commentViewController * comment_=[[commentViewController alloc]init];
+        comment_.sortString=@"15";//这个是判断图集或者新闻的，图集是15
+        comment_.string_ID=self.id_atlas;//这个是图集的id
+        comment_.string_title = atlasModel.atlas_name;//@"越野e族";
+        [self.navigationController pushViewController:comment_ animated:YES];
+        
+        
     } WithSendBlock:^(NSString *content, BOOL isForward) {
         
         NSLog(@"发表评论");
         
-        [bself submitPingLunTap:nil];
+        [bself submitPingLunTap:content];
         
     }];
     
@@ -737,6 +834,16 @@
     [self panduanCollection];
 
     [self setNavgationBar];
+    
+    
+    
+    
+    _thezkingAlertV=[[ZkingAlert alloc]initWithFrame:CGRectMake(0, 0, 320, 480) labelString:@""];
+    _thezkingAlertV.hidden=YES;
+    [self.view addSubview:_thezkingAlertV];
+    
+    
+    
 }
 
 
@@ -856,13 +963,11 @@
 #pragma mark - 发送评论
 
 
--(void)submitPingLunTap:(UIButton *)sender
+-(void)submitPingLunTap:(NSString *)sender
 {
     [text_input_view resignFirstResponder];
     
-    AtlasModel * model = [self.allImagesUrlArray objectAtIndex:0];
-    
-    NSString * fullUrl = [NSString stringWithFormat:ATLAS_COMMENT_URL,model.atlas_id,text_input_view.text,model.atlas_name,model.atlas_name,model.atlas_photo,AUTHKEY];
+    NSString * fullUrl = [NSString stringWithFormat:ATLAS_COMMENT_URL,atlasModel.atlas_id,sender,atlasModel.atlas_name,AUTHKEY];
     
     NSLog(@"发表图集评论接口 ---   %@",fullUrl);
     
@@ -878,11 +983,10 @@
         
         if ([[allDic objectForKey:@"errcode"] intValue] == 0)
         {
-            int count = [model.atlas_likes intValue];
+            [_thezkingAlertV zkingalertShowWithString:@"评论成功"];
             
-            model.atlas_likes = [NSString stringWithFormat:@"%d",count+1];
+            [self performSelector:@selector(ShowAndHiddenAlertView:) withObject:NO afterDelay:0.8];
             
-            [input_view.pinglun_button setTitle:model.atlas_likes forState:UIControlStateNormal];
         }else
         {
             UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:[allDic objectForKey:@"data"] message:nil delegate:nil cancelButtonTitle:@"确认" otherButtonTitles:nil,nil];
@@ -909,70 +1013,294 @@
 #pragma mark - 分享
 
 
-//-(void)ShareMore{
-//    
-//    my_array =[[NSMutableArray alloc]init];
-//    UIActionSheet * editActionSheet = [[UIActionSheet alloc] initWithTitle:@"图文分享" delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
-//    editActionSheet.actionSheetStyle = UIActivityIndicatorViewStyleGray;
-//    
-//    [editActionSheet addButtonWithTitle:@"分享到自留地"];
-//    
-//    for (NSString *snsName in [UMSocialSnsPlatformManager sharedInstance].allSnsValuesArray) {
-//        /*2013-07-22 17:09:59.546 UMSocial[4631:907] name==qzone
-//         2013-07-22 17:09:59.55x3 UMSocial[4631:907] name==sina
-//         2013-07-22 17:09:59.559 UMSocial[4631:907] name==tencent
-//         2013-07-22 17:09:59.564 UMSocial[4631:907] name==renren
-//         2013-07-22 17:09:59.575 UMSocial[4631:907] name==douban
-//         2013-07-22 17:09:59.578 UMSocial[4631:907] name==wechat
-//         2013-07-22 17:09:59.583 UMSocial[4631:907] name==wxtimeline
-//         2013-07-22 17:09:59.587 UMSocial[4631:907] name==email
-//         2013-07-22 17:09:59.592 UMSocial[4631:907] name==sms
-//         2013-07-22 17:09:59.595 UMSocial[4631:907] name==facebook
-//         2013-07-22 17:09:59.598 UMSocial[4631:907] name==twitter*/
-//        
-//        if ([snsName isEqualToString:@"facebook"]||[snsName isEqualToString:@"twitter"]||[snsName isEqualToString:@"renren"]||[snsName isEqualToString:@"qzone"]||[snsName isEqualToString:@"douban"]||[snsName isEqualToString:@"tencent"]||[snsName isEqualToString:@"sms"]||[snsName isEqualToString:@"wxtimeline"]) {
-//        }else{
-//            NSLog(@"weishenmehaiyu===%@",my_array);
-//            [my_array addObject:snsName];
-//            if ([snsName isEqualToString:@"sina"]) {
-//                [editActionSheet addButtonWithTitle:@"分享到新浪微博"];
-//                
-//            }
-//            if ([snsName isEqualToString:@"email"]) {
-//                
-//            }
-//            
-//            //            else if([snsName isEqualToString:@"wechat"])
-//            //            {
-//            //                [editActionSheet addButtonWithTitle:@"分享给微信好友"];
-//            //
-//            //
-//            //            }
-//            //            else if([snsName isEqualToString:@"wxtimeline"])
-//            //            {
-//            //                [editActionSheet addButtonWithTitle:@"分享到微信朋友圈"];
-//            //
-//            //            }
-//            //            else{
-//            //                [editActionSheet addButtonWithTitle:@"短信分享"];
-//            //
-//            //            }
-//            //
-//            
-//        }
-//        
-//        
-//    }
-//    [editActionSheet addButtonWithTitle:@"分享给微信好友"];
-//    [editActionSheet addButtonWithTitle:@"分享到微信朋友圈"];
-//    [editActionSheet addButtonWithTitle:@"分享到邮箱"];
-//    
-//    [editActionSheet addButtonWithTitle:@"取消"];
-//    editActionSheet.cancelButtonIndex = editActionSheet.numberOfButtons - 1;
-//    // [editActionSheet showFromTabBar:self.tabBarController.tabBar];
-//    [editActionSheet showFromRect:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height) inView:self.view animated:YES];
-//    editActionSheet.delegate = self;
-//}
+#pragma mark-进入分享
+
+-(void)ShareMore{
+    
+    my_array =[[NSMutableArray alloc]init];
+    UIActionSheet * editActionSheet = [[UIActionSheet alloc] initWithTitle:@"图文分享" delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
+    editActionSheet.actionSheetStyle = UIActivityIndicatorViewStyleGray;
+    
+    [editActionSheet addButtonWithTitle:@"分享到自留地"];
+    
+    for (NSString *snsName in [UMSocialSnsPlatformManager sharedInstance].allSnsValuesArray) {
+        /*2013-07-22 17:09:59.546 UMSocial[4631:907] name==qzone
+         2013-07-22 17:09:59.55x3 UMSocial[4631:907] name==sina
+         2013-07-22 17:09:59.559 UMSocial[4631:907] name==tencent
+         2013-07-22 17:09:59.564 UMSocial[4631:907] name==renren
+         2013-07-22 17:09:59.575 UMSocial[4631:907] name==douban
+         2013-07-22 17:09:59.578 UMSocial[4631:907] name==wechat
+         2013-07-22 17:09:59.583 UMSocial[4631:907] name==wxtimeline
+         2013-07-22 17:09:59.587 UMSocial[4631:907] name==email
+         2013-07-22 17:09:59.592 UMSocial[4631:907] name==sms
+         2013-07-22 17:09:59.595 UMSocial[4631:907] name==facebook
+         2013-07-22 17:09:59.598 UMSocial[4631:907] name==twitter*/
+        
+        if ([snsName isEqualToString:@"facebook"]||[snsName isEqualToString:@"twitter"]||[snsName isEqualToString:@"renren"]||[snsName isEqualToString:@"qzone"]||[snsName isEqualToString:@"douban"]||[snsName isEqualToString:@"tencent"]||[snsName isEqualToString:@"sms"]||[snsName isEqualToString:@"wxtimeline"]) {
+        }else{
+            NSLog(@"weishenmehaiyu===%@",my_array);
+            [my_array addObject:snsName];
+            if ([snsName isEqualToString:@"sina"]) {
+                [editActionSheet addButtonWithTitle:@"分享到新浪微博"];
+                
+            }
+            if ([snsName isEqualToString:@"email"]) {
+                
+            }
+            
+            //            else if([snsName isEqualToString:@"wechat"])
+            //            {
+            //                [editActionSheet addButtonWithTitle:@"分享给微信好友"];
+            //
+            //
+            //            }
+            //            else if([snsName isEqualToString:@"wxtimeline"])
+            //            {
+            //                [editActionSheet addButtonWithTitle:@"分享到微信朋友圈"];
+            //
+            //            }
+            //            else{
+            //                [editActionSheet addButtonWithTitle:@"短信分享"];
+            //
+            //            }
+            //
+            
+        }
+        
+        
+    }
+    [editActionSheet addButtonWithTitle:@"分享给微信好友"];
+    [editActionSheet addButtonWithTitle:@"分享到微信朋友圈"];
+    [editActionSheet addButtonWithTitle:@"分享到邮箱"];
+    
+    [editActionSheet addButtonWithTitle:@"取消"];
+    editActionSheet.cancelButtonIndex = editActionSheet.numberOfButtons - 1;
+    // [editActionSheet showFromTabBar:self.tabBarController.tabBar];
+    [editActionSheet showFromRect:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height) inView:self.view animated:YES];
+    editActionSheet.delegate = self;
+}
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSString * string_url = [NSString stringWithFormat:@"http://special.fblife.com/listphoto/%@.html",self.id_atlas];
+    
+    if(buttonIndex==0){
+        
+        
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:USER_IN])
+        {
+            WriteBlogViewController * writeBlogView = [[WriteBlogViewController alloc] init];
+            
+            writeBlogView.theText = [NSString stringWithFormat:@"分享论坛:“%@”,链接:%@",string_title,string_url] ;
+            
+            [self presentViewController:writeBlogView animated:YES completion:NULL];
+        }
+        else{
+            //没有激活fb，弹出激活提示
+            LogInViewController *login=[LogInViewController sharedManager];
+            [self presentViewController:login animated:YES completion:nil];
+        }
+        
+        
+    }else if(buttonIndex==1){
+        NSLog(@"到新浪微博界面的");
+        WBWebpageObject *pageObject = [ WBWebpageObject object ];
+        pageObject.objectID =@"nimeideid";
+        pageObject.thumbnailData =UIImageJPEGRepresentation([UIImage imageNamed:@"Icon@2x.png"], 1);
+        pageObject.title = @"分享自越野e族客户端";
+        pageObject.description = string_title;
+        pageObject.webpageUrl = string_url;
+        WBMessageObject *message = [ [ WBMessageObject alloc ] init ];
+        message.text =[NSString stringWithFormat:@"%@（分享自@越野e族）",string_title] ;
+        
+        message.mediaObject = pageObject;
+        WBSendMessageToWeiboRequest *req = [ [  WBSendMessageToWeiboRequest alloc ] init  ];
+        req.message = message;
+        [ WeiboSDK sendRequest:req ];
+        
+    }
+    
+    else if(buttonIndex==4){
+        
+        NSLog(@"分享到邮箱");
+        
+        //        [UMSocialData defaultData].shareText =[NSString stringWithFormat:@"%@（分享自越野e族）  %@<html><a href=http://mobile.fblife.com/>\n点击下载越野e族客户端</a></html>",string_title,string_url] ;
+        //
+        //        UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:@"email"];
+        //
+        //        snsPlatform.snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);
+        
+        NSString *string_bodyofemail=[NSString stringWithFormat:@"%@ \n %@ \n\n 下载越野e族客户端 http://mobile.fblife.com/download.php",string_title,string_url] ;
+        [self okokokokokokowithstring:string_bodyofemail];
+        
+        
+    }else if(buttonIndex==2){
+        NSLog(@"分享给微信好友");
+        
+        
+        if ([WXApi isWXAppInstalled] && [WXApi isWXAppSupportApi]) {
+            WXMediaMessage *message = [WXMediaMessage message];
+            message.title = string_title;
+            message.description = string_title;
+            
+            [message setThumbImage:[UIImage imageNamed:@"Icon@2x.png"]] ;
+            WXWebpageObject *ext = [WXWebpageObject object];
+            //ext.imageData = _weburl_Str;
+            ext.webpageUrl=string_url;
+            message.mediaObject = ext;
+            
+            SendMessageToWXReq* req = [[SendMessageToWXReq alloc] init];
+            
+            req.bText = NO;
+            req.message = message;
+            req.scene=WXSceneSession;
+            
+            [WXApi sendReq:req];
+        }else{
+            UIAlertView *alView = [[UIAlertView alloc]initWithTitle:@"" message:@"你的iPhone上还没有安装微信,无法使用此功能，使用微信可以方便的把你喜欢的作品分享给好友。" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"免费下载微信", nil];
+            [alView show];
+            
+        }
+        
+    }
+    else if(buttonIndex==3){
+        if ([WXApi isWXAppInstalled] && [WXApi isWXAppSupportApi]) {
+            WXMediaMessage *message = [WXMediaMessage message];
+            message.title = string_title;
+            message.description = string_title;
+            
+            [message setThumbImage:[UIImage imageNamed:@"Icon@2x.png"]] ;
+            WXWebpageObject *ext = [WXWebpageObject object];
+            //ext.imageData = _weburl_Str;
+            ext.webpageUrl=string_url;
+            message.mediaObject = ext;
+            
+            SendMessageToWXReq* req = [[SendMessageToWXReq alloc] init];
+            
+            req.bText = NO;
+            req.message = message;
+            req.scene=WXSceneTimeline;
+            
+            [WXApi sendReq:req];
+        }else{
+            UIAlertView *alView = [[UIAlertView alloc]initWithTitle:@"" message:@"你的iPhone上还没有安装微信,无法使用此功能，使用微信可以方便的把你喜欢的作品分享给好友。" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"免费下载微信", nil];
+            [alView show];
+            
+        }
+        
+        
+        NSLog(@"分享到微信朋友圈");
+        
+    }
+    //分享编辑页面的接口
+    //
+    
+    
+}
+
+
+-(void)okokokokokokowithstring:(NSString *)___str{
+    MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
+    picker.mailComposeDelegate = self;
+    
+    [picker setSubject:@"分享自越野e族"];
+    
+    // Fill out the email body text
+    NSString *emailBody =___str;
+    [picker setMessageBody:emailBody isHTML:NO];
+    
+    [self presentViewController:picker animated:YES completion:NULL];
+}
+
+
+
+- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
+
+{
+    NSString *title = @"Mail";
+    
+    NSString *msg;
+    
+    switch (result)
+    
+    {
+            
+        case MFMailComposeResultCancelled:
+            
+            msg = @"Mail canceled";//@"邮件发送取消";
+            
+            break;
+            
+        case MFMailComposeResultSaved:
+            
+            msg = @"Mail saved";//@"邮件保存成功";
+            
+            // [self alertWithTitle:title msg:msg];
+            
+            break;
+            
+        case MFMailComposeResultSent:
+            
+            msg = @"邮件发送成功";//@"邮件发送成功";
+            
+            [self alertWithTitle:title msg:msg];
+            
+            break;
+            
+        case MFMailComposeResultFailed:
+            
+            msg = @"邮件发送失败";//@"邮件发送失败";
+            
+            [self alertWithTitle:title msg:msg];
+            
+            break;
+            
+        default:
+            
+            msg = @"Mail not sent";
+            
+            // [self alertWithTitle:title msg:msg];
+            
+            break;
+            
+    }
+    
+    [self dismissViewControllerAnimated:YES completion:NULL];
+    
+    
+}
+- (void) alertWithTitle: (NSString *)_title_ msg: (NSString *)msg
+
+{
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示"
+                          
+                                                    message:msg
+                          
+                                                   delegate:nil
+                                          cancelButtonTitle:@"确定"
+                          
+                                          otherButtonTitles:nil];
+    
+    [alert show];
+    
+    
+}
+
+
+- (UIImage *)scaleToSize:(UIImage *)img size:(CGSize)size{
+    // 创建一个bitmap的context
+    // 并把它设置成为当前正在使用的context
+    UIGraphicsBeginImageContext(size);
+    // 绘制改变大小的图片
+    [img drawInRect:CGRectMake(0, 0, size.width, size.height)];
+    // 从当前context中创建一个改变大小后的图片
+    UIImage* scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+    // 使当前的context出堆栈
+    UIGraphicsEndImageContext();
+    // 返回新的改变大小后的图片
+    return scaledImage;
+}
+
 
 
 

@@ -384,7 +384,7 @@ alpha:(a)]
 
 #pragma MARK - 图集评论接口
 
-#define ATLAS_COMMENT_URL @"http://fb.fblife.com/openapi/index.php?mod=comment&code=commentadd&sort=15&sortid=%@&content=%@&title=%@&intro=%@&photo=%@&fromtype=b5eeec0b&authkey=%@"
+#define ATLAS_COMMENT_URL @"http://fb.fblife.com/openapi/index.php?mod=comment&code=commentadd&sort=15&sortid=%@&content=%@&title=%@&fromtype=b5eeec0b&authkey=%@"
 
 #pragma mark - 赞图集的接口
 

@@ -57,5 +57,9 @@ typedef void(^InputViewSendToPinglunBlock)(NSString * content,BOOL isForward);//
 //隐藏键盘
 -(void)hiddeninputViewTap;
 
+//同步到自留地
+
+-(void)ForwardingToWeiBoWith:(NSDictionary *)theDictionary;
+
 
 @end

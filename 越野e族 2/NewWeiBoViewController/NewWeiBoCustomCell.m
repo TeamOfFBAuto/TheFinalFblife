@@ -291,7 +291,7 @@
     
     if (theType == 0)
     {
-        [_Head_ImageView loadImageFromURL:info.face_original_url withPlaceholdImage:[personal getImageWithName:@"touxiang"]];
+        [_Head_ImageView loadUserHeaderImageFromUrl:info.face_original_url withPlaceholdImage:[personal getImageWithName:@"touxiang"]];
         
         _UserName_Label.text = info.userName;
     }

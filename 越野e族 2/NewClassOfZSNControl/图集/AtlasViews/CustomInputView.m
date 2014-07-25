@@ -143,7 +143,7 @@
     [text_background_view addSubview:send_button];
     
     
-    isForward = YES;
+    isForward = NO;
     
     UIButton * mark_button = [UIButton buttonWithType:UIButtonTypeCustom];
     
@@ -275,6 +275,12 @@
 -(void)submitPingLunTap:(UIButton *)sender
 {
     sendPingLun_block(text_input_view.text,isForward);
+    
+    [text_input_view resignFirstResponder];
+    
+    text_input_view.text = @"";
+    
+    commit_label.text = @"";
 }
 
 
