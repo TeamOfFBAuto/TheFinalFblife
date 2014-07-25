@@ -588,9 +588,77 @@
     
     //    newsdetailViewController *   comment_=[[newsdetailViewController alloc]init];
     //
-    //    UIViewController *copyRoot=(UIViewController *)self.delegate;
+    UIViewController *copyRoot=(UIViewController *)self.delegate;
+    
+    
+    
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    
+    
+    
+    if (self.mytype==0) {
+        
+        NSDictionary *dicnews=[self.normalarray objectAtIndex:indexPath.row];
+        
+        NSString *thestring=[NSString stringWithFormat:@"%@",[dicnews objectForKey:@"title"]];
+        
+        
+        
+        
+        
+        
+        
+    }else if(self.mytype==1){
+        
+        
+        NSDictionary *dicnews=[self.normalarray objectAtIndex:indexPath.row];
+        
+        NSString *thestring=[NSString stringWithFormat:@"%@",[dicnews objectForKey:@"subject"]];
+        
+        
+        
+        
+        
+    }else if(self.mytype==2){
+        NSDictionary *dicnews=[self.normalarray objectAtIndex:indexPath.row];
+        
+        NSString *thestring=[NSString stringWithFormat:@"%@",[dicnews objectForKey:@"subject"]];
+        
+        
+        
+        
+        
+    }else if(self.mytype==3){
+        
+        NSDictionary *dicnews=[self.normalarray objectAtIndex:indexPath.row];
+        
+        NSString *thestring=[NSString stringWithFormat:@"%@",[dicnews objectForKey:@"title"]];
+        
+        
+    }
+    else if(self.mytype==4){
+        
+        NSDictionary *dicnews=[self.normalarray objectAtIndex:indexPath.row];
+        
+        NSString *thestring=[NSString stringWithFormat:@"%@",[dicnews objectForKey:@"subject"]];
+        
+        
+    }
+    else if(self.mytype==5){
+        
+        NSDictionary *dicnews=[self.normalarray objectAtIndex:indexPath.row];
+        
+        NSString *thestring=[NSString stringWithFormat:@"%@",[dicnews objectForKey:@"subject"]];
+        
+        
+    }
+    
+
+    
+    
+    
     
     
 }
