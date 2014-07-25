@@ -124,7 +124,9 @@
     currentSelectButtonIndex=0;
     
     for (int i=0; i<6; i++) {
-        UIButton *tabbutton=[[UIButton alloc] initWithFrame:CGRectMake(0, 64+i*50, 300, 50)];
+        
+        
+        UIButton *tabbutton=[[UIButton alloc] initWithFrame:CGRectMake(0,iPhone5? 64+i*70:64+i*60, 300, 50)];
        // [tabbutton setSelected:YES];
         tabbutton.tag=i+100;
         if (i==0) {

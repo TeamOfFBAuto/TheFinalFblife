@@ -978,30 +978,31 @@
     
     
     
-//    [guanggao_image cancelDownload];
-//    guanggao_image.delegate=nil;
-//    
-//    [guanggao_image removeFromSuperview];
-//    [iMagelogo removeFromSuperview];
+    //    [guanggao_image cancelDownload];
+    //    guanggao_image.delegate=nil;
+    //
+    //    [guanggao_image removeFromSuperview];
+    //    [iMagelogo removeFromSuperview];
     [bigimageview removeFromSuperview];
-//    
-//    guanggao_image=nil;
-//    iMagelogo=nil;
-//    bigimageview=nil;
+    //
+    //    guanggao_image=nil;
+    //    iMagelogo=nil;
+    //    bigimageview=nil;
     
-
     
-
-
+    
+    
+    
     _navigationController = [[UINavigationController alloc] initWithRootViewController:[[ComprehensiveViewController alloc] init]];
     
     
-//    UINavigationController *ritht = [[UINavigationController alloc] initWithRootViewController:[[RightViewController alloc] init]];
     
-//
+    //    UINavigationController *ritht = [[UINavigationController alloc] initWithRootViewController:[[RightViewController alloc] init]];
+    
+    //
     
     RightViewController * rightVC = [[RightViewController alloc] init];
-
+    
     
     LeftViewController *menuViewController = [[LeftViewController alloc] init];
     
@@ -1016,6 +1017,8 @@
     [_RootVC setOpenDrawerGestureModeMask:MMOpenDrawerGestureModePanningNavigationBar];
     [_RootVC setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
     
+       _RootVC.showsShadow = YES;
+    
     
     _root_nav = [[UINavigationController alloc] initWithRootViewController:_RootVC];
     _root_nav.navigationBarHidden = YES;
@@ -1028,8 +1031,8 @@
     
     pushNav.view.frame = CGRectMake(320,0,320,iPhone5?568:480);
     
-  //  [self.window.rootViewController.view addSubview:pushNav.view];
-        
+    //  [self.window.rootViewController.view addSubview:pushNav.view];
+    
 }
 
 

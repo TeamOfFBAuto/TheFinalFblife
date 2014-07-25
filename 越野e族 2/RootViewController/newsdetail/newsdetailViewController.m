@@ -365,14 +365,14 @@
     
     //收藏的
     
-    UIButton *collectButton=[[UIButton alloc]initWithFrame:CGRectMake(70, (44-43/2)/2, 44/2, 43/2)];
+    UIButton *collectButton=[[UIButton alloc]initWithFrame:CGRectMake(75, (44-43/2)/2, 44/2, 43/2)];
     [collectButton addTarget:self action:@selector(shoucang:) forControlEvents:UIControlEventTouchUpInside];
     [collectButton setBackgroundImage:[UIImage imageNamed:@"newsuncollect44_43.png"] forState:UIControlStateNormal];
 
     
 
     
-    button_comment=[[UIButton alloc]initWithFrame:CGRectMake(MY_MACRO_NAME?140: 25-3, (44-34/2)/2, 34/2, 34/2)];
+    button_comment=[[UIButton alloc]initWithFrame:CGRectMake(MY_MACRO_NAME?125: 25-3, 0, 44, 44)];
     
     
     button_comment.tag=26;
@@ -380,8 +380,11 @@
     //[button_comment setTitle:@"评论" forState:UIControlStateNormal];
     button_comment.titleLabel.font=[UIFont systemFontOfSize:14];
     [button_comment addTarget:self action:@selector(ShareMore) forControlEvents:UIControlEventTouchUpInside];
-    [button_comment setBackgroundImage:[UIImage imageNamed:@"ios_zhuanfa44_37.png"] forState:UIControlStateNormal];
-    button_comment.userInteractionEnabled=NO;
+    //[button_comment setBackgroundImage:[UIImage imageNamed:@"ios_zhuanfa44_37.png"] forState:UIControlStateNormal];
+    
+    [button_comment setImage:[UIImage imageNamed:@"ios_zhuanfa44_37.png"] forState:UIControlStateNormal];
+    
+    button_comment.userInteractionEnabled=YES;
     
     rightView=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 160, 44)];
    // [rightView addTarget:self action:@selector(ShareMore) forControlEvents:UIControlEventTouchUpInside];

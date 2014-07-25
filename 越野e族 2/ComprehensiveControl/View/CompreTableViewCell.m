@@ -141,14 +141,20 @@
         
         switch (theStyle) {
             case CompreTableViewCellStylePictures:
-            {
+            {   NewMainViewModel *_newmodel=[[NewMainViewModel alloc]init];
+                [_newmodel NewMainViewModelSetdic:theDic];
+
                 
                 _zanImageV.center=CGPointMake(290, 122-2);
-                _zanlabel.frame=CGRectMake(290,115-2 , 320-290-10, 11);
+                _zanlabel.frame=CGRectMake(290,115-1 , 320-290-10, 11);
                 
-                NewMainViewModel *_newmodel=[[NewMainViewModel alloc]init];
-                [_newmodel NewMainViewModelSetdic:theDic];
-                //标题
+                if (_newmodel.likes.length>2) {
+                    _zanImageV.center=CGPointMake(290-10, 122-2);
+                    _zanlabel.frame=CGRectMake(290-10,115-1 , 320-280-10, 11);
+
+                }
+                
+                             //标题
                 
                 _bigLabel.frame=CGRectMake(12, 12, 320, 18);
                 _bigLabel.font=[UIFont systemFontOfSize:16];
@@ -203,7 +209,7 @@
             case CompreTableViewCellStyleText:
             {
                 _zanImageV.center=CGPointMake(290, 64);
-                _zanlabel.frame=CGRectMake(290,BIGORIGIN+2 , 320-290-10, 11);
+                _zanlabel.frame=CGRectMake(290,BIGORIGIN+3 , 320-290-10, 11);
                 
                 
                 
@@ -213,6 +219,15 @@
                 [_newmodel NewMainViewModelSetdic:theDic];
                 
                 _zanlabel.text=_newmodel.likes;
+                
+                
+                
+                if (_newmodel.likes.length>2) {
+                    _zanImageV.center=CGPointMake(290-10, 64);
+                    _zanlabel.frame=CGRectMake(280,BIGORIGIN+3 , 320-280-10, 11);
+                    
+                }
+
                 
                 
                 _leftImageV.frame=CGRectMake(12, 13, 90, 60);

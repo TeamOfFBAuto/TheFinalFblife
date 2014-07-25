@@ -58,11 +58,11 @@
 -(void)prepairNavigationBar{
     
     
-//    if([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)] ) {
-//        //iOS 5 new UINavigationBar custom background
-//        [self.navigationController.navigationBar setBackgroundImage:MY_MACRO_NAME?[UIImage imageNamed:IOS7DAOHANGLANBEIJING]:[UIImage imageNamed:@"ios7eva320_44.png"] forBarMetrics: UIBarMetricsDefault];
-//        
-//    }
+    if([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)] ) {
+        //iOS 5 new UINavigationBar custom background
+        [self.navigationController.navigationBar setBackgroundImage:MY_MACRO_NAME?[UIImage imageNamed:IOS7DAOHANGLANBEIJING]:[UIImage imageNamed:@"ios7eva320_44.png"] forBarMetrics: UIBarMetricsDefault];
+        
+    }
     
     
     UIButton *button_back=[[UIButton alloc]initWithFrame:self.isMain? CGRectMake(MY_MACRO_NAME? -2:5, (44-33/2)/2, 36/2, 33/2):CGRectMake(MY_MACRO_NAME? -5:5, (44-43/2)/2, 12, 43/2)];
@@ -139,7 +139,7 @@
     loadview.backgroundColor=[UIColor clearColor];
 
     
-    mainTabView=[[UITableView alloc]initWithFrame:CGRectMake(0, 64, 320, iPhone5?568-64:480-64)];
+    mainTabView=[[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, iPhone5?568-64:480-64)];
     mainTabView.delegate=self;
     mainTabView.dataSource=self;
     mainTabView.backgroundColor=[UIColor whiteColor];
@@ -353,10 +353,10 @@
     //要判断当前是哪一个，有mainTabView/imagesc/twoscrow/sec2
     if (scrollView==mainTabView) {
         
-        if (scrollView.contentOffset.y==-64) {
-            scrollView.contentOffset=CGPointMake(0, 0);
-        }
-        
+//        if (scrollView.contentOffset.y==-64) {
+//            scrollView.contentOffset=CGPointMake(0, 0);
+//        }
+//        
         
         
         [_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];

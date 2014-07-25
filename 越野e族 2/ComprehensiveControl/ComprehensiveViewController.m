@@ -80,8 +80,113 @@
             ]; 
 }
 
+-(UIImage *)imageWithColor:(UIColor *)color size:(CGSize)size
+
+{
+    
+    @autoreleasepool {
+        
+        CGRect rect = CGRectMake(0, 0, size.width, size.height);
+        
+        UIGraphicsBeginImageContext(rect.size);
+        
+        CGContextRef context = UIGraphicsGetCurrentContext();
+        
+        CGContextSetFillColorWithColor(context,
+                                       
+                                       color.CGColor);
+        
+        CGContextFillRect(context, rect);
+        
+        UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
+        
+        UIGraphicsEndImageContext();
+        
+        
+        return img;
+        
+    }
+    
+    
+    
+}
 
 
+/**
+ *  判断版本号605673005
+ */
+
+
+-(void)panduanIsNewVersion{
+
+    SzkLoadData *newload=[[SzkLoadData alloc]init];
+    
+    NSString *url = [NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%@",@"605673005"];
+    
+   [newload SeturlStr:url mytest:^(NSDictionary *dicinfo, int errcode) {
+       
+       
+       @try {
+           NSArray *_newarray=[NSArray arrayWithObject:[dicinfo objectForKey:@"results"]];
+           
+           NSArray *firstdic=[_newarray objectAtIndex:0];
+           
+           NSDictionary *seconddic=[firstdic objectAtIndex:0];
+           
+           NSLog(@"dicnew==%@",seconddic);
+           
+           NSString *stringInfo=[NSString stringWithFormat:@"%@",[seconddic objectForKey:@"releaseNotes"]];
+           NSString *nowline=[NSString stringWithFormat:@"%@",[seconddic objectForKey:@"version"]];
+           
+           NSLog(@"taidanteng==%@",nowline);
+           // NSLog(@"线上版本是%@当前版本是%@",xianshangbanben,NOW_VERSION);
+           
+           if ([nowline isEqualToString:NOW_VERSION]) {
+               
+               NSLog(@"当前是最新版本");
+               
+           }else{
+               
+               
+               
+               UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"发现新版本" message:stringInfo delegate:self cancelButtonTitle:@"立即升级" otherButtonTitles:@"下次提示",nil];
+               
+               alert.delegate = self;
+               
+               alert.tag = 10000;
+               [alert show];
+               
+               
+           }
+       }
+       @catch (NSException *exception) {
+           
+       }
+       @finally {
+           
+       }
+      // NSLog(@"dicnew===%@",dicinfo);
+       
+     // NSString *xianshangbanben=[NSString stringWithFormat:@"%@",[dicinfo objectForKey:@"results"] ];
+       
+      
+       
+       
+       
+   }];
+    
+
+
+
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0 && alertView.tag == 10000)
+    {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.apple.com/cn/app/yue-ye-yi-zu/id605673005?mt=8"]];
+    }
+}
 
 
 - (void)viewDidLoad
@@ -89,7 +194,7 @@
     [super viewDidLoad];
     
 
-    
+    [self panduanIsNewVersion];
   NSLog(@"shizhongkun转化成MD5加密后的字符串为=%@",[self md5:@"shizhongkun"])  ;
     
     
@@ -116,7 +221,7 @@
     [self turnToguanggao];
 
     
-    self.view.backgroundColor=[UIColor redColor];
+    self.view.backgroundColor=[UIColor whiteColor];
     
     huandengDic=[NSDictionary dictionary];
     
@@ -158,12 +263,16 @@
 
 -(void)prepairNavigationBar{
 
-//    
-//    if([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)] ) {
-//        //iOS 5 new UINavigationBar custom background
-//        [self.navigationController.navigationBar setBackgroundImage:MY_MACRO_NAME?[UIImage imageNamed:IOS7DAOHANGLANBEIJING]:[UIImage imageNamed:@"ios7eva320_44.png"] forBarMetrics: UIBarMetricsDefault];
+    
+    if([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)] ) {
+        //iOS 5 new UINavigationBar custom background
+        [self.navigationController.navigationBar setBackgroundImage:MY_MACRO_NAME?[UIImage imageNamed:IOS7DAOHANGLANBEIJING]:[UIImage imageNamed:@"ios7eva320_44.png"] forBarMetrics: UIBarMetricsDefault];
 //        
-//    }
+//               [[UINavigationBar appearance] setShadowImage:[UIImage imageWithColor:[UIColor clearColor] size:CGSizeMake(320, 3)]];
+        
+        [[UINavigationBar appearance]setShadowImage:[self imageWithColor:[UIColor clearColor] size:CGSizeMake(320, 10)]];
+        
+    }
     
     UIButton *button_back=[[UIButton alloc]initWithFrame: CGRectMake(MY_MACRO_NAME? -5:5, (44-33/2)/2, 36/2, 33/2)];
     
@@ -219,7 +328,7 @@
     loadview.backgroundColor=[UIColor clearColor];
 
     
-    mainTabView=[[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, iPhone5?568:480)];
+    mainTabView=[[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, iPhone5?568-64:480-64)];
     mainTabView.delegate=self;
     mainTabView.dataSource=self;
     mainTabView.backgroundColor=[UIColor whiteColor];
@@ -982,10 +1091,11 @@
         
         NSLog(@"table.y===%f",mainTabView.contentOffset.y);
         
-        if (mainTabView.contentOffset.y==0) {
+        if (mainTabView.contentOffset.y==-64) {
             
             
-            mainTabView.contentOffset=CGPointMake(0, -64);
+            mainTabView.contentOffset=CGPointMake(0, 0);
+            
         }
         
         

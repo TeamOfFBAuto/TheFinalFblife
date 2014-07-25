@@ -424,7 +424,7 @@
     __weak typeof(self)wself=self;
     
     
-    [inputV loadAllViewWithPinglunCount:@"0" WithPushBlock:^{
+    [inputV loadAllViewWithPinglunCount:self.string_commentnumber WithPushBlock:^{
         
         
     } WithSendBlock:^(NSString *content, BOOL isForward) {
@@ -587,6 +587,8 @@
             _dic = [data objectFromJSONData];
             NSLog(@"_dic======%@",_dic);
             allcount=[[_dic objectForKey:@"total"]intValue];
+            self.string_commentnumber=[NSString stringWithFormat:@"%@",[_dic objectForKey:@"total"]];
+            [inputV.pinglun_button setTitle:self.string_commentnumber forState:UIControlStateNormal];
             [array_name removeAllObjects];
             [array_reply removeAllObjects];
             [array_time removeAllObjects];
@@ -1035,7 +1037,7 @@
         
 
         
-        self.string_commentnumber=[NSString stringWithFormat:@"%d",array_name.count];
+      //  self.string_commentnumber=[NSString stringWithFormat:@"%d",array_name.count];
         
         //判断，如果等于0，就是没有数据
         if ([self.string_commentnumber integerValue]==0) {
@@ -1194,7 +1196,7 @@
         return labelSize.height+20+12+5;
     }else if(section==1)
     {
-        self.string_commentnumber=[NSString stringWithFormat:@"%d",array_name.count];
+        //self.string_commentnumber=[NSString stringWithFormat:@"%d",array_name.count];
 
         
         

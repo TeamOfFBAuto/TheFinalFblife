@@ -39,7 +39,11 @@
 -(void)viewWillAppear:(BOOL)animated{
     self.navigationController.navigationBarHidden=NO;
     [[UIApplication sharedApplication] setStatusBarHidden:NO ];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault ];
 
+    
+    
+    
     [MobClick beginEvent:@"fbWebViewController"];
 
 }
