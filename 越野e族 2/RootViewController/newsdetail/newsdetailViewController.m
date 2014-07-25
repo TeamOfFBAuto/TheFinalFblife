@@ -105,8 +105,16 @@
     //  self.navigationController.navigationBarHidden = YES;
 }
 
+
+
 - (void)viewDidLoad
 {
+    
+    //commentNumberaddandadd
+    
+    [[NSNotificationCenter defaultCenter]
+     
+     addObserver:self selector:@selector(commentNumberaddandadd) name:@"commentNumberaddandadd" object:nil];
     
     zanNumber=0;
     
@@ -284,25 +292,25 @@
     } WithSendBlock:^(NSString *content, BOOL isForward) {
         //发表
         
-        if (content.length==0) {
-            [self.thezkingAlertV zkingalertShowWithString:@"辛苦下，写几个字再评论"];
-            return ;
-        }
-        
-        NSRange _range = [content rangeOfString:@" "];
-        if (_range.location != NSNotFound) {
-            
-            
-            
-            
-            //有空格
-        }else {
-            
-            
-            //没有空格
-        }
-        
-        
+//        if (content.length==0) {
+//            [self.thezkingAlertV zkingalertShowWithString:@"辛苦下，写几个字再评论"];
+//            return ;
+//        }
+//        
+//        NSRange _range = [content rangeOfString:@" "];
+//        if (_range.location != NSNotFound) {
+//            
+//            
+//            
+//            
+//            //有空格
+//        }else {
+//            
+//            
+//            //没有空格
+//        }
+//        
+        inputV.send_button.userInteractionEnabled=NO;
         
         
         SzkLoadData *loaddata=[[SzkLoadData alloc]init];
@@ -311,11 +319,15 @@
         
         
         
-        
         [loaddata SeturlStr:string_102 mytest:^(NSDictionary *dicinfo, int errcode) {
+            
+            inputV.send_button.userInteractionEnabled=YES;
+
             
             
             if ([[dicinfo objectForKey:@"errcode"] intValue]==0) {
+                
+                [wself Mytool];
                 
                 [inputV hiddeninputViewTap];
                 [inputV.pinglun_button setTitle:[NSString stringWithFormat:@"%d",[str_commentnumberofnews intValue]+1] forState:UIControlStateNormal];
@@ -332,6 +344,16 @@
     [aview addSubview:inputV];
 }
 
+
+-(void)commentNumberaddandadd{
+    
+    
+    
+    
+    [inputV.pinglun_button setTitle:[NSString stringWithFormat:@"%d",[inputV.pinglun_button.titleLabel.text intValue]+1] forState:UIControlStateNormal];
+
+
+}
 
 #pragma mark--准备导航栏
 -(void)prepairNavigationbar{
@@ -1683,11 +1705,17 @@
             writeBlogView.theText = [NSString stringWithFormat:@"分享新闻:“%@”,链接:%@",_title_Str,_weburl_Str] ;
             
             NSMutableArray *array_shareimg=[[NSMutableArray alloc]init];
+            
             [array_shareimg addObject:self.imgforshare];
             NSMutableArray *array_none=[[NSMutableArray alloc]init];
             [array_none addObject:@"safjakf"];
-            writeBlogView.allImageArray1=array_shareimg;
-            writeBlogView.allAssesters1=array_none;
+            
+            if (self.imgforshare) {
+                writeBlogView.allImageArray1=array_shareimg;
+                writeBlogView.allAssesters1=array_none;
+            }
+            
+          
             
             [self presentModalViewController:writeBlogView animated:YES];
             

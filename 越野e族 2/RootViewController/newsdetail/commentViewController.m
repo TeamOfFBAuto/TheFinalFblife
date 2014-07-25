@@ -431,6 +431,9 @@
         //发表
         
         
+        inputV.send_button.userInteractionEnabled=NO;
+
+        
         SzkLoadData *loaddata=[[SzkLoadData alloc]init];
         
         NSString *string_102=[[NSString alloc]initWithFormat:@"http://fb.fblife.com/openapi/index.php?mod=comment&code=commentadd&sort=%@&sortid=%d&content=%@&title=%@&fromtype=b5eeec0b&authkey=%@",self.sortString,[self.string_ID integerValue],[content stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],[self.string_title stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],[[NSUserDefaults standardUserDefaults]objectForKey:USER_AUTHOD]];
@@ -440,6 +443,8 @@
         
         [loaddata SeturlStr:string_102 mytest:^(NSDictionary *dicinfo, int errcode) {
             
+            inputV.send_button.userInteractionEnabled=YES;
+
             
             if ([[dicinfo objectForKey:@"errcode"] intValue]==0) {
                 
@@ -450,6 +455,10 @@
                 
                 [wself fasongpinglunqingqiu];
 
+                [[NSNotificationCenter defaultCenter]
+                 
+                 postNotificationName:@"commentNumberaddandadd" object:nil];
+                
                 
             }
             

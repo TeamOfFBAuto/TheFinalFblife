@@ -135,13 +135,16 @@
     //UIBarButtonItem *buttonitem_collect=[[UIBarButtonItem alloc]initWithCustomView:button_collect];
     // self.navigationItem.rightBarButtonItem=buttonitem_collect;
     
-    UIButton *button_send=[[UIButton alloc]initWithFrame:CGRectMake(MY_MACRO_NAME? 12:2, (44-44/2)/2, 45/2, 44/2)];
+    UIButton *button_send=[[UIButton alloc]initWithFrame:CGRectMake(MY_MACRO_NAME? 12:2, 0, 44, 44)];
     
     [button_send addTarget:self action:@selector(fatieyemian) forControlEvents:UIControlEventTouchUpInside];
-    [button_send setBackgroundImage:[UIImage imageNamed:@"ios7_commit3839.png"] forState:UIControlStateNormal];
+//    [button_send setBackgroundImage:[UIImage imageNamed:@"ios7_commit3839.png"] forState:UIControlStateNormal];
     
+    [button_send setImage:[UIImage imageNamed:@"ios7_commit3839.png"] forState:UIControlStateNormal];
     
-    UIButton *viewsend=[[UIButton alloc]initWithFrame:CGRectMake(80, 0, 30, 44)];
+    UIButton *viewsend=[[UIButton alloc]initWithFrame:CGRectMake(70, 0, 60, 44)];
+    
+    viewsend.backgroundColor=[UIColor clearColor];
     
     [viewsend addTarget:self action:@selector(fatieyemian) forControlEvents:UIControlEventTouchUpInside];
  //   viewsend.backgroundColor=[UIColor redColor];
@@ -150,7 +153,7 @@
     //UIBarButtonItem *buttonitem_send=[[UIBarButtonItem alloc]initWithCustomView:button_send];
     
     
-    UIView *view_right=[[UIView alloc]initWithFrame:CGRectMake(100, 0, 110, 44)];
+    UIView *view_right=[[UIView alloc]initWithFrame:CGRectMake(130, 0, 110, 44)];
     
     
     [view_right addSubview:viewcollect];
@@ -1178,6 +1181,8 @@
     [tool_101 stop];
     tool_101.delegate=nil;
     [xialaView removeFromSuperview];
+    hud.delegate=nil;
+
     [self.navigationController popViewControllerAnimated:YES];
 }
 
