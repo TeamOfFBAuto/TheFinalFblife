@@ -19,6 +19,7 @@
 #import "ImagesViewController.h"
 #import "WenJiViewController.h"
 #import "fbWebViewController.h"
+#import "ShowImagesViewController.h"
 
 #import "NewshoucangTableViewCell.h"
 
@@ -600,12 +601,16 @@
     
     if (self.mytype==0) {
         
+        
+        
         NSDictionary *dicnews=[self.normalarray objectAtIndex:indexPath.row];
         
-        NSString *thestring=[NSString stringWithFormat:@"%@",[dicnews objectForKey:@"title"]];
+        NSString *thestring=[NSString stringWithFormat:@"%@",[dicnews objectForKey:@"nid"]];
         
+        newsdetailViewController *detail_=[[newsdetailViewController alloc]initWithID:thestring];
+        [copyRoot.navigationController pushViewController:detail_ animated:YES];
         
-        
+        NSLog(@"dicnews==%@",dicnews);
         
         
         
@@ -615,17 +620,32 @@
         
         NSDictionary *dicnews=[self.normalarray objectAtIndex:indexPath.row];
         
-        NSString *thestring=[NSString stringWithFormat:@"%@",[dicnews objectForKey:@"subject"]];
+        NSString *thestring=[NSString stringWithFormat:@"%@",[dicnews objectForKey:@"tid"]];
         
+        bbsdetailViewController *detail_=[[bbsdetailViewController alloc]init];
         
+        detail_.bbsdetail_tid=thestring;
+      [copyRoot.navigationController pushViewController:detail_ animated:YES];
+        
+        NSLog(@"dicnews==%@",dicnews);
         
         
         
     }else if(self.mytype==2){
         NSDictionary *dicnews=[self.normalarray objectAtIndex:indexPath.row];
         
-        NSString *thestring=[NSString stringWithFormat:@"%@",[dicnews objectForKey:@"subject"]];
+        NSString *thestring=[NSString stringWithFormat:@"%@",[dicnews objectForKey:@"fid"]];
         
+        
+        BBSfenduiViewController *detail_=[[BBSfenduiViewController alloc]init];
+        detail_.string_id=thestring;
+     
+        [copyRoot.navigationController pushViewController:detail_ animated:YES];
+        
+        
+        
+        
+        NSLog(@"dicnewsbankuai==%@",dicnews);
         
         
         
@@ -634,7 +654,24 @@
         
         NSDictionary *dicnews=[self.normalarray objectAtIndex:indexPath.row];
         
-        NSString *thestring=[NSString stringWithFormat:@"%@",[dicnews objectForKey:@"title"]];
+        NSString *thestring=[NSString stringWithFormat:@"%@",[dicnews objectForKey:@"nid"]];
+        
+        ShowImagesViewController * showImage = [[ShowImagesViewController alloc] init];
+        
+        showImage.id_atlas = thestring;
+        
+
+        
+        
+        [copyRoot.navigationController pushViewController:showImage animated:YES];
+        
+        
+        
+        
+        NSLog(@"dicnews==%@",dicnews);
+        
+        
+        
         
         
     }
@@ -642,17 +679,29 @@
         
         NSDictionary *dicnews=[self.normalarray objectAtIndex:indexPath.row];
         
-        NSString *thestring=[NSString stringWithFormat:@"%@",[dicnews objectForKey:@"subject"]];
+        NSString *thestring=[NSString stringWithFormat:@"%@",[dicnews objectForKey:@"tid"]];
         
+        bbsdetailViewController *detail_=[[bbsdetailViewController alloc]init];
         
+        detail_.bbsdetail_tid=thestring;
+        [copyRoot.navigationController pushViewController:detail_ animated:YES];
+        
+        NSLog(@"dicnews==%@",dicnews);
+    
+    
     }
     else if(self.mytype==5){
         
         NSDictionary *dicnews=[self.normalarray objectAtIndex:indexPath.row];
         
-        NSString *thestring=[NSString stringWithFormat:@"%@",[dicnews objectForKey:@"subject"]];
+        NSString *thestring=[NSString stringWithFormat:@"%@",[dicnews objectForKey:@"tid"]];
         
+        bbsdetailViewController *detail_=[[bbsdetailViewController alloc]init];
         
+        detail_.bbsdetail_tid=thestring;
+        [copyRoot.navigationController pushViewController:detail_ animated:YES];
+        
+        NSLog(@"dicnews==%@",dicnews);
     }
     
 

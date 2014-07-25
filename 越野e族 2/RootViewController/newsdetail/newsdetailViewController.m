@@ -1600,6 +1600,8 @@
     if (!comment_) {
         comment_=[[commentViewController alloc]init];
     }
+    
+    comment_.sortString=@"7";
     comment_.string_ID=self.string_Id;
     comment_.string_biaoti=label_bigbiaoti.text;
     

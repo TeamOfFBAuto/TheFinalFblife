@@ -433,7 +433,7 @@
         
         SzkLoadData *loaddata=[[SzkLoadData alloc]init];
         
-        NSString *string_102=[[NSString alloc]initWithFormat:@"http://fb.fblife.com/openapi/index.php?mod=comment&code=commentadd&sort=7&sortid=%d&content=%@&title=%@&fromtype=b5eeec0b&authkey=%@",[self.string_ID integerValue],[content stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],[self.string_title stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],[[NSUserDefaults standardUserDefaults]objectForKey:USER_AUTHOD]];
+        NSString *string_102=[[NSString alloc]initWithFormat:@"http://fb.fblife.com/openapi/index.php?mod=comment&code=commentadd&sort=%@&sortid=%d&content=%@&title=%@&fromtype=b5eeec0b&authkey=%@",self.sortString,[self.string_ID integerValue],[content stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],[self.string_title stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],[[NSUserDefaults standardUserDefaults]objectForKey:USER_AUTHOD]];
         
         
         NSLog(@"str102===%@",string_102);
@@ -510,7 +510,7 @@
     if (isup) {
         NSLog(@".......................");
         
-        NSURL *url101 = [NSURL URLWithString:[NSString stringWithFormat:@"http://fb.fblife.com/openapi/index.php?mod=comment&code=commentlist&sort=7&sortid=%d&fbtype=json&page=1&order=1",[self.string_ID integerValue]]];
+        NSURL *url101 = [NSURL URLWithString:[NSString stringWithFormat:@"http://fb.fblife.com/openapi/index.php?mod=comment&code=commentlist&sort=%@&sortid=%d&fbtype=json&page=1&order=1",self.sortString,[self.string_ID integerValue]]];
         
         ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url101];
         request.tag=101;
@@ -519,7 +519,7 @@
         NSLog(@"开始请求评论数据");
     }else{
         
-        NSURL *url101 = [NSURL URLWithString:[NSString stringWithFormat:@"http://fb.fblife.com/openapi/index.php?mod=comment&code=commentlist&sort=7&sortid=%d&fbtype=json&page=1&order=2",[self.string_ID integerValue]]];
+        NSURL *url101 = [NSURL URLWithString:[NSString stringWithFormat:@"http://fb.fblife.com/openapi/index.php?mod=comment&code=commentlist&sort=%@&sortid=%d&fbtype=json&page=1&order=2",self.sortString,[self.string_ID integerValue]]];
         ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url101];
         request.tag=101;
         [request setDelegate:self];
@@ -527,23 +527,8 @@
         NSLog(@"开始加载评论数据");
         
     }
-    NSString *string_url=[NSString stringWithFormat:@"http://fb.fblife.com/openapi/index.php?mod=comment&code=commentlist&sort=7&sortid=%d&fbtype=json&page=1&order=1",[self.string_ID integerValue]];
-    NSLog(@"nihaourl==%@",string_url);
     
 }
-//-(void)sendtestdata{
-//
-//    [array_name removeAllObjects];
-//    NSURL *url101 = [NSURL URLWithString:[NSString stringWithFormat:@"http://fb.fblife.com/openapi/index.php?mod=comment&code=commentlist&sort=7&sortid=%@&fbtype=json&page=%d",self.string_ID,pageN]];
-//
-//    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url101];
-//    request.tag=101;
-//    [request setDelegate:self];
-//    [request startAsynchronous];
-//    NSLog(@"开始请求评论数据");
-//
-//
-//}
 -(void)jiazaimore{
     
     if (isloadsuccess==YES) {
@@ -1590,7 +1575,7 @@
     }
     [text_write resignFirstResponder];
     if (iszipinglun==NO) {
-        NSString *string_102=[[NSString alloc]initWithFormat:@"http://fb.fblife.com/openapi/index.php?mod=comment&code=commentadd&sort=7&sortid=%d&content=%@&title=%@&fromtype=b5eeec0b&authkey=%@",[self.string_ID integerValue],[text_write.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],[self.string_title stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],[[NSUserDefaults standardUserDefaults]objectForKey:USER_AUTHOD]];
+        NSString *string_102=[[NSString alloc]initWithFormat:@"http://fb.fblife.com/openapi/index.php?mod=comment&code=commentadd&sort=%@&sortid=%d&content=%@&title=%@&fromtype=b5eeec0b&authkey=%@",self.sortString,[self.string_ID integerValue],[text_write.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],[self.string_title stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],[[NSUserDefaults standardUserDefaults]objectForKey:USER_AUTHOD]];
         
         NSLog(@"评论请求的接口。。。。。。。。。。=%@",string_102);
         NSURL *url102 = [NSURL URLWithString:string_102];

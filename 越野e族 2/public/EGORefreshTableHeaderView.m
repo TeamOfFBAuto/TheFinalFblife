@@ -130,7 +130,7 @@
 }
 -(void)szksetstate{
     NSLog(@"类似爱情");
-    _statusLabel.text = NSLocalizedString(@"加载中...", @"Loading Status");
+    _statusLabel.text = NSLocalizedString(@"加载中...", @"加载中..");
     [_activityView startAnimating];
     [CATransaction begin];
     [CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
@@ -160,7 +160,7 @@
 				[CATransaction commit];
 			}
 			
-			_statusLabel.text = NSLocalizedString(@"拖迤以更新...", @"释放以更新");
+			_statusLabel.text = NSLocalizedString(@"下拉以更新...", @"下拉以更新");
 			[_activityView stopAnimating];
 			[CATransaction begin];
 			[CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions]; 
@@ -173,7 +173,7 @@
 			break;
 		case EGOOPullRefreshLoading:
 			
-			_statusLabel.text = NSLocalizedString(@"加载中...", @"Loading Status");
+			_statusLabel.text = NSLocalizedString(@"加载中...", @"加载中...");
 			[_activityView startAnimating];
 			[CATransaction begin];
 			[CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions]; 

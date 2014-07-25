@@ -28,6 +28,21 @@
 
 @implementation fbWebViewController
 @synthesize urlstring;
+
+
+-(void)downloadtoolError{
+}
+
+
+-(void)didReceiveWeiboRequest:(WBBaseRequest *)request{
+
+}
+-(void)NoticeFrameHigh{
+}
+-(void)NoticeFrameLow{
+}
+
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -80,7 +95,9 @@
         [self.navigationController.navigationBar setBackgroundImage:IOS_VERSION>=7?[UIImage imageNamed:IOS7DAOHANGLANBEIJING]: [UIImage imageNamed:IOS6DAOHANGLANBEIJING] forBarMetrics: UIBarMetricsDefault];
     }
     
-    button_comment=[[UIButton alloc]initWithFrame:CGRectMake(MY_MACRO_NAME?40: 30, (44-37/2)/2, 44/2, 37/2)];
+    button_comment=[[UIButton alloc]initWithFrame:CGRectMake(23, 0, 44, 44)];
+    
+    button_comment.backgroundColor=[UIColor clearColor];
     
     
     button_comment.tag=26;
@@ -88,7 +105,12 @@
     //[button_comment setTitle:@"评论" forState:UIControlStateNormal];
     button_comment.titleLabel.font=[UIFont systemFontOfSize:14];
     [button_comment addTarget:self action:@selector(ShareMore) forControlEvents:UIControlEventTouchUpInside];
-    [button_comment setBackgroundImage:[UIImage imageNamed:@"ios_zhuanfa44_37.png"] forState:UIControlStateNormal];
+//    [button_comment setBackgroundImage:[UIImage imageNamed:@"ios_zhuanfa44_37.png"] forState:UIControlStateNormal];
+    
+    [button_comment setImage:[UIImage imageNamed:@"ios_zhuanfa44_37.png"] forState:UIControlStateNormal];
+    
+    [button_comment setImageEdgeInsets:UIEdgeInsetsMake(0, 20, 0, 0)];
+
     button_comment.userInteractionEnabled=NO;
     
     

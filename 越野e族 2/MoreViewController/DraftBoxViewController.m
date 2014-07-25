@@ -854,6 +854,7 @@
     {
         NewWeiBoCommentViewController * comment = [[NewWeiBoCommentViewController alloc] init];
         
+        
         comment.theText = data_.content;
         
         comment.tid = data_.weiboid;

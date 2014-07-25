@@ -60,6 +60,7 @@
 {
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
     
+    
     [self.navigationController popViewControllerAnimated:YES];
     
     self.navigationController.navigationBarHidden = NO;

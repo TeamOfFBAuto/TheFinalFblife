@@ -40,6 +40,16 @@
     return self;
 }
 
+
+-(void)viewWillAppear:(BOOL)animated{
+
+    [super viewWillAppear:YES];
+    
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+
+
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

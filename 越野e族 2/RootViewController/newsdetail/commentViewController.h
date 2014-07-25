@@ -87,6 +87,8 @@
 @property(nonatomic,strong)NSString *string_commentnumber;
 @property(nonatomic,strong)NSString *string_author;
 
+@property(nonatomic,strong)NSString *sortString;//判断的，是新闻评论还是图集评论
+
 
 
 @end
