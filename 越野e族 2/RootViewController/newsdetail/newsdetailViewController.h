@@ -94,7 +94,8 @@
     UIButton *rightView;
     
     int zanNumber;
-    
+    BOOL isPraise;//是否赞过
+
     
 }
 

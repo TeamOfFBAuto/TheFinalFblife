@@ -36,7 +36,7 @@
     
     [object setValue:sender forKey:@"atlasid"];
     
-    [object setValue:thePraise forKey:@"praise"];
+    [object setValue:[NSNumber numberWithBool:YES] forKey:@"praise"];
     
     NSError* error;
     BOOL isSaveSuccess=[myAppDelegate.managedObjectContext save:&error];

@@ -1118,6 +1118,10 @@
     
     if (tableView == _myTableView2)
     {
+        
+        
+        
+        
         SliderBBSForumModel * first_model = [[_forum_temp_array objectAtIndex:current_forum] objectAtIndex:indexPath.section];
         
         SliderBBSForumModel * second_model = [first_model.forum_sub objectAtIndex:indexPath.row];
@@ -1347,6 +1351,8 @@
         LogInViewController * logIn = [LogInViewController sharedManager];
         
         [self presentViewController:logIn animated:YES completion:NULL];
+        
+        return;
     }
     
     

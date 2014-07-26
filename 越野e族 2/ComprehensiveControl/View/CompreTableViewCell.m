@@ -105,6 +105,8 @@
         _bigLeixing.titleLabel.font=[UIFont systemFontOfSize:11];
         [_bigLeixing setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
         _bigLeixing.backgroundColor=RGBCOLOR(244, 244, 244);
+        
+        
         [_bigLeixing addTarget:self action:@selector(clickBigButton:) forControlEvents:UIControlEventTouchUpInside];
         
         
@@ -146,7 +148,7 @@
 
                 
                 _zanImageV.center=CGPointMake(290, 122-2);
-                _zanlabel.frame=CGRectMake(290,115-1 , 320-290-10, 11);
+                _zanlabel.frame=CGRectMake(290,115 , 320-290-10, 11);
                 
                 if (_newmodel.likes.length>2) {
                     _zanImageV.center=CGPointMake(290-10, 122-2);
@@ -208,8 +210,12 @@
                 
             case CompreTableViewCellStyleText:
             {
-                _zanImageV.center=CGPointMake(290, 64);
-                _zanlabel.frame=CGRectMake(290,BIGORIGIN+3 , 320-290-10, 11);
+                
+                
+                
+                
+                _zanImageV.center=CGPointMake(290, 68);
+                _zanlabel.frame=CGRectMake(290,BIGORIGIN+8 , 320-290-10, 11);
                 
                 
                 
@@ -223,8 +229,8 @@
                 
                 
                 if (_newmodel.likes.length>2) {
-                    _zanImageV.center=CGPointMake(290-10, 64);
-                    _zanlabel.frame=CGRectMake(280,BIGORIGIN+3 , 320-280-10, 11);
+                    _zanImageV.center=CGPointMake(290-10, 68);
+                    _zanlabel.frame=CGRectMake(280,BIGORIGIN+8 , 320-280-10, 11);
                     
                 }
 

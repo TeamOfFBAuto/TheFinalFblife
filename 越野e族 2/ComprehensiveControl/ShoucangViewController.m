@@ -24,7 +24,6 @@
 
 
 
-
 @interface ShoucangViewController ()
 
 @end

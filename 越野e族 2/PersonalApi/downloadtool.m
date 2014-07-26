@@ -34,8 +34,12 @@
     
 }
 
+
+
 #pragma mark-提示没有网络
 -(void)HaveNoNetWork{
+    
+    
     [_replaceAlertView removeFromSuperview];
     _replaceAlertView=[[AlertRePlaceView alloc]initWithFrame:CGRectMake(100, 200, 150, 100) labelString:@"检测到您的手机没有网络连接，请检查网络"];
     _replaceAlertView.delegate=self;

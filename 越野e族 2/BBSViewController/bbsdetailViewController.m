@@ -11,6 +11,7 @@
 
 
 
+#import "PraiseAndCollectedModel.h"
 
 
 
@@ -33,6 +34,9 @@
     UIImageView * xialaView_bbs;
     AlertRePlaceView *_replaceAlertView;
     UIButton *  button_share;
+    
+    PraiseAndCollectedModel * praise_model;
+
 }
 
 @end
@@ -334,9 +338,27 @@
     
     //点赞的
     
-    UIButton *heartButton=[[UIButton alloc]initWithFrame:CGRectMake(10, (44-37/2)/2, 42/2, 37/2)];
+    
+//    praise_model = [[PraiseAndCollectedModel alloc] init];
+    
+    isPraise = [[[PraiseAndCollectedModel getTeamInfoById:self.bbsdetail_tid] praise] intValue];
+
+    UIButton *heartButton=[[UIButton alloc]initWithFrame:CGRectMake(10, 0, 44, 44)];
     [heartButton addTarget:self action:@selector(dianzan:) forControlEvents:UIControlEventTouchUpInside];
-    [heartButton setBackgroundImage:[UIImage imageNamed:@"blackheart42_37.png"] forState:UIControlStateNormal];
+    
+    [heartButton setImage:[UIImage imageNamed:@"blackheart42_37.png"] forState:UIControlStateNormal];
+    
+    [heartButton setImage:[UIImage imageNamed:@"redheart42_37.png"] forState:UIControlStateSelected];
+    
+    if  (isPraise)
+    {
+        
+        
+        
+        
+        heartButton.selected = YES;
+    }
+    
     
     
     //收藏的
@@ -392,27 +414,42 @@ UIButton *    rightView=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 160, 44)
 
 -(void)dianzan:(UIButton *)sender{
     
-    if (zanNumber<32) {
-        zanNumber++;
+    
+  
+    if (isPraise)
+    {
+        
+        sender.selected = NO;
+        
+        isPraise = NO;
+        
+        [PraiseAndCollectedModel deleteWithId:self.bbsdetail_tid];
+        
+        return;
+    }
     
     
-    [sender setBackgroundImage:[UIImage imageNamed:@"redheart42_37@2x.png"] forState:UIControlStateNormal];
     
-    [UIView animateWithDuration:0.6 animations:^{
-        
-        sender.frame=CGRectMake(sender.frame.origin.x-5, sender.frame.origin.y-5, 1.4*sender.frame.size.width,  1.4*sender.frame.size.height);
-        
-        
-        
-        
-    } completion:^(BOOL finished) {}];
+    [self changeMySizeAnimationWithView:sender];
     
-    [UIView animateWithDuration:0.6 animations:^{
-        
-        sender.frame=CGRectMake(sender.frame.origin.x+5, sender.frame.origin.y+5, 0.71428571*sender.frame.size.width,  0.71428571*sender.frame.size.height);
-        
-        
-    } completion:^(BOOL finished) {}];
+    
+    [self.thezkingAlertV zkingalertShowWithString:[NSString stringWithFormat:@"感兴趣" ]];
+    
+    sender.selected=YES;
+    
+    isPraise=YES;
+    
+    [PraiseAndCollectedModel addIntoDataSourceWithId:self.bbsdetail_tid WithPraise:[NSNumber numberWithBool:YES]];
+    
+    
+    NSLog(@"ID===%@",self.bbsdetail_tid);
+    
+    //    isPraise = [[[PraiseAndCollectedModel getTeamInfoById:self.string_Id] praise] intValue];
+    
+    
+    NSLog(@"isPraise==%d",isPraise);
+    
+
     
     
     
@@ -430,19 +467,38 @@ UIButton *    rightView=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 160, 44)
         
         
         
-    }];}else{
-    
-        [self.thezkingAlertV zkingalertShowWithString:@"32个赞了，休息下看看别的文章吧~"];
-        
-       // sender.userInteractionEnabled=NO;
-
-    }
-    // sender.userInteractionEnabled=NO;
+    }];    // sender.userInteractionEnabled=NO;
     
     
     
     
 }
+
+
+#pragma mark - 放到再缩小动画
+
+
+-(void)changeMySizeAnimationWithView:(UIView *)sender
+{
+    [UIView animateWithDuration:0.4 animations:^{
+        
+        sender.transform = CGAffineTransformMakeScale(1.5,1.5);
+        
+    } completion:^(BOOL finished) {
+        
+        [UIView animateWithDuration:0.4 animations:^{
+            
+            sender.transform = CGAffineTransformMakeScale(1,1);
+            
+        } completion:^(BOOL finished) {
+            
+            
+        }];
+        
+    }];
+}
+
+
 
 /**
  12. 收藏帖子的接口

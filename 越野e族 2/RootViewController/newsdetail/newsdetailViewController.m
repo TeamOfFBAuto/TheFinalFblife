@@ -20,6 +20,9 @@
 #import "WriteBlogViewController.h"
 #import "SSWBViewController.h"
 
+
+#import "PraiseAndCollectedModel.h"
+
 #import "CustomInputView.h"//少男写的公共评论条
 
 
@@ -34,6 +37,8 @@
     AlertRePlaceView *_replaceAlertView;
     NewMineViewController *_people;
     AlertRePlaceView *_alertnodata;
+//    PraiseAndCollectedModel * praise_model;
+
     
     CustomInputView *inputV;//这个是新换的条
     
@@ -62,12 +67,12 @@
 {
     self = [super init];
     if (self) {
-        self.string_Id=id;
+        self.string_Id=[NSString stringWithFormat:@"%@",id];
     }
     return self;
 }
 -(void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:NO];
+    [super viewWillAppear:animated];
     
     [MobClick beginEvent:@"newsdetailViewController"];
     
@@ -97,6 +102,8 @@
 
 -(void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
+    
     _isloadingIv.hidden=YES;
 
     [inputV deleteKeyBordNotification];
@@ -109,6 +116,10 @@
 
 - (void)viewDidLoad
 {
+    
+    
+//    [super viewDidLoad];
+    
     
     //commentNumberaddandadd
     
@@ -282,8 +293,10 @@
     inputV=[[CustomInputView alloc]initWithFrame:CGRectMake(0,iPhone5?419+88-42:377, 320, 41)];
     
     
-    __weak typeof(self)wself=self;
+    __weak typeof(inputV)weakInputV = inputV;
+    __weak typeof(newsdetailViewController *)wself=self;
     
+    __weak typeof(str_commentnumberofnews)weakstr_commentnumberofnews = str_commentnumberofnews;
     
     [inputV loadAllViewWithPinglunCount:@"0" WithPushBlock:^{
         
@@ -309,19 +322,21 @@
 //            
 //            //没有空格
 //        }
-//        
-        inputV.send_button.userInteractionEnabled=NO;
+//
+        
+
+        weakInputV.send_button.userInteractionEnabled=NO;
         
         
         SzkLoadData *loaddata=[[SzkLoadData alloc]init];
         
-              NSString *string_102=[[NSString alloc]initWithFormat:@"http://fb.fblife.com/openapi/index.php?mod=comment&code=commentadd&sort=7&sortid=%d&content=%@&title=%@&fromtype=b5eeec0b&authkey=%@",[self.string_Id integerValue],[content stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],[self.title_Str stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],[[NSUserDefaults standardUserDefaults]objectForKey:USER_AUTHOD]];
+              NSString *string_102=[[NSString alloc]initWithFormat:@"http://fb.fblife.com/openapi/index.php?mod=comment&code=commentadd&sort=7&sortid=%d&content=%@&title=%@&fromtype=b5eeec0b&authkey=%@",[wself.string_Id integerValue],[content stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],[wself.title_Str stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],[[NSUserDefaults standardUserDefaults]objectForKey:USER_AUTHOD]];
         
         
         
         [loaddata SeturlStr:string_102 mytest:^(NSDictionary *dicinfo, int errcode) {
             
-            inputV.send_button.userInteractionEnabled=YES;
+            weakInputV.send_button.userInteractionEnabled=YES;
 
             
             
@@ -329,10 +344,11 @@
                 
                 [wself Mytool];
                 
-                [inputV hiddeninputViewTap];
-                [inputV.pinglun_button setTitle:[NSString stringWithFormat:@"%d",[str_commentnumberofnews intValue]+1] forState:UIControlStateNormal];
+                [weakInputV hiddeninputViewTap];
                 
-                [_thezkingAlertV zkingalertShowWithString:@"评论成功"];
+                [weakInputV.pinglun_button setTitle:[NSString stringWithFormat:@"%d",[weakstr_commentnumberofnews intValue]+1] forState:UIControlStateNormal];
+                
+                [wself.thezkingAlertV zkingalertShowWithString:@"评论成功"];
 
             }
             
@@ -380,9 +396,31 @@
     
     //点赞的
     
-    UIButton *heartButton=[[UIButton alloc]initWithFrame:CGRectMake(10, (44-37/2)/2, 42/2, 37/2)];
+    
+    
+//    praise_model = [[PraiseAndCollectedModel alloc] init];
+    
+    isPraise = [[[PraiseAndCollectedModel getTeamInfoById:self.string_Id] praise] intValue];
+    
+    
+    NSLog(@"ispr===%d",isPraise);
+    
+
+    UIButton *heartButton=[[UIButton alloc]initWithFrame:CGRectMake(10, 0, 44, 44)];
     [heartButton addTarget:self action:@selector(dianzan:) forControlEvents:UIControlEventTouchUpInside];
-    [heartButton setBackgroundImage:[UIImage imageNamed:@"blackheart42_37.png"] forState:UIControlStateNormal];
+    
+    [heartButton setImage:[UIImage imageNamed:@"blackheart42_37.png"] forState:UIControlStateNormal];
+    
+    [heartButton setImage:[UIImage imageNamed:@"redheart42_37.png"] forState:UIControlStateSelected];
+    
+    if  (isPraise)
+    {
+        
+        
+        
+        
+        heartButton.selected = YES;
+    }
     
     
     //收藏的
@@ -441,63 +479,99 @@
 
 }
 
+-(void)dealloc
+{
+    
+    
+    
+
+
+}
+
 #pragma mark--点赞的
 
 -(void)dianzan:(UIButton *)sender{
     
+    if (isPraise)
+    {
+        
+        sender.selected = NO;
+        
+        isPraise = NO;
+        
+        [PraiseAndCollectedModel deleteWithId:self.string_Id];
+        
+        return;
+    }
+
+  
+
+    [self changeMySizeAnimationWithView:sender];
     
-    if (zanNumber<32) {
-        zanNumber++;
+    
+        [self.thezkingAlertV zkingalertShowWithString:[NSString stringWithFormat:@"感兴趣" ]];
+    
+    sender.selected=YES;
+        
+    isPraise=YES;
+    
+    [PraiseAndCollectedModel addIntoDataSourceWithId:self.string_Id WithPraise:[NSNumber numberWithBool:YES]];
+    
+    
+    NSLog(@"ID===%@",self.string_Id);
 
-        
-        [self.thezkingAlertV zkingalertShowWithString:[NSString stringWithFormat:@"赞+%d" ,zanNumber]];
-        
-        [sender setBackgroundImage:[UIImage imageNamed:@"redheart42_37@2x.png"] forState:UIControlStateNormal];
+//    isPraise = [[[PraiseAndCollectedModel getTeamInfoById:self.string_Id] praise] intValue];
+    
+    
+    NSLog(@"isPraise==%d",isPraise);
 
-        
-        [UIView animateWithDuration:0.6 animations:^{
-            
-            sender.frame=CGRectMake(sender.frame.origin.x-5, sender.frame.origin.y-5, 1.4*sender.frame.size.width,  1.4*sender.frame.size.height);
-            
-            
-            
-            
-        } completion:^(BOOL finished) {}];
-        
-        [UIView animateWithDuration:0.6 animations:^{
-            
-            sender.frame=CGRectMake(sender.frame.origin.x+5, sender.frame.origin.y+5, 0.71428571*sender.frame.size.width,  0.71428571*sender.frame.size.height);
-            
-            
-        } completion:^(BOOL finished) {}];
-        
-        
-        
+    
         SzkLoadData *loaddata=[[SzkLoadData alloc]init];
         
-        
-        
+  
+    
         [loaddata SeturlStr:[NSString stringWithFormat:@"http://cmsweb.fblife.com/ajax.php?c=newstwo&a=addnewslikes&type=json&id=%@",self.string_Id] mytest:^(NSDictionary *dicinfo, int errcode) {
             
+            
+          
             NSLog(@"点赞返回的数据===%@",dicinfo);
             
             
         }];
-    }else{
     
-        [self.thezkingAlertV zkingalertShowWithString:@"32个赞了，休息下看看别的文章吧~"];
-
-    
-    
-    }
-    
-    
-   // sender.userInteractionEnabled=NO;
 
     
 
 
 }
+
+
+#pragma mark - 放到再缩小动画
+
+
+-(void)changeMySizeAnimationWithView:(UIView *)sender
+{
+    __weak typeof (UIView *)weakView = sender;
+    [UIView animateWithDuration:0.4 animations:^{
+        
+        weakView.transform = CGAffineTransformMakeScale(1.5,1.5);
+        
+    } completion:^(BOOL finished) {
+        
+        [UIView animateWithDuration:0.4 animations:^{
+            
+            weakView.transform = CGAffineTransformMakeScale(1,1);
+            
+        } completion:^(BOOL finished) {
+            
+            
+        }];
+        
+    }];
+}
+
+
+
 
 #pragma mark-判断是否收藏
 
@@ -520,10 +594,7 @@
         if ([[dicinfo objectForKey:@"errno"] intValue]==0) {
             
             
-            sender.userInteractionEnabled=YES;
-            
-            
-            
+            wsender.userInteractionEnabled=YES;
             
             [weself tempQuxiaoshoucang:wsender];
 
@@ -532,9 +603,9 @@
             
             //
             
-            sender.userInteractionEnabled=YES;
+            wsender.userInteractionEnabled=YES;
             
-            [sender setBackgroundImage:[UIImage imageNamed:@"newscollect44_43.png"] forState:UIControlStateNormal];
+            [wsender setBackgroundImage:[UIImage imageNamed:@"newscollect44_43.png"] forState:UIControlStateNormal];
 
             
             
@@ -553,14 +624,14 @@
     
     SzkLoadData *loaddata=[[SzkLoadData alloc]init];
     
-    // __weak typeof(self) weself=self;
+     __weak typeof(sender) wsendeer=sender;
     
     [loaddata SeturlStr:[NSString stringWithFormat:@"http://cmsweb.fblife.com/ajax.php?c=newstwo&a=delfavorites&type=json&took=%@&id=%@",[personal getMyAuthkey],self.string_Id] mytest:^(NSDictionary *dicinfo, int errcode) {
  
         if ([[dicinfo objectForKey:@"errno"] intValue]==0) {
             
             
-            [sender setBackgroundImage:[UIImage imageNamed:@"newsuncollect44_43.png"] forState:UIControlStateNormal];
+            [wsendeer setBackgroundImage:[UIImage imageNamed:@"newsuncollect44_43.png"] forState:UIControlStateNormal];
             
         }
         
@@ -594,15 +665,9 @@
 -(void)shoucang:(UIButton *)sender{
     
     [self panduanIsLogin];
-   
-    
-    
-    
-    
+
 
     sender.userInteractionEnabled=NO;
-
-
     
     
     SzkLoadData *loaddata=[[SzkLoadData alloc]init];
@@ -619,27 +684,25 @@
         if ([[dicinfo objectForKey:@"errno"] intValue]==0) {
             
             
-            _thezkingAlertV.hidden=NO;
-            _thezkingAlertV.textLabel.text=@"收藏成功";
-            [_thezkingAlertV ZkingAlerthide];
+            weself.thezkingAlertV.hidden=NO;
+            weself.thezkingAlertV.textLabel.text=@"收藏成功";
+            [weself.thezkingAlertV ZkingAlerthide];
             
-            sender.userInteractionEnabled=YES;
+            wsender.userInteractionEnabled=YES;
 
             
-            [sender setBackgroundImage:[UIImage imageNamed:@"newscollect44_43.png"] forState:UIControlStateNormal];
+            [wsender setBackgroundImage:[UIImage imageNamed:@"newscollect44_43.png"] forState:UIControlStateNormal];
             
             [UIView animateWithDuration:0.6 animations:^{
                 
-                sender.frame=CGRectMake(sender.frame.origin.x-5, sender.frame.origin.y-5, 1.4*sender.frame.size.width,  1.4*sender.frame.size.height);
-                
-                
+                wsender.frame=CGRectMake(wsender.frame.origin.x-5, wsender.frame.origin.y-5, 1.4*wsender.frame.size.width,  1.4*wsender.frame.size.height);
                 
                 
             } completion:^(BOOL finished) {}];
             
             [UIView animateWithDuration:0.6 animations:^{
                 
-                sender.frame=CGRectMake(sender.frame.origin.x+5, sender.frame.origin.y+5, 0.71428571*sender.frame.size.width,  0.71428571*sender.frame.size.height);
+                wsender.frame=CGRectMake(wsender.frame.origin.x+5, wsender.frame.origin.y+5, 0.71428571*wsender.frame.size.width,  0.71428571*wsender.frame.size.height);
                 
                 
             } completion:^(BOOL finished) {}];
@@ -675,23 +738,22 @@
     
     SzkLoadData *loaddata=[[SzkLoadData alloc]init];
     
-   // __weak typeof(self) weself=self;
+    __weak typeof(self) weself=self;
+    
+    __weak typeof(sender)wsender=sender;
     
     [loaddata SeturlStr:[NSString stringWithFormat:@"http://cmsweb.fblife.com/ajax.php?c=newstwo&a=delfavorites&type=json&took=%@&id=%@",[personal getMyAuthkey],self.string_Id] mytest:^(NSDictionary *dicinfo, int errcode) {
-        
-        
         
         
         if ([[dicinfo objectForKey:@"errno"] intValue]==0) {
             
             
-            
-            _thezkingAlertV.hidden=NO;
-            _thezkingAlertV.textLabel.text=@"已取消收藏";
-            [_thezkingAlertV ZkingAlerthide];
+            weself.thezkingAlertV.hidden=NO;
+             weself.thezkingAlertV.textLabel.text=@"已取消收藏";
+            [ weself.thezkingAlertV ZkingAlerthide];
 
         
-            [sender setBackgroundImage:[UIImage imageNamed:@"newsuncollect44_43.png"] forState:UIControlStateNormal];
+            [wsender setBackgroundImage:[UIImage imageNamed:@"newsuncollect44_43.png"] forState:UIControlStateNormal];
 
         
         }
@@ -905,17 +967,11 @@
 }
 - (void)webViewDidFinishLoad:(UIWebView *)webView{
     
-
-    
-    
     NSString * height = [webView stringByEvaluatingJavaScriptFromString: @"document.body.offsetHeight"];
     NSLog(@"height==%@",height);
     
     
     //换了
-    
-    
-    
     
 }
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
@@ -1291,7 +1347,7 @@
                     _webView.delegate=self;
                     
                     [self ShowbeforeFineshed];
-                    [self shareimgload];
+                   [self shareimgload];
                     
                 }
                 
@@ -1317,25 +1373,28 @@
         NSLog(@"1请求的url = %@",fullURL);
         ASIHTTPRequest * request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:fullURL]];
         
-        __block ASIHTTPRequest * _requset = request;
+//        __weak ASIHTTPRequest * _requset = request;
         
-        _requset.delegate = self;
+        __weak typeof(request)wres=request;
         
-        [_requset setCompletionBlock:^{
+        
+        __weak typeof(self)wself=self;
+        
+        [request setCompletionBlock:^{
             NSLog(@"说明这个照片下载成功了");
-            self.imgforshare= [UIImage imageWithData:request.responseData];
+            wself.imgforshare= [UIImage imageWithData:wres.responseData];
             
             
         }];
         
         
-        [_requset setFailedBlock:^{
+        [request setFailedBlock:^{
             
-            [request cancel];
+            [wres cancel];
             
         }];
         
-        [_requset startAsynchronous];
+        [request startAsynchronous];
         
     }
     
@@ -1347,6 +1406,11 @@
 -(void)ShowbeforeFineshed{
     _webView.alpha=1;
     secondWebView.alpha=1;
+    
+    
+    __weak typeof (UIWebView *)weakWeb = _webView;
+    __weak typeof (UIWebView *)weakSecondWeb = secondWebView;
+
     
     if ([string_upordown isEqualToString:@""]) {
         NSLog(@"第一次加载，不做操作");
@@ -1365,19 +1429,15 @@
             
             
             
-            
-            
             [UIView animateWithDuration:1 animations:^{
-                _webView.frame=CGRectMake(0, 0, 320 ,iPhone5? 314+88+105-41:314+105-41+4+2);
-                secondWebView.frame=CGRectMake(0, -(iPhone5? 314+88+105-41:314+105-41+4+2), 320 ,iPhone5? 314+88+105-41:314+105-41+4+2);
-
-                
+                weakWeb.frame=CGRectMake(0, 0, 320 ,iPhone5? 314+88+105-41:314+105-41+4+2);
+                weakSecondWeb.frame=CGRectMake(0, -(iPhone5? 314+88+105-41:314+105-41+4+2), 320 ,iPhone5? 314+88+105-41:314+105-41+4+2);
                 
                 
             }completion:^(BOOL finished)
              
              {
-                 secondWebView.alpha=0;
+                 weakSecondWeb.alpha=0;
 
                  
                  
@@ -1399,13 +1459,13 @@
             
             [UIView animateWithDuration:1 animations:^{
                 
-                secondWebView.frame=CGRectMake(0, 0, 320 ,iPhone5? 314+88+105-41:314+105-41+4+2);
-                _webView.frame=CGRectMake(0, -(iPhone5? 314+88+105-41:314+105-41+4+2), 320 ,iPhone5? 314+88+105-41:314+105-41+4+2);
+                weakSecondWeb.frame=CGRectMake(0, 0, 320 ,iPhone5? 314+88+105-41:314+105-41+4+2);
+                weakWeb.frame=CGRectMake(0, -(iPhone5? 314+88+105-41:314+105-41+4+2), 320 ,iPhone5? 314+88+105-41:314+105-41+4+2);
             }completion:^(BOOL finished)
              
              {
                  
-                 _webView.alpha=0;
+                 weakWeb.alpha=0;
 
                  
              }];
@@ -1433,13 +1493,13 @@
             
             [UIView animateWithDuration:1 animations:^{
                 
-                _webView.frame=CGRectMake(0, 0, 320 ,iPhone5? 314+88+105-41:314+105-41+4+2);
-                secondWebView.frame=CGRectMake(0, (iPhone5? 314+88+105-41:314+105-41+4+2), 320 ,iPhone5? 314+88+105-41:314+105-41+4+2);
+                weakWeb.frame=CGRectMake(0, 0, 320 ,iPhone5? 314+88+105-41:314+105-41+4+2);
+                weakSecondWeb.frame=CGRectMake(0, (iPhone5? 314+88+105-41:314+105-41+4+2), 320 ,iPhone5? 314+88+105-41:314+105-41+4+2);
             }completion:^(BOOL finished)
              
              {
                  
-                 secondWebView.alpha=0;
+                 weakSecondWeb.alpha=0;
                  
              }];
             
@@ -1454,12 +1514,12 @@
 //            
             [UIView animateWithDuration:1 animations:^{
                 
-                secondWebView.frame=CGRectMake(0, 0, 320 ,iPhone5? 314+88+105-41:314+105-41+4+2);
-                _webView.frame=CGRectMake(0, (iPhone5? 314+88+105-41:314+105-41+4+2), 320 ,iPhone5? 314+88+105-41:314+105-41+4+2);
+                weakSecondWeb.frame=CGRectMake(0, 0, 320 ,iPhone5? 314+88+105-41:314+105-41+4+2);
+                weakWeb.frame=CGRectMake(0, (iPhone5? 314+88+105-41:314+105-41+4+2), 320 ,iPhone5? 314+88+105-41:314+105-41+4+2);
             }completion:^(BOOL finished)
              
              {
-                 _webView.alpha=0;
+                 weakWeb.alpha=0;
                  
                  
              }];
@@ -2244,6 +2304,8 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+    
+    NSLog(@"didReceiveMemoryWarning");
 }
 //对应ios6下的横竖屏问题
 //- (BOOL)shouldAutorotate{

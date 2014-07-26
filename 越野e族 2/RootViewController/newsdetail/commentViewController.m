@@ -545,7 +545,7 @@
         pageN++;
         BOOL isqingqiu=     [personal islastpage:allcount pagenumber:pageN];
         if (isqingqiu==YES) {
-            NSString *string103=[[NSString alloc]initWithFormat:@"http://fb.fblife.com/openapi/index.php?mod=comment&code=commentlist&sortid=%@&fbtype=json&page=%d",self.string_ID,pageN];
+            NSString *string103=[[NSString alloc]initWithFormat:@"http://fb.fblife.com/openapi/index.php?mod=comment&code=commentlist&sort=%@&sortid=%@&fbtype=json&page=%d",self.sortString,self.string_ID,pageN];
             NSURL *url103 = [NSURL URLWithString:string103];
             
             NSLog(@"ahaurl====%@",string103);
@@ -635,13 +635,23 @@
                         
                         [tab_pinglunliebiao reloadData];
                     }
-                    if([array_content count]>0&&[array_content count]<=20){
+                    if([array_content count]>0&&[array_content count]<20){
                         
                         tab_pinglunliebiao.tableFooterView=label_meiduoshao;
                         
                     }else{
                         tab_pinglunliebiao.tableFooterView=loadview;
                         
+                    }
+                    
+                    if (array_weiboinfo.count<20) {
+                        tab_pinglunliebiao.tableFooterView=label_meiduoshao;
+
+                    }
+                    
+                    if (array_weiboinfo.count==0&&array_content==0) {
+                        tab_pinglunliebiao.tableFooterView=label_noneshuju;
+
                     }
                     
                 }
@@ -725,6 +735,28 @@
                         NSArray *arraytest = [stringtest componentsSeparatedByString:@" "];
                         
                         [array_content addObject:arraytest];
+                        
+                        if([array_content count]>0&&[array_content count]<20){
+                            
+                            tab_pinglunliebiao.tableFooterView=label_meiduoshao;
+                            
+                        }else{
+                            tab_pinglunliebiao.tableFooterView=loadview;
+                            
+                        }
+                        
+                        if (array_weiboinfo.count<20) {
+                            tab_pinglunliebiao.tableFooterView=label_meiduoshao;
+                            isloadsuccess=NO;
+
+                        }
+                        
+                        if (array_weiboinfo.count==0&&array_content==0) {
+                            tab_pinglunliebiao.tableFooterView=label_noneshuju;
+                            isloadsuccess=NO;
+                            
+                        }
+
                         
                         
                     }
@@ -978,7 +1010,7 @@
         UIView *firstsectionview=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 156/2)];
         firstsectionview.backgroundColor=RGBCOLOR(255, 255, 255);
         UILabel *label_bigtitle=[[UILabel alloc]initWithFrame:CGRectMake(10, 10, 300, 30)];
-        label_bigtitle.font=[UIFont boldSystemFontOfSize:20];
+        label_bigtitle.font=[UIFont systemFontOfSize:20];
         label_bigtitle.lineBreakMode = UILineBreakModeWordWrap|UILineBreakModeTailTruncation;
         label_bigtitle.backgroundColor=[UIColor clearColor];
         label_bigtitle.text=self.string_title;
@@ -1708,6 +1740,11 @@
         if ([string_ isEqualToString:@"lastpage"]) {
             return;
         }else{
+            
+            
+            
+            
+            
             [loadview startLoading];
             [self jiazaimore];
             NSLog(@"上提刷新");

@@ -17,7 +17,6 @@
 
 //101更新   102加载   202收藏  203查看收藏
 @interface BBSfenduiViewController (){
-    bbsdetailViewController *detail;
     UIButton *button_collect;
     UIImageView *xialaView;
     AlertRePlaceView *_replaceAlertView;
@@ -92,7 +91,6 @@
    // UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:button_back];
   //  self.navigationItem.leftBarButtonItem=back_item;
     
-    
     /*
     
     UIButton *button_back=[[UIButton alloc]initWithFrame: CGRectMake(MY_MACRO_NAME?5:15, (44-43/2)/2, 12, 43/2)];
@@ -100,14 +98,11 @@
     [button_back addTarget:self action:@selector(backto) forControlEvents:UIControlEventTouchUpInside];
     [button_back setBackgroundImage:[UIImage imageNamed:@"ios7_back.png"] forState:UIControlStateNormal];
     
-    
     UIButton *backview=[[UIButton alloc]initWithFrame: CGRectMake(MY_MACRO_NAME?-10:-10, 0, 40, 44)];
     backview.backgroundColor=[UIColor clearColor];
     [backview addTarget:self action:@selector(backto) forControlEvents:UIControlEventTouchUpInside];
     [backview addSubview:button_back];
 
-    
-    
     
     
     UIButton *view_left=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50, 44)];
@@ -129,10 +124,10 @@
   */
     
     UIBarButtonItem * spaceButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    spaceButton.width = MY_MACRO_NAME?-5:5;
+    spaceButton.width = MY_MACRO_NAME?-12:5;
     
     
-    UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(10,8,30,30)];
+    UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(0,8,30,30)];
     [button_back addTarget:self action:@selector(backto) forControlEvents:UIControlEventTouchUpInside];
     [button_back setImage:[UIImage imageNamed:@"ios7_back"] forState:UIControlStateNormal];
     UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:button_back];
@@ -1180,21 +1175,26 @@
         [self showPopoverView:nil];
     }
     
-    if (detail) {
-        detail=nil;
-    }
+//    if (detail) {
+//        detail=nil;
+//    }
     selecttionofxialaview=1;
-    detail=[[bbsdetailViewController alloc]init];
+ bbsdetailViewController *   tempdetail=[[bbsdetailViewController alloc]init];
     
-    [self setHidesBottomBarWhenPushed:YES];
+//    [self setHidesBottomBarWhenPushed:YES];
     NSDictionary *dic=[_array_info objectAtIndex:indexPath.row];
     
-    detail.bbsdetail_tid=[NSString stringWithFormat:@"%@",[dic objectForKey:@"tid"]];
+    tempdetail.bbsdetail_tid=[NSString stringWithFormat:@"%@",[dic objectForKey:@"tid"]];
+    
+//    [self.leveyTabBarController hidesTabBar:YES animated:YES];
+   [self.navigationController pushViewController:tempdetail animated:YES];
+    
+//    [self.navigationController pushViewController:tempdetail animated:YES];
     
     
-    [self.leveyTabBarController hidesTabBar:YES animated:YES];
-    [self.navigationController pushViewController:detail animated:YES];
     
+    NSLog(@"self.navigati===%@",self.navigationController);
+//    
     
 }
 -(void)backto{

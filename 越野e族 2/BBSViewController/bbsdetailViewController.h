@@ -19,6 +19,8 @@
 #import <MessageUI/MessageUI.h>
 #import "WeiboSDK.h"
 #import "ZkingAlert.h"
+#import "PraiseAndCollectedModel.h"
+
 #import <MessageUI/MFMailComposeViewController.h>
 @interface bbsdetailViewController : UIViewController<downloaddelegate,BottombarviewDelegate,SelectNumberViewDelegate,AlertRePlaceViewDelegate,UIWebViewDelegate,MWPhotoBrowserDelegate,UIScrollViewDelegate,UIActionSheetDelegate,WXApiDelegate,MFMailComposeViewControllerDelegate,WeiboSDKDelegate>{
     
@@ -71,7 +73,10 @@
     int jiushizhegele;//多连几次
     
     int zanNumber;
+    
 
+
+    BOOL isPraise;//是否赞过
 
     
 }

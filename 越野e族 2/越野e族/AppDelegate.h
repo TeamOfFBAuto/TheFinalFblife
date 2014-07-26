@@ -36,6 +36,13 @@
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate,UITabBarControllerDelegate,LogInViewControllerDelegate,downloaddelegate,LeveyTabBarControllerDelegate,LeveyTabBarDelegate,AsyncImageDelegate,MobClickDelegate,WXApiDelegate,RESideMenuDelegate>
 {
+    UIBackgroundTaskIdentifier backgroundTask_;
+    
+    
+//    UIBackgroundTaskIdentifier szkTast;
+    int bgCount;
+
+    
     UITabBarController * tabbar;
     LogInViewController * logIn;
     AsyncImageView *guanggao_image;

@@ -141,6 +141,22 @@
 -(void)loadAllBBSPostData
 {
     
+    
+//    BOOL isLogin = [[NSUserDefaults standardUserDefaults] boolForKey:USER_IN];
+//    
+//    
+//    if (!isLogin) {
+//        LogInViewController * logIn = [LogInViewController sharedManager];
+//        
+//        [self presentViewController:logIn animated:YES completion:NULL];
+//        
+//        return;
+//    }
+    
+
+    
+    
+    
     if (!_bbs_post_collection_array) {
         _bbs_post_collection_array = [NSMutableArray array];
     }else
@@ -288,6 +304,20 @@
 
 -(void)cancelOrCollectSectionsWith:(RankingListCustomCell *)cell
 {
+    
+    BOOL isLogin = [[NSUserDefaults standardUserDefaults] boolForKey:USER_IN];
+    
+    
+    if (!isLogin) {
+        LogInViewController * logIn = [LogInViewController sharedManager];
+        
+        [self presentViewController:logIn animated:YES completion:NULL];
+        
+        return;
+    }
+    
+
+    
     NSIndexPath * indexPath = [_myTableView indexPathForCell:cell];
     
     RankingListModel * model = [[_data_array objectAtIndex:_currentPage-1] objectAtIndex:indexPath.row];
