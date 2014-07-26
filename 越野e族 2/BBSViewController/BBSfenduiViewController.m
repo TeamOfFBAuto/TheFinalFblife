@@ -23,6 +23,10 @@
     AlertRePlaceView *_replaceAlertView;
 
     UIButton *button_more;
+    
+    downloadtool *Collect_Tool;
+    
+    downloadtool *Collect_Tool11;
 }
 @end
 @implementation BBSfenduiViewController
@@ -88,6 +92,9 @@
    // UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:button_back];
   //  self.navigationItem.leftBarButtonItem=back_item;
     
+    
+    /*
+    
     UIButton *button_back=[[UIButton alloc]initWithFrame: CGRectMake(MY_MACRO_NAME?5:15, (44-43/2)/2, 12, 43/2)];
     
     [button_back addTarget:self action:@selector(backto) forControlEvents:UIControlEventTouchUpInside];
@@ -117,6 +124,22 @@
 
     
     self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithCustomView:view_left];
+     
+     
+  */
+    
+    UIBarButtonItem * spaceButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    spaceButton.width = MY_MACRO_NAME?-5:5;
+    
+    
+    UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(10,8,30,30)];
+    [button_back addTarget:self action:@selector(backto) forControlEvents:UIControlEventTouchUpInside];
+    [button_back setImage:[UIImage imageNamed:@"ios7_back"] forState:UIControlStateNormal];
+    UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:button_back];
+    self.navigationItem.leftBarButtonItems=@[spaceButton,back_item];
+
+    
+    
     
     button_collect=[[UIButton alloc]initWithFrame:CGRectMake(MY_MACRO_NAME? 15:10, (44-21)/2, 22, 21)];
     button_collect.tag=999;
@@ -516,7 +539,7 @@
     {  NSLog(@"string_fid=%@",str_fid);
         NSString *url=[NSString stringWithFormat:@"http://bbs.fblife.com/bbsapinew/favoritesforums.php?fid=%@&action=add&formattype=json&authcode=%@",str_fid,[[NSUserDefaults standardUserDefaults]objectForKey:USER_AUTHOD]];
         NSLog(@"url====%@",url);
-        downloadtool *Collect_Tool=[[downloadtool alloc]init];
+        Collect_Tool=[[downloadtool alloc]init];
         [Collect_Tool setUrl_string:[NSString stringWithFormat:@"http://bbs.fblife.com/bbsapinew/favoritesforums.php?fid=%@&action=add&formattype=json&authcode=%@",str_fid,[[NSUserDefaults standardUserDefaults]objectForKey:USER_AUTHOD]]];
         Collect_Tool.tag=202;
         Collect_Tool.delegate=self;
@@ -540,11 +563,11 @@
     {  NSLog(@"string_fid=%@",str_fid);
         NSString *url=[NSString stringWithFormat:@"http://bbs.fblife.com/bbsapinew/favoritesforums.php?fid=%@&action=add&formattype=json&authcode=%@",str_fid,[[NSUserDefaults standardUserDefaults]objectForKey:USER_AUTHOD]];
         NSLog(@"url====%@",url);
-        downloadtool *Collect_Tool=[[downloadtool alloc]init];
-        [Collect_Tool setUrl_string:[NSString stringWithFormat:@"http://bbs.fblife.com/bbsapinew/delfavorites.php?delid=%@&formattype=json&authcode=%@",str_fid,[[NSUserDefaults standardUserDefaults]objectForKey:USER_AUTHOD]]];
-        Collect_Tool.tag=203;
-        Collect_Tool.delegate=self;
-        [Collect_Tool start];
+        Collect_Tool11=[[downloadtool alloc]init];
+        [Collect_Tool11 setUrl_string:[NSString stringWithFormat:@"http://bbs.fblife.com/bbsapinew/delfavorites.php?delid=%@&formattype=json&authcode=%@",str_fid,[[NSUserDefaults standardUserDefaults]objectForKey:USER_AUTHOD]]];
+        Collect_Tool11.tag=203;
+        Collect_Tool11.delegate=self;
+        [Collect_Tool11 start];
         
         //已经激活过FB 加载个人信息
     }
@@ -1181,6 +1204,11 @@
         [self showPopoverView:nil];
     }
     
+    [Collect_Tool stop];
+    Collect_Tool.delegate = nil;
+    
+    [Collect_Tool11 stop];
+    Collect_Tool11.delegate = nil;
     
     [tool_101 stop];
     tool_101.delegate=nil;

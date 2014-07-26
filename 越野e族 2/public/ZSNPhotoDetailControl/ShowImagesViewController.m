@@ -113,8 +113,6 @@
         
         button.frame = CGRectMake(130 + 70*i,20,60,44);
         
-        button.userInteractionEnabled = NO;
-        
         button.tag = 10000 + i;
         
         [button addTarget:self action:@selector(buttonTap:) forControlEvents:UIControlEventTouchUpInside];
@@ -191,11 +189,26 @@
     {
         LogInViewController * logIn = [LogInViewController sharedManager];
         
+        logIn.delegate = self;
+        
         [self presentViewController:logIn animated:YES completion:NULL];
     }
     
     return islogin;
 }
+
+
+-(void)successToLogIn
+{
+    
+}
+
+-(void)failToLogIn
+{
+    [input_view.text_input_view resignFirstResponder];
+}
+
+
 
 
 #pragma mark - 赞 收藏 转发
@@ -225,7 +238,13 @@
             break;
         case 2://转发
         {
-            [self ShareMore];
+            BOOL islogin = [self isLogIn];
+            
+            if (islogin)
+            {
+                [self ShareMore];
+            }
+            
         }
             break;
             
@@ -460,9 +479,9 @@
 
 -(void)viewDidDisappear:(BOOL)animated
 {
-    [input_view.text_background_view removeFromSuperview];
-    
-    input_view.text_background_view = nil;
+//    [input_view.text_background_view removeFromSuperview];
+//    
+//    input_view.text_background_view = nil;
 }
 
 
@@ -495,9 +514,7 @@
         
         
         commit_label.userInteractionEnabled = YES;
-        
-        pinglun_button.userInteractionEnabled = NO;
-        
+                
         for (int i = 0;i < 3;i++)
         {
             UIButton * button = (UIButton *)[navImageView viewWithTag:10000+i];
@@ -683,6 +700,7 @@
         comment_.sortString=@"15";//这个是判断图集或者新闻的，图集是15
         comment_.string_ID=self.id_atlas;//这个是图集的id
         comment_.string_title = atlasModel.atlas_name;//@"越野e族";
+        comment_.string_author = @"越野e族";
         [self.navigationController pushViewController:comment_ animated:YES];
         
         

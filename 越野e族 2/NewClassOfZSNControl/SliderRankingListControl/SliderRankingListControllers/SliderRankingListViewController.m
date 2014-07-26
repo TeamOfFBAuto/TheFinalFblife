@@ -51,12 +51,8 @@
         [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:MY_MACRO_NAME?@"sliderBBSNavigationBarImage":@"sliderBBSNavigationBarImage_ios6"] forBarMetrics: UIBarMetricsDefault];
     }
     
-    
-    if (self.currentPage == 1)
-    {
-        [self.myTableView reloadData];
-    }
-    
+
+    [self.myTableView reloadData];
 }
 
 
@@ -94,10 +90,9 @@
         
         bself.currentPage = index + 1;
         
-        if ([[bself.data_array objectAtIndex:index] count] > 0)
-        {
-            [bself.myTableView reloadData];
-        }else
+        [bself.myTableView reloadData];
+        
+        if ([[bself.data_array objectAtIndex:index] count] == 0)
         {
             [bself loadRankingListDataWithIndex:index+1];
         }
@@ -244,6 +239,8 @@
     
     [cell setInfoWith:indexPath.row + 1 WithModel:model WithType:self.currentPage];
     
+    NSLog(@"---=--=-----  %@",self.bbs_forum_collection_array);
+    
     cell.collection_button.selected = [self.currentPage==1?self.bbs_post_collection_array:self.bbs_forum_collection_array containsObject:model.ranking_id];
     
     return cell;
@@ -264,17 +261,22 @@
         [self.navigationController pushViewController:detail animated:YES];
     }else
     {
-        RankingListModel * model = [[_data_array objectAtIndex:_currentPage-1] objectAtIndex:indexPath.row];
         
-        BBSfenduiViewController * detail = [[BBSfenduiViewController alloc] init];
-        
-        detail.string_id = model.ranking_id;
-        
-        detail.string_name = model.ranking_title;
-        
-        detail.collection_array = self.bbs_forum_collection_array;
-        
-        [self.navigationController pushViewController:detail animated:YES];
+        if ([[_data_array objectAtIndex:_currentPage-1] count] > 0)
+        {
+            RankingListModel * model = [[_data_array objectAtIndex:_currentPage-1] objectAtIndex:indexPath.row];
+            
+            BBSfenduiViewController * detail = [[BBSfenduiViewController alloc] init];
+            
+            detail.string_id = model.ranking_id;
+            
+            detail.string_name = model.ranking_title;
+            
+            detail.collection_array = self.bbs_forum_collection_array;
+            
+            [self.navigationController pushViewController:detail animated:YES];
+            
+        }
     }
 }
 

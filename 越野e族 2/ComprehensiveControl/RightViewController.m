@@ -51,6 +51,16 @@
     
     self.navigationController.navigationBarHidden = YES;
     
+    self.wantsFullScreenLayout = YES;
+    
+    if (MY_MACRO_NAME) {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+        
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+        
+    }
+    
+    
     [self setup];
 }
 
@@ -81,17 +91,29 @@
     
     BOOL islogin = [userDefaults boolForKey:USER_IN];
     
+//    if (_rootScrollView)
+//    {
+//        if (islogin && [LogIn_label.text isEqualToString:@"点击立即登录"])
+//        {
+//            LogIn_label.text = [userDefaults objectForKey:USER_NAME];
+//            
+//            [headerImageView loadUserHeaderImageFromUrl:[userDefaults objectForKey:USER_FACE] withPlaceholdImage:[UIImage imageNamed:@"touxiang"]];
+//        }
+//        
+//        return;
+//    }
+    
+    
+    
     if (_rootScrollView)
     {
-        if (islogin && [LogIn_label.text isEqualToString:@"点击立即登录"])
-        {
-            LogIn_label.text = [userDefaults objectForKey:USER_NAME];
-            
-            [headerImageView loadUserHeaderImageFromUrl:[userDefaults objectForKey:USER_FACE] withPlaceholdImage:[UIImage imageNamed:@"touxiang"]];
-        }
         
-        return;
+        for (UIView * view in _rootScrollView.subviews) {
+            [view removeFromSuperview];
+        }
     }
+    
+    
     
     _rootScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0,0,298,(iPhone5?568:480))];
     

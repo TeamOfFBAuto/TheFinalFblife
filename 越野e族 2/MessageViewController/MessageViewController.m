@@ -325,7 +325,7 @@
     
     self.title = @"私信";
     
-    self.rightImageName = @"weibo_write_image";
+    self.rightImageName = @"ios7_commit3839";
     
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeOther];
     

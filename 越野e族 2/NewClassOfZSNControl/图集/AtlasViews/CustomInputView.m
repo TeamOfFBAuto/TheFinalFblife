@@ -250,7 +250,6 @@
     
     if (!islogin)
     {
-        
         LogInViewController * logIn = [LogInViewController sharedManager];
         
         [[(AppDelegate *)[UIApplication sharedApplication].delegate RootVC] presentViewController:logIn animated:YES completion:NULL];
@@ -287,6 +286,12 @@
 
 
 #pragma mark - UITextViewDelegate
+
+
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView;
+{
+    return YES;
+}
 
 
 - (void)textViewDidBeginEditing:(UITextView *)textView

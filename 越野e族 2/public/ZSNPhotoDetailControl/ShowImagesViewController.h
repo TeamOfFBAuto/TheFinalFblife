@@ -12,7 +12,7 @@
 
 #import "AtlasContentView.h"
 
-@interface ShowImagesViewController : UIViewController<UIScrollViewDelegate,QBShowImagesScrollViewDelegate,UITextViewDelegate,UIActionSheetDelegate,MFMailComposeViewControllerDelegate>
+@interface ShowImagesViewController : UIViewController<UIScrollViewDelegate,QBShowImagesScrollViewDelegate,UITextViewDelegate,UIActionSheetDelegate,MFMailComposeViewControllerDelegate,LogInViewControllerDelegate>
 {
     UIView * navgationBar;
     
